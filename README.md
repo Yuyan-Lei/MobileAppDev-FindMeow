@@ -1,11 +1,9 @@
-# MobileAppDev-FindMeow
-
-
 ## Description
 **Find your favorite cat to join your family!**
 
 FindMeow is an app designed for pet lovers to select and buy your favorite cats online without leaving home to start a life with pets! With online functions such as searching or filtering for available kittens, browsing and star favorite catteries, and viewing nearby available kittens or catteries, the app is a convenient platform for catteries to share information and for pet lovers to buy dream cats.
  
+
 **Convenient and lightweight pet trading portal**
 
  Anytime, anywhere, you can view nearby pet trading information and shopping offers. Buying a cat is super easy!
@@ -26,7 +24,9 @@ FindMeow is an app designed for pet lovers to select and buy your favorite cats 
 
 ## UI Design
 Designed with Figma.
+
 See high-fidelity prototype at https://www.figma.com/file/05dpdLKL5MVPJbbfeNqn0m/Find-Meow.
+
 ![discover](./UI_Design/Discover.png)
 ![findBreeders](./UI_Design/Find_Breeders.png)
 ![login](./UI_Design/login.png)
