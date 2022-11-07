@@ -7,17 +7,17 @@ Zhongyi Lu
 ## Description
 FindMeow is an app designed for pet lovers to select and buy your favorite cats online without leaving home to start a life with pets! With online functions such as searching or filtering for available kittens, browsing and star favorite catteries, and viewing nearby available kittens or catteries, the app is a convenient platform for catteries to share information and for pet lovers to buy dream cats.
  
-* Convenient and lightweight pet trading portal
-Anytime, anywhere, you can view nearby pet trading information and shopping offers. Buying a cat is super easy!
+* **Convenient and lightweight pet trading portal**
+* * Anytime, anywhere, you can view nearby pet trading information and shopping offers. Buying a cat is super easy!
  
-* Coverage
-Dozens of pet breeds in our app are sold. Pick up your favorite one!
+* **Coverage**
+* * Dozens of pet breeds in our app are sold. Pick up your favorite one!
  
-* Pet community
-You can obtain knowledge about pets and share your stories with your loved cats at any time.
+* **Pet community**
+* * You can obtain knowledge about pets and share your stories with your loved cats at any time.
  
-* Seller certification
-All pet sellers in our app are certified! Don’t worry about choosing a credible seller.
+* **Seller certification**
+* * All pet sellers in our app are certified! Don’t worry about choosing a credible seller.
  
  
 ## Slogan
@@ -28,6 +28,7 @@ Cat purchasers who would like to buy high-quality cats from certified cattery ow
  
 ## Aims
 In short, the application helps cat purchasers find and buy their favorite cats more easily and conveniently, and it helps cattery owners sell cats faster.
+
 Specifically, in the United States, there are mainly three niches for the cat-trading market: unpaid or low cost adoptions, private sellers selling personally bred ones, and catteries selling high quality cats.
 
 Our app is focused on the third niche market, which is the transaction of high quality cats from registered catteries. This market accounts for a large share of the U.S. cat transactions, but this market has never been looked at. 
@@ -38,6 +39,7 @@ The advent of our app will revolutionize their transactions, transforming an ant
 
 ## Advantages Over Competitors
 Although there are many pet buying apps on the market, they share two major characteristics:
+
 One is that they tend to encompass all types of pets. Although that choice makes these apps available to a broader audience, they are often hard to be perfect in either category.
 
 Second, their main sellers tend to be rescue centers or private sellers. Rescue centers allow buyers to adopt cats for free or at a low cost, which is a great way to rescue animals. However, It is rather difficult for buyers who are interested in high quality cats to find their dream cats there. Cats sold by private sellers are at relatively low price, but private sellers do not have related qualifications to breed cats, nor do they have the knowledge and ability to scientifically breed and feed kittens. Therefore the breeding process may be unhealthy and the quality of cats often varies greatly.
