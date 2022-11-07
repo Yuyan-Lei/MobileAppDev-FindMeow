@@ -12,22 +12,28 @@
 FindMeow is an app designed for pet lovers to select and buy your favorite cats online without leaving home to start a life with pets! With online functions such as searching or filtering for available kittens, browsing and star favorite catteries, and viewing nearby available kittens or catteries, the app is a convenient platform for catteries to share information and for pet lovers to buy dream cats.
  
 * **Convenient and lightweight pet trading portal**
+
  Anytime, anywhere, you can view nearby pet trading information and shopping offers. Buying a cat is super easy!
  
 * **Coverage**
+
  Dozens of pet breeds in our app are sold. Pick up your favorite one!
  
 * **Pet community**
+
  You can obtain knowledge about pets and share your stories with your loved cats at any time.
  
 * **Seller certification**
+
  All pet sellers in our app are certified! Don’t worry about choosing a credible seller.
  
  
-## Slogan
+- Slogan
+
 Find your favorite cat to join your family!
  
-## Target users
+-  Target users
+
 Cat purchasers who would like to buy high-quality cats from certified cattery owners.
  
 ## Aims
