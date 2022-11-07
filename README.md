@@ -8,9 +8,6 @@
 ![starlist](./UI_Design/StarList.png)
 ![upload](./UI_Design/Upload.png)
 
-## Group Members
-Cuichan Wu, Yuyan Lei, and Zhongyi Lu
- 
 ## Description
 FindMeow is an app designed for pet lovers to select and buy your favorite cats online without leaving home to start a life with pets! With online functions such as searching or filtering for available kittens, browsing and star favorite catteries, and viewing nearby available kittens or catteries, the app is a convenient platform for catteries to share information and for pet lovers to buy dream cats.
  
