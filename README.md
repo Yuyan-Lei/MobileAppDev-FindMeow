@@ -34,7 +34,7 @@ See high-fidelity prototype at https://www.figma.com/file/05dpdLKL5MVPJbbfeNqn0m
 
 
 
-## Aims
+## Goals
 In short, the application helps cat purchasers find and buy their favorite cats more easily and conveniently, and it helps cattery owners sell cats faster.
 
 Specifically, in the United States, there are mainly three niches for the cat-trading market: unpaid or low cost adoptions, private sellers selling personally bred ones, and catteries selling high quality cats.
