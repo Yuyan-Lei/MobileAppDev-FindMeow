@@ -26,7 +26,7 @@ FindMeow is an app designed for pet lovers to select and buy your favorite cats 
 Designed with Figma.
 
 See high-fidelity prototype at https://www.figma.com/file/05dpdLKL5MVPJbbfeNqn0m/Find-Meow?node-id=0%3A1.
-
+    
 ![discover](./UI_Design/Discover.png)
 ![findBreeders](./UI_Design/Find_Breeders.png)
 ![login](./UI_Design/login.png)
