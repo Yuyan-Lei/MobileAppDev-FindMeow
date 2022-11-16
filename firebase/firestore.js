@@ -23,7 +23,7 @@ export async function deleteFromDB(key, collectionName) {
   }
 }
 
-export async function markImportant(key, collectionName, changingDict) {
+export async function updateToDB(key, collectionName, changingDict) {
   try {
     await updateDoc(doc(firestore, collectionName, key), changingDict);
   } catch (err) {
