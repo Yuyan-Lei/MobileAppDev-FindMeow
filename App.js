@@ -1,8 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+import { FilterButtons } from "./components/pressable/FilterButtons";
+import { useState } from "react";
+import DiscoverMainScreen from "./components/screens/DiscoverMainScreen";
 
 export default function App() {
-  return <View></View>;
+  return (
+    <View>
+      <DiscoverMainScreen />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
