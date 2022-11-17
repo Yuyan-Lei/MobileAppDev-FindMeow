@@ -12,7 +12,10 @@ export default function App() {
   const { height, weight } = useWindowDimensions();
   return (
     <View style={[styles.container, { maxHeight: height }]}>
-      <CatteryProfileScreen />
+      {/* <CatteryProfileScreen /> */}
+      {/* <DiscoverFilter /> */}
+      <DiscoverMainScreen />
+      {/* <FindBreederMainScreen /> */}
     </View>
   );
 }
