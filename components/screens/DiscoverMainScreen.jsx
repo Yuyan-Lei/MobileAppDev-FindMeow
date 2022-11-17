@@ -3,6 +3,7 @@ import { FlatList, Text, View } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
+import { TitleText } from "../texts/TitleText";
 
 const mockData = [
   { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
@@ -14,11 +15,9 @@ export default function DiscoverMainScreen() {
   return (
     <View>
       <View style={{ flexDirection: "row", flex: 1, margin: 12 }}>
-        <Text
-          style={{ flex: 7, textAlign: "center", fontSize: 20, marginTop: 12 }}
-        >
-          Discover
-        </Text>
+        <View style={{ flex: 7 }}>
+          <TitleText>Discover</TitleText>
+        </View>
 
         <FilterButton />
       </View>
