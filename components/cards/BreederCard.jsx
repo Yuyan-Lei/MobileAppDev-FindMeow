@@ -1,5 +1,6 @@
+import { Image } from "@rneui/themed";
 import React from "react";
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 
 export function BreederCard({ breeder }) {
@@ -21,10 +22,21 @@ export function BreederCard({ breeder }) {
           marginRight: 24,
           borderRadius: 16,
         }}
-      ></View>
+      >
+        {"image" in breeder ? (
+          <Image
+            //TODO: why not working?
+            source={require("resources/cats/Angel Girls.png")}
+            containerStyle={{ aspectRatio: 1, flex: 1, width: "100%" }}
+            PlaceholderContent={<ActivityIndicator />}
+          />
+        ) : (
+          <></>
+        )}
+      </View>
       <View>
         <Text style={{ fontWeight: "bold" }}>{breeder.name}</Text>
-        <Text>{breeder.breed}</Text>    
+        <Text>{breeder.breed}</Text>
         <Text style={{ color: "orange", fontWeight: "500" }}>
           {breeder.availableCount > 0
             ? `${breeder.availableCount} Available Kittens`

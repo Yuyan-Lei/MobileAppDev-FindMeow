@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, SafeAreaView, View } from "react-native";
 import { BreederCard } from "../cards/BreederCard";
 import { SearchBar } from "../pressable/SearchBar";
 import { TitleText } from "../texts/TitleText";
@@ -10,6 +10,7 @@ const mockBreeders = [
     breed: "Ragdoll",
     availableCount: 5,
     location: "Washington, D.C.",
+    image: "resources/cats/Angel Girls.png",
   },
   {
     name: "Heavenly Cats",
