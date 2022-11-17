@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import { CatCard } from "../cards/CatCard";
+import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
 
 const mockData = [
@@ -12,9 +13,16 @@ export default function DiscoverMainScreen() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   return (
     <View>
-      <Text style={{ textAlign: "center", fontSize: 20, marginTop: 12 }}>
-        Discover
-      </Text>
+      <View style={{ flexDirection: "row", flex: 1, margin: 12 }}>
+        <Text
+          style={{ flex: 7, textAlign: "center", fontSize: 20, marginTop: 12 }}
+        >
+          Discover
+        </Text>
+
+        <FilterButton />
+      </View>
+
       <FilterButtons
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}

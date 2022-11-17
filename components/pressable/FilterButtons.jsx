@@ -23,9 +23,9 @@ export function FilterButtons({ selectedIndex, setSelectedIndex }) {
           containerStyle={{ height: 40 }}
         />
       </View>
-      <View style={{ width: 32, height: 32 }}>
+      {/* <View style={{ width: 32, height: 32 }}>
         <Button title="↓↑" titleStyle={{ fontSize: 16 }} />
-      </View>
+      </View> */}
     </View>
   );
 }
