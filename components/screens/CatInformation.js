@@ -100,7 +100,7 @@ const CatInformation = () => {
                 marginLeft: "auto",
               }}
             >
-              200$
+              $200
             </Text>
           </View>
 
