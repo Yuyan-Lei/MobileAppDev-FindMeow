@@ -2,12 +2,12 @@ import { View, Text } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 
 export function CatCard({ cat }) {
-//   console.log(cat);
+  //   console.log(cat);
   return (
     <View
       style={{
         flex: 1,
-        margin: 12,
+        margin: 8,
         justifyContent: "center",
         borderRadius: 8,
       }}
