@@ -47,7 +47,7 @@ const mockBreeders = [
 export default function FindBreederMainScreen() {
   const [searchName, setSearchName] = useState("");
   return (
-    <View style={{ margin: 16 }}>
+    <View style={{ margin: 16, marginTop: 28 }}>
       <View style={{ alignItems: "center", margin: 12 }}>
         <TitleText>Find Breeders</TitleText>
       </View>

@@ -21,14 +21,16 @@ const cats = [
 export default function DiscoverMainScreen() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   return (
-    <View style={{ padding: 12 }}>
-      <View style={{ flexDirection: "row", flex: 1, margin: 12 }}>
+    <View style={{ margin: 16, marginTop: 28 }}>
+      <View style={{ flexDirection: "row", margin: 12 }}>
         <View style={{ flex: 7 }}>
           <TitleText>Discover</TitleText>
         </View>
 
         <FilterButton />
       </View>
+
+      {/* <TitleText>Discover</TitleText> */}
 
       <FilterButtons
         selectedIndex={selectedIndex}
