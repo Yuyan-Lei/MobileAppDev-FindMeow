@@ -58,7 +58,7 @@ export default function CatteryProfileScreen() {
           style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
         >
           <Text style={{ color: "orange", fontWeight: "500" }}>About</Text>
-          <br></br>
+          <Text></Text>
           <View style={{ flexDirection: "row" }}>
             <Text style={{ fontWeight: "500" }}>Phone: </Text>
             <Text>111</Text>

@@ -23,7 +23,7 @@ export function BreederCard({ breeder }) {
           borderRadius: 16,
         }}
       >
-        {"image" in breeder ? (
+        {/* {"image" in breeder ? (
           <Image
             //TODO: why not working?
             source={require("resources/cats/Angel Girls.png")}
@@ -32,7 +32,7 @@ export function BreederCard({ breeder }) {
           />
         ) : (
           <></>
-        )}
+        )} */}
       </View>
       <View>
         <Text style={{ fontWeight: "bold" }}>{breeder.name}</Text>
