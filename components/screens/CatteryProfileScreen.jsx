@@ -36,6 +36,7 @@ export default function CatteryProfileScreen() {
       </View>
 
       <View style={{ margin: 32, top: -80 }}>
+        {/* buggy codes start */}
         <View
           style={{
             alignItems: "center",
@@ -52,7 +53,7 @@ export default function CatteryProfileScreen() {
           </View>
         </View>
 
-        <View style={{ margin: 12 }} />
+        <View style={{ height: 24 }} />
 
         <View
           style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
@@ -69,7 +70,9 @@ export default function CatteryProfileScreen() {
           </View>
         </View>
 
-        <View style={{ margin: 12 }} />
+        <View style={{ height: 24 }} />
+
+        {/* buggy codes end */}
 
         <View
           style={{ padding: 16, backgroundColor: "white", borderRadius: 12 }}
@@ -83,6 +86,7 @@ export default function CatteryProfileScreen() {
             data={cattery.cats}
             renderItem={({ item, index }) => <CatCard cat={item} />}
             numColumns={2}
+            ListFooterComponent={<View style={{ height: 60 }} />}
           />
         </View>
       </View>
