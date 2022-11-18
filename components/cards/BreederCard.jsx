@@ -8,10 +8,11 @@ export function BreederCard({ breeder }) {
     <View
       style={{
         flexDirection: "row",
-        margin: 12,
-        padding: 12,
-        alignItems: "center",
-        marginHorizontal: 28,
+        // margin: 12,
+        padding: 16,
+        // alignItems: "center",
+        // marginHorizontal: 28,
+        flex: 1,
       }}
     >
       <View

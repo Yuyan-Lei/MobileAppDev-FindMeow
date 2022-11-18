@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { BreederCard } from "../cards/BreederCard";
 import { SearchBar } from "../pressable/SearchBar";
 import { TitleText } from "../texts/TitleText";
@@ -57,6 +57,7 @@ export default function FindBreederMainScreen() {
       <FlatList
         data={mockBreeders}
         renderItem={({ item }) => <BreederCard breeder={item} />}
+        ListFooterComponent={<View style={{ height: 160 }} />}
       />
     </View>
   );

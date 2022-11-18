@@ -41,6 +41,7 @@ export default function DiscoverMainScreen() {
           data={cats}
           renderItem={({ item, index }) => <CatCard cat={item} />}
           numColumns={2}
+          ListFooterComponent={<View style={{ height: 60 }} />}
         />
       </View>
     </View>
