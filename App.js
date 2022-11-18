@@ -1,8 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
-import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { default as React, default as React } from "react";
+import { LogBox, StyleSheet, useWindowDimensions, View } from "react-native";
 import HomePage from "./components/screens/HomePage";
+
+LogBox.ignoreLogs(["Remote debugger"]);
 
 export default function App() {
   const { height, weight } = useWindowDimensions();
