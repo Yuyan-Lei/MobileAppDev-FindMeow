@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, SafeAreaView, View } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
 import { BreederCard } from "../cards/BreederCard";
 import { SearchBar } from "../pressable/SearchBar";
 import { TitleText } from "../texts/TitleText";
@@ -47,11 +47,13 @@ const mockBreeders = [
 export default function FindBreederMainScreen() {
   const [searchName, setSearchName] = useState("");
   return (
-    <View style={{ margin: 16, marginTop: 28 }}>
+    <View style={styles.cardView}>
       <View style={{ alignItems: "center", margin: 12 }}>
         <TitleText>Find Breeders</TitleText>
       </View>
-      <SearchBar text={searchName} setText={setSearchName} />
+      <View style={styles.cardView}>
+        <SearchBar text={searchName} setText={setSearchName} />
+      </View>
       <FlatList
         data={mockBreeders}
         renderItem={({ item }) => <BreederCard breeder={item} />}
@@ -59,3 +61,10 @@ export default function FindBreederMainScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  cardView: {
+    alignItems: "center",
+    margin: 12,
+  },
+});
