@@ -1,23 +1,29 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
-import { FilterButtons } from "./components/pressable/FilterButtons";
-import { useState } from "react";
-import DiscoverMainScreen from "./components/screens/DiscoverMainScreen";
-import FindBreederMainScreen from "./components/screens/FindBreederMainScreen";
-import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
-import DiscoverFilter from "./components/screens/DiscoverFilter";
-import CatInformation from "./components/screens/CatInformation";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
+import HomePage from "./components/screens/HomePage";
 
-// only use for test before adding a real navigation bar
 export default function App() {
   const { height, weight } = useWindowDimensions();
+  const Stack = createNativeStackNavigator();
+
   return (
     <View style={[styles.container, { maxHeight: height }]}>
-      <CatteryProfileScreen />
+      {/* <CatteryProfileScreen /> */}
       {/* <DiscoverFilter /> */}
       {/* <DiscoverMainScreen /> */}
-      {/* <DiscoverFilter></DiscoverFilter> */}
-      {/* <CatInformation /> */}
+      {/* <FindBreederMainScreen /> */}
+
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Home" component={HomePage} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </View>
   );
 }
