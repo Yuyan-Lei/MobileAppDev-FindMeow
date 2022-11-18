@@ -6,6 +6,7 @@ import DiscoverMainScreen from "./components/screens/DiscoverMainScreen";
 import FindBreederMainScreen from "./components/screens/FindBreederMainScreen";
 import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
 import DiscoverFilter from "./components/screens/DiscoverFilter";
+import CatInformation from "./components/screens/CatInformation";
 
 // only use for test before adding a real navigation bar
 export default function App() {
@@ -15,7 +16,8 @@ export default function App() {
       <CatteryProfileScreen />
       {/* <DiscoverFilter /> */}
       {/* <DiscoverMainScreen /> */}
-      {/* <FindBreederMainScreen /> */}
+      {/* <DiscoverFilter></DiscoverFilter> */}
+      {/* <CatInformation /> */}
     </View>
   );
 }
