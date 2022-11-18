@@ -86,10 +86,6 @@ const CatInformation = () => {
                 <Text style={{ color: Colors.gray }}>Breed</Text>
                 <Text>Unknown</Text>
               </View>
-
-              {/* <Chip title="Female" containerStyle={styles.chip} />
-              <Chip title="1 year" containerStyle={styles.chip} />
-              <Chip title="Unknown" containerStyle={styles.chip} /> */}
             </View>
           </View>
 
