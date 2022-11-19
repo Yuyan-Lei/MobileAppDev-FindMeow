@@ -10,6 +10,7 @@ import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
 import DiscoverMainScreen from "./components/screens/DiscoverMainScreen";
 import { navigationRef } from "./components/RootNavigation";
 import CatInformation from "./components/screens/CatInformation";
+import DiscoverFilter from "./components/screens/DiscoverFilter";
 
 LogBox.ignoreLogs(["Remote debugger"]);
 
@@ -28,6 +29,11 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="CatInformation" component={CatInformation} />
+          <Stack.Screen
+            name="CatteryProfile"
+            component={CatteryProfileScreen}
+          />
+          <Stack.Screen name="DiscoverFilter" component={DiscoverFilter} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

@@ -12,18 +12,6 @@ export function CatCard({ cat }) {
         borderRadius: 8,
       }}
     >
-      <View
-        style={{
-          position: "absolute",
-          top: 6,
-          left: 12,
-        }}
-      >
-        <View style={{ margin: 4 }}>
-          <HeartButton />
-        </View>
-      </View>
-
       <Pressable onPress={() => rootStackNavigate("CatInformation")}>
         <View
           style={{ height: 120, backgroundColor: "gray", borderRadius: 8 }}
@@ -52,6 +40,10 @@ export function CatCard({ cat }) {
           <Text style={{ fontSize: 12 }}>{cat.location}</Text>
         </View>
       </Pressable>
+
+      <View style={{ position: "absolute", top: 0, left: 0 }}>
+        <HeartButton />
+      </View>
     </View>
   );
 }
