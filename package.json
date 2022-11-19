@@ -22,6 +22,8 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
+    "react-native-date-picker": "^4.2.6",
+    "react-native-datepicker": "^1.7.2",
     "react-native-dotenv": "^3.4.2",
     "react-native-dropdown-select-list": "^2.0.2",
     "react-native-elements": "^3.4.2",
