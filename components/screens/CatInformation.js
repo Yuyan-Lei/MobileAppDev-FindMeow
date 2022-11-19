@@ -51,9 +51,9 @@ const CatInformation = () => {
         />
         <Overlay style={styles.card}>
           <View style={{ position: "absolute", top: 12, left: 12 }}>
-            <View style={{ backgroundColor: "gray", opacity: 0.5 }}>
+            <View style={{ opacity: 0.5 }}>
               <Pressable onPress={rootStackNavigateBack}>
-                <Text>Go back</Text>
+                <Feather name="arrow-left-circle" size={24} color="black" />
               </Pressable>
             </View>
           </View>
