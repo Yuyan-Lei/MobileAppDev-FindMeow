@@ -5,18 +5,13 @@ import { FilterButton } from "../pressable/FilterButton";
 
 export function SearchBar({ text, setText }) {
   return (
-    <View style={{ flexDirection: "row", marginHorizontal: 24 }}>
-      <View style={{ width: "90%" }}>
-        <Input
-          value={text}
-          onChangeText={(value) => setText(value)}
-          leftIcon={<Text>🔍 | </Text>}
-          placeholder="Search"
-        />
-      </View>
-      <View style={{ top: 8 }}>
-        <FilterButton />
-      </View>
+    <View style={{ flexDirection: "row", marginHorizontal: 24, flex: 1 }}>
+      <Input
+        value={text}
+        onChangeText={(value) => setText(value)}
+        leftIcon={<Text>🔍 | </Text>}
+        placeholder="Search"
+      />
     </View>
   );
 }
