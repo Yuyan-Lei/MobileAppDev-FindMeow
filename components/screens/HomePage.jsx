@@ -7,6 +7,7 @@ import FindBreederMainScreen from "./FindBreederMainScreen";
 import { Dimensions } from "react-native";
 import DiscoverFilter from "./DiscoverFilter";
 import CatInformation from "./CatInformation";
+import PostNewCatScreen from "./PostNewCatScreen";
 
 export default function HomePage({ route, navigation }) {
   const Tab = createBottomTabNavigator();
@@ -25,6 +26,11 @@ export default function HomePage({ route, navigation }) {
         name="FindBreederMain"
         component={FindBreederMainScreen}
         initialParams={{ symbol: "2" }}
+      />
+      <Tab.Screen
+        name="PostNewCat"
+        component={PostNewCatScreen}
+        initialParams={{ symbol: "3"}}
       />
       {/* <Tab.Screen
         name="CatteryProfile"
