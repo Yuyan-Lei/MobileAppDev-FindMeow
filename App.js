@@ -4,7 +4,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useCallback } from "react";
-import { LogBox, StyleSheet, useWindowDimensions, View } from "react-native";
+import { LogBox, StyleSheet, useWindowDimensions, View, Pressable } from "react-native";
 import HomePage from "./components/screens/HomePage";
 import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
 import DiscoverMainScreen from "./components/screens/DiscoverMainScreen";
@@ -16,6 +16,7 @@ import * as SplashScreen from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
 LogBox.ignoreLogs(["Remote debugger"]);
+LogBox.ignoreAllLogs();
 
 export default function App() {
   const [fontsLoaded] = useFonts({

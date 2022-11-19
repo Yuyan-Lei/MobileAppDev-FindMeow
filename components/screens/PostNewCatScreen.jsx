@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, StyleSheet } from "react-native";
+import { Text, View, TextInput, StyleSheet, ScrollView, Pressable } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import CatBreedSelector from "./CatBreedSelector";
 import DatePicker from 'react-native-datepicker';
+import { Chip } from '@rneui/themed';
+import CatImagePicker from "./CatImagePicker";
 
 export default function PostNewCatScreen() {
     const [catName, setCatName] = useState('');
@@ -11,11 +13,19 @@ export default function PostNewCatScreen() {
     const [birthDate, setBirthDate] = useState(new Date());
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
+    const [vaccinated, setVaccinated] = useState(false);
+    const [vetChecked, setVetChecked] = useState(false);
+    const [dewormed, setDewormed] = useState(false);
+    const [ready, setReady] = useState(false);
+    const [neutered, setNeutered] = useState(false);
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
+            <Pressable style={styles.submitButton}>
+                <Text style={styles.submitButtonText}>Submit</Text>
+            </Pressable>
             <Text style={styles.title}>Upload Cat</Text>
-            {/* TODO: Add Image Upload */}
+            <CatImagePicker></CatImagePicker>
             <Text style={styles.subTitle}>Cat Name</Text>
             <TextInput placeholder="Name" style={styles.textInput}></TextInput>
             <Text style={styles.subTitle}>Breed</Text>
@@ -50,27 +60,70 @@ export default function PostNewCatScreen() {
                 placeholder="Describe the kitten" 
                 style={styles.textInput}
                 multiline={true}/>
-        </View>
+            <Text style={styles.subTitle}>Labels</Text>
+            <View style={styles.chipContainer}>
+                <Chip 
+                    title="Vaccinated" 
+                    type={vaccinated ? "solid" : "outline"}
+                    containerStyle={styles.chip}
+                    color="#F59156"
+                    onPress={() => setVaccinated(!vaccinated)}></Chip>
+                <Chip 
+                    title="Vet Checked"
+                    type={vetChecked ? "solid" : "outline"}
+                    containerStyle={styles.chip}
+                    color="#F59156"
+                    onPress={() => setVetChecked(!vetChecked)}></Chip>
+                <Chip 
+                    title="Dewormed" 
+                    type={dewormed ? "solid" : "outline"}
+                    containerStyle={styles.chip}
+                    color="#F59156"
+                    onPress={() => setDewormed(!dewormed)}></Chip>
+                <Chip 
+                    title="Ready to go home" 
+                    type={ready ? "solid" : "outline"}
+                    containerStyle={styles.chip}
+                    color="#F59156"
+                    onPress={() => setReady(!ready)}></Chip>
+                <Chip 
+                    title="Neutered"
+                    type={neutered ? "solid" : "outline"}
+                    containerStyle={styles.chip}
+                    color="#F59156"
+                    onPress={() => setNeutered(!neutered)}></Chip>
+            </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        padding: 30,
+        paddingHorizontal: 30,
         backgroundColor: "#FFFCF6",
         flex: 1,
     },
-    title: {
+    submitButton: {
         marginTop: '20%',
-        color: 'orange',
-        fontSize: 26
+        alignSelf: "flex-end",
+    },
+    submitButtonText: {
+        color: '#F59156',
+        fontFamily: 'Montserrat',
+    },
+    title: {
+        color: '#F59156',
+        fontSize: 26,
+        fontFamily: 'Montserrat',
+        fontWeight: '700',
     },
     subTitle: {
         color: '#F59156',
         fontFamily: 'Montserrat',
         marginTop: 10,
         marginBottom: 10,
-        fontSize: 14
+        fontSize: 14,
+        fontWeight: '600',
     },
     textInput: {
         height: 60,
@@ -87,5 +140,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 10
     },
+    chipContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    chip: {
+        margin: 5
+    }
   });
 
