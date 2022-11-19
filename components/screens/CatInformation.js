@@ -58,6 +58,7 @@ const CatInformation = () => {
             </View>
           </View>
 
+          {/* card format */}
           <View
             style={{
               flexDirection: "row",
@@ -66,30 +67,15 @@ const CatInformation = () => {
             }}
           >
             <View style={styles.label}>
-              <View
-                style={{
-                  backgroundColor: Colors.labelBackground,
-                  marginHorizontal: 20,
-                }}
-              >
+              <View style={styles.tags}>
                 <Text style={{ color: Colors.gray }}>Gender</Text>
                 <Text>Female</Text>
               </View>
-              <View
-                style={{
-                  backgroundColor: Colors.labelBackground,
-                  marginHorizontal: 20,
-                }}
-              >
+              <View style={styles.tags}>
                 <Text style={{ color: Colors.gray }}>Age</Text>
                 <Text>1 year</Text>
               </View>
-              <View
-                style={{
-                  backgroundColor: Colors.labelBackground,
-                  marginHorizontal: 20,
-                }}
-              >
+              <View style={styles.tags}>
                 <Text style={{ color: Colors.gray }}>Breed</Text>
                 <Text>Unknown</Text>
               </View>
@@ -169,6 +155,13 @@ const styles = StyleSheet.create({
   label: {
     alignItems: "center",
     flexDirection: "row",
+  },
+  tags: {
+    backgroundColor: Colors.labelBackground,
+    marginHorizontal: 20,
+    alignItems: "center",
+    padding: 8,
+    borderRadius: 12,
   },
   textPrimary: {
     textAlign: "left",
