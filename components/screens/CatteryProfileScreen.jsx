@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Feather } from "@expo/vector-icons";
 import { FlatList, Pressable, Text, View } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
@@ -39,7 +40,7 @@ export default function CatteryProfileScreen() {
       <View style={{ position: "absolute", top: 48, left: 12 }}>
         <View style={{ backgroundColor: "gray", opacity: 0.5 }}>
           <Pressable onPress={rootStackNavigateBack}>
-            <Text>Go back</Text>
+            <Feather name="arrow-left-circle" size={24} color="black" />
           </Pressable>
         </View>
       </View>
