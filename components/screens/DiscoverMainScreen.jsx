@@ -4,6 +4,8 @@ import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
+import { rootStackNavigate } from "../RootNavigation";
+import DiscoverFilter from "./DiscoverFilter";
 
 const cats = [
   { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
@@ -20,6 +22,32 @@ const cats = [
 
 export default function DiscoverMainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  /* values used for DiscoverFilter start */
+  const [visible, setVisible] = useState(false);
+  const [value, setValue] = useState(0);
+
+  const [check1, setCheck1] = useState(false);
+  const [check2, setCheck2] = useState(false);
+  const [check3, setCheck3] = useState(false);
+  const [check4, setCheck4] = useState(false);
+
+  const [selectedBreed, setSelectedBreed] = useState("All");
+  const [selectedAge, setSelectedAge] = useState("All");
+  /* values used for DiscoverFilter end */
+
+  function resetAllFilters() {
+    setValue(0);
+
+    setCheck1(false);
+    setCheck2(false);
+    setCheck3(false);
+    setCheck4(false);
+
+    setSelectedBreed("");
+    setSelectedAge("");
+  }
+
   return (
     <View style={{ margin: 16, marginTop: 28, marginBottom: 200 }}>
       <View style={{ flexDirection: "row", margin: 12 }}>
@@ -27,10 +55,30 @@ export default function DiscoverMainScreen({ route, navigation }) {
           <TitleText>Discover</TitleText>
         </View>
 
-        <FilterButton />
+        <FilterButton onPress={() => setVisible(true)} />
       </View>
 
-      {/* <TitleText>Discover</TitleText> */}
+      <DiscoverFilter
+        states={{
+          visible,
+          setVisible,
+          value,
+          setValue,
+          check1,
+          setCheck1,
+          check2,
+          setCheck2,
+          check3,
+          setCheck3,
+          check4,
+          setCheck4,
+          selectedBreed,
+          setSelectedBreed,
+          selectedAge,
+          setSelectedAge,
+          resetAllFilters,
+        }}
+      />
 
       <FilterButtons
         selectedIndex={selectedIndex}
