@@ -14,7 +14,7 @@ export function SearchBar({ text, setText }) {
           placeholder="Search"
         />
       </View>
-      <View style={{ width: "10%" }}>
+      <View style={{ top: 8 }}>
         <FilterButton />
       </View>
     </View>

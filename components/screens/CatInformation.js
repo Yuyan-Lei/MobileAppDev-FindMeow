@@ -1,17 +1,16 @@
+import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
+import { Button, Chip, Overlay } from "@rneui/themed";
 import React, { useState } from "react";
-import { Button, Overlay, Chip } from "@rneui/themed";
-import { Ionicons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 import {
-  ImageBackground,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   Alert,
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import Colors from "../Colors";
+import { rootStackNavigateBack } from "../RootNavigation";
 
 const CatInformation = () => {
   const [visible, setVisible] = useState(false);
@@ -51,6 +50,14 @@ const CatInformation = () => {
           buttonStyle={styles.button}
         />
         <Overlay style={styles.card}>
+          <View style={{ position: "absolute", top: 12, left: 12 }}>
+            <View style={{ backgroundColor: "gray", opacity: 0.5 }}>
+              <Pressable onPress={rootStackNavigateBack}>
+                <Text>Go back</Text>
+              </Pressable>
+            </View>
+          </View>
+
           <View
             style={{
               flexDirection: "row",

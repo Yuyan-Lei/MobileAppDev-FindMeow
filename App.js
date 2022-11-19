@@ -1,23 +1,41 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
-import { FilterButtons } from "./components/pressable/FilterButtons";
-import { useState } from "react";
-import DiscoverMainScreen from "./components/screens/DiscoverMainScreen";
-import FindBreederMainScreen from "./components/screens/FindBreederMainScreen";
+import {
+  createNavigationContainerRef,
+  NavigationContainer,
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import { LogBox, StyleSheet, useWindowDimensions, View } from "react-native";
+import HomePage from "./components/screens/HomePage";
 import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
-import DiscoverFilter from "./components/screens/DiscoverFilter";
+import DiscoverMainScreen from "./components/screens/DiscoverMainScreen";
+import { navigationRef } from "./components/RootNavigation";
 import CatInformation from "./components/screens/CatInformation";
+import DiscoverFilter from "./components/screens/DiscoverFilter";
 
-// only use for test before adding a real navigation bar
+LogBox.ignoreLogs(["Remote debugger"]);
+
 export default function App() {
   const { height, weight } = useWindowDimensions();
+  const Stack = createNativeStackNavigator();
+
   return (
     <View style={[styles.container, { maxHeight: height }]}>
-      <CatteryProfileScreen />
+      {/* <CatteryProfileScreen /> */}
       {/* <DiscoverFilter /> */}
       {/* <DiscoverMainScreen /> */}
-      {/* <DiscoverFilter></DiscoverFilter> */}
-      {/* <CatInformation /> */}
+      {/* <FindBreederMainScreen /> */}
+
+      <NavigationContainer ref={navigationRef}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Home" component={HomePage} />
+          <Stack.Screen name="CatInformation" component={CatInformation} />
+          <Stack.Screen
+            name="CatteryProfile"
+            component={CatteryProfileScreen}
+          />
+          <Stack.Screen name="DiscoverFilter" component={DiscoverFilter} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </View>
   );
 }

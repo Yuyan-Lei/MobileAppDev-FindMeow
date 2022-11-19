@@ -6,18 +6,27 @@ import { SelectList } from "react-native-dropdown-select-list";
 // type OverlayComponentProps = {};
 
 // const DiscoverFilter: React.FunctionComponent<OverlayComponentProps> = () => {
-const DiscoverFilter = () => {
-  const [visible, setVisible] = useState(false);
-  const [value, setValue] = useState(0);
-
-  const [check1, setCheck1] = useState(false);
-  const [check2, setCheck2] = useState(false);
-  const [check3, setCheck3] = useState(false);
-  const [check4, setCheck4] = useState(false);
-
-  const [selectedBreed, setSelectedBreed] = useState("");
-  const [selectedAge, setSelectedAge] = useState("");
-
+const DiscoverFilter = ({
+  states: {
+    visible,
+    setVisible,
+    value,
+    setValue,
+    check1,
+    setCheck1,
+    check2,
+    setCheck2,
+    check3,
+    setCheck3,
+    check4,
+    setCheck4,
+    selectedBreed,
+    setSelectedBreed,
+    selectedAge,
+    setSelectedAge,
+    resetAllFilters,
+  },
+}) => {
   const breed = [
     { key: "All", value: "All" },
     { key: "Siamese", value: "Siamese" },
@@ -40,20 +49,21 @@ const DiscoverFilter = () => {
   ];
 
   const resetHandler = () => {
-    setVisible(!visible);
+    resetAllFilters();
   };
-  const applyHandler = () => {
+
+  const goBackHandler = () => {
     setVisible(!visible);
   };
 
   return (
     <View>
-      <Button
+      {/* <Button
         title="Filter button"
         onPress={resetHandler}
         buttonStyle={styles.button}
-      />
-      <Overlay isVisible={visible} onBackdropPress={resetHandler}>
+      /> */}
+      <Overlay isVisible={visible} onBackdropPress={goBackHandler}>
         <Text style={styles.textPrimary}>Filter</Text>
         <Text style={styles.textSecondary}>From $0 to $200000000</Text>
 
@@ -84,6 +94,7 @@ const DiscoverFilter = () => {
           setSelected={(val) => setSelectedBreed(val)}
           data={breed}
           save="value"
+          defaultOption={{ key: selectedBreed, value: selectedBreed }}
         />
 
         <Text style={styles.text}>Age</Text>
@@ -91,6 +102,7 @@ const DiscoverFilter = () => {
           setSelected={(val) => setSelectedAge(val)}
           data={age}
           save="value"
+          defaultOption={{ key: selectedAge, value: selectedAge }}
         />
 
         <View style={styles.checkbox}>
@@ -124,7 +136,7 @@ const DiscoverFilter = () => {
 
         <View style={styles.buttonView}>
           <Button title="Reset" onPress={resetHandler} />
-          <Button title="Apply" onPress={applyHandler} />
+          <Button title="Apply" onPress={goBackHandler} />
         </View>
       </Overlay>
     </View>

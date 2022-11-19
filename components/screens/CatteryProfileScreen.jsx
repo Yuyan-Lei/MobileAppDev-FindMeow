@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -7,6 +7,7 @@ import { TitleText } from "../texts/TitleText";
 import { useWindowDimensions } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
+import { rootStackNavigateBack } from "../RootNavigation";
 
 const cats = [
   { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
@@ -35,7 +36,16 @@ export default function CatteryProfileScreen() {
         <View style={{ height: width / 2, backgroundColor: "gray" }}></View>
       </View>
 
+      <View style={{ position: "absolute", top: 48, left: 12 }}>
+        <View style={{ backgroundColor: "gray", opacity: 0.5 }}>
+          <Pressable onPress={rootStackNavigateBack}>
+            <Text>Go back</Text>
+          </Pressable>
+        </View>
+      </View>
+
       <View style={{ margin: 32, top: -80 }}>
+        {/* buggy codes start */}
         <View
           style={{
             alignItems: "center",
@@ -52,7 +62,7 @@ export default function CatteryProfileScreen() {
           </View>
         </View>
 
-        <View style={{ margin: 12 }} />
+        <View style={{ height: 24 }} />
 
         <View
           style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
@@ -69,7 +79,9 @@ export default function CatteryProfileScreen() {
           </View>
         </View>
 
-        <View style={{ margin: 12 }} />
+        <View style={{ height: 24 }} />
+
+        {/* buggy codes end */}
 
         <View
           style={{ padding: 16, backgroundColor: "white", borderRadius: 12 }}
@@ -83,6 +95,7 @@ export default function CatteryProfileScreen() {
             data={cattery.cats}
             renderItem={({ item, index }) => <CatCard cat={item} />}
             numColumns={2}
+            ListFooterComponent={<View style={{ height: 60 }} />}
           />
         </View>
       </View>
