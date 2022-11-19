@@ -1,10 +1,15 @@
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  createNavigationContainerRef,
+  NavigationContainer,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { LogBox, StyleSheet, useWindowDimensions, View } from "react-native";
 import HomePage from "./components/screens/HomePage";
 import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
 import DiscoverMainScreen from "./components/screens/DiscoverMainScreen";
+import { navigationRef } from "./components/RootNavigation";
+import CatInformation from "./components/screens/CatInformation";
 
 LogBox.ignoreLogs(["Remote debugger"]);
 
@@ -19,13 +24,10 @@ export default function App() {
       {/* <DiscoverMainScreen /> */}
       {/* <FindBreederMainScreen /> */}
 
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
+      <NavigationContainer ref={navigationRef}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomePage} />
+          <Stack.Screen name="CatInformation" component={CatInformation} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
