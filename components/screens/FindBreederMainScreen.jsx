@@ -68,7 +68,7 @@ export default function FindBreederMainScreen() {
       <View style={{ alignItems: "center", margin: 12 }}>
         <TitleText>Find Breeders</TitleText>
       </View>
-      <View style={styles.cardView}>
+      <View style={[styles.cardView, { flexDirection: "row" }]}>
         <SearchBar text={searchName} setText={setSearchName} />
         <FilterButton onPress={() => setVisible(true)} />
       </View>
