@@ -18,7 +18,7 @@ const cats = [
   { name: "ooo", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
 ];
 
-export default function DiscoverMainScreen() {
+export default function DiscoverMainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   return (
     <View style={{ margin: 16, marginTop: 28, marginBottom: 200 }}>

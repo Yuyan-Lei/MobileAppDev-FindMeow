@@ -5,6 +5,8 @@ import { TabBar } from "../TabBar";
 import DiscoverMainScreen from "./DiscoverMainScreen";
 import FindBreederMainScreen from "./FindBreederMainScreen";
 import { Dimensions } from "react-native";
+import DiscoverFilter from "./DiscoverFilter";
+import CatInformation from "./CatInformation";
 
 export default function HomePage({ route, navigation }) {
   const Tab = createBottomTabNavigator();
@@ -24,21 +26,21 @@ export default function HomePage({ route, navigation }) {
         component={FindBreederMainScreen}
         initialParams={{ symbol: "2" }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="CatteryProfile"
         component={CatteryProfileScreen}
         initialParams={{ symbol: "3" }}
       />
       <Tab.Screen
-        name="CatteryProfile4"
-        component={CatteryProfileScreen}
+        name="DiscoverFilter"
+        component={DiscoverFilter}
         initialParams={{ symbol: "4" }}
       />
       <Tab.Screen
-        name="CatteryProfile5"
-        component={CatteryProfileScreen}
+        name="CatInformation"
+        component={CatInformation}
         initialParams={{ symbol: "5" }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }
