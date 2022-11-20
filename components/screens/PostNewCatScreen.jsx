@@ -6,9 +6,11 @@ import DatePicker from 'react-native-datepicker';
 import { Chip } from '@rneui/themed';
 import CatImagePicker from "./CatImagePicker";
 import { createCat } from "../../firebaseUtils/cat";
+import { writeImageToDB } from "../../firebaseUtils/firestore";
 
 export default function PostNewCatScreen({navigation: {navigate}}) {
     const [catName, setCatName] = useState('');
+    const [image, setImage] = useState(null);
     const [breed, setBreed] = useState('');
     const [gender, setGender] = useState('');
     const [birthDate, setBirthDate] = useState(new Date());
@@ -37,9 +39,12 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
         if (neutered) {
             tags.push('Neutered');
         }
-        createCat({Name: catName, Breed: breed, Birthday: birthDate,
-             Picture: '', Gender: gender, Price: price, Description: description, 
-             Tags: tags, Cattery: '', Contact: ''}).then(navigate('Cats'));
+        writeImageToDB(image).
+            then(url => {
+                createCat({Name: catName, Breed: breed, Birthday: birthDate,
+                    Picture: url, Gender: gender, Price: price, Description: description, 
+                    Tags: tags, Cattery: '', Contact: '', UploadTime: new Date().getTime()})
+            }).then(navigate('Cats'));
     };
 
     return (
@@ -48,7 +53,7 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
                 <Text style={styles.submitButtonText}>Submit</Text>
             </Pressable>
             <Text style={styles.title}>Upload Cat</Text>
-            <CatImagePicker></CatImagePicker>
+            <CatImagePicker image={image} setImage={setImage}></CatImagePicker>
             <Text style={styles.subTitle}>Cat Name</Text>
             <TextInput 
                 placeholder="Name" 

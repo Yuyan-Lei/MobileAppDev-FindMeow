@@ -3,8 +3,7 @@ import { Pressable, Image, View, Text, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Entypo } from '@expo/vector-icons';
 
-export default function CatImagePicker() {
-  const [image, setImage] = useState(null);
+export default function CatImagePicker({image, setImage}) {
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -14,8 +13,6 @@ export default function CatImagePicker() {
       aspect: [1, 1],
       quality: 1,
     });
-
-    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);

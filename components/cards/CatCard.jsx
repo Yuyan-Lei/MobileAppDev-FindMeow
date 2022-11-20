@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Image } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
 import { LocationText } from "../texts/LocationText";
@@ -30,6 +30,13 @@ export function CatCard({ cat }) {
             width: "100%",
           }}
         >
+          {/* cat photo */}
+          <Image source={{ uri: cat.photo }} 
+            style={{ 
+              width: "100%", 
+              height: 115, 
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20, }} />
           <View
             style={{ padding: 12, backgroundColor: "#F9F9F9", borderRadius: 5 }}
           >

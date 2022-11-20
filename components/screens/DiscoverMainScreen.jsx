@@ -6,7 +6,7 @@ import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import { rootStackNavigate } from "../RootNavigation";
 import DiscoverFilter from "./DiscoverFilter";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
 
 export default function DiscoverMainScreen({ route, navigation }) {
@@ -41,26 +41,46 @@ export default function DiscoverMainScreen({ route, navigation }) {
 
   const [data, setData] = useState([]);
   useEffect(() => {
-    const unSubscribe = onSnapshot(collection(db, "Cats"), (snapshot) => {
+    let q;
+    if (selectedIndex == 0) {
+      q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
+    } else {
+      q = query(collection(db, "Cats"), orderBy("Price", "desc"));
+    }
+    const unSubscribe = onSnapshot(q, (snapshot) => {
       setData(
-        snapshot.docs.map((entry) => {
+        snapshot.docs.map(entry => {
           const birthday = new Date(entry.data().Birthday);
           const now = new Date();
-          const age =
-            now.getMonth() -
+          const age = now.getMonth() -
             birthday.getMonth() +
-            12 * (now.getFullYear() - birthday.getFullYear());
+            12 * (now.getFullYear() - birthday.getFullYear())
           return {
             name: entry.data().Breed,
             sex: entry.data().Gender,
             price: entry.data().Price,
             month: age,
+            photo: entry.data().Picture,
+            uploadTime: entry.data().UploadTime,
           };
         })
-      );
+      )
     });
+
     return () => unSubscribe();
   }, []);
+
+  const onFilterChange = (value) => {
+    console.log(value);
+    let dataCopy = data;
+    if (value === 0) {
+      setData(dataCopy.sort((d1, d2) => d2.uploadTime - d1.uploadTime));
+      console.log(data);
+    } else {
+      setData(dataCopy.sort((d1, d2) => d1.price - d2.price));
+    }
+    setSelectedIndex(value);
+  };
 
   return (
     <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
@@ -99,7 +119,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
 
       <FilterButtons
         selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
+        setSelectedIndex={onFilterChange}
         buttons={["Latest Post", "Nearby", "Lowest Price"]}
       />
       <View style={{ padding: 12 }}>
