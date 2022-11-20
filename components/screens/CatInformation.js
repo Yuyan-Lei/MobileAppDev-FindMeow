@@ -1,18 +1,17 @@
-import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { Button, Chip, Overlay } from "@rneui/themed";
 import React, { useState } from "react";
 import {
-  Alert,
   ImageBackground,
   Pressable,
   StyleSheet,
   Text,
   View,
 } from "react-native";
-import { Colors } from "../styles/Colors";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 import { rootStackNavigateBack } from "../RootNavigation";
+import { Colors } from "../styles/Colors";
 
 const CatInformation = () => {
   const [visible, setVisible] = useState(false);
