@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -49,13 +49,14 @@ export default function DiscoverMainScreen({ route, navigation }) {
   }
 
   return (
-    <View style={{ margin: 16, marginTop: 28, marginBottom: 200 }}>
-      <View style={{ flexDirection: "row", margin: 12 }}>
-        <View style={{ flex: 7 }}>
+    <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
+      <View style={{ margin: 12 }}>
+        <View style={{ alignSelf: "center" }}>
           <TitleText>Discover</TitleText>
         </View>
-
-        <FilterButton onPress={() => setVisible(true)} />
+        <View style={{ position: "absolute", alignSelf: "flex-end" }}>
+          <FilterButton onPress={() => setVisible(true)} />
+        </View>
       </View>
 
       <DiscoverFilter
