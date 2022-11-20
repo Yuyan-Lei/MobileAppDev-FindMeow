@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
-import { Colors } from "../styles/colors";
+import { Colors } from "../styles/Colors";
 
 export function OrangeText({ children }) {
   return <Text style={styles.titleText}>{children}</Text>;

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { OrangeTitleText } from "../texts/OrangeTitleText";
 import { OrangeText } from "../texts/OrangeText";
-import { Colors } from "../styles/colors";
+import { Colors } from "../styles/Colors";
 
 // type OverlayComponentProps = {};
 

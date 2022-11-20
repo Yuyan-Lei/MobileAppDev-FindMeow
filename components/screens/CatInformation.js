@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { Colors } from "../styles/colors";
+import { Colors } from "../styles/Colors";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 import { rootStackNavigateBack } from "../RootNavigation";

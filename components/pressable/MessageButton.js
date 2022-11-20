@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Alert, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Colors } from "../styles/colors";
+import { Colors } from "../styles/Colors";
 
 export function MessageButton({ onPress }) {
   const messageHandler = () => {
