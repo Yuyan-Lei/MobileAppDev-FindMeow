@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Button, Overlay, Icon, CheckBox, Slider } from "@rneui/themed";
 import { View, Text, StyleSheet } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
+import { OrangeTitleText } from "../texts/OrangeTitleText";
+import { OrangeText } from "../texts/OrangeText";
+import { Colors } from "../styles/Colors";
 
 // type OverlayComponentProps = {};
 
@@ -69,12 +72,15 @@ const FindBreederFilter = ({
         buttonStyle={styles.button}
       /> */}
       <Overlay isVisible={visible} onBackdropPress={goBackHandler}>
-        <Text style={styles.textPrimary}>Filter</Text>
-        <Text style={styles.textSecondary}>
+        <OrangeTitleText>Filter</OrangeTitleText>
+        <Text
+          style={{ textAlign: "left", color: Colors.gray, paddingRight: 150 }}
+        >
           Arrange Based On The Following Types
         </Text>
 
-        <Text style={styles.text}>Breed</Text>
+        <OrangeText>Breed</OrangeText>
+
         <SelectList
           setSelected={(val) => setSelectedBreed(val)}
           data={breed}
@@ -82,7 +88,7 @@ const FindBreederFilter = ({
           defaultOption={{ key: selectedBreed, value: selectedBreed }}
         />
 
-        <Text style={styles.text}>State</Text>
+        <OrangeText>State</OrangeText>
         <SelectList
           setSelected={(val) => setSelectedState(val)}
           data={state}
@@ -90,7 +96,7 @@ const FindBreederFilter = ({
           defaultOption={{ key: selectedState, value: selectedState }}
         />
 
-        <Text style={styles.text}>Has Avaliable Kitten</Text>
+        <OrangeText>Has Avaliable Kitten</OrangeText>
         <SelectList
           setSelected={(val) => setSelectedCatNum(val)}
           data={catNum}
@@ -127,6 +133,7 @@ const styles = StyleSheet.create({
   buttonView: {
     flexDirection: "row",
     justifyContent: "space-around",
+    paddingTop: 50,
   },
   checkbox: {
     flexDirection: "row",

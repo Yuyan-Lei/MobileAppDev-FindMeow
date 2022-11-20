@@ -87,9 +87,12 @@ const DiscoverFilter = ({
       <Overlay isVisible={visible} onBackdropPress={goBackHandler}>
         {/* <Text style={styles.textPrimary}>Filter</Text> */}
         <OrangeTitleText>Filter</OrangeTitleText>
-        <Text style={{ textAlign: "left", color: Colors.gray }}>
-          From $0 to ${value}
+        <Text
+          style={{ textAlign: "left", color: Colors.gray, paddingRight: 150 }}
+        >
+          Arrange Based On The Following Types
         </Text>
+        <OrangeText>From $0 to ${value}</OrangeText>
 
         <Slider
           value={value}
