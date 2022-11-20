@@ -8,6 +8,7 @@ export function CatCard({ cat }) {
       style={{
         margin: 8,
         justifyContent: "center",
+        width: "45%",
       }}
     >
       <Pressable onPress={() => rootStackNavigate("CatInformation")}>
