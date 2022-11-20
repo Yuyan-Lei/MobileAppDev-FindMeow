@@ -17,7 +17,7 @@ const cats = [
   { name: "ggg", month: 3, sex: "Male", location: "San Jose", price: 1000 },
   { name: "hhh", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
   { name: "iii", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "ooo", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
+  // { name: "ooo", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
 ];
 
 export default function DiscoverMainScreen({ route, navigation }) {
