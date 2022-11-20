@@ -15,7 +15,7 @@ export function PhoneButton({ onPress }) {
     ]);
   };
   return (
-    <View style={{ width: 60, height: 40, top: 4 }}>
+    <View style={{ width: 60, height: 40, top: 4, marginBottom: 10 }}>
       <Pressable
         onPress={onPress}
         style={{
