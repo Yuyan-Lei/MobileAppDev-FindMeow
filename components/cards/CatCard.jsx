@@ -4,13 +4,7 @@ import { rootStackNavigate } from "../RootNavigation";
 import { LocationText } from "../texts/LocationText";
 export function CatCard({ cat }) {
   return (
-    <View
-      style={{
-        margin: 8,
-        justifyContent: "center",
-        width: "45%",
-      }}
-    >
+    <View style={styles.container}>
       <Pressable onPress={() => rootStackNavigate("CatInformation")}>
         <View
           style={{
@@ -21,7 +15,18 @@ export function CatCard({ cat }) {
             borderBottomLeftRadius: 5,
             borderBottomRightRadius: 5,
           }}
-        ></View>
+        >
+          {/* cat photo */}
+          <Image
+            source={{ uri: cat.photo }}
+            style={{
+              width: "100%",
+              height: 115,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+            }}
+          />
+        </View>
 
         <View
           style={{
@@ -30,13 +35,6 @@ export function CatCard({ cat }) {
             width: "100%",
           }}
         >
-          {/* cat photo */}
-          <Image source={{ uri: cat.photo }} 
-            style={{ 
-              width: "100%", 
-              height: 115, 
-              borderTopLeftRadius: 20,
-              borderTopRightRadius: 20, }} />
           <View
             style={{ padding: 12, backgroundColor: "#F9F9F9", borderRadius: 5 }}
           >
@@ -71,7 +69,8 @@ export function CatCard({ cat }) {
           position: "absolute",
           top: 12,
           right: 12,
-          padding: 4,
+          paddingHorizontal: 4,
+          paddingVertical: 2,
           backgroundColor: "#F9F9F9",
           borderRadius: 10,
           shadowColor: "rgba(245, 145, 86, 0.19)",
@@ -86,7 +85,7 @@ export function CatCard({ cat }) {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { margin: 8, justifyContent: "center", width: "45%" },
   fontStyle: {
     fontFamily: "Poppins",
     fontWeight: "500",
