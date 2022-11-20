@@ -52,6 +52,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
             sex: entry.data().Gender,
             price: entry.data().Price,
             month: age,
+            photo: entry.data().Picture,
           };
         })
       )

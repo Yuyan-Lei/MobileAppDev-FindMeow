@@ -13,6 +13,7 @@ export async function createCat({
   Tags,
   Cattery,
   Contact,
+  UploadTime
 }) {
   const newCat = {
     Name,
@@ -25,6 +26,7 @@ export async function createCat({
     Tags,
     Cattery,
     Contact,
+    UploadTime,
   };
 
   return await wrtieToDB(newCat, collectionName);
