@@ -1,43 +1,21 @@
-import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { Button, Chip, Overlay } from "@rneui/themed";
 import React, { useState } from "react";
 import {
-  Alert,
   ImageBackground,
   Pressable,
   StyleSheet,
   Text,
   View,
 } from "react-native";
-import Colors from "../Colors";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 import { rootStackNavigateBack } from "../RootNavigation";
+import { Colors } from "../styles/Colors";
 
 const CatInformation = () => {
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState(0);
-
-  const phoneHandler = () => {
-    Alert.alert("Phone number", "123-456-7890", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      { text: "OK", onPress: () => console.log("OK Pressed") },
-    ]);
-  };
-  const messageHandler = () => {
-    Alert.alert("Message number", "123-456-7890", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      { text: "OK", onPress: () => console.log("OK Pressed") },
-    ]);
-  };
 
   return (
     <View style={styles.container}>
@@ -46,11 +24,8 @@ const CatInformation = () => {
         resizeMode="cover"
         style={styles.image}
       >
-        <Button
-          title="Cat info"
-          onPress={phoneHandler}
-          buttonStyle={styles.button}
-        />
+        <Button title="Cat info" buttonStyle={styles.button} />
+
         <Overlay style={styles.card}>
           <View style={{ position: "absolute", top: 12, left: 12 }}>
             <View style={{ opacity: 0.5 }}>
@@ -122,18 +97,6 @@ const CatInformation = () => {
               <Text style={styles.date}>Cattery</Text>
             </View>
             <View style={styles.buttonView}>
-              {/* <Button onPress={phoneHandler} style={{ marginHorizontal: 10 }}>
-                <Feather name="phone-call" size={24} color="black" />
-              </Button> */}
-              {/* <TouchableOpacity
-              onPress={phoneHandler}
-              styles={styles.roundButton}
-            >
-              <Text>Call</Text>
-            </TouchableOpacity> */}
-              {/* <Button onPress={messageHandler} style={{ marginHorizontal: 10 }}>
-                <AntDesign name="message1" size={24} color="black" />
-              </Button> */}
               <PhoneButton />
               <MessageButton />
             </View>
@@ -180,7 +143,7 @@ const styles = StyleSheet.create({
   chip: {
     marginVertical: 15,
     marginHorizontal: 10,
-    height: 30,
+    height: 35,
   },
   contact: {
     fontWeight: "bold",

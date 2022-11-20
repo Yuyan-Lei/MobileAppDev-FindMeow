@@ -1,4 +1,4 @@
-export const colors = {
+export const Colors = {
   darkSlateBlue: "rgb(66,68,151)",
   darkBlueGray: "rgb(98, 99, 153)",
   darkSlateBlue2: "rgb(77, 78, 150)",
@@ -8,4 +8,9 @@ export const colors = {
   philippineGray: "rgb(142,142,143)",
   phoneButton: "#07689F",
   messageButton: "#FFB801",
+  gray: "#ADADAD",
+  lightOrange: "#fadb98",
+  darkOrange: "#fac248",
+  labelBackground: "#fcf7eb",
+  orangeText: "#F59156",
 };

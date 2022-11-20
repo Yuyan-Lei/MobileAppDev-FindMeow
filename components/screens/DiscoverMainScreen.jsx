@@ -23,6 +23,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
 
   const [selectedBreed, setSelectedBreed] = useState("All");
   const [selectedAge, setSelectedAge] = useState("All");
+  const [selectedState, setSelectedState] = useState("All");
   /* values used for DiscoverFilter end */
 
   function resetAllFilters() {
@@ -35,6 +36,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
 
     setSelectedBreed("");
     setSelectedAge("");
+    setSelectedState("");
   }
 
   const [data, setData] = useState([]);
@@ -105,6 +107,8 @@ export default function DiscoverMainScreen({ route, navigation }) {
           setCheck3,
           check4,
           setCheck4,
+          selectedState,
+          setSelectedState,
           selectedBreed,
           setSelectedBreed,
           selectedAge,
