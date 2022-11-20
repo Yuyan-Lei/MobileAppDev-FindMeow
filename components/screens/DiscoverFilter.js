@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Overlay, Icon, CheckBox, Slider } from "@rneui/themed";
 import { View, Text, StyleSheet } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
+import MultiSlider from "@ptomasroos/react-native-multi-slider";
 
 // type OverlayComponentProps = {};
 
@@ -42,10 +43,11 @@ const DiscoverFilter = ({
   const age = [
     { key: "All", value: "All" },
     { key: ">1", value: ">1" },
-    { key: "1", value: "1" },
-    { key: "2", value: "2" },
-    { key: "3", value: "3" },
-    { key: "4+", value: "4+" },
+    { key: "1~3", value: "1 ~ 3" },
+    { key: "3~6", value: "3 ~ 6" },
+    { key: "6~9", value: "6 ~ 9" },
+    { key: "9~12", value: "9 ~ 12" },
+    { key: "12+", value: "12+" },
   ];
 
   const resetHandler = () => {
@@ -65,17 +67,17 @@ const DiscoverFilter = ({
       /> */}
       <Overlay isVisible={visible} onBackdropPress={goBackHandler}>
         <Text style={styles.textPrimary}>Filter</Text>
-        <Text style={styles.textSecondary}>From $0 to $200000000</Text>
+        <Text style={styles.textSecondary}>From $0 to ${value}</Text>
 
         <Slider
           value={value}
           onValueChange={setValue}
-          maximumValue={10000}
+          maximumValue={100000}
           minimumValue={0}
           step={1}
           allowTouchTrack
           trackStyle={{ height: 5, backgroundColor: "transparent" }}
-          thumbStyle={{ height: 20, width: 20, backgroundColor: "transparent" }}
+          thumbStyle={{ height: 1, width: 1, backgroundColor: "transparent" }}
           thumbProps={{
             children: (
               <Icon
@@ -97,7 +99,7 @@ const DiscoverFilter = ({
           defaultOption={{ key: selectedBreed, value: selectedBreed }}
         />
 
-        <Text style={styles.text}>Age</Text>
+        <Text style={styles.text}>Age (months)</Text>
         <SelectList
           setSelected={(val) => setSelectedAge(val)}
           data={age}
@@ -105,21 +107,23 @@ const DiscoverFilter = ({
           defaultOption={{ key: selectedAge, value: selectedAge }}
         />
 
-        <View style={styles.checkbox}>
+        <View style={{ flexDirection: "row" }}>
           <CheckBox
             center
             title="Female"
             checked={check1}
             onPress={() => setCheck1(!check1)}
           />
-          <CheckBox
-            center
-            title="Male"
-            checked={check2}
-            onPress={() => setCheck2(!check2)}
-          />
+          <View style={{ marginLeft: 15 }}>
+            <CheckBox
+              center
+              title="Male"
+              checked={check2}
+              onPress={() => setCheck2(!check2)}
+            />
+          </View>
         </View>
-        <View style={styles.checkbox}>
+        <View style={{ flexDirection: "row" }}>
           <CheckBox
             center
             title="Neutered"
@@ -164,9 +168,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-  checkbox: {
-    flexDirection: "row",
-  },
+
   text: {
     marginTop: 20,
     marginBottom: 10,
