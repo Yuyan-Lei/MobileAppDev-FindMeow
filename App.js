@@ -17,6 +17,7 @@ LogBox.ignoreAllLogs();
 export default function App() {
   const [fontsLoaded] = useFonts({
     Montserrat: require("./resources/fonts/Montserrat/Montserrat-Regular.ttf"),
+    Montserrat: require("./resources/fonts/Montserrat-Regular.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
