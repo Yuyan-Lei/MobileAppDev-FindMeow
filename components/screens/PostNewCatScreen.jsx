@@ -5,13 +5,14 @@ import CatBreedSelector from "./CatBreedSelector";
 import DatePicker from 'react-native-datepicker';
 import { Chip } from '@rneui/themed';
 import CatImagePicker from "./CatImagePicker";
+import { createCat } from "../../firebaseUtils/cat";
 
-export default function PostNewCatScreen() {
+export default function PostNewCatScreen({navigation: {navigate}}) {
     const [catName, setCatName] = useState('');
     const [breed, setBreed] = useState('');
     const [gender, setGender] = useState('');
     const [birthDate, setBirthDate] = useState(new Date());
-    const [price, setPrice] = useState('');
+    const [price, setPrice] = useState(0);
     const [description, setDescription] = useState('');
     const [vaccinated, setVaccinated] = useState(false);
     const [vetChecked, setVetChecked] = useState(false);
@@ -19,15 +20,41 @@ export default function PostNewCatScreen() {
     const [ready, setReady] = useState(false);
     const [neutered, setNeutered] = useState(false);
 
+    const onPostNewCat = () => {
+        const tags = [];
+        if (vaccinated) {
+            tags.push('Vaccinated');
+        }
+        if (vetChecked) {
+            tags.push('Vet Checked');
+        }
+        if (dewormed) {
+            tags.push('Dewormed');
+        }
+        if (ready) {
+            tags.push('Ready to go home');
+        }
+        if (neutered) {
+            tags.push('Neutered');
+        }
+        createCat({Name: catName, Breed: breed, Birthday: birthDate,
+             Picture: '', Gender: gender, Price: price, Description: description, 
+             Tags: tags, Cattery: '', Contact: ''}).then(navigate('Cats'));
+    };
+
     return (
         <ScrollView style={styles.container}>
-            <Pressable style={styles.submitButton}>
+            <Pressable style={styles.submitButton} onPress={onPostNewCat}>
                 <Text style={styles.submitButtonText}>Submit</Text>
             </Pressable>
             <Text style={styles.title}>Upload Cat</Text>
             <CatImagePicker></CatImagePicker>
             <Text style={styles.subTitle}>Cat Name</Text>
-            <TextInput placeholder="Name" style={styles.textInput}></TextInput>
+            <TextInput 
+                placeholder="Name" 
+                style={styles.textInput}
+                value={catName}
+                onChangeText={setCatName}></TextInput>
             <Text style={styles.subTitle}>Breed</Text>
             <CatBreedSelector selectedBreed={breed} setSelectedBreed={setBreed}/>
             <Text style={styles.subTitle}>Birthdate</Text>
@@ -51,7 +78,10 @@ export default function PostNewCatScreen() {
                 />
             <Text style={styles.subTitle}>Price</Text>
             <View style={styles.priceInput}>
-                <TextInput placeholder="100" />
+                <TextInput 
+                    placeholder="100"
+                    value={price}
+                    onChangeText={setPrice} />
                 <View style={{flex: 1}}></View>
                 <Text>$</Text>
             </View>
@@ -59,7 +89,9 @@ export default function PostNewCatScreen() {
             <TextInput 
                 placeholder="Describe the kitten" 
                 style={styles.textInput}
-                multiline={true}/>
+                multiline={true}
+                value={description}
+                onChangeText={setDescription}/>
             <Text style={styles.subTitle}>Labels</Text>
             <View style={styles.chipContainer}>
                 <Chip 
@@ -148,4 +180,3 @@ const styles = StyleSheet.create({
         margin: 5
     }
   });
-

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
@@ -6,19 +6,8 @@ import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import { rootStackNavigate } from "../RootNavigation";
 import DiscoverFilter from "./DiscoverFilter";
-
-const cats = [
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "ccc", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "ddd", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "eee", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "fff", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "ggg", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "hhh", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "iii", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  // { name: "ooo", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-];
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebaseUtils/firebase-setup";
 
 export default function DiscoverMainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -47,6 +36,29 @@ export default function DiscoverMainScreen({ route, navigation }) {
     setSelectedBreed("");
     setSelectedAge("");
   }
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const unSubscribe = onSnapshot(collection(db, "Cats"), (snapshot) => {
+      setData(
+        snapshot.docs.map(entry => {
+          const birthday = new Date(entry.data().Birthday);
+          const now = new Date();
+          const age = now.getMonth() -
+            birthday.getMonth() +
+            12 * (now.getFullYear() - birthday.getFullYear())
+          return {
+            name: entry.data().Breed,
+            sex: entry.data().Gender,
+            price: entry.data().Price,
+            month: age,
+          };
+        })
+      )
+    });
+
+    return () => unSubscribe();
+  }, []);
 
   return (
     <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
@@ -88,7 +100,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
       />
       <View style={{ padding: 12 }}>
         <FlatList
-          data={cats}
+          data={data}
           renderItem={({ item, index }) => <CatCard cat={item} />}
           numColumns={2}
           ListFooterComponent={<View style={{ height: 60 }} />}
