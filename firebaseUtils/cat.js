@@ -3,28 +3,28 @@ import { deleteFromDB, updateToDB, wrtieToDB } from "./firestore";
 const collectionName = "Cats";
 
 export async function createCat({
-  name,
-  breed,
-  isAvaiable,
-  location,
-  picture,
-  price,
-  description,
-  tags,
-  cattery,
-  contact,
+  Name,
+  Breed,
+  Picture,
+  Birthday,
+  Gender,
+  Price,
+  Description,
+  Tags,
+  Cattery,
+  Contact,
 }) {
   const newCat = {
-    name,
-    breed,
-    isAvaiable,
-    location,
-    picture,
-    price,
-    description,
-    tags,
-    cattery,
-    contact,
+    Name,
+    Breed,
+    Picture,
+    Birthday,
+    Gender,
+    Price,
+    Description,
+    Tags,
+    Cattery,
+    Contact,
   };
 
   return await wrtieToDB(newCat, collectionName);

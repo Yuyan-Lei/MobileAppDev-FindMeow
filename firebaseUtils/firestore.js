@@ -5,11 +5,11 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { firestore } from "./firebase-setup";
+import { db } from "./firebase-setup";
 
 export async function wrtieToDB(data, collectionName) {
   try {
-    return await addDoc(collection(firestore, collectionName), data);
+    return await addDoc(collection(db, collectionName), data);
   } catch (err) {
     console.log(err);
   }
@@ -17,7 +17,7 @@ export async function wrtieToDB(data, collectionName) {
 
 export async function deleteFromDB(key, collectionName) {
   try {
-    return await deleteDoc(doc(firestore, collectionName, key));
+    return await deleteDoc(doc(db, collectionName, key));
   } catch (err) {
     console.log(err);
   }
@@ -25,7 +25,7 @@ export async function deleteFromDB(key, collectionName) {
 
 export async function updateToDB(key, collectionName, changingDict) {
   try {
-    return await updateDoc(doc(firestore, collectionName, key), changingDict);
+    return await updateDoc(doc(db, collectionName, key), changingDict);
   } catch (err) {
     console.log(err);
   }
