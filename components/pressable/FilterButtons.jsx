@@ -3,7 +3,7 @@ import React from "react";
 import { View } from "react-native";
 
 // reference: https://reactnativeelements.com/docs/components/buttongroup
-export function FilterButtons({ selectedIndex, setSelectedIndex }) {
+export function FilterButtons({ selectedIndex, setSelectedIndex, buttons }) {
   return (
     <View
       style={{
@@ -15,12 +15,16 @@ export function FilterButtons({ selectedIndex, setSelectedIndex }) {
     >
       <View style={{ flex: 1 }}>
         <ButtonGroup
-          buttons={["Latest Post", "Nearby", "Lowest Price"]}
+          buttons={buttons}
           selectedIndex={selectedIndex}
           onPress={(value) => {
             setSelectedIndex(value);
           }}
-          containerStyle={{ height: 40 }}
+          containerStyle={{ height: 40, shadowRadius: 10, borderRadius: 10 }}
+          selectedButtonStyle={{
+            backgroundColor: "#FFB801",
+          }}
+          textStyle={{ fontSize: 14, fontFamily: "Poppins" }}
         />
       </View>
       {/* <View style={{ width: 32, height: 32 }}>

@@ -84,6 +84,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
       <FilterButtons
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
+        buttons={["Latest Post", "Nearby", "Lowest Price"]}
       />
       <View style={{ padding: 12 }}>
         <FlatList
