@@ -5,7 +5,7 @@ import { SelectList } from "react-native-dropdown-select-list";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { OrangeTitleText } from "../texts/OrangeTitleText";
 import { OrangeText } from "../texts/OrangeText";
-import { Colors } from "../styles/Colors";
+import { Colors } from "../styles/Colors2";
 
 // type OverlayComponentProps = {};
 

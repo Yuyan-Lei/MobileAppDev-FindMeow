@@ -11,7 +11,7 @@ import {
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 import { rootStackNavigateBack } from "../RootNavigation";
-import { Colors } from "../styles/Colors";
+import { Colors } from "../styles/Colors2";
 
 const CatInformation = () => {
   const [visible, setVisible] = useState(false);
