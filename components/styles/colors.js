@@ -6,4 +6,6 @@ export const colors = {
   amethyst: "rgb(128,123,194)",
   spanishYellow: "rgb(247,188,12)",
   philippineGray: "rgb(142,142,143)",
+  phoneButton: "#07689F",
+  messageButton: "#FFB801",
 };
