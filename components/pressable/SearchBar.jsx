@@ -1,7 +1,6 @@
 import { Input } from "@rneui/themed";
 import React from "react";
 import { Text, View } from "react-native";
-import { FilterButton } from "../pressable/FilterButton";
 
 export function SearchBar({ text, setText }) {
   return (
