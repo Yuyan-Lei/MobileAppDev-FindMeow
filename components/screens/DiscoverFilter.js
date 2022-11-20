@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Overlay, Icon, CheckBox, Slider } from "@rneui/themed";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { OrangeTitleText } from "../texts/OrangeTitleText";
@@ -79,13 +79,7 @@ const DiscoverFilter = ({
 
   return (
     <View>
-      {/* <Button
-        title="Filter button"
-        onPress={resetHandler}
-        buttonStyle={styles.button}
-      /> */}
       <Overlay isVisible={visible} onBackdropPress={goBackHandler}>
-        {/* <Text style={styles.textPrimary}>Filter</Text> */}
         <OrangeTitleText>Filter</OrangeTitleText>
         <Text
           style={{ textAlign: "left", color: Colors.gray, paddingRight: 150 }}
@@ -172,9 +166,40 @@ const DiscoverFilter = ({
           />
         </View>
 
-        <View style={styles.buttonView}>
-          <Button title="Reset" onPress={resetHandler} />
-          <Button title="Apply" onPress={goBackHandler} />
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <Pressable
+            onPress={resetHandler}
+            style={{
+              backgroundColor: Colors.orangeText,
+              padding: 8,
+              borderRadius: 25,
+              height: 40,
+              width: 63,
+            }}
+          >
+            <Text
+              style={{ alignItems: "center", color: "white", fontSize: 18 }}
+            >
+              Reset
+            </Text>
+          </Pressable>
+
+          <Pressable
+            onPress={resetHandler}
+            style={{
+              backgroundColor: Colors.orangeText,
+              padding: 8,
+              borderRadius: 25,
+              height: 40,
+              width: 63,
+            }}
+          >
+            <Text
+              style={{ alignItems: "center", color: "white", fontSize: 18 }}
+            >
+              Apply
+            </Text>
+          </Pressable>
         </View>
       </Overlay>
     </View>
@@ -198,11 +223,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 17,
   },
-  buttonView: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-
   text: {
     marginTop: 20,
     marginBottom: 10,
