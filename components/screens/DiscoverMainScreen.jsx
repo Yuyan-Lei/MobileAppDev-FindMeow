@@ -23,6 +23,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
 
   const [selectedBreed, setSelectedBreed] = useState("All");
   const [selectedAge, setSelectedAge] = useState("All");
+  const [selectedState, setSelectedState] = useState("All");
   /* values used for DiscoverFilter end */
 
   function resetAllFilters() {
@@ -35,18 +36,20 @@ export default function DiscoverMainScreen({ route, navigation }) {
 
     setSelectedBreed("");
     setSelectedAge("");
+    setSelectedState("");
   }
 
   const [data, setData] = useState([]);
   useEffect(() => {
     const unSubscribe = onSnapshot(collection(db, "Cats"), (snapshot) => {
       setData(
-        snapshot.docs.map(entry => {
+        snapshot.docs.map((entry) => {
           const birthday = new Date(entry.data().Birthday);
           const now = new Date();
-          const age = now.getMonth() -
+          const age =
+            now.getMonth() -
             birthday.getMonth() +
-            12 * (now.getFullYear() - birthday.getFullYear())
+            12 * (now.getFullYear() - birthday.getFullYear());
           return {
             name: entry.data().Breed,
             sex: entry.data().Gender,
@@ -54,9 +57,8 @@ export default function DiscoverMainScreen({ route, navigation }) {
             month: age,
           };
         })
-      )
+      );
     });
-
     return () => unSubscribe();
   }, []);
 
@@ -85,6 +87,8 @@ export default function DiscoverMainScreen({ route, navigation }) {
           setCheck3,
           check4,
           setCheck4,
+          selectedState,
+          setSelectedState,
           selectedBreed,
           setSelectedBreed,
           selectedAge,
