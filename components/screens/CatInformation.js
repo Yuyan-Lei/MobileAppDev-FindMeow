@@ -10,8 +10,6 @@ import {
   View,
 } from "react-native";
 import Colors from "../Colors";
-import { PhoneButton } from "../pressable/PhoneButton";
-import { MessageButton } from "../pressable/MessageButton";
 import { rootStackNavigateBack } from "../RootNavigation";
 
 const CatInformation = () => {
@@ -122,20 +120,18 @@ const CatInformation = () => {
               <Text style={styles.date}>Cattery</Text>
             </View>
             <View style={styles.buttonView}>
-              <PhoneButton />
-              {/* <Button onPress={phoneHandler} style={{ marginHorizontal: 10 }}>
+              <Button onPress={phoneHandler} style={{ marginHorizontal: 10 }}>
                 <Feather name="phone-call" size={24} color="black" />
-              </Button> */}
+              </Button>
               {/* <TouchableOpacity
               onPress={phoneHandler}
               styles={styles.roundButton}
             >
               <Text>Call</Text>
             </TouchableOpacity> */}
-              {/* <Button onPress={messageHandler} style={{ marginHorizontal: 10 }}>
+              <Button onPress={messageHandler} style={{ marginHorizontal: 10 }}>
                 <AntDesign name="message1" size={24} color="black" />
-              </Button> */}
-              <MessageButton />
+              </Button>
             </View>
           </View>
         </Overlay>
