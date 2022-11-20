@@ -51,10 +51,10 @@ export default function DiscoverMainScreen({ route, navigation }) {
   return (
     <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
       <View style={{ margin: 12 }}>
-        <View style={{ alignSelf: "center" }}>
+        <View>
           <TitleText>Discover</TitleText>
         </View>
-        <View style={{ position: "absolute", alignSelf: "flex-end" }}>
+        <View style={{ position: "absolute", right: 0 }}>
           <FilterButton onPress={() => setVisible(true)} />
         </View>
       </View>
