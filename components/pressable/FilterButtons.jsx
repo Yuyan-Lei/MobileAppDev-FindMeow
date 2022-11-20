@@ -1,18 +1,11 @@
 import { ButtonGroup } from "@rneui/themed";
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 // reference: https://reactnativeelements.com/docs/components/buttongroup
 export function FilterButtons({ selectedIndex, setSelectedIndex, buttons }) {
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        margin: 12,
-      }}
-    >
+    <View style={styles.container}>
       <View style={{ flex: 1 }}>
         <ButtonGroup
           buttons={buttons}
@@ -20,16 +13,32 @@ export function FilterButtons({ selectedIndex, setSelectedIndex, buttons }) {
           onPress={(value) => {
             setSelectedIndex(value);
           }}
-          containerStyle={{ height: 40, shadowRadius: 10, borderRadius: 10 }}
-          selectedButtonStyle={{
-            backgroundColor: "#FFB801",
-          }}
-          textStyle={{ fontSize: 14, fontFamily: "Poppins" }}
+          containerStyle={styles.buttonContainerStyle}
+          selectedButtonStyle={styles.selectedButtonStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          textStyle={styles.buttonTextStyle}
         />
       </View>
-      {/* <View style={{ width: 32, height: 32 }}>
-        <Button title="↓↑" titleStyle={{ fontSize: 16 }} />
-      </View> */}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 12,
+  },
+  buttonContainerStyle: { height: 40, shadowRadius: 10, borderRadius: 10 },
+  selectedButtonStyle: {
+    backgroundColor: "#FFB801",
+  },
+  buttonTextStyle: {
+    fontSize: 14,
+    fontFamily: "Poppins",
+    color: "rgba(46, 37, 37, 0.43)",
+    fontWeight: "500",
+  },
+  selectedTextStyle: { color: "white" },
+});
