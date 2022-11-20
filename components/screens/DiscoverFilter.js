@@ -107,21 +107,23 @@ const DiscoverFilter = ({
           defaultOption={{ key: selectedAge, value: selectedAge }}
         />
 
-        <View style={styles.checkbox}>
+        <View style={{ flexDirection: "row" }}>
           <CheckBox
             center
             title="Female"
             checked={check1}
             onPress={() => setCheck1(!check1)}
           />
-          <CheckBox
-            center
-            title="Male"
-            checked={check2}
-            onPress={() => setCheck2(!check2)}
-          />
+          <View style={{ marginLeft: 15 }}>
+            <CheckBox
+              center
+              title="Male"
+              checked={check2}
+              onPress={() => setCheck2(!check2)}
+            />
+          </View>
         </View>
-        <View style={styles.checkbox}>
+        <View style={{ flexDirection: "row" }}>
           <CheckBox
             center
             title="Neutered"
@@ -166,9 +168,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-  checkbox: {
-    flexDirection: "row",
-  },
+
   text: {
     marginTop: 20,
     marginBottom: 10,
