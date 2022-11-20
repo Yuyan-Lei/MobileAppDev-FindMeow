@@ -6,4 +6,6 @@ export const colors = {
   amethyst: "rgb(128,123,194)",
   spanishYellow: "rgb(247,188,12)",
   philippineGray: "rgb(142,142,143)",
+  phoneBlue: "#07689F",
+  messageOrange: "#FFB801",
 };
