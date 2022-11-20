@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { BaseButton } from "./BaseButton";
 import { colors } from "../styles/colors";
+import { BaseButton } from "./BaseButton";
 
 export function TabButton({
   style,

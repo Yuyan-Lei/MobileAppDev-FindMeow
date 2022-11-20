@@ -2,7 +2,6 @@ import { View, Text, Pressable } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
 export function CatCard({ cat }) {
-  //   console.log(cat);
   return (
     <View
       style={{

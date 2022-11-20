@@ -1,6 +1,5 @@
-import { Image } from "@rneui/themed";
 import React from "react";
-import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
 
@@ -11,10 +10,7 @@ export function BreederCard({ breeder }) {
         <View
           style={{
             flexDirection: "row",
-            // margin: 12,
             padding: 16,
-            // alignItems: "center",
-            // marginHorizontal: 28,
             flex: 1,
             minWidth: 300,
           }}

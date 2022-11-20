@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { ButtonGroup, Button } from "@rneui/themed";
-import { Text, StyleSheet, View } from "react-native";
+import { ButtonGroup } from "@rneui/themed";
+import React from "react";
+import { View } from "react-native";
 
 // reference: https://reactnativeelements.com/docs/components/buttongroup
 export function FilterButtons({ selectedIndex, setSelectedIndex }) {

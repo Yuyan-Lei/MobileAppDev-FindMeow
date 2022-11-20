@@ -1,18 +1,14 @@
-import {
-  createNavigationContainerRef,
-  NavigationContainer,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useCallback } from "react";
-import { LogBox, StyleSheet, useWindowDimensions, View, Pressable } from "react-native";
-import HomePage from "./components/screens/HomePage";
-import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
-import DiscoverMainScreen from "./components/screens/DiscoverMainScreen";
-import { navigationRef } from "./components/RootNavigation";
-import CatInformation from "./components/screens/CatInformation";
-import DiscoverFilter from "./components/screens/DiscoverFilter";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import React, { useCallback } from "react";
+import { LogBox, StyleSheet, useWindowDimensions, View } from "react-native";
+import { navigationRef } from "./components/RootNavigation";
+import CatInformation from "./components/screens/CatInformation";
+import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
+import DiscoverFilter from "./components/screens/DiscoverFilter";
+import HomePage from "./components/screens/HomePage";
 
 SplashScreen.preventAutoHideAsync();
 LogBox.ignoreLogs(["Remote debugger"]);
@@ -37,11 +33,6 @@ export default function App() {
       style={[styles.container, { maxHeight: height }]}
       onLayout={onLayoutRootView}
     >
-      {/* <CatteryProfileScreen /> */}
-      {/* <DiscoverFilter /> */}
-      {/* <DiscoverMainScreen /> */}
-      {/* <FindBreederMainScreen /> */}
-
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomePage} />
