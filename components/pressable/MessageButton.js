@@ -11,7 +11,7 @@ export function MessageButton({ onPress }) {
         onPress: () => console.log("Cancel Pressed"),
         style: "cancel",
       },
-      { text: "OK", onPress: () => console.log("OK Pressed") },
+      { text: "OK", onPress: () => console.log("OK button Pressed") },
     ]);
   };
   return (
