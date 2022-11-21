@@ -49,12 +49,13 @@ export default function DiscoverMainScreen({ route, navigation }) {
     }
     const unSubscribe = onSnapshot(q, (snapshot) => {
       setData(
-        snapshot.docs.map(entry => {
+        snapshot.docs.map((entry) => {
           const birthday = new Date(entry.data().Birthday);
           const now = new Date();
-          const age = now.getMonth() -
+          const age =
+            now.getMonth() -
             birthday.getMonth() +
-            12 * (now.getFullYear() - birthday.getFullYear())
+            12 * (now.getFullYear() - birthday.getFullYear());
           return {
             name: entry.data().Breed,
             sex: entry.data().Gender,
@@ -64,7 +65,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
             uploadTime: entry.data().UploadTime,
           };
         })
-      )
+      );
     });
 
     return () => unSubscribe();
@@ -83,8 +84,15 @@ export default function DiscoverMainScreen({ route, navigation }) {
   };
 
   return (
-    <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
-      <View style={{ margin: 12 }}>
+    <View
+      style={{
+        paddingHorizontal: 16,
+        paddingTop: 55,
+        paddingBottom: 200,
+        backgroundColor: "white",
+      }}
+    >
+      <View style={{ padding: 12 }}>
         <View>
           <TitleText>Discover</TitleText>
         </View>
