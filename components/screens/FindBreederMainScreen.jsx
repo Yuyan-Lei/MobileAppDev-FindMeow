@@ -73,7 +73,7 @@ export default function FindBreederMainScreen() {
         <View style={styles.searchBarView}>
           <SearchBar text={searchName} setText={setSearchName} />
         </View>
-        <FilterButton onPress={() => setVisible(true)} />
+        <FilterButton onPress={() => setVisible(true)} size={24} length={60} />
       </View>
       <View style={styles.listView}>
         <FlatList
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 28,
     paddingTop: 55,
-    backgroundColor: Colors.backgroundGray,
   },
   cardView: {
     alignItems: "center",
@@ -114,7 +113,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     padding: 5,
-    paddingHorizontal: 28,
   },
   searchBarView: {
     backgroundColor: Colors.dimGray,
@@ -122,6 +120,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   listView: {
-    padding: 12,
   },
 });
