@@ -96,8 +96,12 @@ export default function DiscoverMainScreen({ route, navigation }) {
         <View>
           <TitleText>Discover</TitleText>
         </View>
-        <View style={{ position: "absolute", right: 24, top: 12 }}>
-          <FilterButton onPress={() => setVisible(true)} />
+        <View style={{ position: "absolute", right: 24, top: 18 }}>
+          <FilterButton
+            onPress={() => setVisible(true)}
+            size={18}
+            length={29}
+          />
         </View>
       </View>
 

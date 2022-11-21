@@ -12,6 +12,7 @@ export function SearchBar({ text, setText }) {
         leftIcon={<AntDesign name="search1" color="black" size={16} />}
         leftIconContainerStyle={{ paddingRight: 8 }}
         placeholder="Search"
+        style={{ height: 60 }}
       />
     </View>
   );
