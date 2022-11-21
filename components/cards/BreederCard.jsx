@@ -13,10 +13,11 @@ export function BreederCard({ breeder }) {
           style={{
             flexDirection: "row",
             marginVertical: 16,
-            backgroundColor: "white",
-            padding: 24,
+            // backgroundColor: Colors.cardShadow,
+            backgroundColor:"white",
             borderRadius: 20,
-            shadowColor: Colors.cardShadow,
+            // shadowColor: Colors.cardShadow,
+            shadowColor: "blue",
             shadowRadius: 20,
             shadowOffset: { height: 40 },
           }}
@@ -26,7 +27,7 @@ export function BreederCard({ breeder }) {
               height: 80,
               width: 80,
               backgroundColor: "gray",
-              marginRight: 24,
+              marginHorizontal: 20,
               borderRadius: 16,
             }}
           ></View>
