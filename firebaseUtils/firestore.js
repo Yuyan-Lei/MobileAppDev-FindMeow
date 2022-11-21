@@ -2,15 +2,20 @@ import {
   addDoc,
   collection,
   deleteDoc,
+  setDoc,
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "./firebase-setup";
 
-export async function wrtieToDB(data, collectionName) {
+export async function wrtieToDB(data, collectionName, key='') {
   try {
-    return await addDoc(collection(db, collectionName), data);
+    if (key !== '') {
+      return await setDoc(doc(db, collectionName, key), data);
+    } else {
+      return await addDoc(collection(db, collectionName), data);
+    }
   } catch (err) {
     console.log(err);
   }
