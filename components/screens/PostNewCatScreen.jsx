@@ -135,7 +135,7 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
                     color="#F59156"
                     onPress={() => setReady(!ready)}></Chip>
                 <Chip 
-                    title="Neutered"
+                    title="Neutered / Spayed"
                     type={neutered ? "solid" : "outline"}
                     containerStyle={styles.chip}
                     color="#F59156"
