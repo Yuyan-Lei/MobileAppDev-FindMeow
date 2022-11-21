@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 28,
     paddingTop: 55,
-    backgroundColor: "white",
+    backgroundColor: Colors.backgroundGray,
   },
   cardView: {
     alignItems: "center",

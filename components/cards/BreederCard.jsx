@@ -11,7 +11,10 @@ export function BreederCard({ breeder }) {
         <View
           style={{
             flexDirection: "row",
-            padding: 16,
+            margin: 16,
+            backgroundColor: "white",
+            padding: 24,
+            borderRadius: 20,
           }}
         >
           <View
@@ -38,7 +41,7 @@ export function BreederCard({ breeder }) {
         </View>
       </Pressable>
 
-      <View style={{ position: "absolute", top: 8, right: 8 }}>
+      <View style={{ position: "absolute", top: 24, right: 24 }}>
         <HeartButton />
       </View>
     </View>
