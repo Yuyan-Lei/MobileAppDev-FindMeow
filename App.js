@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback } from "react";
-import { LogBox, StyleSheet, useWindowDimensions, View } from "react-native";
+import { LogBox, StyleSheet, useWindowDimensions, View, Text } from "react-native";
 import { navigationRef } from "./components/RootNavigation";
 import CatInformation from "./components/screens/CatInformation";
 import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
@@ -15,6 +15,8 @@ import StarListScreen from "./components/screens/StarListScreen";
 SplashScreen.preventAutoHideAsync();
 LogBox.ignoreLogs(["Remote debugger"]);
 LogBox.ignoreAllLogs();
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
 
 export default function App() {
   const [fontsLoaded] = useFonts({

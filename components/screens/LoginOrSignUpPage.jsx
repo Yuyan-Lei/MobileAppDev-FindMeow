@@ -97,7 +97,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                                     title="I'm a cattery owner"
                                     checked={isCattery}
                                     onPress={() => setIsCattery(!isCattery)}
-                                    textStyle={{ color: "#F59156", fontSize: 17 }}
+                                    textStyle={{ color: "#F59156", fontSize: 14 }}
                                     checkedColor="#F59156"
                                     containerStyle={{ backgroundColor: 'transparent' }}
                                 />
@@ -145,11 +145,12 @@ const styles = StyleSheet.create({
     majorContent: {
         backgroundColor: "#F9F9F9",
         flex: 1,
-        borderRadius: 18,
+        borderTopLeftRadius: 60,
+        borderTopRightRadius: 60,
         padding: 20,
     },
     title: {
-        fontSize: 40,
+        fontSize: 30,
         marginTop: 70,
         marginBottom: 35,
         textAlign: 'center',
@@ -162,12 +163,12 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     selectedButton: {
-        fontSize: 23,
+        fontSize: 20,
         color: '#0C0C0E',
         fontWeight: '600',
     },
     notSelectedButton: {
-        fontSize: 16,
+        fontSize: 14,
         color: 'rgba(12, 12, 14, 0.5)',
 
     },
@@ -176,12 +177,12 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         height: 72,
         alignItems: "center",
-        padding: 25,
+        padding: 22,
         marginTop: '10%'
     },
     loginAndSignUpButtonText: {
         textAlign: 'center',
-        fontSize: 22,
+        fontSize: 20,
         color: '#FFFFFF',
         fontWeight: '600',
     },
