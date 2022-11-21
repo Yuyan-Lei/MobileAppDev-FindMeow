@@ -5,6 +5,7 @@ import { SearchBar } from "../pressable/SearchBar";
 import { TitleText } from "../texts/TitleText";
 import FindBreederFilter from "./FindBreederFilter";
 import { FilterButton } from "../pressable/FilterButton";
+import { Colors } from "../styles/Colors";
 
 const mockBreeders = [
   {
@@ -64,20 +65,23 @@ export default function FindBreederMainScreen() {
   }
 
   return (
-    <View style={styles.cardView}>
-      <View style={{ alignItems: "center", margin: 12 }}>
+    <View style={styles.containter}>
+      <View style={styles.cardView}>
         <TitleText>Find Breeders</TitleText>
       </View>
-      <View style={[styles.cardView, { flexDirection: "row" }]}>
-        <SearchBar text={searchName} setText={setSearchName} />
-        <FilterButton onPress={() => setVisible(true)} />
+      <View style={styles.toolBarView}>
+        <View style={styles.searchBarView}>
+          <SearchBar text={searchName} setText={setSearchName} />
+        </View>
+        <FilterButton onPress={() => setVisible(true)} size={24} length={60} />
       </View>
-
-      <FlatList
-        data={mockBreeders}
-        renderItem={({ item }) => <BreederCard breeder={item} />}
-        ListFooterComponent={<View style={{ height: 160 }} />}
-      />
+      <View style={styles.listView}>
+        <FlatList
+          data={mockBreeders}
+          renderItem={({ item }) => <BreederCard breeder={item} />}
+          ListFooterComponent={<View style={{ height: 250 }} />}
+        />
+      </View>
       <FindBreederFilter
         states={{
           visible,
@@ -96,8 +100,29 @@ export default function FindBreederMainScreen() {
 }
 
 const styles = StyleSheet.create({
+  containter: {
+    alignItems: "center",
+    padding: 28,
+    paddingTop: 55,
+    backgroundColor: "white",
+  },
   cardView: {
     alignItems: "center",
-    margin: 12,
+    padding: 12,
+  },
+  toolBarView: {
+    alignItems: "center",
+    flexDirection: "row",
+    padding: 5,
+    paddingHorizontal: 24,
+  },
+  searchBarView: {
+    backgroundColor: Colors.dimGray,
+    marginRight: 12,
+    borderRadius: 10,
+  },
+  listView: {
+    paddingVertical: 16,
+    width: "100%",
   },
 });

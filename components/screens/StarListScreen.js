@@ -9,35 +9,8 @@ import DiscoverFilter from "./DiscoverFilter";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
 
-export default function DiscoverMainScreen({ route, navigation }) {
+export default function StarListScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  /* values used for DiscoverFilter start */
-  const [visible, setVisible] = useState(false);
-  const [value, setValue] = useState(0);
-
-  const [check1, setCheck1] = useState(false);
-  const [check2, setCheck2] = useState(false);
-  const [check3, setCheck3] = useState(false);
-  const [check4, setCheck4] = useState(false);
-
-  const [selectedBreed, setSelectedBreed] = useState("All");
-  const [selectedAge, setSelectedAge] = useState("All");
-  const [selectedState, setSelectedState] = useState("All");
-  /* values used for DiscoverFilter end */
-
-  function resetAllFilters() {
-    setValue(0);
-
-    setCheck1(false);
-    setCheck2(false);
-    setCheck3(false);
-    setCheck4(false);
-
-    setSelectedBreed("");
-    setSelectedAge("");
-    setSelectedState("");
-  }
 
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -84,62 +57,24 @@ export default function DiscoverMainScreen({ route, navigation }) {
   };
 
   return (
-    <View
-      style={{
-        paddingHorizontal: 16,
-        paddingTop: 55,
-        paddingBottom: 200,
-        backgroundColor: "white",
-      }}
-    >
-      <View style={{ padding: 12 }}>
+    <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
+      <View style={{ margin: 12 }}>
         <View>
-          <TitleText>Discover</TitleText>
-        </View>
-        <View style={{ position: "absolute", right: 24, top: 18 }}>
-          <FilterButton
-            onPress={() => setVisible(true)}
-            size={18}
-            length={29}
-          />
+          <TitleText>Star List</TitleText>
         </View>
       </View>
-
-      <DiscoverFilter
-        states={{
-          visible,
-          setVisible,
-          value,
-          setValue,
-          check1,
-          setCheck1,
-          check2,
-          setCheck2,
-          check3,
-          setCheck3,
-          check4,
-          setCheck4,
-          selectedState,
-          setSelectedState,
-          selectedBreed,
-          setSelectedBreed,
-          selectedAge,
-          setSelectedAge,
-          resetAllFilters,
-        }}
-      />
 
       <FilterButtons
         selectedIndex={selectedIndex}
         setSelectedIndex={onFilterChange}
-        buttons={["Latest Post", "Nearby", "Lowest Price"]}
+        buttons={["Cats", "Catteries"]}
       />
       <View style={{ padding: 12 }}>
         <FlatList
           data={data}
           renderItem={({ item, index }) => <CatCard cat={item} />}
           numColumns={2}
-          ListFooterComponent={<View style={{ height: 80 }} />}
+          ListFooterComponent={<View style={{ height: 60 }} />}
         />
       </View>
     </View>

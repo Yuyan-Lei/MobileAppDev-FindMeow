@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Alert, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { colors } from "../styles/colors";
+import { Colors } from "../styles/Colors";
 
 export function MessageButton({ onPress }) {
   const messageHandler = () => {
@@ -19,7 +19,7 @@ export function MessageButton({ onPress }) {
       <Pressable
         onPress={onPress}
         style={{
-          backgroundColor: colors.messageButton,
+          backgroundColor: Colors.messageButton,
           padding: 8,
           borderRadius: 100,
           height: 40,

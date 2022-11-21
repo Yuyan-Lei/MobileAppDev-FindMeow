@@ -9,6 +9,8 @@ import React from "react";
 import DiscoverMainScreen from "./DiscoverMainScreen";
 import FindBreederMainScreen from "./FindBreederMainScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
+import StarListScreen from "./StarListScreen";
+import UserProfile from "./UserProfile";
 
 export default function HomePage({ route, navigation }) {
   const Tab = createBottomTabNavigator();
@@ -44,8 +46,8 @@ export default function HomePage({ route, navigation }) {
         component={PostNewCatScreen}
         screenOptions={{ tabBarLabel: "Add" }}
       />
-      <Tab.Screen name="Like" component={PostNewCatScreen} />
-      <Tab.Screen name="Profile" component={PostNewCatScreen} />
+      <Tab.Screen name="Like" component={StarListScreen} />
+      <Tab.Screen name="Profile" component={UserProfile} />
     </Tab.Navigator>
   );
 }

@@ -1,14 +1,24 @@
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, View } from "react-native";
+import { Colors } from "../styles/Colors";
 
 // reference: https://reactnativeelements.com/docs/components/buttongroup
-export function FilterButton({ onPress }) {
+export function FilterButton({ onPress, length, size }) {
   return (
-    <View style={{ width: 60, height: 40, top: 4 }}>
-      <Pressable onPress={onPress}>
-        <AntDesign name="filter" size={24} color="black" />
-      </Pressable>
-    </View>
+    <Pressable onPress={onPress}>
+      <View
+        style={{
+          width: length,
+          height: length,
+          justifyContent: "center",
+          backgroundColor: Colors.orange,
+          borderRadius: 10,
+          alignItems: "center",
+        }}
+      >
+        <AntDesign name="filter" size={size} color="white" />
+      </View>
+    </Pressable>
   );
 }

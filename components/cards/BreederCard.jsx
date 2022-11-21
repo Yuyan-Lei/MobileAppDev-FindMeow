@@ -2,6 +2,8 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
+import { Colors } from "../styles/Colors";
+import { LocationText } from "../texts/LocationText";
 
 export function BreederCard({ breeder }) {
   return (
@@ -10,9 +12,14 @@ export function BreederCard({ breeder }) {
         <View
           style={{
             flexDirection: "row",
-            padding: 16,
-            flex: 1,
-            minWidth: 300,
+            marginVertical: 16,
+            // backgroundColor: Colors.cardShadow,
+            backgroundColor: "white",
+            borderRadius: 20,
+            // shadowColor: Colors.cardShadow,
+            shadowColor: "blue",
+            shadowRadius: 20,
+            shadowOffset: { height: 40 },
           }}
         >
           <View
@@ -20,35 +27,28 @@ export function BreederCard({ breeder }) {
               height: 80,
               width: 80,
               backgroundColor: "gray",
-              marginRight: 24,
+              marginHorizontal: 20,
               borderRadius: 16,
             }}
-          >
-            {/* {"image" in breeder ? (
-          <Image
-            //TODO: why not working?
-            source={require("resources/cats/Angel Girls.png")}
-            containerStyle={{ aspectRatio: 1, flex: 1, width: "100%" }}
-            PlaceholderContent={<ActivityIndicator />}
-          />
-        ) : (
-          <></>
-        )} */}
-          </View>
-          <View>
-            <Text style={{ fontWeight: "bold" }}>{breeder.name}</Text>
-            <Text>{breeder.breed}</Text>
+          ></View>
+
+          {/* I tried to use "flexGlow:1" but it doesn't work */}
+          <View style={{ width: 360 }}>
+            <Text style={{ fontWeight: "bold", color: Colors.black }}>
+              {breeder.name}
+            </Text>
+            <Text style={{ color: Colors.black }}>{breeder.breed}</Text>
             <Text style={{ color: "orange", fontWeight: "500" }}>
               {breeder.availableCount > 0
                 ? `${breeder.availableCount} Available Kittens`
                 : ""}
             </Text>
-            <Text style={{ color: "gray" }}>{breeder.location}</Text>
+            <LocationText>{breeder.location}</LocationText>
           </View>
         </View>
       </Pressable>
 
-      <View style={{ position: "absolute", top: 8, right: 8 }}>
+      <View style={{ position: "absolute", top: 8, right: 24 }}>
         <HeartButton />
       </View>
     </View>

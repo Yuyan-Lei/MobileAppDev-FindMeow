@@ -5,7 +5,7 @@ import { Text, View } from "react-native";
 export function LocationText({ textStyle, locationIconColor, children }) {
   return (
     <View style={{ flexDirection: "row" }}>
-      <View style={{ position: "relative", top: 3 }}>
+      <View style={{ position: "relative", top: 5 }}>
         <Ionicons
           name="location-outline"
           color={locationIconColor || "#F59156"}

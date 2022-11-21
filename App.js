@@ -9,6 +9,8 @@ import CatInformation from "./components/screens/CatInformation";
 import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
 import DiscoverFilter from "./components/screens/DiscoverFilter";
 import HomePage from "./components/screens/HomePage";
+import LoginOrSignUpPage from "./components/screens/LoginOrSignUpPage";
+import StarListScreen from "./components/screens/StarListScreen";
 
 SplashScreen.preventAutoHideAsync();
 LogBox.ignoreLogs(["Remote debugger"]);
@@ -36,6 +38,7 @@ export default function App() {
     >
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="LoginOrSignUp" component={LoginOrSignUpPage} />
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="CatInformation" component={CatInformation} />
           <Stack.Screen
