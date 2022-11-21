@@ -50,26 +50,26 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             });
     }
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
             <Text style={styles.title}>Find Your Favorite Cat to Join Your Family</Text>
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={styles.majorContent}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Pressable
+                        style={styles.headPressable}
+                        onPress={() => setPageState(0)} >
+                        <Text style={pageState === 0 ?
+                            styles.selectedButton : styles.notSelectedButton}>Log In</Text>
+                    </Pressable>
+                    <Pressable
+                        style={styles.headPressable}
+                        onPress={() => setPageState(1)} >
+                        <Text style={pageState === 1 ?
+                            styles.selectedButton : styles.notSelectedButton}>Sign Up</Text>
+                    </Pressable>
+                </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Pressable
-                            style={styles.headPressable}
-                            onPress={() => setPageState(0)} >
-                            <Text style={pageState === 0 ?
-                                styles.selectedButton : styles.notSelectedButton}>Log In</Text>
-                        </Pressable>
-                        <Pressable
-                            style={styles.headPressable}
-                            onPress={() => setPageState(1)} >
-                            <Text style={pageState === 1 ?
-                                styles.selectedButton : styles.notSelectedButton}>Sign Up</Text>
-                        </Pressable>
-                    </View>
                     <TextInput
                         label="EMAIL"
                         value={userName}
@@ -133,7 +133,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     }
                 </ScrollView>
             </KeyboardAvoidingView>
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 

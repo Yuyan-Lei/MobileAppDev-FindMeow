@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, StyleSheet, ScrollView, Pressable } from "react-native";
+import { Text, View, TextInput, StyleSheet, ScrollView, Pressable, KeyboardAvoidingView } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import CatBreedSelector from "./CatBreedSelector";
 import DatePicker from 'react-native-datepicker';
@@ -48,11 +48,22 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
     };
 
     return (
+        <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={{ flex: 1}}
+                >
         <ScrollView style={styles.container}>
-            <Pressable style={styles.submitButton} onPress={onPostNewCat}>
-                <Text style={styles.submitButtonText}>Submit</Text>
-            </Pressable>
-            <Text style={styles.title}>Upload Cat</Text>
+            <View style={{ 
+                flexDirection: "row", 
+                marginTop: "25%",
+                alignItems: "center",
+                marginBottom: 20}}>
+                <Text style={styles.title}>Upload Cat</Text>
+                <View style={{ flex: 1}}></View>
+                <Pressable style={styles.submitButton} onPress={onPostNewCat}>
+                    <Text style={styles.submitButtonText}>Submit</Text>
+                </Pressable>
+            </View>
             <CatImagePicker image={image} setImage={setImage}></CatImagePicker>
             <Text style={styles.subTitle}>Cat Name</Text>
             <TextInput 
@@ -131,6 +142,7 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
                     onPress={() => setNeutered(!neutered)}></Chip>
             </View>
         </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -138,25 +150,23 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 30,
         backgroundColor: "#FFFCF6",
-        flex: 1,
     },
     submitButton: {
-        marginTop: '20%',
-        alignSelf: "flex-end",
+        // alignSelf: "flex-end",
     },
     submitButtonText: {
         color: '#F59156',
-        fontFamily: 'Montserrat',
+        textAlign: "center",
     },
     title: {
         color: '#F59156',
-        fontSize: 26,
-        fontFamily: 'Montserrat',
-        fontWeight: '700',
+        fontStyle: "normal",
+        fontWeight: "600",
+        fontSize: 24,
+        textAlign: "center",
     },
     subTitle: {
         color: '#F59156',
-        fontFamily: 'Montserrat',
         marginTop: 10,
         marginBottom: 10,
         fontSize: 14,
@@ -166,12 +176,13 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 20,
         alignItems: "center",
-        backgroundColor: "white", 
+        backgroundColor: "#FFFFFF",
+        fontSize: 14, 
         padding: 10
     },
     priceInput: {
         flexDirection: 'row',
-        backgroundColor: "white", 
+        backgroundColor: "#FFFFFF", 
         height: 60,
         borderRadius: 20,
         alignItems: "center",

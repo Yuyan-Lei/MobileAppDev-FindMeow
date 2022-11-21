@@ -21,7 +21,11 @@ export default function CatImagePicker({image, setImage}) {
 
   return (
     // <View style={{ width: 200, height: 200, backgroundColor: 'white'}}>
-    <Pressable style={{ width: 200, height: 200, backgroundColor: 'white', borderRadius: 12}} onPress={pickImage} >
+    <Pressable style={
+      image ? 
+        { width: 200, height: 200, backgroundColor: 'white', borderRadius: 12} : 
+        { width: "100%", height: 200, backgroundColor: 'white', borderRadius: 12}} 
+        onPress={pickImage} >
     {image ? 
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> : 
         <View style={styles.container}>
@@ -41,7 +45,6 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#ADADAD',
-        fontFamily: 'Montserrat',
         fontSize: 17
     }
   });
