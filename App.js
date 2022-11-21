@@ -9,7 +9,7 @@ import CatInformation from "./components/screens/CatInformation";
 import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
 import DiscoverFilter from "./components/screens/DiscoverFilter";
 import HomePage from "./components/screens/HomePage";
-import LoginOrSignUpPage from "./components/screens/LoginOrSignupPage";
+import LoginOrSignUpPage from "./components/screens/LoginOrSignUpPage";
 import StarListScreen from "./components/screens/StarListScreen";
 
 SplashScreen.preventAutoHideAsync();
