@@ -9,35 +9,8 @@ import DiscoverFilter from "./DiscoverFilter";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
 
-export default function DiscoverMainScreen({ route, navigation }) {
+export default function StarListScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  /* values used for DiscoverFilter start */
-  const [visible, setVisible] = useState(false);
-  const [value, setValue] = useState(0);
-
-  const [check1, setCheck1] = useState(false);
-  const [check2, setCheck2] = useState(false);
-  const [check3, setCheck3] = useState(false);
-  const [check4, setCheck4] = useState(false);
-
-  const [selectedBreed, setSelectedBreed] = useState("All");
-  const [selectedAge, setSelectedAge] = useState("All");
-  const [selectedState, setSelectedState] = useState("All");
-  /* values used for DiscoverFilter end */
-
-  function resetAllFilters() {
-    setValue(0);
-
-    setCheck1(false);
-    setCheck2(false);
-    setCheck3(false);
-    setCheck4(false);
-
-    setSelectedBreed("");
-    setSelectedAge("");
-    setSelectedState("");
-  }
 
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -49,12 +22,13 @@ export default function DiscoverMainScreen({ route, navigation }) {
     }
     const unSubscribe = onSnapshot(q, (snapshot) => {
       setData(
-        snapshot.docs.map(entry => {
+        snapshot.docs.map((entry) => {
           const birthday = new Date(entry.data().Birthday);
           const now = new Date();
-          const age = now.getMonth() -
+          const age =
+            now.getMonth() -
             birthday.getMonth() +
-            12 * (now.getFullYear() - birthday.getFullYear())
+            12 * (now.getFullYear() - birthday.getFullYear());
           return {
             name: entry.data().Breed,
             sex: entry.data().Gender,
@@ -64,7 +38,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
             uploadTime: entry.data().UploadTime,
           };
         })
-      )
+      );
     });
 
     return () => unSubscribe();
@@ -86,41 +60,14 @@ export default function DiscoverMainScreen({ route, navigation }) {
     <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
       <View style={{ margin: 12 }}>
         <View>
-          <TitleText>Discover</TitleText>
-        </View>
-        <View style={{ position: "absolute", right: 0 }}>
-          <FilterButton onPress={() => setVisible(true)} />
+          <TitleText>Star List</TitleText>
         </View>
       </View>
-
-      <DiscoverFilter
-        states={{
-          visible,
-          setVisible,
-          value,
-          setValue,
-          check1,
-          setCheck1,
-          check2,
-          setCheck2,
-          check3,
-          setCheck3,
-          check4,
-          setCheck4,
-          selectedState,
-          setSelectedState,
-          selectedBreed,
-          setSelectedBreed,
-          selectedAge,
-          setSelectedAge,
-          resetAllFilters,
-        }}
-      />
 
       <FilterButtons
         selectedIndex={selectedIndex}
         setSelectedIndex={onFilterChange}
-        buttons={["Latest Post", "Nearby", "Lowest Price"]}
+        buttons={["Cats", "Catteries"]}
       />
       <View style={{ padding: 12 }}>
         <FlatList

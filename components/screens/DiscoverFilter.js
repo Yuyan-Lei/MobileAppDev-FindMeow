@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Button, Overlay, Icon, CheckBox, Slider } from "@rneui/themed";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
+import { OrangeTitleText } from "../texts/OrangeTitleText";
+import { OrangeText } from "../texts/OrangeText";
+import { Colors } from "../styles/Colors";
 
 // type OverlayComponentProps = {};
 
@@ -25,6 +28,8 @@ const DiscoverFilter = ({
     setSelectedBreed,
     selectedAge,
     setSelectedAge,
+    selectedState,
+    setSelectedState,
     resetAllFilters,
   },
 }) => {
@@ -50,6 +55,20 @@ const DiscoverFilter = ({
     { key: "12+", value: "12+" },
   ];
 
+  const state = [
+    { key: "All", value: "All" },
+    { key: "Alabama", value: "Alabama" },
+    { key: "Alaska", value: "Alaska" },
+    { key: "Arizona", value: "Arizona" },
+    { key: "Arkansas", value: "Arkansas" },
+    { key: "California", value: "California" },
+    { key: "Colorado", value: "Colorado" },
+    { key: "Connecticut", value: "Connecticut" },
+    { key: "Delaware", value: "Delaware" },
+    { key: "Florida", value: "Florida" },
+    { key: "Georgia", value: "Georgia" },
+  ];
+
   const resetHandler = () => {
     resetAllFilters();
   };
@@ -60,14 +79,14 @@ const DiscoverFilter = ({
 
   return (
     <View>
-      {/* <Button
-        title="Filter button"
-        onPress={resetHandler}
-        buttonStyle={styles.button}
-      /> */}
       <Overlay isVisible={visible} onBackdropPress={goBackHandler}>
-        <Text style={styles.textPrimary}>Filter</Text>
-        <Text style={styles.textSecondary}>From $0 to ${value}</Text>
+        <OrangeTitleText>Filter</OrangeTitleText>
+        <Text
+          style={{ textAlign: "left", color: Colors.gray, paddingRight: 150 }}
+        >
+          Arrange Based On The Following Types
+        </Text>
+        <OrangeText>From $0 to ${value}</OrangeText>
 
         <Slider
           value={value}
@@ -84,6 +103,7 @@ const DiscoverFilter = ({
                 name="dollar"
                 type="font-awesome"
                 size={10}
+                color={Colors.orangeText}
                 reverse
                 containerStyle={{ bottom: 20, right: 20 }}
               />
@@ -91,7 +111,7 @@ const DiscoverFilter = ({
           }}
         />
 
-        <Text style={styles.text}>Breed</Text>
+        <OrangeText>Breed</OrangeText>
         <SelectList
           setSelected={(val) => setSelectedBreed(val)}
           data={breed}
@@ -99,12 +119,20 @@ const DiscoverFilter = ({
           defaultOption={{ key: selectedBreed, value: selectedBreed }}
         />
 
-        <Text style={styles.text}>Age (months)</Text>
+        <OrangeText>Age (months)</OrangeText>
         <SelectList
           setSelected={(val) => setSelectedAge(val)}
           data={age}
           save="value"
           defaultOption={{ key: selectedAge, value: selectedAge }}
+        />
+
+        <OrangeText>State</OrangeText>
+        <SelectList
+          setSelected={(val) => setSelectedState(val)}
+          data={state}
+          save="value"
+          defaultOption={{ key: selectedState, value: selectedState }}
         />
 
         <View style={{ flexDirection: "row" }}>
@@ -138,9 +166,40 @@ const DiscoverFilter = ({
           />
         </View>
 
-        <View style={styles.buttonView}>
-          <Button title="Reset" onPress={resetHandler} />
-          <Button title="Apply" onPress={goBackHandler} />
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <Pressable
+            onPress={resetHandler}
+            style={{
+              backgroundColor: Colors.orangeText,
+              padding: 8,
+              borderRadius: 25,
+              height: 40,
+              width: 63,
+            }}
+          >
+            <Text
+              style={{ alignItems: "center", color: "white", fontSize: 18 }}
+            >
+              Reset
+            </Text>
+          </Pressable>
+
+          <Pressable
+            onPress={resetHandler}
+            style={{
+              backgroundColor: Colors.orangeText,
+              padding: 8,
+              borderRadius: 25,
+              height: 40,
+              width: 63,
+            }}
+          >
+            <Text
+              style={{ alignItems: "center", color: "white", fontSize: 18 }}
+            >
+              Apply
+            </Text>
+          </Pressable>
         </View>
       </Overlay>
     </View>
@@ -164,11 +223,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 17,
   },
-  buttonView: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-
   text: {
     marginTop: 20,
     marginBottom: 10,

@@ -3,6 +3,7 @@ import { REACT_APP_FIREBASE_APP_ID, REACT_APP_FIREBASE_MESSAGING_SENDER_ID, REAC
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: REACT_APP_FIREBASE_API_KEY,
@@ -18,3 +19,5 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 // Initialize Cloud Storage and get a reference to the service
 export const storage = getStorage(app);
+// Initialize Firebase Authentication and get a reference to the service
+export const auth = getAuth(app);
