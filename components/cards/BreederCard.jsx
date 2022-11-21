@@ -1,5 +1,6 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
 import { LocationText } from "../texts/LocationText";
@@ -11,10 +12,13 @@ export function BreederCard({ breeder }) {
         <View
           style={{
             flexDirection: "row",
-            margin: 16,
+            marginVertical: 16,
             backgroundColor: "white",
             padding: 24,
             borderRadius: 20,
+            shadowColor: Colors.cardShadow,
+            shadowRadius: 20,
+            shadowOffset: { height: 40 },
           }}
         >
           <View

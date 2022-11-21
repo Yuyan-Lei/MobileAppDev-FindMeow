@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 28,
     paddingTop: 55,
+    backgroundColor: "white",
   },
   cardView: {
     alignItems: "center",
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     padding: 5,
+    paddingHorizontal: 24,
   },
   searchBarView: {
     backgroundColor: Colors.dimGray,
@@ -120,5 +122,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   listView: {
+    paddingVertical: 16,
+    width: "100%",
   },
 });
