@@ -2,10 +2,11 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
+import { LocationText } from "../texts/LocationText";
 
 export function BreederCard({ breeder }) {
   return (
-    <View style={{ width: "100%" }}>
+    <View>
       <Pressable onPress={() => rootStackNavigate("CatteryProfile")}>
         <View
           style={{
@@ -21,19 +22,10 @@ export function BreederCard({ breeder }) {
               marginRight: 24,
               borderRadius: 16,
             }}
-          >
-            {/* {"image" in breeder ? (
-          <Image
-            //TODO: why not working?
-            source={require("resources/cats/Angel Girls.png")}
-            containerStyle={{ aspectRatio: 1, flex: 1, width: "100%" }}
-            PlaceholderContent={<ActivityIndicator />}
-          />
-        ) : (
-          <></>
-        )} */}
-          </View>
-          <View>
+          ></View>
+
+          {/* I tried to use "flexGlow:1" but it doesn't work */}
+          <View style={{ width: 360 }}>
             <Text style={{ fontWeight: "bold" }}>{breeder.name}</Text>
             <Text>{breeder.breed}</Text>
             <Text style={{ color: "orange", fontWeight: "500" }}>
@@ -41,7 +33,7 @@ export function BreederCard({ breeder }) {
                 ? `${breeder.availableCount} Available Kittens`
                 : ""}
             </Text>
-            <Text style={{ color: "gray" }}>{breeder.location}</Text>
+            <LocationText>{breeder.location}</LocationText>
           </View>
         </View>
       </Pressable>
