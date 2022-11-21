@@ -1,4 +1,4 @@
-import { deleteFromDB, updateToDB, wrtieToDB } from "./firestore";
+import { deleteFromDB, getAllFromDB, updateToDB, wrtieToDB } from "./firestore";
 
 const collectionName = "Cats";
 
@@ -63,4 +63,8 @@ export async function updateCat({
 
 export async function deleteCat(key) {
   return await deleteFromDB(key, collectionName);
+}
+
+export async function getAllCats() {
+  return await getAllFromDB(collectionName);
 }

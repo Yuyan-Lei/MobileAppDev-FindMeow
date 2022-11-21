@@ -73,23 +73,6 @@ export default function DiscoverMainScreen({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
-  useEffect(() => {
-    const unSubscribe = 
-      onSnapshot(doc(db, 'Users', getCurrentUserEmail()), 
-        (snapshot) => {
-          const likeCats = snapshot.data().likeCats;
-          if (data.length !== 0) {
-            setData(data.map(entry => {
-              let newEntry = entry;
-              newEntry.like = likeCats.includes(entry.id);
-              return newEntry;
-            }));
-          }
-        });
-    
-    return () => unSubscribe();
-  }, [])
-
   const onFilterChange = (value) => {
     console.log(value);
     let dataCopy = data;
