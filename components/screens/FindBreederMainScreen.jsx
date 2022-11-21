@@ -79,7 +79,7 @@ export default function FindBreederMainScreen() {
         <FlatList
           data={mockBreeders}
           renderItem={({ item }) => <BreederCard breeder={item} />}
-          ListFooterComponent={<View style={{ height: 160 }} />}
+          ListFooterComponent={<View style={{ height: 200 }} />}
         />
       </View>
       <FindBreederFilter
