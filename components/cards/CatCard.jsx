@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   container: { margin: 8, justifyContent: "center", width: "45%" },
   imageView: {
     aspectRatio: 0.834,
-    backgroundColor: "gray",
+    // backgroundColor: "gray",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 5,
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: "#F9F9F9",
     borderRadius: 5,
+    height: 90,
   },
   fontStyle: {
     fontFamily: "Poppins",
