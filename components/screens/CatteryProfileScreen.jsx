@@ -9,6 +9,7 @@ import { useWindowDimensions } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 import { rootStackNavigateBack } from "../RootNavigation";
+import { Colors } from "../styles/Colors";
 
 const cats = [
   { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
@@ -71,11 +72,15 @@ export default function CatteryProfileScreen() {
           <Text style={{ color: "orange", fontWeight: "500" }}>About</Text>
           <Text></Text>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontWeight: "500" }}>Phone: </Text>
+            <Text style={{ fontWeight: "500", color: Colors.black }}>
+              Phone:{" "}
+            </Text>
             <Text>111</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontWeight: "500" }}>Website: </Text>
+            <Text style={{ fontWeight: "500", color: Colors.black }}>
+              Website:{" "}
+            </Text>
             <Text>http://xxx</Text>
           </View>
         </View>

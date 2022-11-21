@@ -17,4 +17,5 @@ export const Colors = {
   dimGray: "#F9F9F9",
   backgroundGray: "#F5F5F5",
   cardShadow: "rgba(64, 46, 197, 0.0468477)",
+  black: "#2E2525",
 };
