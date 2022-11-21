@@ -1,4 +1,5 @@
-import { deleteFromDB, updateToDB, wrtieToDB } from "./firestore";
+import { deleteFromDB, updateToDB, wrtieToDB, getCurrentUserEmail } from "./firestore";
+import { arrayUnion, arrayRemove } from "firebase/firestore";
 
 const collectionName = "Users";
 
@@ -8,6 +9,28 @@ export async function createUser(userEmail) {
         likeCats: [],
     }
     return await wrtieToDB(newUser, collectionName, userEmail);
+}
+
+export async function userLikeACat(catId) {
+    const email = getCurrentUserEmail();
+    const newLikesArrayEntry = {
+        likeCats: arrayUnion(catId)
+    };
+    return await updateToDB(email, collectionName, newLikesArrayEntry);
+}
+
+export async function userUnLikeACat(catId) {
+    const email = getCurrentUserEmail();
+    const newLikesArrayEntry = {
+        likeCats: arrayRemove(catId)
+    };
+    return await updateToDB(email, collectionName, newLikesArrayEntry);
+}
+
+export async function getUserLikeCats() {
+    const email = getCurrentUserEmail();
+
+    return await getFromDB(email, collection).then((docSnap) => docSnap.data().likeCats);
 }
 
 export async function createCattery(userEmail, {

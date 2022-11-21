@@ -1,9 +1,24 @@
-import { View, Text, Pressable, StyleSheet, Image } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Pressable, StyleSheet, Image, Alert } from "react-native";
+import { userUnLikeACat, userLikeACat } from "../../firebaseUtils/user";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 export function CatCard({ cat }) {
+  const [like, setLike] = useState(cat.like);
+  const onClickLikeButton = () => {
+    if(!like) {
+      userLikeACat(cat.id).then(() => {
+        setLike(true);
+      });
+    } else {
+      userUnLikeACat(cat.id).then(() => {
+        setLike(false);
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Pressable onPress={() => rootStackNavigate("CatInformation")}>
@@ -35,7 +50,10 @@ export function CatCard({ cat }) {
 
       {/* floating components */}
       <View style={styles.heartButtonView}>
-        <HeartButton notSelectedColor="white" />
+        <HeartButton 
+          notSelectedColor="white"
+          isLiked={like}
+          onPress={onClickLikeButton} />
       </View>
 
       <View style={styles.priceView}>

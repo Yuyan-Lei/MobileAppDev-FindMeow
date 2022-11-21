@@ -5,9 +5,10 @@ import {
   setDoc,
   doc,
   updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { db, storage } from "./firebase-setup";
+import { db, storage, auth } from "./firebase-setup";
 
 export async function wrtieToDB(data, collectionName, key='') {
   try {
@@ -16,6 +17,15 @@ export async function wrtieToDB(data, collectionName, key='') {
     } else {
       return await addDoc(collection(db, collectionName), data);
     }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getFromDB(key, collectionName) {
+  try {
+    const docRef = doc(db, collectionName, key);
+    return await getDoc(docRef);
   } catch (err) {
     console.log(err);
   }
@@ -48,6 +58,16 @@ export async function writeImageToDB(image) {
     // 'file' comes from the Blob or File API
     return await uploadBytes(storageRef, blob).then((result) => getDownloadURL(result.ref));
   }catch (err) {
+    console.log(err);
+  }
+}
+
+export function getCurrentUserEmail() {
+  try {
+    const user = auth.currentUser;
+
+    return user.email;
+  } catch (err) {
     console.log(err);
   }
 }

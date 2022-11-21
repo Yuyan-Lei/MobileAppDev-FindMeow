@@ -6,8 +6,9 @@ import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import { rootStackNavigate } from "../RootNavigation";
 import DiscoverFilter from "./DiscoverFilter";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, doc } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 
 export default function DiscoverMainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -57,6 +58,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
             birthday.getMonth() +
             12 * (now.getFullYear() - birthday.getFullYear());
           return {
+            id: entry.id,
             name: entry.data().Breed,
             sex: entry.data().Gender,
             price: entry.data().Price,
@@ -71,12 +73,28 @@ export default function DiscoverMainScreen({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
+  useEffect(() => {
+    const unSubscribe = 
+      onSnapshot(doc(db, 'Users', getCurrentUserEmail()), 
+        (snapshot) => {
+          const likeCats = snapshot.data().likeCats;
+          if (data.length !== 0) {
+            setData(data.map(entry => {
+              let newEntry = entry;
+              newEntry.like = likeCats.includes(entry.id);
+              return newEntry;
+            }));
+          }
+        });
+    
+    return () => unSubscribe();
+  }, [])
+
   const onFilterChange = (value) => {
     console.log(value);
     let dataCopy = data;
     if (value === 0) {
       setData(dataCopy.sort((d1, d2) => d2.uploadTime - d1.uploadTime));
-      console.log(data);
     } else {
       setData(dataCopy.sort((d1, d2) => d1.price - d2.price));
     }
