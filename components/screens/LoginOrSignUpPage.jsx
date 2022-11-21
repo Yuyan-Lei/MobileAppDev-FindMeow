@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import { StyleSheet, Text, View, Alert, KeyboardAvoidingView, ScrollView } from "react-native";
 import { TextInput, Pressable } from "@react-native-material/core";
 import { CheckBox } from '@rneui/themed';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
@@ -52,83 +52,87 @@ export default function LoginOrSignUpPage({ route, navigation }) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Find Your Favorite Cat to Join Your Family</Text>
-            <View style={styles.majorContent}>
-                <View style={{ flexDirection: 'row' }}>
-                    <Pressable
-                        style={styles.headPressable}
-                        onPress={() => setPageState(0)} >
-                        <Text style={pageState === 0 ?
-                            styles.selectedButton : styles.notSelectedButton}>Log In</Text>
-                    </Pressable>
-                    <Pressable
-                        style={styles.headPressable}
-                        onPress={() => setPageState(1)} >
-                        <Text style={pageState === 1 ?
-                            styles.selectedButton : styles.notSelectedButton}>Sign Up</Text>
-                    </Pressable>
-                </View>
-                <TextInput
-                    label="EMAIL"
-                    value={userName}
-                    leading={props => <MaterialCommunityIcons name="email" {...props} />}
-                    color="#F59156"
-                    onChangeText={setUserName} />
-                <TextInput
-                    label="PASSWORD"
-                    secureTextEntry={true}
-                    leading={props => <Entypo name="lock" {...props} />}
-                    value={password}
-                    color="#F59156"
-                    onChangeText={setPassword} />
-                {
-                    pageState === 0 ?
-                        <View>
-                            <Pressable
-                                onPress={() => onSignIn()}
-                                style={styles.loginAndSignUpButton}>
-                                <Text style={styles.loginAndSignUpButtonText}>Log In</Text>
-                            </Pressable>
-                        </View> :
-                        <View>
-                            <CheckBox
-                                title="I'm a cattery owner"
-                                checked={isCattery}
-                                onPress={() => setIsCattery(!isCattery)}
-                                textStyle={{ color: "#F59156", fontSize: 17 }}
-                                checkedColor="#F59156"
-                                containerStyle={{ backgroundColor: 'transparent' }}
-                            />
-                            {
-                                isCattery &&
-                                <View>
-                                    <TextInput
-                                        label="Cattery Name"
-                                        value={name}
-                                        color="#F59156"
-                                        leading={props => <MaterialIcons name="storefront" {...props} />}
-                                        onChangeText={setName} />
-                                    <TextInput
-                                        label="Cattery Phone"
-                                        value={phoneNumber}
-                                        color="#F59156"
-                                        leading={props => <Feather name="phone" {...props} />}
-                                        onChangeText={setPhoneNumber} />
-                                    <TextInput
-                                        label="Cattery Website"
-                                        value={website}
-                                        color="#F59156"
-                                        leading={props => <MaterialCommunityIcons name="web" {...props} />}
-                                        onChangeText={setWebsite} />
-                                </View>
-                            }
-                            <Pressable
-                                onPress={() => onCreateAccount()}
-                                style={styles.loginAndSignUpButton}>
-                                <Text style={styles.loginAndSignUpButtonText}>Create Account</Text>
-                            </Pressable>
-                        </View>
-                }
-            </View>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={styles.majorContent}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Pressable
+                            style={styles.headPressable}
+                            onPress={() => setPageState(0)} >
+                            <Text style={pageState === 0 ?
+                                styles.selectedButton : styles.notSelectedButton}>Log In</Text>
+                        </Pressable>
+                        <Pressable
+                            style={styles.headPressable}
+                            onPress={() => setPageState(1)} >
+                            <Text style={pageState === 1 ?
+                                styles.selectedButton : styles.notSelectedButton}>Sign Up</Text>
+                        </Pressable>
+                    </View>
+                    <TextInput
+                        label="EMAIL"
+                        value={userName}
+                        leading={props => <MaterialCommunityIcons name="email" {...props} />}
+                        color="#F59156"
+                        onChangeText={setUserName} />
+                    <TextInput
+                        label="PASSWORD"
+                        secureTextEntry={true}
+                        leading={props => <Entypo name="lock" {...props} />}
+                        value={password}
+                        color="#F59156"
+                        onChangeText={setPassword} />
+                    {
+                        pageState === 0 ?
+                            <View>
+                                <Pressable
+                                    onPress={() => onSignIn()}
+                                    style={styles.loginAndSignUpButton}>
+                                    <Text style={styles.loginAndSignUpButtonText}>Log In</Text>
+                                </Pressable>
+                            </View> :
+                            <View>
+                                <CheckBox
+                                    title="I'm a cattery owner"
+                                    checked={isCattery}
+                                    onPress={() => setIsCattery(!isCattery)}
+                                    textStyle={{ color: "#F59156", fontSize: 17 }}
+                                    checkedColor="#F59156"
+                                    containerStyle={{ backgroundColor: 'transparent' }}
+                                />
+                                {
+                                    isCattery &&
+                                    <View>
+                                        <TextInput
+                                            label="Cattery Name"
+                                            value={name}
+                                            color="#F59156"
+                                            leading={props => <MaterialIcons name="storefront" {...props} />}
+                                            onChangeText={setName} />
+                                        <TextInput
+                                            label="Cattery Phone"
+                                            value={phoneNumber}
+                                            color="#F59156"
+                                            leading={props => <Feather name="phone" {...props} />}
+                                            onChangeText={setPhoneNumber} />
+                                        <TextInput
+                                            label="Cattery Website"
+                                            value={website}
+                                            color="#F59156"
+                                            leading={props => <MaterialCommunityIcons name="web" {...props} />}
+                                            onChangeText={setWebsite} />
+                                    </View>
+                                }
+                                <Pressable
+                                    onPress={() => onCreateAccount()}
+                                    style={styles.loginAndSignUpButton}>
+                                    <Text style={styles.loginAndSignUpButtonText}>Create Account</Text>
+                                </Pressable>
+                            </View>
+                    }
+                </ScrollView>
+            </KeyboardAvoidingView>
         </View>
     );
 };
