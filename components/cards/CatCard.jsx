@@ -34,7 +34,7 @@ export function CatCard({ cat }) {
 
       {/* floating components */}
       <View style={styles.heartButtonView}>
-        <HeartButton />
+        <HeartButton notSelectedColor="white" />
       </View>
 
       <View style={styles.priceView}>
