@@ -1,8 +1,8 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
+import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 
 export function BreederCard({ breeder }) {
@@ -33,8 +33,10 @@ export function BreederCard({ breeder }) {
 
           {/* I tried to use "flexGlow:1" but it doesn't work */}
           <View style={{ width: 360 }}>
-            <Text style={{ fontWeight: "bold" }}>{breeder.name}</Text>
-            <Text>{breeder.breed}</Text>
+            <Text style={{ fontWeight: "bold", color: Colors.black }}>
+              {breeder.name}
+            </Text>
+            <Text style={{ color: Colors.black }}>{breeder.breed}</Text>
             <Text style={{ color: "orange", fontWeight: "500" }}>
               {breeder.availableCount > 0
                 ? `${breeder.availableCount} Available Kittens`

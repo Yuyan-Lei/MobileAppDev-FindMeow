@@ -1,6 +1,7 @@
 import { View, Text, Pressable, StyleSheet, Image } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
+import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 export function CatCard({ cat }) {
   return (
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   catNameStyle: {
-    color: "#2E2525",
+    color: Colors.black,
     fontSize: 14,
   },
   catDetailStyle: {
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
   },
   locationStyle: {
     fontSize: 10,
-    color: "#2E2525",
+    color: Colors.black,
   },
   locationIconStyle: {
     color: "#F59156",
