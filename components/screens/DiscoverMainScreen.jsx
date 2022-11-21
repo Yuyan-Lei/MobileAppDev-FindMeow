@@ -139,7 +139,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
           data={data}
           renderItem={({ item, index }) => <CatCard cat={item} />}
           numColumns={2}
-          ListFooterComponent={<View style={{ height: 60 }} />}
+          ListFooterComponent={<View style={{ height: 80 }} />}
         />
       </View>
     </View>
