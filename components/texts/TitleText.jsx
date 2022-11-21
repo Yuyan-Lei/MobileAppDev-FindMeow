@@ -8,7 +8,7 @@ export function TitleText({ children }) {
 
 const styles = StyleSheet.create({
   titleText: {
-    fontFamily: "Poppins",
+    // fontFamily: "Poppins",
     fontStyle: "normal",
     fontWeight: "600",
     fontSize: 24,
