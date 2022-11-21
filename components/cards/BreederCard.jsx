@@ -5,14 +5,12 @@ import { rootStackNavigate } from "../RootNavigation";
 
 export function BreederCard({ breeder }) {
   return (
-    <View>
+    <View style={{ width: "100%" }}>
       <Pressable onPress={() => rootStackNavigate("CatteryProfile")}>
         <View
           style={{
             flexDirection: "row",
             padding: 16,
-            flex: 1,
-            minWidth: 300,
           }}
         >
           <View
