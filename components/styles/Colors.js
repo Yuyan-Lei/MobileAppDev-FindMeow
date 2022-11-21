@@ -15,4 +15,5 @@ export const Colors = {
   orangeText: "#F59156",
   orange: "#FFB801",
   dimGray: "#F9F9F9",
+  backgroundGray: "#F5F5F5",
 };
