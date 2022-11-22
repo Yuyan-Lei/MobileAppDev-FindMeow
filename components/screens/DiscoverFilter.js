@@ -592,9 +592,9 @@ const DiscoverFilter = ({
   };
 
   const applyHandler = () => {
-    setSelectedBreed(selectedBreed);
-    setSelectedAge(selectedAge);
-    setSelectedState(selectedState);
+    // setSelectedBreed(selectedBreed);
+    // setSelectedAge(selectedAge);
+    // setSelectedState(selectedState);
     // setSelectedGender(selectedGender);
     // setVisible(!visible);
     Alert.alert("The button function is coming soon~", "See you next time!", [
@@ -615,19 +615,21 @@ const DiscoverFilter = ({
   };
 
   return (
-    <View style={{ marginHorizontal: 15 }}>
+    <View style={styles.filterContainer}>
       <OrangeTitleText>Filter</OrangeTitleText>
+
       <Text style={{ textAlign: "left", color: Colors.gray }}>
         Arrange Based On The Following Types
       </Text>
       <OrangeText>From $0 to ${value}</OrangeText>
 
+
       <Slider
         value={value}
         onValueChange={setValue}
-        maximumValue={100000}
+        maximumValue={10000}
         minimumValue={0}
-        step={1}
+        step={100}
         allowTouchTrack
         trackStyle={{ height: 5, backgroundColor: "transparent" }}
         thumbStyle={{ height: 1, width: 1, backgroundColor: "transparent" }}
@@ -644,6 +646,7 @@ const DiscoverFilter = ({
           ),
         }}
       />
+
 
       <OrangeText>Breed</OrangeText>
       <SelectList
@@ -715,33 +718,22 @@ const DiscoverFilter = ({
         />
       </View> */}
 
-      <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop:20 }}>
+
+      <View style={styles.submitButtonContainer}>
         <Pressable
           onPress={resetHandler}
-          style={{
-            backgroundColor: Colors.orangeText,
-            padding: 8,
-            borderRadius: 25,
-            height: 40,
-            width: 63,
-          }}
+          style={styles.submitButton}
         >
-          <Text style={{ alignItems: "center", color: "white", fontSize: 18 }}>
+          <Text style={styles.submitText}>
             Reset
           </Text>
         </Pressable>
 
         <Pressable
           onPress={applyHandler}
-          style={{
-            backgroundColor: Colors.orangeText,
-            padding: 8,
-            borderRadius: 25,
-            height: 40,
-            width: 63,
-          }}
+          style={styles.submitButton}
         >
-          <Text style={{ alignItems: "center", color: "white", fontSize: 18 }}>
+          <Text style={styles.submitText}>
             Apply
           </Text>
         </Pressable>
@@ -751,6 +743,9 @@ const DiscoverFilter = ({
 };
 
 const styles = StyleSheet.create({
+  filterContainer: {
+    marginHorizontal: 15,
+  },
   button: {
     margin: 10,
     marginTop: 100,
@@ -771,6 +766,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
+  submitButtonContainer: {
+    flexDirection: "row", 
+    justifyContent: "space-around", 
+    paddingTop: 40,
+    paddingBottom: 10
+  },
+  submitButton: {
+    backgroundColor: Colors.orangeText,
+    padding: 8,
+    borderRadius: 25,
+    height: 40,
+    width: 90,
+  },
+  submitText: {
+    alignItems: "center", 
+    textAlign: "center",
+    color: "white", 
+    fontSize: 18 
+  }
 });
 
 export default DiscoverFilter;

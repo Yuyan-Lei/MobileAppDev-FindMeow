@@ -189,7 +189,7 @@
 // version 2
 import React, { useState } from "react";
 import { Button, Overlay, Icon, CheckBox, Slider } from "@rneui/themed";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { OrangeTitleText } from "../texts/OrangeTitleText";
 import { OrangeText } from "../texts/OrangeText";
@@ -199,12 +199,14 @@ const FindBreederFilter = ({
   states: {
     visible,
     setVisible,
+
     selectedBreed,
     setSelectedBreed,
     selectedState,
     setSelectedState,
     selectedCatNum,
     setSelectedCatNum,
+    
     resetAllFilters,
     refRBSheet,
   },
@@ -237,15 +239,12 @@ const FindBreederFilter = ({
 
   const catNum = [
     { key: "All", value: "All" },
-    { key: "1", value: "1" },
-    { key: "2", value: "2" },
-    { key: "3", value: "3" },
-    { key: "4+", value: "4+" },
+    { key: "Yes", value: "Yes" },
+    { key: "No", value: "No" },
   ];
 
   const resetHandler = () => {
     resetAllFilters();
-    refRBSheet.current.close();
   };
 
   const applyHandler = () => {
@@ -253,6 +252,16 @@ const FindBreederFilter = ({
     setSelectedCatNum(selectedCatNum);
     setSelectedState(selectedState);
     // setVisible(!visible);
+    Alert.alert("The button function is coming soon~", "See you next time!", [
+      {
+        text: "Sad",
+        onPress: () => console.log("Feel Sad about no button function now"),
+      },
+      {
+        text: "Wait for you",
+        onPress: () => console.log("Wait for coming button function"),
+      },
+    ]);
     refRBSheet.current.close();
   };
 
@@ -261,14 +270,14 @@ const FindBreederFilter = ({
   };
 
   return (
-    <View style={{ marginHorizontal: 15 }}>
+    <View style={styles.filterContainer}>
       <OrangeTitleText>Filter</OrangeTitleText>
+
       <Text style={{ textAlign: "left", color: Colors.gray }}>
         Arrange Based On The Following Types
       </Text>
 
       <OrangeText>Breed</OrangeText>
-
       <SelectList
         setSelected={(val) => setSelectedBreed(val)}
         data={breed}
@@ -290,37 +299,22 @@ const FindBreederFilter = ({
         data={catNum}
         save="value"
         defaultOption={{ key: selectedCatNum, value: selectedCatNum }}
+        search={false}
       />
 
-      <View style={styles.buttonView}>
+      <View style={styles.submitButtonContainer}>
         <Pressable
           onPress={resetHandler}
-          style={{
-            backgroundColor: Colors.orangeText,
-            padding: 8,
-            borderRadius: 25,
-            height: 40,
-            width: 63,
-          }}
+          style={ styles.submitButton }
         >
-          <Text style={{ alignItems: "center", color: "white", fontSize: 18 }}>
-            Reset
-          </Text>
+          <Text style={ styles.submitText }>Reset</Text>
         </Pressable>
 
         <Pressable
           onPress={applyHandler}
-          style={{
-            backgroundColor: Colors.orangeText,
-            padding: 8,
-            borderRadius: 25,
-            height: 40,
-            width: 63,
-          }}
+          style={ styles.submitButton }
         >
-          <Text style={{ alignItems: "center", color: "white", fontSize: 18 }}>
-            Apply
-          </Text>
+          <Text style={ styles.submitText }>Apply</Text>
         </Pressable>
       </View>
     </View>
@@ -328,6 +322,9 @@ const FindBreederFilter = ({
 };
 
 const styles = StyleSheet.create({
+  filterContainer: {
+    marginHorizontal: 15,
+  },
   button: {
     margin: 10,
     marginTop: 100,
@@ -344,11 +341,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 17,
   },
-  buttonView: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingTop: 40,
-  },
   checkbox: {
     flexDirection: "row",
   },
@@ -356,6 +348,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
+  submitButtonContainer: {
+    flexDirection: "row", 
+    justifyContent: "space-around", 
+    paddingTop: 40,
+    paddingBottom: 10
+  },
+  submitButton: {
+    backgroundColor: Colors.orangeText,
+    padding: 8,
+    borderRadius: 25,
+    height: 40,
+    width: 90,
+  },
+  submitText: {
+    alignItems: "center", 
+    textAlign: "center",
+    color: "white", 
+    fontSize: 18 
+  }
 });
 
 export default FindBreederFilter;
