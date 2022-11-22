@@ -64,6 +64,8 @@ export default function FindBreederMainScreen() {
     setSelectedCatNum("");
   }
 
+
+
   return (
     <View style={styles.containter}>
       <View style={styles.cardView}>

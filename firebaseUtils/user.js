@@ -34,6 +34,16 @@ export async function getUserLikeCats() {
     return await getFromDB(email, collectionName).then((docSnap) => docSnap.data().likeCats);
 }
 
+export async function getUserData() {
+    const email = getCurrentUserEmail();
+
+    if (email === '') {
+        return Promise.resolve();
+    }
+
+    return await getFromDB(email, collectionName).then((docSnap) => docSnap.data());
+}
+
 export async function createCattery(userEmail, {
     catteryName,
     phoneNumber,
@@ -46,6 +56,27 @@ export async function createCattery(userEmail, {
         website,
         geoLocation: '',
         cats: [],
+        likeCats: [],
     }
     return await wrtieToDB(newCattery, collectionName, userEmail);
+}
+
+export async function updateCattery({
+    catteryName,
+    phoneNumber,
+    website,
+    address,
+    placeId,
+    picture
+}) {
+    const email = getCurrentUserEmail();
+    const updatedCattery = {
+        catteryName,
+        phoneNumber,
+        website,
+        address,
+        placeId,
+        picture
+    };
+    return await updateToDB(email, collectionName, updatedCattery);
 }
