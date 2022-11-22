@@ -20,4 +20,7 @@ export const Colors = {
   black: "#2E2525",
   chipText: "#F8C055",
   chipBackground: "#f5ddb0",
+  grayText: "rgba(46, 37, 37, 0.7)",
+  purple: "#402ec5",
+  shadowWhiteAndroid: "#babacf",
 };
