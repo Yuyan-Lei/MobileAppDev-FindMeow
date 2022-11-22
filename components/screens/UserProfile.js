@@ -49,6 +49,7 @@ export default function UserProfile({ route, navigation }) {
       }
     ]);
   }
+  const onViewCatteryPage = () => navigation.navigate('ProfileCatteryPage');
   return (
     <View
       style={{
@@ -93,7 +94,7 @@ export default function UserProfile({ route, navigation }) {
 
         {/* Buttons  */}
         {
-          user && user.isCattery && <Pressable onPress={buttonHandler} style={styles.button}>
+          user && user.isCattery && <Pressable onPress={onViewCatteryPage} style={styles.button}>
             <Text style={styles.text}>View Cattery Page</Text>
           </Pressable>
         }
