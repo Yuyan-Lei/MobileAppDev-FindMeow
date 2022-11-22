@@ -157,16 +157,20 @@ export default function DiscoverMainScreen({ route, navigation }) {
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
-        closeOnPressMask={false}
+        closeOnPressMask={true}
         customStyles={{
           wrapper: {
             backgroundColor: "transparent",
           },
+          container: {
+            borderRadius: 28,
+          },
           draggableIcon: {
-            backgroundColor: "#000",
+            backgroundColor: "#EFEFEF",
+            width: 100,
           },
         }}
-        height={600}
+        height={650}
       >
         <DiscoverFilter
           states={{

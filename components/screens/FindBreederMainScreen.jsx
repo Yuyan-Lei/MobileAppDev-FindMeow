@@ -86,16 +86,22 @@ export default function FindBreederMainScreen() {
         <RBSheet
           ref={refRBSheet}
           closeOnDragDown={true}
-          closeOnPressMask={false}
+          closeOnPressMask={true}
+          keyboardAvoidingViewEnabled={true}
+          animationType="slide"
           customStyles={{
             wrapper: {
               backgroundColor: "transparent",
             },
+            container: {
+              borderRadius: 28,
+            },
             draggableIcon: {
-              backgroundColor: "#000",
+              backgroundColor: "#EFEFEF",
+              width: 100,
             },
           }}
-          height={460}
+          height={470}
         >
           <FindBreederFilter
             states={{
