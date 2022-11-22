@@ -41,11 +41,11 @@ export default function UserProfile({ route, navigation }) {
   const onLogout = () => {
     Alert.alert("Confirm to Log Out", "Are you sure you want to log out?", [
       {
-        text: "Confirm",
-        onPress: () => auth.signOut().then(() => navigation.navigate('LoginOrSignUp')),
+        text: "Cancel",
       },
       {
-        text: "Cancel",
+        text: "Confirm",
+        onPress: () => auth.signOut().then(() => navigation.navigate('LoginOrSignUp')),
       }
     ]);
   }
