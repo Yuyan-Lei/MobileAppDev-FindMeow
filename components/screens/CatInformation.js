@@ -268,16 +268,97 @@ const IMAGE_HEIGHT = 49;
 export default class CatInformation extends React.Component {
   renderContent = () => {
     return (
-      <View>
-        <Text>hello world</Text>
+      <View style={{ marginHorizontal: 15 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            marginVertical: 20,
+          }}
+        >
+          <View style={styles.label}>
+            <View style={styles.tags}>
+              <Text style={styles.tagText}>Gender</Text>
+              <Text style={{ fontWeight: "bold", fontSize: 16 }}>Female</Text>
+            </View>
+            <View style={styles.tags}>
+              <Text style={styles.tagText}>Age</Text>
+              <Text style={{ fontWeight: "bold", fontSize: 16 }}>1 year</Text>
+            </View>
+            <View style={styles.tags}>
+              <Text style={styles.tagText}>Breed</Text>
+              <Text style={{ fontWeight: "bold", fontSize: 16 }}>Unknown</Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textPrimary}>Kaka</Text>
+          <Text
+            style={{
+              textAlign: "right",
+              fontSize: 20,
+              fontWeight: "bold",
+              color: Colors.darkOrange,
+              marginLeft: "auto",
+              marginVertical: 20,
+            }}
+          >
+            $200
+          </Text>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+          <Ionicons name="location-sharp" size={24} color={Colors.darkOrange} />
+          <Text style={styles.textSecondary}>Santa Clara (0.8km)</Text>
+        </View>
+
+        <Text style={styles.date}>Nov 17, 2022</Text>
+        <View style={styles.chipBox}>
+          <Chip title="Vaccinated" containerStyle={styles.chip} />
+          <Chip title="Vet Checked" containerStyle={styles.chip} />
+          <Chip title="Dewormed" containerStyle={styles.chip} />
+        </View>
+
+        <Text style={styles.contact}>Contact Info</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View>
+            <Text>Angel Girls</Text>
+            <Text style={styles.date}>Cattery</Text>
+          </View>
+          <View style={styles.buttonView}>
+            <PhoneButton />
+            <MessageButton />
+          </View>
+        </View>
       </View>
     );
   };
   render() {
     return (
-      <BottomDrawer containerHeight={800} downDisplay={300} startUp={false}>
-        {this.renderContent()}
-      </BottomDrawer>
+      <View>
+        <Image
+          source={require("../pictures/kaka.jpg")}
+          resizeMode="cover"
+          style={{ height: 450, width: 500 }}
+        ></Image>
+        <View style={{ position: "absolute", top: 48, left: 12 }}>
+          <View style={{ opacity: 0.5 }}>
+            <Pressable onPress={rootStackNavigateBack}>
+              <Feather name="arrow-left-circle" size={24} color="white" />
+            </Pressable>
+          </View>
+        </View>
+        <BottomDrawer
+          containerHeight={800}
+          downDisplay={300}
+          startUp={false}
+          backgroundColor={Colors.dimGray}
+          borderRadius={30}
+        >
+          {this.renderContent()}
+        </BottomDrawer>
+      </View>
     );
   }
 }
@@ -299,11 +380,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   tags: {
-    backgroundColor: Colors.labelBackground,
+    backgroundColor: "white",
     marginHorizontal: 20,
     alignItems: "center",
     padding: 8,
     borderRadius: 12,
+  },
+  tagText: {
+    color: Colors.gray,
+    padding: 5,
+    width: 80,
+    textAlign: "center",
   },
   textPrimary: {
     textAlign: "left",
@@ -315,6 +402,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "left",
     fontSize: 14,
+    marginLeft: 6,
   },
   chip: {
     marginVertical: 15,
@@ -340,6 +428,7 @@ const styles = StyleSheet.create({
   },
   chipBox: {
     flexDirection: "row",
+    justifyContent: "space-evenly",
   },
   date: {
     color: Colors.gray,
