@@ -505,7 +505,7 @@
 // test test test
 import React, { useState } from "react";
 import { Overlay, Icon, Slider } from "@rneui/themed";
-import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert, ScrollView } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { OrangeTitleText } from "../texts/OrangeTitleText";
@@ -615,7 +615,7 @@ const DiscoverFilter = ({
   };
 
   return (
-    <View style={styles.filterContainer}>
+    <ScrollView style={styles.filterContainer}>
       <OrangeTitleText>Filter</OrangeTitleText>
 
       <Text style={styles.reminderText}>
@@ -630,9 +630,20 @@ const DiscoverFilter = ({
         maximumValue={10000}
         minimumValue={0}
         step={100}
+        minimumTrackTintColor={Colors.orangeText}
         allowTouchTrack
-        trackStyle={{ height: 5, backgroundColor: "transparent" }}
-        thumbStyle={{ height: 1, width: 1, backgroundColor: "transparent" }}
+        style={{
+          marginLeft:15,
+          marginRight:15
+        }}
+        trackStyle={{ 
+          height: 5, 
+          color:Colors.orange, 
+        }}
+        thumbStyle={{ 
+          height: 1, 
+          width: 1
+        }}
         thumbProps={{
           children: (
             <Icon
@@ -738,7 +749,7 @@ const DiscoverFilter = ({
           </Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
