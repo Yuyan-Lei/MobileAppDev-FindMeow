@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   shadowView: {
-    shadowColor: Platform.OS === 'ios' ? Colors.purple : Colors.shadowWhiteAndroid,
+    shadowColor: Platform.OS === 'ios' ? Colors.Purple : Colors.shadowWhiteAndroid,
     shadowOffset: {
       width: 40,
       height: 80,
     },
-    shadowOpacity: 0.468,
+    shadowOpacity: 0.0468,
     shadowRadius: 20,
     elevation: 17,
   }
