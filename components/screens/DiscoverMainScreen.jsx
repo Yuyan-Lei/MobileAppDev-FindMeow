@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { FlatList, StyleSheet, Text, View, Button } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import { rootStackNavigate } from "../RootNavigation";
 import DiscoverFilter from "./DiscoverFilter";
-import { collection, onSnapshot, query, orderBy, doc } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  doc,
+} from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import RBSheet from "react-native-raw-bottom-sheet";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export default function DiscoverMainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -25,6 +33,8 @@ export default function DiscoverMainScreen({ route, navigation }) {
   const [selectedBreed, setSelectedBreed] = useState("All");
   const [selectedAge, setSelectedAge] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
+
+  const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
   function resetAllFilters() {
@@ -90,7 +100,6 @@ export default function DiscoverMainScreen({ route, navigation }) {
         paddingHorizontal: 16,
         paddingTop: 55,
         paddingBottom: 200,
-        backgroundColor: "white",
       }}
     >
       <View style={{ padding: 12 }}>
@@ -99,36 +108,56 @@ export default function DiscoverMainScreen({ route, navigation }) {
         </View>
         <View style={{ position: "absolute", right: 24, top: 18 }}>
           <FilterButton
-            onPress={() => setVisible(true)}
+            onPress={() => refRBSheet.current.open()}
             size={18}
             length={29}
           />
         </View>
       </View>
 
-      <DiscoverFilter
-        states={{
-          visible,
-          setVisible,
-          value,
-          setValue,
-          check1,
-          setCheck1,
-          check2,
-          setCheck2,
-          check3,
-          setCheck3,
-          check4,
-          setCheck4,
-          selectedState,
-          setSelectedState,
-          selectedBreed,
-          setSelectedBreed,
-          selectedAge,
-          setSelectedAge,
-          resetAllFilters,
+      {/* <Button
+        title="OPEN BOTTOM SHEET"
+        onPress={() => refRBSheet.current.open()}
+      /> */}
+      <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        customStyles={{
+          wrapper: {
+            backgroundColor: "transparent",
+          },
+          draggableIcon: {
+            backgroundColor: "#000",
+          },
         }}
-      />
+        height={600}
+      >
+        <DiscoverFilter
+          states={{
+            visible,
+            setVisible,
+            value,
+            setValue,
+            check1,
+            setCheck1,
+            check2,
+            setCheck2,
+            check3,
+            setCheck3,
+            check4,
+            setCheck4,
+            selectedState,
+            setSelectedState,
+            selectedBreed,
+            setSelectedBreed,
+            selectedAge,
+            setSelectedAge,
+            resetAllFilters,
+            refRBSheet,
+          }}
+        />
+      </RBSheet>
 
       <FilterButtons
         selectedIndex={selectedIndex}
