@@ -14,12 +14,10 @@ export function BreederCard({ breeder }) {
         <View style={styles.cardView}>
           <View style={styles.imageView}></View>
 
-          <View style={{ width: 360 }}>
-            <Text style={{ fontWeight: "bold", color: Colors.black }}>
-              {breeder.name}
-            </Text>
-            <Text style={{ color: Colors.black }}>{breeder.breed}</Text>
-            <Text style={{ color: "orange", fontWeight: "500" }}>
+          <View style={styles.detailView}>
+            <Text style={styles.breederNameText}>{breeder.name}</Text>
+            <Text style={styles.breedText}>{breeder.breed}</Text>
+            <Text style={styles.availableKittenText}>
               {breeder.availableCount > 0
                 ? `${breeder.availableCount} Available Kittens`
                 : ""}
@@ -29,7 +27,7 @@ export function BreederCard({ breeder }) {
         </View>
       </Pressable>
 
-      <View style={{ position: "absolute", top: 8, right: 24 }}>
+      <View style={styles.heartButtonView}>
         <HeartButton />
       </View>
     </View>
@@ -37,6 +35,25 @@ export function BreederCard({ breeder }) {
 }
 
 const styles = StyleSheet.create({
+  heartButtonView: {
+    position: "absolute",
+    top: 8,
+    right: 24,
+  },
+  availableKittenText: {
+    color: "orange",
+    fontWeight: "500",
+  },
+  breedText: {
+    color: Colors.black,
+  },
+  breederNameText: {
+    fontWeight: "bold",
+    color: Colors.black,
+  },
+  detailView: {
+    width: 360,
+  },
   imageView: {
     height: 80,
     width: 80,
