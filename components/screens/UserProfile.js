@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View, Pressable } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  useWindowDimensions,
+  Alert,
+} from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -11,15 +19,38 @@ import { db } from "../../firebaseUtils/firebase-setup";
 import { Colors } from "../styles/Colors";
 
 export default function UserProfile({ route, navigation }) {
+  const { height, width } = useWindowDimensions();
+  const buttonHandler = () => {
+    Alert.alert("The button function is coming soon~", "See you next time!", [
+      {
+        text: "Sad",
+        onPress: () => console.log("Feel Sad about no button function now"),
+      },
+      {
+        text: "Wait for you",
+        onPress: () => console.log("Wait for coming button function"),
+      },
+    ]);
+  };
   return (
-    <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
+    <View
+      style={{
+        // marginHorizontal: 16,
+        marginTop: 55,
+        marginBottom: 200,
+        flex: 0,
+        alignItems: "center",
+        justifyContent: "center",
+        margin: 12,
+      }}
+    >
       <View style={{ margin: 12 }}>
         <View>
           <TitleText>Profile</TitleText>
         </View>
       </View>
 
-      <View style={{ padding: 12 }}>
+      <View style={{ alignItems: "center", marginTop: 20 }}>
         {/* add a profile photo here */}
         <Text
           style={{
@@ -32,30 +63,23 @@ export default function UserProfile({ route, navigation }) {
         >
           Corrine
         </Text>
-        <Pressable
-          //   onPress={resetHandler}
-          style={styles.button}
-        >
+
+        {/* Buttons  */}
+        <Pressable onPress={buttonHandler} style={styles.button}>
           <Text style={styles.text}>Change Profile Photo</Text>
         </Pressable>
 
-        <Pressable
-          //   onPress={resetHandler}
-          style={styles.button}
-        >
+        <Pressable onPress={buttonHandler} style={styles.button}>
           <Text style={styles.text}>Change Password</Text>
         </Pressable>
 
-        <Pressable
-          //   onPress={resetHandler}
-          style={styles.button}
-        >
+        <Pressable onPress={buttonHandler} style={styles.button}>
           <Text style={styles.text}>Enable Notifications</Text>
         </Pressable>
 
         {/* Log Out button */}
         <Pressable
-          //   onPress={resetHandler}
+          onPress={buttonHandler}
           style={{
             backgroundColor: Colors.messageButton,
             padding: 8,
@@ -68,7 +92,6 @@ export default function UserProfile({ route, navigation }) {
         >
           <Text
             style={{
-              alignItems: "center",
               color: "white",
               fontSize: 18,
               marginLeft: 20,
@@ -85,15 +108,18 @@ export default function UserProfile({ route, navigation }) {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: "white",
-    padding: 8,
-    borderRadius: 10,
+
     height: 40,
-    width: 363,
+    width: 300,
     marginVertical: 20,
+    backgroundColor: "white",
+    padding: 8,
+    borderRadius: 12,
   },
   text: {
-    alignItems: "center",
+    textAlign: "left",
     color: "black",
     fontSize: 18,
+    marginLeft: 5,
   },
 });

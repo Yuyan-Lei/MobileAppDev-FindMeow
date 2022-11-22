@@ -60,6 +60,13 @@ const FindBreederFilter = ({
     resetAllFilters();
   };
 
+  const applyHandler = () => {
+    setSelectedBreed(selectedBreed);
+    setSelectedCatNum(selectedCatNum);
+    setSelectedState(selectedState);
+    setVisible(!visible);
+  };
+
   const goBackHandler = () => {
     setVisible(!visible);
   };
@@ -125,7 +132,7 @@ const FindBreederFilter = ({
           </Pressable>
 
           <Pressable
-            onPress={resetHandler}
+            onPress={applyHandler}
             style={{
               backgroundColor: Colors.orangeText,
               padding: 8,
