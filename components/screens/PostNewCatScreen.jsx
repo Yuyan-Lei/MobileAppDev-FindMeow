@@ -97,8 +97,9 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
                 <TextInput 
                     placeholder="100"
                     value={price}
+                    keyboardType="number-pad"
+                    style={{ width: '95%'}}
                     onChangeText={setPrice} />
-                <View style={{flex: 1}}></View>
                 <Text>$</Text>
             </View>
             <Text style={styles.subTitle}>Description</Text>
@@ -186,7 +187,8 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 20,
         alignItems: "center",
-        padding: 10
+        padding: 10,
+        width: '100%',
     },
     chipContainer: {
         flexDirection: 'row',
