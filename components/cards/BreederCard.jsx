@@ -5,17 +5,11 @@ import { rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 // import DropShadow from "react-native-drop-shadow";
-import { Shadow } from "react-native-shadow-2";
+// import { Shadow } from "react-native-shadow-2";
 
 export function BreederCard({ breeder }) {
   return (
     <View>
-      <Shadow
-        distance={5}
-        startColor={"#00000010"}
-        containerViewStyle={{ marginVertical: 20 }}
-        radius={8}
-      ></Shadow>
       <Pressable onPress={() => rootStackNavigate("CatteryProfile")}>
         <View style={styles.cardView}>
           <View style={styles.imageView}></View>
