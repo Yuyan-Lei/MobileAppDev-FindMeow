@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     fontStyle: "normal",
     fontWeight: "bold",
-    fontSize: 12,
+    fontSize: 14,
     textAlign: "left",
     color: Colors.orangeText,
     marginTop: 20,

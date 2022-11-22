@@ -273,8 +273,8 @@ const FindBreederFilter = ({
     <View style={styles.filterContainer}>
       <OrangeTitleText>Filter</OrangeTitleText>
 
-      <Text style={{ textAlign: "left", color: Colors.gray }}>
-        Arrange Based On The Following Types
+      <Text style={styles.reminderText}>
+        Arrange Based On The Following Choices
       </Text>
 
       <OrangeText>Breed</OrangeText>
@@ -348,6 +348,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
+  reminderText: {
+    fontSize: 14,
+    textAlign: "left", 
+    color: Colors.gray 
+  },
   submitButtonContainer: {
     flexDirection: "row", 
     justifyContent: "space-around", 
@@ -359,13 +364,13 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 25,
     height: 40,
-    width: 90,
+    width: 150,
   },
   submitText: {
     alignItems: "center", 
     textAlign: "center",
     color: "white", 
-    fontSize: 18 
+    fontSize: 19 
   }
 });
 
