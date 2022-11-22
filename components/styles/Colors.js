@@ -18,4 +18,6 @@ export const Colors = {
   backgroundGray: "#F5F5F5",
   cardShadow: "#f7f7fd",
   black: "#2E2525",
+  chipText: "#F8C055",
+  chipBackground: "#f5ddb0",
 };
