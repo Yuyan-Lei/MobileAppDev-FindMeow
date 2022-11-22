@@ -17,6 +17,9 @@ import DiscoverFilter from "./DiscoverFilter";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { Colors } from "../styles/Colors";
+import { Avatar } from "@react-native-material/core";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { auth } from "../../firebaseUtils/firebase-setup";
 
 export default function UserProfile({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -32,16 +35,24 @@ export default function UserProfile({ route, navigation }) {
       },
     ]);
   };
+  const onLogout = () => {
+    Alert.alert("Confirm to Log Out", "Are you sure you want to log out?", [
+      {
+        text: "Confirm", 
+        onPress: () => auth.signOut().then(() => navigation.navigate('LoginOrSignUp')),
+      },
+      {
+        text: "Cancel",
+      }
+    ]);
+  }
   return (
     <View
       style={{
         // marginHorizontal: 16,
-        marginTop: 55,
-        marginBottom: 200,
-        flex: 0,
-        alignItems: "center",
-        justifyContent: "center",
-        margin: 12,
+        paddingHorizontal: 16,
+        paddingTop: 55,
+        paddingBottom: 200,
       }}
     >
       <View style={{ margin: 12 }}>
@@ -52,7 +63,7 @@ export default function UserProfile({ route, navigation }) {
 
       <View style={{ alignItems: "center", marginTop: 20 }}>
         {/* add a profile photo here */}
-        <Text
+        {/* <Text
           style={{
             color: "orange",
             fontWeight: "700",
@@ -62,7 +73,20 @@ export default function UserProfile({ route, navigation }) {
           }}
         >
           Corrine
-        </Text>
+        </Text> */}
+        <Avatar 
+          label={getCurrentUserEmail()} 
+          color="#FFB801" 
+          tintColor="#FFFFFF"
+          size={100} />
+        <Text style={{
+            color: "orange",
+            fontWeight: "700",
+            fontSize: 22,
+            textAlign: "center",
+            marginTop: 20,
+            marginBottom: 20
+          }}>{getCurrentUserEmail()}</Text>
 
         {/* Buttons  */}
         <Pressable onPress={buttonHandler} style={styles.button}>
@@ -79,7 +103,7 @@ export default function UserProfile({ route, navigation }) {
 
         {/* Log Out button */}
         <Pressable
-          onPress={buttonHandler}
+          onPress={onLogout}
           style={{
             backgroundColor: Colors.messageButton,
             padding: 8,
