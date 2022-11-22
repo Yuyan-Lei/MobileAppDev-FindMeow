@@ -34,6 +34,12 @@ export async function getUserLikeCats() {
     return await getFromDB(email, collectionName).then((docSnap) => docSnap.data().likeCats);
 }
 
+export async function getUserData() {
+    const email = getCurrentUserEmail();
+
+    return await getFromDB(email, collectionName).then((docSnap) => docSnap.data());
+}
+
 export async function createCattery(userEmail, {
     catteryName,
     phoneNumber,
@@ -46,6 +52,7 @@ export async function createCattery(userEmail, {
         website,
         geoLocation: '',
         cats: [],
+        likeCats: [],
     }
     return await wrtieToDB(newCattery, collectionName, userEmail);
 }
