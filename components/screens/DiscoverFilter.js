@@ -73,6 +73,13 @@ const DiscoverFilter = ({
     resetAllFilters();
   };
 
+  const applyHandler = () => {
+    setSelectedBreed(selectedBreed);
+    setSelectedAge(selectedAge);
+    setSelectedState(selectedState);
+    setVisible(!visible);
+  };
+
   const goBackHandler = () => {
     setVisible(!visible);
   };
@@ -185,7 +192,7 @@ const DiscoverFilter = ({
           </Pressable>
 
           <Pressable
-            onPress={resetHandler}
+            onPress={applyHandler}
             style={{
               backgroundColor: Colors.orangeText,
               padding: 8,
