@@ -20,4 +20,5 @@ export const Colors = {
   black: "#2E2525",
   chipText: "#F8C055",
   chipBackground: "#f5ddb0",
+  filterBackground: "#E1E1E1",
 };

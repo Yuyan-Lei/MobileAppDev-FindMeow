@@ -16,6 +16,7 @@ import {
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export default function DiscoverMainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -99,7 +100,6 @@ export default function DiscoverMainScreen({ route, navigation }) {
         paddingHorizontal: 16,
         paddingTop: 55,
         paddingBottom: 200,
-        backgroundColor: "white",
       }}
     >
       <View style={{ padding: 12 }}>
