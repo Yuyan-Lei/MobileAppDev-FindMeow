@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FlatList, StyleSheet, Text, View, Button } from "react-native";
+import { FlatList, StyleSheet, Text, View, Button, Alert } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -21,6 +21,7 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 export default function DiscoverMainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  
   /* values used for DiscoverFilter start */
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState(0);
@@ -38,6 +39,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
+
   function resetAllFilters() {
     setValue(0);
 
@@ -52,12 +54,22 @@ export default function DiscoverMainScreen({ route, navigation }) {
     setSelectedGender("");
   }
 
+
+  /* data collector used for top filter tags - start */
   const [data, setData] = useState([]);
   useEffect(() => {
     let q;
+    // 1. Newer Post
     if (selectedIndex == 0) {
       q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
-    } else {
+    }
+    // 2. Nearby Post
+    else if (selectedIndex == 1) {
+      q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
+      // todo ...
+    }
+    // 3. Lower Price
+    else if (selectedIndex == 2) {
       q = query(collection(db, "Cats"), orderBy("Price", "desc"));
     }
     const unSubscribe = onSnapshot(q, (snapshot) => {
@@ -84,17 +96,38 @@ export default function DiscoverMainScreen({ route, navigation }) {
 
     return () => unSubscribe();
   }, []);
+  /* data collector used for top filter tags - end */
 
+
+  /* events for top filter tags - start */
   const onFilterChange = (value) => {
     console.log(value);
     let dataCopy = data;
+    // 1. newer post
     if (value === 0) {
       setData(dataCopy.sort((d1, d2) => d2.uploadTime - d1.uploadTime));
-    } else {
+    }
+    // 2. nearby Post
+    else if (value === 1) {
+      Alert.alert("The button function is coming soon~", "See you next time!", [
+        {
+          text: "Sad",
+          onPress: () => console.log("Feel Sad about no button function now"),
+        },
+        {
+          text: "Wait for you",
+          onPress: () => console.log("Wait for coming button function"),
+        },
+      ]);
+    }
+    // 3. Lower Price
+    else if (value === 2) {
       setData(dataCopy.sort((d1, d2) => d1.price - d2.price));
     }
     setSelectedIndex(value);
   };
+  /* events for top filter tags - end */
+
 
   return (
     <View
@@ -169,8 +202,9 @@ export default function DiscoverMainScreen({ route, navigation }) {
       <FilterButtons
         selectedIndex={selectedIndex}
         setSelectedIndex={onFilterChange}
-        buttons={["Latest Post", "Nearby", "Lowest Price"]}
+        buttons={["Newer Post", "Nearby", "Lower Price"]}
       />
+
       <View style={{ padding: 12 }}>
         <FlatList
           data={data}
