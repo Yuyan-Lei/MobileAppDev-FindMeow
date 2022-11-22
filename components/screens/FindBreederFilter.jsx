@@ -189,7 +189,7 @@
 // version 2
 import React, { useState } from "react";
 import { Button, Overlay, Icon, CheckBox, Slider } from "@rneui/themed";
-import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert, ScrollView} from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { OrangeTitleText } from "../texts/OrangeTitleText";
 import { OrangeText } from "../texts/OrangeText";
@@ -270,7 +270,7 @@ const FindBreederFilter = ({
   };
 
   return (
-    <View style={styles.filterContainer}>
+    <ScrollView style={styles.filterContainer}>
       <OrangeTitleText>Filter</OrangeTitleText>
 
       <Text style={styles.reminderText}>
@@ -317,7 +317,7 @@ const FindBreederFilter = ({
           <Text style={ styles.submitText }>Apply</Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
