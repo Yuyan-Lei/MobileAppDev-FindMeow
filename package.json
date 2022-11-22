@@ -37,6 +37,7 @@
     "react-native-linear-gradient": "^2.6.2",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-range-slider": "^0.1.2",
+    "react-native-raw-bottom-sheet": "^2.2.0",
     "react-native-screens": "^3.18.2",
     "react-native-web": "~0.18.9",
     "rn-range-slider": "^2.2.2",
