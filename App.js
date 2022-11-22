@@ -10,6 +10,7 @@ import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
 import DiscoverFilter from "./components/screens/DiscoverFilter";
 import HomePage from "./components/screens/HomePage";
 import LoginOrSignUpPage from "./components/screens/LoginOrSignUpPage";
+import ProfileCatteryPage from "./components/screens/ProfileCatteryPage";
 import StarListScreen from "./components/screens/StarListScreen";
 
 SplashScreen.preventAutoHideAsync();
@@ -50,6 +51,7 @@ export default function App() {
             component={CatteryProfileScreen}
           />
           <Stack.Screen name="DiscoverFilter" component={DiscoverFilter} />
+          <Stack.Screen name="ProfileCatteryPage" component={ProfileCatteryPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
