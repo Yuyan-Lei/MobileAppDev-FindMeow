@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View, Alert } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -84,11 +84,20 @@ export default function StarListScreen({ route, navigation }) {
   }, [])
 
   const onFilterChange = (value) => {
-    console.log(value);
     let dataCopy = data;
     if (value === 0) {
       setData(dataCopy.sort((d1, d2) => d2.uploadTime - d1.uploadTime));
     } else {
+      Alert.alert("The button function is coming soon~", "See you next time!", [
+        {
+          text: "Sad",
+          onPress: () => console.log("Feel Sad about no button function now"),
+        },
+        {
+          text: "Wait for you",
+          onPress: () => console.log("Wait for coming button function"),
+        },
+      ]);
       setData(dataCopy.sort((d1, d2) => d1.price - d2.price));
     }
     setSelectedIndex(value);
@@ -98,7 +107,7 @@ export default function StarListScreen({ route, navigation }) {
     <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
       <View style={{ margin: 12 }}>
         <View>
-          <TitleText>Star List</TitleText>
+          <TitleText>Collections</TitleText>
         </View>
       </View>
 
