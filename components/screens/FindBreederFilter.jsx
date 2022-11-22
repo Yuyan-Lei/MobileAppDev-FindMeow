@@ -285,7 +285,7 @@ const FindBreederFilter = ({
         defaultOption={{ key: selectedBreed, value: selectedBreed }}
       />
 
-      <OrangeText>State</OrangeText>
+      <OrangeText>Location</OrangeText>
       <SelectList
         setSelected={(val) => setSelectedState(val)}
         data={state}
