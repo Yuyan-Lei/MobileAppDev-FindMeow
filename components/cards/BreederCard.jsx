@@ -13,13 +13,8 @@ export function BreederCard({ breeder }) {
           style={{
             flexDirection: "row",
             marginVertical: 16,
-            // backgroundColor: Colors.cardShadow,
             backgroundColor: "white",
             borderRadius: 20,
-            // shadowColor: Colors.cardShadow,
-            shadowColor: "blue",
-            shadowRadius: 20,
-            shadowOffset: { height: 40 },
           }}
         >
           <View
@@ -32,7 +27,6 @@ export function BreederCard({ breeder }) {
             }}
           ></View>
 
-          {/* I tried to use "flexGlow:1" but it doesn't work */}
           <View style={{ width: 360 }}>
             <Text style={{ fontWeight: "bold", color: Colors.black }}>
               {breeder.name}
