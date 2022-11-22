@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
@@ -11,7 +11,7 @@ export function BreederCard({ breeder }) {
   return (
     <View>
       <Pressable onPress={() => rootStackNavigate("CatteryProfile")}>
-        <View style={styles.cardView}>
+        <View style={[styles.cardView, styles.shadowView]}>
           <View style={styles.imageView}></View>
 
           <View style={styles.detailView}>
@@ -37,7 +37,7 @@ export function BreederCard({ breeder }) {
 const styles = StyleSheet.create({
   heartButtonView: {
     position: "absolute",
-    top: 8,
+    top: 20,
     right: 24,
   },
   availableKittenText: {
@@ -63,8 +63,20 @@ const styles = StyleSheet.create({
   },
   cardView: {
     flexDirection: "row",
-    marginVertical: 16,
+    padding: 16,
+    paddingLeft: 8,
+    margin: 16,
     backgroundColor: "white",
     borderRadius: 20,
   },
+  shadowView: {
+    shadowColor: Platform.OS === 'ios' ? Colors.purple : Colors.shadowWhiteAndroid,
+    shadowOffset: {
+      width: 40,
+      height: 80,
+    },
+    shadowOpacity: 0.468,
+    shadowRadius: 20,
+    elevation: 17,
+  }
 });
