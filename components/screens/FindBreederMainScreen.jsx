@@ -101,13 +101,16 @@ export default function FindBreederMainScreen() {
             states={{
               visible,
               setVisible,
+              
               selectedBreed,
               setSelectedBreed,
               selectedState,
               setSelectedState,
               selectedCatNum,
               setSelectedCatNum,
+
               resetAllFilters,
+              refRBSheet,
             }}
           />
         </RBSheet>
