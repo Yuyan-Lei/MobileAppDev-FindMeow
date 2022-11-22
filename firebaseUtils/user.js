@@ -37,6 +37,10 @@ export async function getUserLikeCats() {
 export async function getUserData() {
     const email = getCurrentUserEmail();
 
+    if (email === '') {
+        return Promise.resolve();
+    }
+
     return await getFromDB(email, collectionName).then((docSnap) => docSnap.data());
 }
 
