@@ -56,3 +56,23 @@ export async function createCattery(userEmail, {
     }
     return await wrtieToDB(newCattery, collectionName, userEmail);
 }
+
+export async function updateCattery({
+    catteryName,
+    phoneNumber,
+    website,
+    address,
+    placeId,
+    picture
+}) {
+    const email = getCurrentUserEmail();
+    const updatedCattery = {
+        catteryName,
+        phoneNumber,
+        website,
+        address,
+        placeId,
+        picture
+    };
+    return await updateToDB(email, collectionName, updatedCattery);
+}

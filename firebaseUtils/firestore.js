@@ -76,7 +76,7 @@ export function getCurrentUserEmail() {
   try {
     const user = auth.currentUser;
 
-    return user.email;
+    return user ? user.email : '';
   } catch (err) {
     console.log(err);
   }

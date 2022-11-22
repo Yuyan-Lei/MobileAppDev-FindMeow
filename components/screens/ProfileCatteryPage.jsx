@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { FlatList, Pressable, Text, View, Image } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -31,19 +31,33 @@ const cattery = {
   location: "Sunnyvale, CA",
 };
 
-export default function ProfileCatteryPage() {
+export default function ProfileCatteryPage({ route, navigation }) {
   const { height, width } = useWindowDimensions();
   const [user, setUser] = useState(null);
   getUserData().then(user => setUser(user));
+  const onUpdateCattery = () => {
+    navigation.navigate("UpdateCatteryPage", {user});
+  };
   const majorPage = user ? (<View>
     <View>
-        <View style={{ height: width / 2, backgroundColor: "gray" }}></View>
+        <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
+            {user.picture && 
+            <Image source={{ uri: user.picture }} style={{ width: "100%", height: "100%" }} />}
+        </View>
       </View>
 
       <View style={{ position: "absolute", top: 48, left: 12 }}>
-        <View style={{ backgroundColor: "gray", opacity: 0.5 }}>
+        <View>
           <Pressable onPress={rootStackNavigateBack}>
             <Feather name="arrow-left-circle" size={24} color="black" />
+          </Pressable>
+        </View>
+      </View>
+
+      <View style={{ position: "absolute", top: 48, right: 12 }}>
+        <View>
+          <Pressable onPress={onUpdateCattery}>
+            <Feather name="edit" size={24} color="black" />
           </Pressable>
         </View>
       </View>
@@ -62,7 +76,7 @@ export default function ProfileCatteryPage() {
             {user.catteryName}
           </Text>
           <View style={{ padding: 4 }}>
-            <LocationText>{cattery.location}</LocationText>
+            <LocationText>{user.address}</LocationText>
           </View>
         </View>
 
@@ -106,11 +120,6 @@ export default function ProfileCatteryPage() {
             ListFooterComponent={<View style={{ height: 60 }} />}
           />
         </View>
-      </View>
-
-      {/* floating components */}
-      <View style={{ position: "absolute", top: 40, right: 32 }}>
-        <HeartButton />
       </View>
   </View>) : <Text>Loading</Text>;
   return (

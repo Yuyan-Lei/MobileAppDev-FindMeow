@@ -20,7 +20,6 @@ export default function CatImagePicker({image, setImage}) {
   };
 
   return (
-    // <View style={{ width: 200, height: 200, backgroundColor: 'white'}}>
     <Pressable style={
       image ? 
         { width: 200, height: 200, backgroundColor: 'white', borderRadius: 12} : 
@@ -33,7 +32,6 @@ export default function CatImagePicker({image, setImage}) {
             <Text style={styles.text}>Upload Image</Text>
         </View>}
     </Pressable>
-    // </View>
   );
 };
 
