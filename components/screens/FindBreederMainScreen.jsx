@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { BreederCard } from "../cards/BreederCard";
 import { SearchBar } from "../pressable/SearchBar";
@@ -6,6 +6,7 @@ import { TitleText } from "../texts/TitleText";
 import FindBreederFilter from "./FindBreederFilter";
 import { FilterButton } from "../pressable/FilterButton";
 import { Colors } from "../styles/Colors";
+import RBSheet from "react-native-raw-bottom-sheet";
 
 const mockBreeders = [
   {
@@ -56,6 +57,8 @@ export default function FindBreederMainScreen() {
   const [selectedBreed, setSelectedBreed] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCatNum, setSelectedCatNum] = useState("All");
+
+  const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
   function resetAllFilters() {
@@ -73,7 +76,39 @@ export default function FindBreederMainScreen() {
         <View style={styles.searchBarView}>
           <SearchBar text={searchName} setText={setSearchName} />
         </View>
-        <FilterButton onPress={() => setVisible(true)} size={24} length={60} />
+        <FilterButton
+          onPress={() => refRBSheet.current.open()}
+          size={24}
+          length={60}
+        />
+        <RBSheet
+          ref={refRBSheet}
+          closeOnDragDown={true}
+          closeOnPressMask={false}
+          customStyles={{
+            wrapper: {
+              backgroundColor: "transparent",
+            },
+            draggableIcon: {
+              backgroundColor: "#000",
+            },
+          }}
+          height={460}
+        >
+          <FindBreederFilter
+            states={{
+              visible,
+              setVisible,
+              selectedBreed,
+              setSelectedBreed,
+              selectedState,
+              setSelectedState,
+              selectedCatNum,
+              setSelectedCatNum,
+              resetAllFilters,
+            }}
+          />
+        </RBSheet>
       </View>
       <View style={styles.listView}>
         <FlatList
@@ -82,19 +117,6 @@ export default function FindBreederMainScreen() {
           ListFooterComponent={<View style={{ height: 250 }} />}
         />
       </View>
-      <FindBreederFilter
-        states={{
-          visible,
-          setVisible,
-          selectedBreed,
-          setSelectedBreed,
-          selectedState,
-          setSelectedState,
-          selectedCatNum,
-          setSelectedCatNum,
-          resetAllFilters,
-        }}
-      />
     </View>
   );
 }
