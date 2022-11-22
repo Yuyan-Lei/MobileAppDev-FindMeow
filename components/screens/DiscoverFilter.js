@@ -504,8 +504,8 @@
 
 // test test test
 import React, { useState } from "react";
-import { Button, Overlay, Icon, CheckBox, Slider } from "@rneui/themed";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { Overlay, Icon, Slider } from "@rneui/themed";
+import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { OrangeTitleText } from "../texts/OrangeTitleText";
@@ -521,6 +521,7 @@ const DiscoverFilter = ({
     setVisible,
     value,
     setValue,
+
     check1,
     setCheck1,
     check2,
@@ -529,12 +530,18 @@ const DiscoverFilter = ({
     setCheck3,
     check4,
     setCheck4,
+    check5,
+    setCheck5,
+
     selectedBreed,
     setSelectedBreed,
     selectedAge,
     setSelectedAge,
     selectedState,
     setSelectedState,
+    selectedGender,
+    setSelectedGender,
+
     resetAllFilters,
     refRBSheet,
   },
@@ -553,12 +560,11 @@ const DiscoverFilter = ({
 
   const age = [
     { key: "All", value: "All" },
-    { key: ">1", value: ">1" },
-    { key: "1~3", value: "1 ~ 3" },
-    { key: "3~6", value: "3 ~ 6" },
-    { key: "6~9", value: "6 ~ 9" },
-    { key: "9~12", value: "9 ~ 12" },
-    { key: "12+", value: "12+" },
+    { key: "< 1 month", value: "< 1 month" },
+    { key: "1 - 3 months", value: "1 - 3 months" },
+    { key: "3 - 6 months", value: "3 - 6 months" },
+    { key: "6 - 12 months", value: "6 - 12 months" },
+    { key: "> 1 year", value: "> 1 year" },
   ];
 
   const state = [
@@ -575,16 +581,32 @@ const DiscoverFilter = ({
     { key: "Georgia", value: "Georgia" },
   ];
 
+  const gender = [
+    { key: "All", value: "All" },
+    { key: "Female", value: "Female" },
+    { key: "Male", value: "Male" },
+  ];
+
   const resetHandler = () => {
     resetAllFilters();
-    refRBSheet.current.close();
   };
 
   const applyHandler = () => {
     setSelectedBreed(selectedBreed);
     setSelectedAge(selectedAge);
     setSelectedState(selectedState);
+    // setSelectedGender(selectedGender);
     // setVisible(!visible);
+    Alert.alert("The button function is coming soon~", "See you next time!", [
+      {
+        text: "Sad",
+        onPress: () => console.log("Feel Sad about no button function now"),
+      },
+      {
+        text: "Wait for you",
+        onPress: () => console.log("Wait for coming button function"),
+      },
+    ]);
     refRBSheet.current.close();
   };
 
@@ -631,15 +653,25 @@ const DiscoverFilter = ({
         defaultOption={{ key: selectedBreed, value: selectedBreed }}
       />
 
-      <OrangeText>Age (months)</OrangeText>
+      <OrangeText>Age</OrangeText>
       <SelectList
         setSelected={(val) => setSelectedAge(val)}
         data={age}
         save="value"
         defaultOption={{ key: selectedAge, value: selectedAge }}
+        search={false}
       />
 
-      <OrangeText>State</OrangeText>
+      <OrangeText>Gender</OrangeText>
+      <SelectList
+        setSelected={(val) => setSelectedGender(val)}
+        data={gender}
+        save="value"
+        defaultOption={{ key: selectedGender, value: selectedGender }}
+        search={false}
+      />
+
+      <OrangeText>Location</OrangeText>
       <SelectList
         setSelected={(val) => setSelectedState(val)}
         data={state}
@@ -647,38 +679,43 @@ const DiscoverFilter = ({
         defaultOption={{ key: selectedState, value: selectedState }}
       />
 
-      <View style={{ flexDirection: "row" }}>
+      {/* <View style={{ flexDirection: "row" }}>
         <CheckBox
           center
-          title="Female"
+          title="Vaccinated"
           checked={check1}
           onPress={() => setCheck1(!check1)}
         />
-        <View style={{ marginLeft: 15 }}>
-          <CheckBox
-            center
-            title="Male"
-            checked={check2}
-            onPress={() => setCheck2(!check2)}
-          />
-        </View>
-      </View>
-      <View style={{ flexDirection: "row" }}>
         <CheckBox
           center
-          title="Neutered"
+          title="Vet Checked"
+          checked={check2}
+          onPress={() => setCheck2(!check2)}
+        />
+        <CheckBox
+          center
+          title="Dewormed"
           checked={check3}
           onPress={() => setCheck3(!check3)}
         />
+      </View>
+
+      <View style={{ flexDirection: "row" }}>
         <CheckBox
           center
-          title="Not Spayed"
+          title="Ready to go home"
           checked={check4}
           onPress={() => setCheck4(!check4)}
         />
-      </View>
+        <CheckBox
+          center
+          title="Neutered / Spayed"
+          checked={check5}
+          onPress={() => setCheck5(!check5)}
+        />
+      </View> */}
 
-      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop:20 }}>
         <Pressable
           onPress={resetHandler}
           style={{
