@@ -20,9 +20,12 @@ import { Colors } from "../styles/Colors";
 import { Avatar } from "@react-native-material/core";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { auth } from "../../firebaseUtils/firebase-setup";
+import { getUserData } from "../../firebaseUtils/user";
 
 export default function UserProfile({ route, navigation }) {
   const { height, width } = useWindowDimensions();
+  const [user, setUser] = useState(null);
+  getUserData().then(user => setUser(user));
   const buttonHandler = () => {
     Alert.alert("The button function is coming soon~", "See you next time!", [
       {
@@ -38,7 +41,7 @@ export default function UserProfile({ route, navigation }) {
   const onLogout = () => {
     Alert.alert("Confirm to Log Out", "Are you sure you want to log out?", [
       {
-        text: "Confirm", 
+        text: "Confirm",
         onPress: () => auth.signOut().then(() => navigation.navigate('LoginOrSignUp')),
       },
       {
@@ -74,21 +77,26 @@ export default function UserProfile({ route, navigation }) {
         >
           Corrine
         </Text> */}
-        <Avatar 
-          label={getCurrentUserEmail()} 
-          color="#FFB801" 
+        <Avatar
+          label={user && user.isCattery ? user.catteryName : getCurrentUserEmail()}
+          color="#FFB801"
           tintColor="#FFFFFF"
           size={100} />
         <Text style={{
-            color: "orange",
-            fontWeight: "700",
-            fontSize: 22,
-            textAlign: "center",
-            marginTop: 20,
-            marginBottom: 20
-          }}>{getCurrentUserEmail()}</Text>
+          color: "orange",
+          fontWeight: "700",
+          fontSize: 22,
+          textAlign: "center",
+          marginTop: 20,
+          marginBottom: 20
+        }}>{user && user.isCattery ? user.catteryName : getCurrentUserEmail()}</Text>
 
         {/* Buttons  */}
+        {
+          user && user.isCattery && <Pressable onPress={buttonHandler} style={styles.button}>
+            <Text style={styles.text}>View Cattery Page</Text>
+          </Pressable>
+        }
         <Pressable onPress={buttonHandler} style={styles.button}>
           <Text style={styles.text}>Change Profile Photo</Text>
         </Pressable>
