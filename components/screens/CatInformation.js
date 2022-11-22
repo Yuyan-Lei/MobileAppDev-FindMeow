@@ -275,7 +275,7 @@ export default class CatInformation extends React.Component {
   };
   render() {
     return (
-      <BottomDrawer containerHeight={400} offset={IMAGE_HEIGHT}>
+      <BottomDrawer containerHeight={800} downDisplay={300} startUp={false}>
         {this.renderContent()}
       </BottomDrawer>
     );
