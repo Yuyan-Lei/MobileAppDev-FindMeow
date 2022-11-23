@@ -7,6 +7,7 @@ import { Chip } from '@rneui/themed';
 import CatImagePicker from "./CatImagePicker";
 import { createCat } from "../../firebaseUtils/cat";
 import { writeImageToDB } from "../../firebaseUtils/firestore";
+import { getUserData } from "../../firebaseUtils/user";
 
 export default function PostNewCatScreen({navigation: {navigate}}) {
     const [catName, setCatName] = useState('');
@@ -21,6 +22,15 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
     const [dewormed, setDewormed] = useState(false);
     const [ready, setReady] = useState(false);
     const [neutered, setNeutered] = useState(false);
+
+    const [,setUser] = useState(null);
+    const [userShortAddress, setUserShortAddress] = useState("");
+    const [userPhone, setUserPhone] = useState("");
+    getUserData().then ((user) => {
+        setUser(user);
+        setUserShortAddress(user.address.split(", ")[1] + ", " + user.address.split(", ")[2]);
+        setUserPhone(user.phone);
+    });
 
     const onPostNewCat = () => {
         const tags = [];
@@ -41,9 +51,18 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
         }
         writeImageToDB(image).
             then(url => {
-                createCat({Name: catName, Breed: breed, Birthday: birthDate,
-                    Picture: url, Gender: gender, Price: price, Description: description, 
-                    Tags: tags, Cattery: '', Contact: '', UploadTime: new Date().getTime()})
+                createCat({
+                    Name: catName, 
+                    Breed: breed, 
+                    Birthday: birthDate,
+                    Picture: url, 
+                    Gender: gender, 
+                    Price: price, 
+                    Description: description, 
+                    Tags: tags, 
+                    Cattery: userShortAddress, 
+                    Contact: userPhone, 
+                    UploadTime: new Date().getTime()})
             }).then(navigate('Cats'));
     };
 
