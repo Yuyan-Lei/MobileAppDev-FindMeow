@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
-import { FlatList, Pressable, Text, View, Image, StyleSheet } from "react-native";
+import { FlatList, Pressable, Text, View, Image, StyleSheet, Alert } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -61,6 +61,7 @@ export default function CatteryProfileScreen({ route }) {
           </View>
         </View>
 
+        {/* Top left button - back */}
         <View style={{ position: "absolute", top: 48, left: 12 }}>
           <View>
             <Pressable onPress={rootStackNavigateBack}>
@@ -147,7 +148,14 @@ export default function CatteryProfileScreen({ route }) {
 
       {/* floating components */}
       <View style={{ position: "absolute", top: 40, right: 32 }}>
-        <HeartButton />
+        <HeartButton 
+          onPress={() =>{
+              Alert.alert("Feature for this button is coming soon~", "See you next time!", [
+                {text: "Sad"},
+                {text: "Wait for you"},
+              ])
+          }}
+        />
       </View>
     </View>
   );

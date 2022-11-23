@@ -28,10 +28,10 @@ export default function UserProfile({ route, navigation }) {
   const user = route.params.user;
 
   const buttonHandler = () => {
-    Alert.alert("The button function is coming soon~", "See you next time!", [
+    Alert.alert("Feature for this button is coming soon~", "See you next time!", [
       {text: "Sad"},
       {text: "Wait for you"},
-    ]);
+    ])
   };
 
   const onLogout = () => {

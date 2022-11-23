@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, Pressable, StyleSheet, Text, View, Image } from "react-native";
+import { Platform, Pressable, StyleSheet, Text, View, Image, Alert } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
@@ -41,7 +41,14 @@ export function BreederCard({ cattery }) {
       </Pressable>
 
       <View style={styles.heartButtonView}>
-        <HeartButton />
+        <HeartButton 
+            onPress={() =>{
+                Alert.alert("Feature for this button is coming soon~", "See you next time!", [
+                  {text: "Sad"},
+                  {text: "Wait for you"},
+                ])
+            }}
+          />
       </View>
     </View>
   );

@@ -99,10 +99,10 @@ export default function DiscoverMainScreen({ route, navigation }) {
     }
     // 2. nearby Post
     else if (value === 1) {
-      Alert.alert("The button function is coming soon~", "See you next time!", [
+      Alert.alert("Feature for this button is coming soon~", "See you next time!", [
         {text: "Sad"},
         {text: "Wait for you"},
-      ]);
+      ])
     }
     // 3. Lower Price
     else if (value === 2) {

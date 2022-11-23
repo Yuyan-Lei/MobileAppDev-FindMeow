@@ -94,7 +94,7 @@ export default function StarListScreen({ route, navigation }) {
     if (value === 0) {
       setData(dataCopy.sort((d1, d2) => d2.uploadTime - d1.uploadTime));
     } else {
-      Alert.alert("The button function is coming soon~", "See you next time!", [
+      Alert.alert("Feature for this button is coming soon~", "See you next time!", [
         {text: "Sad"},
         {text: "Wait for you"},
       ]);

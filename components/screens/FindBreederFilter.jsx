@@ -252,16 +252,10 @@ const FindBreederFilter = ({
     setSelectedCatNum(selectedCatNum);
     setSelectedState(selectedState);
     // setVisible(!visible);
-    Alert.alert("The button function is coming soon~", "See you next time!", [
-      {
-        text: "Sad",
-        onPress: () => console.log("Feel Sad about no button function now"),
-      },
-      {
-        text: "Wait for you",
-        onPress: () => console.log("Wait for coming button function"),
-      },
-    ]);
+    Alert.alert("Feature for this button is coming soon~", "See you next time!", [
+      {text: "Sad"},
+      {text: "Wait for you"},
+    ])
     refRBSheet.current.close();
   };
 
