@@ -21,23 +21,21 @@ import { Avatar } from "@react-native-material/core";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { auth } from "../../firebaseUtils/firebase-setup";
 import { getUserData } from "../../firebaseUtils/user";
+import { Divider } from 'react-native-elements';
 
 export default function UserProfile({ route, navigation }) {
   const { height, width } = useWindowDimensions();
   const [user, setUser] = useState(null);
+
   getUserData().then(user => setUser(user));
+
   const buttonHandler = () => {
     Alert.alert("The button function is coming soon~", "See you next time!", [
-      {
-        text: "Sad",
-        onPress: () => console.log("Feel Sad about no button function now"),
-      },
-      {
-        text: "Wait for you",
-        onPress: () => console.log("Wait for coming button function"),
-      },
+      {text: "Sad"},
+      {text: "Wait for you"},
     ]);
   };
+
   const onLogout = () => {
     Alert.alert("Confirm to Log Out", "Are you sure you want to log out?", [
       {
@@ -49,87 +47,68 @@ export default function UserProfile({ route, navigation }) {
       }
     ]);
   }
+
+
   const onViewCatteryPage = () => navigation.navigate('ProfileCatteryPage');
   return (
-    <View
-      style={{
-        // marginHorizontal: 16,
-        paddingHorizontal: 16,
-        paddingTop: 55,
-        paddingBottom: 200,
-      }}
-    >
+    <View style={styles.container}>
       <View style={{ margin: 12 }}>
         <View>
           <TitleText>Profile</TitleText>
         </View>
       </View>
 
-      <View style={{ alignItems: "center", marginTop: 20 }}>
-        {/* add a profile photo here */}
-        {/* <Text
-          style={{
-            color: "orange",
-            fontWeight: "700",
-            fontSize: 24,
-            textAlign: "center",
-            paddingBottom: 20,
-          }}
-        >
-          Corrine
-        </Text> */}
+      <View style={{ 
+        alignItems: "center", 
+        marginTop: 20 
+      }}>
         <Avatar
           label={user && user.isCattery ? user.catteryName : getCurrentUserEmail()}
           color="#FFB801"
           tintColor="#FFFFFF"
-          size={100} />
+          size={90} />
         <Text style={{
           color: "orange",
           fontWeight: "700",
-          fontSize: 22,
+          fontSize: 21,
           textAlign: "center",
           marginTop: 20,
-          marginBottom: 20
-        }}>{user && user.isCattery ? user.catteryName : getCurrentUserEmail()}</Text>
+        }}>
+          {user && user.isCattery ? user.catteryName : getCurrentUserEmail()}
+        </Text>
 
-        {/* Buttons  */}
-        {
-          user && user.isCattery && <Pressable onPress={onViewCatteryPage} style={styles.button}>
-            <Text style={styles.text}>View Cattery Page</Text>
+
+        <View style={styles.buttonContainer}>
+          {
+            user && user.isCattery &&
+            <View>
+              <Pressable onPress={onViewCatteryPage} style={styles.button}>
+                <Text style={styles.buttonText}>View Cattery Page</Text>
+              </Pressable>
+              <Divider style={styles.divider} />
+            </View>
+          }
+          <Pressable onPress={buttonHandler} style={styles.button}>
+            <Text style={styles.buttonText}>Change Profile Photo</Text>
           </Pressable>
-        }
-        <Pressable onPress={buttonHandler} style={styles.button}>
-          <Text style={styles.text}>Change Profile Photo</Text>
-        </Pressable>
+          <Divider style={styles.divider} />
 
-        <Pressable onPress={buttonHandler} style={styles.button}>
-          <Text style={styles.text}>Change Password</Text>
-        </Pressable>
+          <Pressable onPress={buttonHandler} style={styles.button}>
+            <Text style={styles.buttonText}>Change Password</Text>
+          </Pressable>
+          <Divider style={styles.divider} />
 
-        <Pressable onPress={buttonHandler} style={styles.button}>
-          <Text style={styles.text}>Enable Notifications</Text>
-        </Pressable>
+          <Pressable onPress={buttonHandler} style={styles.button}>
+            <Text style={styles.buttonText}>Enable Notifications</Text>
+          </Pressable>
+        </View>
 
         {/* Log Out button */}
         <Pressable
           onPress={onLogout}
-          style={{
-            backgroundColor: Colors.messageButton,
-            padding: 8,
-            borderRadius: 25,
-            height: 40,
-            width: 120,
-            marginHorizontal: 130,
-            marginTop: 40,
-          }}
+          style={styles.logOutButton}
         >
-          <Text
-            style={{
-              color: "white",
-              fontSize: 18,
-              marginLeft: 20,
-            }}
-          >
+          <Text style={styles.logOutButtonText}>
             Log Out
           </Text>
         </Pressable>
@@ -139,20 +118,50 @@ export default function UserProfile({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container:{
+    paddingHorizontal: 16,
+    paddingTop: 55,
+    paddingBottom: 200,
+  },
+  buttonContainer: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    marginTop: 30,
+    marginBottom: 40,
+    height: 230,
+    width: '88%'
+  },
   button: {
     backgroundColor: "white",
-
     height: 40,
     width: 300,
-    marginVertical: 20,
+    marginVertical: 8,
     backgroundColor: "white",
     padding: 8,
-    borderRadius: 12,
+    borderRadius: 20,
   },
-  text: {
+  buttonText: {
     textAlign: "left",
     color: "black",
     fontSize: 18,
-    marginLeft: 5,
+    marginLeft: 10,
+  },
+  divider: {
+    borderBottomWidth: 1.3,
+    marginHorizontal: 10,
+  },
+  logOutButton: {
+    backgroundColor: Colors.messageButton,
+    borderRadius: 25,
+    height: 43,
+    width: 182,
+    alignItems: "center",
+  },
+  logOutButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "600",
+    textAlign: "center",
+    marginTop: 10,
   },
 });
