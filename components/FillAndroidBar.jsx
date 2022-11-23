@@ -5,7 +5,6 @@ const screenHeight = Dimensions.get('screen').height;
 const windowHeight = Dimensions.get('window').height;
 const statusBarHeight = StatusBar.currentHeight;
 const navbarHeight = screenHeight - windowHeight + statusBarHeight;
-console.log(`navigation bar height: ${navbarHeight}`)
 
 export function FillAndroidTopBar() {
     return (<View style={{ height: statusBarHeight, width: "100%", opacity: 1 }} />)
