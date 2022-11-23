@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, TextInput, StyleSheet, ScrollView, Pressable, KeyboardAvoidingView } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import CatBreedSelector from "./CatBreedSelector";
@@ -8,8 +8,10 @@ import CatImagePicker from "./CatImagePicker";
 import { createCat } from "../../firebaseUtils/cat";
 import { getCurrentUserEmail, writeImageToDB } from "../../firebaseUtils/firestore";
 import { getUserData } from "../../firebaseUtils/user";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebaseUtils/firebase-setup";
 
-export default function PostNewCatScreen({navigation: {navigate}}) {
+export default function PostNewCatScreen({route, navigation: {navigate}}) {
     const [catName, setCatName] = useState('');
     const [image, setImage] = useState(null);
     const [breed, setBreed] = useState('');
@@ -24,9 +26,15 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
     const [neutered, setNeutered] = useState(false);
 
     const [userPhone, setUserPhone] = useState("");
-    getUserData().then ((user) => {
-        setUserPhone(user.phoneNumber);
-    });
+    
+    useEffect(() => {
+        const docRef = doc(db, "Users", getCurrentUserEmail());
+        const unSubscribe = onSnapshot(docRef, (snapshot) => {
+          setUserPhone(snapshot.data().phoneNumber);
+        });
+    
+        return () => unSubscribe();
+      }, []);
 
     const onPostNewCat = () => {
         const tags = [];

@@ -1,4 +1,4 @@
-import { getFromDB, updateToDB, wrtieToDB, getCurrentUserEmail } from "./firestore";
+import { getFromDB, updateToDB, wrtieToDB, getCurrentUserEmail, getAllFromDB } from "./firestore";
 import { arrayUnion, arrayRemove, doc } from "firebase/firestore";
 import { db } from "./firebase-setup";
 
@@ -83,4 +83,13 @@ export async function updateCattery({
 
 export async function getCattery(email) {
     return await getFromDB(email, collectionName).then((docSnap) => docSnap.data());
+}
+
+export async function getAllCatteries() {
+    return await getAllFromDB(collectionName).then((userSnap) => userSnap.docs.filter(snap => snap.data().isCattery).map(snap => {
+        return {
+            catteryEmail: snap.id,
+            catteryData: snap.data()
+        };
+    }));
 }

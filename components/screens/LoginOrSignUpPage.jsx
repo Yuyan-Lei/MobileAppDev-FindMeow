@@ -4,7 +4,7 @@ import { TextInput, Pressable } from "@react-native-material/core";
 import { CheckBox } from '@rneui/themed';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseUtils/firebase-setup";
-import { createUser, createCattery } from "../../firebaseUtils/user";
+import { createUser, createCattery, getUserData } from "../../firebaseUtils/user";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Feather } from "@expo/vector-icons";
 
 export default function LoginOrSignUpPage({ route, navigation }) {
@@ -41,7 +41,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
         signInWithEmailAndPassword(auth, userName, password).then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            navigation.navigate('Home');
+            getUserData().then(user => navigation.navigate('Home'));
         })
             .catch((error) => {
                 const errorCode = error.code;

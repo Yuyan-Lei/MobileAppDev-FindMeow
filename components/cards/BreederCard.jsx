@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { Platform, Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
@@ -7,22 +7,26 @@ import { LocationText } from "../texts/LocationText";
 // import DropShadow from "react-native-drop-shadow";
 // import { Shadow } from "react-native-shadow-2";
 
-export function BreederCard({ breeder }) {
+export function BreederCard({ cattery }) {
   return (
-    <View>
-      <Pressable onPress={() => rootStackNavigate("CatteryProfile")}>
+    <View style={{ marginHorizontal: 10}}>
+      <Pressable onPress={() => rootStackNavigate("CatteryProfile", {cattery})}>
         <View style={[styles.cardView, styles.shadowView]}>
-          <View style={styles.imageView}></View>
+          <View style={styles.imageView}>
+            {/* Cattery photo */}
+            <Image source={{ uri: cattery.catteryData.picture }} style={styles.image} />
+          </View>
 
           <View style={styles.detailView}>
-            <Text style={styles.breederNameText}>{breeder.name}</Text>
-            <Text style={styles.breedText}>{breeder.breed}</Text>
+            <Text style={styles.breederNameText}>{cattery.catteryData.catteryName}</Text>
+            <Text style={styles.breedText}>{cattery.catteryData.breed}</Text>
             <Text style={styles.availableKittenText}>
-              {breeder.availableCount > 0
-                ? `${breeder.availableCount} Available Kittens`
+              {cattery.catteryData.cats.length > 0
+                ? `${cattery.catteryData.cats.length} Available Kittens`
                 : ""}
             </Text>
-            <LocationText>{breeder.location}</LocationText>
+            <LocationText>{cattery.catteryData.address.split(", ")[1] 
+              + ", " + cattery.catteryData.address.split(", ")[2]}</LocationText>
           </View>
         </View>
       </Pressable>
@@ -59,6 +63,11 @@ const styles = StyleSheet.create({
     width: 80,
     backgroundColor: "gray",
     marginHorizontal: 20,
+    borderRadius: 16,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
     borderRadius: 16,
   },
   cardView: {
