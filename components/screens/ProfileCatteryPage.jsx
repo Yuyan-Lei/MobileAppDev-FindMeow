@@ -9,55 +9,61 @@ import { useWindowDimensions } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 import { rootStackNavigateBack } from "../RootNavigation";
-import { Colors } from "../styles/Colors";
-import { getUserData } from "../../firebaseUtils/user";
-import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, documentId, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
-
-const mockCats = [
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-];
 
 
 export default function ProfileCatteryPage({ route, navigation }) {
   const { height, width } = useWindowDimensions();
-  
-  const [user, setUser] = useState(null);
-  const [userShortAddress, setUserShortAddress] = useState("");
-  const [userFullAddress, setUserFullAddress] = useState("");
+  const [cats, setCats] = useState([]);
+  const cattery = route.params.user;
+  const catteryShortAddress = cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2];
+  const catteryFullAddress = cattery.address.split(", ")[0] + ", " + cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2];
+
   useEffect(() => {
-    const docRef = doc(db, "Users", getCurrentUserEmail());
-    const unSubscribe = onSnapshot(docRef, (snapshot) => {
-      setUser(snapshot.data());
-      setUserShortAddress(snapshot.data().address.split(", ")[1] + ", " + snapshot.data().address.split(", ")[2]);
-      setUserFullAddress(snapshot.data().address.split(", ")[0] + ", " + snapshot.data().address.split(", ")[1] + ", " + snapshot.data().address.split(", ")[2]);
+    if (cattery.cats.length === 0) {
+      return;
+    }
+    const q = query(collection(db, "Cats"), where(documentId(), "in", cattery.cats));
+    const unSubscribe = onSnapshot(q, (snapshot) => {
+      setCats(snapshot.docs.map((entry) => { return { id: entry.id, ...entry.data() } }));
     });
 
     return () => unSubscribe();
   }, []);
+  
 
-  const onUpdateCattery = () => {
-    navigation.navigate("UpdateCatteryPage", { user });
+  const buildCatItem = (cat) => {
+    const birthday = new Date(cat.Birthday);
+    const now = new Date();
+    const age =
+      now.getMonth() -
+      birthday.getMonth() +
+      12 * (now.getFullYear() - birthday.getFullYear());
+    return {
+      id: cat.id,
+      name: cat.Name,
+      month: age,
+      sex: cat.Gender,
+      price: cat.Price,
+      cattery: cat.Cattery,
+      photo: cat.Picture,
+    }
   };
 
-  const majorPage = user ? (<View>
+  const onUpdateCattery = () => {
+    navigation.navigate("UpdateCatteryPage", { cattery });
+  };
+
+  const majorPage = cattery ? (<View>
     <View>
       <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
-        {user.picture &&
-          <Image source={{ uri: user.picture }} style={{ width: "100%", height: "100%" }} />}
+        {cattery.picture &&
+          <Image source={{ uri: cattery.picture }} style={{ width: "100%", height: "100%" }} />}
       </View>
     </View>
 
+    {/* Top left - back button */}
     <View style={{ position: "absolute", top: 48, left: 12 }}>
       <View>
         <Pressable onPress={rootStackNavigateBack}>
@@ -66,6 +72,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
       </View>
     </View>
 
+    {/* Top right - update cattery button */}
     <View style={{ position: "absolute", top: 48, right: 12 }}>
       <View>
         <Pressable onPress={onUpdateCattery}>
@@ -74,8 +81,8 @@ export default function ProfileCatteryPage({ route, navigation }) {
       </View>
     </View>
 
+
     <View style={{ margin: 32, top: -80 }}>
-      
       {/* cattery name & address */}
       <View
         style={{
@@ -86,11 +93,11 @@ export default function ProfileCatteryPage({ route, navigation }) {
         }}
       >
         <Text style={styles.catteryName}>
-          {user.catteryName}
+          {cattery.catteryName}
         </Text>
 
         <View style={{ padding: 4 }}>
-          <LocationText>{userShortAddress}</LocationText>
+          <LocationText>{catteryShortAddress}</LocationText>
         </View>
       </View>
 
@@ -104,26 +111,26 @@ export default function ProfileCatteryPage({ route, navigation }) {
         <Text style={styles.infoTitle}>
           About
         </Text>
-        
+
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.infoSubTitle}>
             Phone:{" "}
           </Text>
-          <Text>{user.phoneNumber}</Text>
+          <Text>{cattery.phoneNumber}</Text>
         </View>
 
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.infoSubTitle}>
             Website:{" "}
           </Text>
-          <Text>{user.website}</Text>
+          <Text>{cattery.website}</Text>
         </View>
 
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.infoSubTitle}>
             Address:{" "}
           </Text>
-          <Text>{userFullAddress}</Text>
+          <Text>{catteryFullAddress}</Text>
         </View>
       </View>
 
@@ -140,8 +147,8 @@ export default function ProfileCatteryPage({ route, navigation }) {
           </Text>
         </View>
         <FlatList
-          data={mockCats}
-          renderItem={({ item, index }) => <CatCard cat={item} />}
+          data={cats}
+          renderItem={({ item, index }) => <CatCard cat={buildCatItem(item)} />}
           numColumns={2}
           ListFooterComponent={<View style={{ height: 60 }} />}
         />
