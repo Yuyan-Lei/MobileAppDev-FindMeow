@@ -12,7 +12,11 @@ export function LocationText({ textStyle, locationIconColor, children }) {
           size={12}
         />
       </View>
-      <Text style={[{ fontSize: 12, color: "gray" }, textStyle]}>
+      <Text style={[{ 
+        fontSize: 12, 
+        color: "gray",
+        marginTop: 6,
+        }, textStyle]}>
         {" "}
         {children}
       </Text>
