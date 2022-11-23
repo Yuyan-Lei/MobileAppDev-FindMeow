@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Feather } from "@expo/vector-icons";
 import { FlatList, Pressable, Text, View, Image, StyleSheet } from "react-native";
 import { CatCard } from "../cards/CatCard";
@@ -11,6 +11,9 @@ import { LocationText } from "../texts/LocationText";
 import { rootStackNavigateBack } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
 import { getUserData } from "../../firebaseUtils/user";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebaseUtils/firebase-setup";
 
 const mockCats = [
   { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
@@ -32,11 +35,16 @@ export default function ProfileCatteryPage({ route, navigation }) {
   const [user, setUser] = useState(null);
   const [userShortAddress, setUserShortAddress] = useState("");
   const [userFullAddress, setUserFullAddress] = useState("");
-  getUserData().then ((user) => {
-    setUser(user);
-    setUserShortAddress(user.address.split(", ")[1] + ", " + user.address.split(", ")[2]);
-    setUserFullAddress(user.address.split(", ")[0] + ", " + user.address.split(", ")[1] + ", " + user.address.split(", ")[2]);
-  });
+  useEffect(() => {
+    const docRef = doc(db, "Users", getCurrentUserEmail());
+    const unSubscribe = onSnapshot(docRef, (snapshot) => {
+      setUser(snapshot.data());
+      setUserShortAddress(snapshot.data().address.split(", ")[1] + ", " + snapshot.data().address.split(", ")[2]);
+      setUserFullAddress(snapshot.data().address.split(", ")[0] + ", " + snapshot.data().address.split(", ")[1] + ", " + snapshot.data().address.split(", ")[2]);
+    });
+
+    return () => unSubscribe();
+  }, []);
 
   const onUpdateCattery = () => {
     navigation.navigate("UpdateCatteryPage", { user });

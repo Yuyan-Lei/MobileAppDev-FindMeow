@@ -25,9 +25,7 @@ import { Divider } from 'react-native-elements';
 
 export default function UserProfile({ route, navigation }) {
   const { height, width } = useWindowDimensions();
-  const [user, setUser] = useState(null);
-
-  getUserData().then(user => setUser(user));
+  const user = route.params.user;
 
   const buttonHandler = () => {
     Alert.alert("The button function is coming soon~", "See you next time!", [
@@ -49,7 +47,7 @@ export default function UserProfile({ route, navigation }) {
   }
 
 
-  const onViewCatteryPage = () => navigation.navigate('ProfileCatteryPage');
+  const onViewCatteryPage = () => navigation.navigate('ProfileCatteryPage', {user});
   return (
     <View style={styles.container}>
       <View style={{ margin: 12 }}>

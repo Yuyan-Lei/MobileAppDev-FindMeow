@@ -5,8 +5,10 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React, { useState } from "react";
-import { getUserData } from "../../firebaseUtils/user";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
+import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import DiscoverMainScreen from "./DiscoverMainScreen";
 import FindBreederMainScreen from "./FindBreederMainScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
@@ -16,10 +18,17 @@ import UserProfile from "./UserProfile";
 export default function HomePage({ route, navigation }) {
   const Tab = createBottomTabNavigator();
   const [user, setUser] = useState(null);
+  useEffect(() => {
+    const docRef = doc(db, "Users", getCurrentUserEmail());
+    const unSubscribe = onSnapshot(docRef, (snapshot) => {
+      setUser(snapshot.data());
+    });
 
-  getUserData().then(user => setUser(user));
+    return () => unSubscribe();
+  }, []);
 
   return (
+    user &&
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -51,9 +60,10 @@ export default function HomePage({ route, navigation }) {
         name="Post"
         component={PostNewCatScreen}
         screenOptions={{ tabBarLabel: "Add" }}
+        initialParams={{ user }}
       />}
       <Tab.Screen name="Like" component={StarListScreen} />
-      <Tab.Screen name="Profile" component={UserProfile} />
+      <Tab.Screen name="Profile" component={UserProfile} initialParams={{ user }} />
     </Tab.Navigator>
   );
 }
