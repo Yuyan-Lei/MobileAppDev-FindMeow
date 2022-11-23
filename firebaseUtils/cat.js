@@ -1,4 +1,4 @@
-import { deleteFromDB, getAllFromDB, updateToDB, wrtieToDB } from "./firestore";
+import { deleteFromDB, getAllFromDB, updateToDB, wrtieToDB, getMultipleFromDB } from "./firestore";
 
 const collectionName = "Cats";
 
@@ -67,4 +67,9 @@ export async function deleteCat(key) {
 
 export async function getAllCats() {
   return await getAllFromDB(collectionName);
+}
+
+export async function getCats(catIds) {
+  return await getMultipleFromDB(catIds, collectionName)
+  .then((catsSnap) => catsSnap.docs.map(doc => doc.data()));
 }

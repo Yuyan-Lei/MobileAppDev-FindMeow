@@ -7,6 +7,9 @@ import {
   updateDoc,
   getDoc,
   getDocs,
+  documentId,
+  query,
+  where,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage, auth } from "./firebase-setup";
@@ -36,6 +39,15 @@ export async function getAllFromDB(collectionName) {
   try {
     const querySnapshot = collection(db, collectionName);
     return await getDocs(querySnapshot);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getMultipleFromDB(keys, collectionName) {
+  try {
+    return await getDocs(query(
+      collection(db, collectionName), where(documentId(), "in", keys)));
   } catch (err) {
     console.log(err);
   }

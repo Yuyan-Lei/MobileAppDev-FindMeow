@@ -7,6 +7,7 @@ import FindBreederFilter from "./FindBreederFilter";
 import { FilterButton } from "../pressable/FilterButton";
 import { Colors } from "../styles/Colors";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { getAllCatteries } from "../../firebaseUtils/user";
 
 const mockBreeders = [
   {
@@ -53,6 +54,7 @@ export default function FindBreederMainScreen() {
 
   /* values used for DiscoverFilter start */
   const [visible, setVisible] = useState(false);
+  const [catteries, setCatteries] = useState([]);
 
   const [selectedBreed, setSelectedBreed] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
@@ -67,7 +69,7 @@ export default function FindBreederMainScreen() {
     setSelectedCatNum("");
   }
 
-
+  getAllCatteries().then((catteries) => setCatteries(catteries));
 
   return (
     <View style={styles.containter}>
@@ -101,7 +103,7 @@ export default function FindBreederMainScreen() {
               width: 100,
             },
           }}
-          height={470}
+          height={495}
         >
           <FindBreederFilter
             states={{
@@ -123,8 +125,8 @@ export default function FindBreederMainScreen() {
       </View>
       <View style={styles.listView}>
         <FlatList
-          data={mockBreeders}
-          renderItem={({ item }) => <BreederCard breeder={item} />}
+          data={catteries}
+          renderItem={({ item }) => <BreederCard cattery={item} />}
           ListFooterComponent={<View style={{ height: 250 }} />}
         />
       </View>
