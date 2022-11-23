@@ -6,7 +6,7 @@ import DatePicker from 'react-native-datepicker';
 import { Chip } from '@rneui/themed';
 import CatImagePicker from "./CatImagePicker";
 import { createCat } from "../../firebaseUtils/cat";
-import { writeImageToDB } from "../../firebaseUtils/firestore";
+import { getCurrentUserEmail, writeImageToDB } from "../../firebaseUtils/firestore";
 import { getUserData } from "../../firebaseUtils/user";
 
 export default function PostNewCatScreen({navigation: {navigate}}) {
@@ -23,13 +23,9 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
     const [ready, setReady] = useState(false);
     const [neutered, setNeutered] = useState(false);
 
-    const [,setUser] = useState(null);
-    const [userShortAddress, setUserShortAddress] = useState("");
     const [userPhone, setUserPhone] = useState("");
     getUserData().then ((user) => {
-        setUser(user);
-        setUserShortAddress(user.address.split(", ")[1] + ", " + user.address.split(", ")[2]);
-        setUserPhone(user.phone);
+        setUserPhone(user.phoneNumber);
     });
 
     const onPostNewCat = () => {
@@ -60,7 +56,7 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
                     Price: price, 
                     Description: description, 
                     Tags: tags, 
-                    Cattery: userShortAddress, 
+                    Cattery: getCurrentUserEmail(), 
                     Contact: userPhone, 
                     UploadTime: new Date().getTime()})
             }).then(navigate('Cats'));
