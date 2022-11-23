@@ -11,45 +11,6 @@ import { getAllCatteries } from "../../firebaseUtils/user";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
 
-const mockBreeders = [
-  {
-    name: "Angel Girls",
-    breed: "Ragdoll",
-    availableCount: 5,
-    location: "Washington, D.C.",
-    image: "resources/cats/Angel Girls.png",
-  },
-  {
-    name: "Heavenly Cats",
-    breed: "British Shorthair",
-    availableCount: 1,
-    location: "San Jose, CA",
-  },
-  {
-    name: "Osoragdolls",
-    breed: "Ragdoll",
-    availableCount: 2,
-    location: "Los Angeles, CA",
-  },
-  {
-    name: "Blue Gems",
-    breed: "Ragdoll",
-    availableCount: 0,
-    location: "Riverside, WA",
-  },
-  {
-    name: "Osoragdolls",
-    breed: "Ragdoll",
-    availableCount: 2,
-    location: "Los Angeles, CA",
-  },
-  {
-    name: "Blue Gems",
-    breed: "Ragdoll",
-    availableCount: 0,
-    location: "Riverside, WA",
-  },
-];
 
 export default function FindBreederMainScreen() {
   const [searchName, setSearchName] = useState("");

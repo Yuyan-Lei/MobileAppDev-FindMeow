@@ -14,24 +14,6 @@ import { getCats } from "../../firebaseUtils/cat";
 import { collection, documentId, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
 
-const mockCats = [
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-];
-
-// const cattery = {
-//   cats,
-//   name: "Angel Girls",
-//   location: "Sunnyvale, CA",
-// };
 
 export default function CatteryProfileScreen({ route }) {
   const { height, width } = useWindowDimensions();
