@@ -47,14 +47,17 @@ export async function getUserData() {
 export async function createCattery(userEmail, {
     catteryName,
     phoneNumber,
-    website
+    website,
+    address,
+    placeId,
 }) {
     const newCattery = {
         isCattery: true,
         catteryName,
         phoneNumber,
         website,
-        geoLocation: '',
+        address,
+        placeId,
         cats: [],
         likeCats: [],
     }

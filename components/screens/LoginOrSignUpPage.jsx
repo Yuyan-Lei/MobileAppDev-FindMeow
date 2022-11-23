@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View, Alert, KeyboardAvoidingView, ScrollView } from "react-native";
 import { TextInput, Pressable } from "@react-native-material/core";
 import { CheckBox } from '@rneui/themed';
@@ -6,6 +6,8 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fire
 import { auth } from "../../firebaseUtils/firebase-setup";
 import { createUser, createCattery, getUserData } from "../../firebaseUtils/user";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Feather } from "@expo/vector-icons";
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
 
 export default function LoginOrSignUpPage({ route, navigation }) {
     const [pageState, setPageState] = useState(0);
@@ -15,6 +17,14 @@ export default function LoginOrSignUpPage({ route, navigation }) {
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [website, setWebsite] = useState('');
+    const [placeId, setPlaceId] = useState('');
+    const [address, setAddress] = useState('');
+
+    const ref = useRef();
+
+    useEffect(() => {
+        ref.current?.setAddressText(address || '');
+    }, []);
 
     const onCreateAccount = () => {
         createUserWithEmailAndPassword(auth, userName, password)
@@ -27,7 +37,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 if (!isCattery) {
                     return createUser(email);
                 } else {
-                    return createCattery(email, { catteryName: name, phoneNumber, website });
+                    return createCattery(email, { catteryName: name, phoneNumber, website, placeId, address});
                 }
             }).then(() => navigation.navigate('Home'))
             .catch((error) => {
@@ -69,7 +79,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                             styles.selectedButton : styles.notSelectedButton}>Sign Up</Text>
                     </Pressable>
                 </View>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
                     <TextInput
                         inputStyle={{fontFamily: "Poppins"}}
                         label="EMAIL"
@@ -124,6 +134,41 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                                             color="#F59156"
                                             leading={props => <MaterialCommunityIcons name="web" {...props} />}
                                             onChangeText={setWebsite} />
+                                        {/* <Text style={styles.subTitle}>Address</Text> */}
+                                        <GooglePlacesAutocomplete
+                                            placeholder="Cattery Address"
+                                            ref={ref}
+                                            query={{
+                                                key: REACT_APP_GOOGLE_MAP_APP_KEY,
+                                                language: 'en', // language of the results
+                                            }}
+                                            onPress={(data, details = null) => {
+                                                setAddress(data.description);
+                                                setPlaceId(data.place_id);
+                                            }}
+                                            textInputProps= {{
+                                                InputComp: TextInput,
+                                                label: "Cattery Address",
+                                                color: "#F59156",
+                                                leading: (<Feather name="map-pin" size={24} color="rgb(97,97,97)" />)
+                                            }}
+                                            styles={{
+                                                container: {
+                                                    padding: -20
+                                                },
+                                            textInput: {
+                                                height: 52,
+                                                width: '100%',
+                                                color: '#2E2525',
+                                                backgroundColor: 'rgb(246,245,245)',
+                                                fontSize: 16,
+                                            },
+                                            container: {
+                                                color: '#2E2525',
+                                            }
+                                            }}
+                                            onFail={(error) => console.error(error)}
+                                        />
                                     </View>
                                 }
                                 <Pressable

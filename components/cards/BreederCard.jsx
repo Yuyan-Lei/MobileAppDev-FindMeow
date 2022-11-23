@@ -14,19 +14,19 @@ export function BreederCard({ cattery }) {
         <View style={[styles.cardView, styles.shadowView]}>
           <View style={styles.imageView}>
             {/* Cattery photo */}
-            <Image source={{ uri: cattery.catteryData.picture }} style={styles.image} />
+            <Image source={{ uri: cattery.picture }} style={styles.image} />
           </View>
 
           <View style={styles.detailView}>
-            <Text style={styles.breederNameText}>{cattery.catteryData.catteryName}</Text>
-            <Text style={styles.breedText}>{cattery.catteryData.breed}</Text>
+            <Text style={styles.breederNameText}>{cattery.catteryName}</Text>
+            <Text style={styles.breedText}>{cattery.breed}</Text>
             <Text style={styles.availableKittenText}>
-              {cattery.catteryData.cats.length > 0
-                ? `${cattery.catteryData.cats.length} Available Kittens`
+              {cattery.cats.length > 0
+                ? `${cattery.cats.length} Available Kittens`
                 : ""}
             </Text>
-            <LocationText>{cattery.catteryData.address.split(", ")[1] 
-              + ", " + cattery.catteryData.address.split(", ")[2]}</LocationText>
+            <LocationText>{cattery.address.split(", ")[1] 
+              + ", " + cattery.address.split(", ")[2]}</LocationText>
           </View>
         </View>
       </Pressable>
