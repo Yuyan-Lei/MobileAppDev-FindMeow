@@ -40,9 +40,9 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 2. Built the navigation bar, and enabled it to display different menus to buyers / cattery owners. 
 3. Built the login&signup screen, and implemented the authentication & registration feature.
 4. Built the post screen, and implemented the post-new-cat feature. (Collect images, database CRUD and assign the cattery ID to this cat)
-5. Implemented the star-a-cat feature. (Database CRUD, and auto-delete all related likes when deleting a cat, by using the observer&subscriber design pattern)
+5. Implemented the star-a-cat feature. (Database CRUD, and auto-delete all related likes when deleting a cat, by using subscribers)
 6. Built the profile screen, displayed an extra cattery-profile-page button for cattery owners, and implemented the logout feature.
-7. Built the cattery profile screen, implemented the realtime display of profile information and available cats.
+7. Built the cattery profile screen, and implemented the realtime display of profile information and available cats.
 8. Built the updateCattery screen, and implemented the update-cattery-info feature. (Collect images, use the map API and database CRUD)
 9. Implemented the realtime display on the cat card component. 
 10. Implemented the realtime display on the cattery card component. 
@@ -53,18 +53,18 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 1.
 
 
-### Features, bugs, styling issues remaining to resolve in the next iteration
+### Features, bugs, and styling issues remaining to resolve in the next iteration
 
 **Features to expect**:
-1. Input verifications in each form.
+1. Input verifications in each of the input forms.
 2. Implement the display-nearby-cats feature on the DiscoverCat screen.
 3. Implement the map feature for the discoverCat screen. 
-4. Enable users to star a cattery.
-5. Display the realtime cattery collection list.
-6. Display available cats on the cattery profile screen.
+4. Implement the filter feature for both discoverCat screen and findBreeder screen.
+5. Enable users to star a cattery.
+6. Display the realtime cattery collection list.
 7. Display th realtime cat infomation on the CatInfo screen.
-9. Enable users to change their profile photos and passwords
-10. Enable users to receive notifications when a nearby cat is posted. 
+8. Enable users to change their profile photos and passwords
+9. Enable users to receive notifications when a nearby cat is posted. 
 
 **Known Bugs**
 1. Overloading issues in some screens and two filters.
@@ -103,7 +103,7 @@ FindMeow is an app designed for pet lovers to select and buy your favorite cats 
  
 
 
-## Goals
+### Goals
 In short, the application helps cat purchasers find and buy their favorite cats more easily and conveniently, and it helps cattery owners sell cats faster.
 
 Specifically, in the United States, there are mainly three niches for the cat-trading market: unpaid or low cost adoptions, private sellers selling personally bred ones, and catteries selling high quality cats.
@@ -114,7 +114,7 @@ Catteries are used to setting up their own web pages, uploading the information 
 
 The advent of our app will revolutionize their transactions, transforming an antiquated, complex, time-consuming, and delayed transaction process into a new, simple, and convenient real-time one.
 
-## Advantages Over Competitors
+### Advantages Over Competitors
 Although there are many pet buying apps on the market, they share two major characteristics:
 
 One is that they tend to encompass all types of pets. Although that choice makes these apps available to a broader audience, they are often hard to be perfect in either category.
