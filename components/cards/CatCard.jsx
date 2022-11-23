@@ -12,7 +12,9 @@ export function CatCard({ cat }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
 
-  getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+  if (cat.cattery) {
+    getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+  }
 
   useEffect(() => {
     const unSubscribe = 
