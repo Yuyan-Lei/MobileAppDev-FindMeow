@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { BreederCard } from "../cards/BreederCard";
 import { SearchBar } from "../pressable/SearchBar";
@@ -8,6 +8,8 @@ import { FilterButton } from "../pressable/FilterButton";
 import { Colors } from "../styles/Colors";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { getAllCatteries } from "../../firebaseUtils/user";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../firebaseUtils/firebase-setup";
 
 const mockBreeders = [
   {
@@ -69,7 +71,14 @@ export default function FindBreederMainScreen() {
     setSelectedCatNum("");
   }
 
-  getAllCatteries().then((catteries) => setCatteries(catteries));
+  useEffect(() => {
+    const q = query(collection(db, "Users"), where('isCattery', '==', true));
+    const unSubscribe = onSnapshot(q, (snapshot) => {
+      setCatteries(snapshot.docs.map((entry) => entry.data()));
+    });
+
+    return () => unSubscribe();
+  }, []);
 
   return (
     <View style={styles.containter}>
