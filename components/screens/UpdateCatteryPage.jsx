@@ -7,6 +7,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
 import { updateCattery } from "../../firebaseUtils/user";
 import { writeImageToDB } from "../../firebaseUtils/firestore";
+import { FillAndroidTopBar, FillAndroidButtomBar} from "../FillAndroidBar";
 
 export default function UpdateCatteryPage({ route, navigation }) {
     const user = route.params.user;
@@ -36,6 +37,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={{ flex: 1}}
                 >
+                    <FillAndroidTopBar/>
                     <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
                         <View style={{ margin: 12 }}>
                             <TitleText>Update Cattery</TitleText>
@@ -78,6 +80,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
                                 <Text style={styles.SubmitButtonText}>Submit</Text>
                             </Pressable>
                         </View>
+                        <FillAndroidButtomBar/>
                     </ScrollView>
                 </KeyboardAvoidingView>
     );
