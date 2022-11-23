@@ -62,6 +62,7 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 4. Enable users to star a cattery.
 5. Display the realtime cattery collection list.
 6. Display available cats on the cattery profile screen.
+7. Display th realtime cat infomation on the CatInfo screen.
 9. Enable users to change their profile photos and passwords
 10. Enable users to receive notifications when a nearby cat is posted. 
 
@@ -73,6 +74,9 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 1. Require to unify all fonts and font sizes.
 2. Require to unify style sheets.
 3. Require to unify colors.
+
+## ScreenShots
+...
 
 ## Project Descriptions
 
@@ -97,12 +101,6 @@ FindMeow is an app designed for pet lovers to select and buy your favorite cats 
 
  All pet sellers in our app are certified! Don’t worry about choosing a credible seller.
  
-
-
-## UI Design
-Designed with Figma.
-
-See high-fidelity prototype at https://www.figma.com/file/05dpdLKL5MVPJbbfeNqn0m/Find-Meow?node-id=0%3A1.
 
 
 ## Goals
