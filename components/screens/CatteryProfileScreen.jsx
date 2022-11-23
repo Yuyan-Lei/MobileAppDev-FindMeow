@@ -41,6 +41,9 @@ export default function CatteryProfileScreen({ route }) {
   const catteryFullAddress = cattery.address.split(", ")[0] + ", " + cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2];
 
   useEffect(() => {
+    if (cattery.cats.length === 0) {
+      return;
+    }
     const q = query(collection(db, "Cats"), where(documentId(), "in", cattery.cats));
     const unSubscribe = onSnapshot(q, (snapshot) => {
       setCats(snapshot.docs.map((entry) => { return { id: entry.id, ...entry.data() } }));
