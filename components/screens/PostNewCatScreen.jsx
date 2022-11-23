@@ -6,7 +6,8 @@ import DatePicker from 'react-native-datepicker';
 import { Chip } from '@rneui/themed';
 import CatImagePicker from "./CatImagePicker";
 import { createCat } from "../../firebaseUtils/cat";
-import { writeImageToDB } from "../../firebaseUtils/firestore";
+import { getCurrentUserEmail, writeImageToDB } from "../../firebaseUtils/firestore";
+import { getUserData } from "../../firebaseUtils/user";
 
 export default function PostNewCatScreen({navigation: {navigate}}) {
     const [catName, setCatName] = useState('');
@@ -21,6 +22,11 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
     const [dewormed, setDewormed] = useState(false);
     const [ready, setReady] = useState(false);
     const [neutered, setNeutered] = useState(false);
+
+    const [userPhone, setUserPhone] = useState("");
+    getUserData().then ((user) => {
+        setUserPhone(user.phoneNumber);
+    });
 
     const onPostNewCat = () => {
         const tags = [];
@@ -41,9 +47,18 @@ export default function PostNewCatScreen({navigation: {navigate}}) {
         }
         writeImageToDB(image).
             then(url => {
-                createCat({Name: catName, Breed: breed, Birthday: birthDate,
-                    Picture: url, Gender: gender, Price: price, Description: description, 
-                    Tags: tags, Cattery: '', Contact: '', UploadTime: new Date().getTime()})
+                createCat({
+                    Name: catName, 
+                    Breed: breed, 
+                    Birthday: birthDate,
+                    Picture: url, 
+                    Gender: gender, 
+                    Price: price, 
+                    Description: description, 
+                    Tags: tags, 
+                    Cattery: getCurrentUserEmail(), 
+                    Contact: userPhone, 
+                    UploadTime: new Date().getTime()})
             }).then(navigate('Cats'));
     };
 

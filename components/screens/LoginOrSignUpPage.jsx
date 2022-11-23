@@ -71,12 +71,14 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <TextInput
+                        inputStyle={{fontFamily: "Poppins"}}
                         label="EMAIL"
                         value={userName}
                         leading={props => <MaterialCommunityIcons name="email" {...props} />}
                         color="#F59156"
                         onChangeText={setUserName} />
                     <TextInput
+                        inputStyle={{fontFamily: "Poppins"}}
                         label="PASSWORD"
                         secureTextEntry={true}
                         leading={props => <Entypo name="lock" {...props} />}
@@ -150,6 +152,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
+        fontFamily: "PoppinsBold",
         fontSize: 30,
         marginTop: 70,
         marginBottom: 35,
@@ -163,11 +166,13 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     selectedButton: {
+        fontFamily: "PoppinsSemiBold",
         fontSize: 20,
         color: '#0C0C0E',
         fontWeight: '600',
     },
     notSelectedButton: {
+        fontFamily: "PoppinsMedium",
         fontSize: 14,
         color: 'rgba(12, 12, 14, 0.5)',
 
@@ -181,12 +186,14 @@ const styles = StyleSheet.create({
         marginTop: '10%'
     },
     loginAndSignUpButtonText: {
+        fontFamily: "PoppinsSemiBold",
         textAlign: 'center',
         fontSize: 20,
         color: '#FFFFFF',
         fontWeight: '600',
     },
     textInput: {
+        fontFamily: "Poppins",
         color: '#F59156',
     }
 });

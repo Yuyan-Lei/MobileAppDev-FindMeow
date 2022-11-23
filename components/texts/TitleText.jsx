@@ -8,14 +8,9 @@ export function TitleText({ children }) {
 
 const styles = StyleSheet.create({
   titleText: {
-    // fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "600",
+    fontFamily: "PoppinsSemiBold",
     fontSize: 24,
     textAlign: "center",
     color: "#2E2525",
-    // textShadowOffset: { height: 4 },
-    // textShadowRadius: 4,
-    // textShadowColor: "rgba(0, 0, 0, 0.25)",
   },
 });
