@@ -67,13 +67,7 @@ export default function UserProfile({ route, navigation }) {
           color="#FFB801"
           tintColor="#FFFFFF"
           size={90} />
-        <Text style={{
-          color: "orange",
-          fontWeight: "700",
-          fontSize: 21,
-          textAlign: "center",
-          marginTop: 20,
-        }}>
+        <Text style={styles.catteryNameText}>
           {user && user.isCattery ? user.catteryName : getCurrentUserEmail()}
         </Text>
 
@@ -123,6 +117,14 @@ const styles = StyleSheet.create({
     paddingTop: 55,
     paddingBottom: 200,
   },
+  catteryNameText: {
+    fontFamily: "PoppinsBold",
+    color: "#F59156",
+    fontWeight: "700",
+    fontSize: 21,
+    textAlign: "center",
+    marginTop: 20,
+  },
   buttonContainer: {
     backgroundColor: "white",
     borderRadius: 20,
@@ -141,9 +143,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonText: {
+    fontFamily: "Poppins",
     textAlign: "left",
     color: "black",
-    fontSize: 18,
+    fontSize: 16,
     marginLeft: 10,
   },
   divider: {
@@ -158,6 +161,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logOutButtonText: {
+    fontFamily: "PoppinsSemiBold",
     color: "white",
     fontSize: 18,
     fontWeight: "600",
