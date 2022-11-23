@@ -137,9 +137,9 @@ export default function FindBreederMainScreen() {
 const styles = StyleSheet.create({
   containter: {
     alignItems: "center",
-    padding: 28,
     paddingTop: 55,
     backgroundColor: "white",
+    flex: 1,
   },
   cardView: {
     alignItems: "center",
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     padding: 5,
-    paddingHorizontal: 24,
+    paddingHorizontal: 60,
   },
   searchBarView: {
     backgroundColor: Colors.dimGray,

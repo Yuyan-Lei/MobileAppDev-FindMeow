@@ -9,7 +9,7 @@ import { LocationText } from "../texts/LocationText";
 
 export function BreederCard({ cattery }) {
   return (
-    <View>
+    <View style={{ marginHorizontal: 10}}>
       <Pressable onPress={() => rootStackNavigate("CatteryProfile", {cattery})}>
         <View style={[styles.cardView, styles.shadowView]}>
           <View style={styles.imageView}>
@@ -19,7 +19,7 @@ export function BreederCard({ cattery }) {
 
           <View style={styles.detailView}>
             <Text style={styles.breederNameText}>{cattery.catteryData.catteryName}</Text>
-            <Text style={styles.breedText}>{cattery.catteryData.breeds[0]}</Text>
+            <Text style={styles.breedText}>{cattery.catteryData.breed}</Text>
             <Text style={styles.availableKittenText}>
               {cattery.catteryData.cats.length > 0
                 ? `${cattery.catteryData.cats.length} Available Kittens`
@@ -67,9 +67,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 65,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    height: "100%",
+    borderRadius: 16,
   },
   cardView: {
     flexDirection: "row",
