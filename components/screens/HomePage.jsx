@@ -5,7 +5,8 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React from "react";
+import React, { useState } from "react";
+import { getUserData } from "../../firebaseUtils/user";
 import DiscoverMainScreen from "./DiscoverMainScreen";
 import FindBreederMainScreen from "./FindBreederMainScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
@@ -14,6 +15,9 @@ import UserProfile from "./UserProfile";
 
 export default function HomePage({ route, navigation }) {
   const Tab = createBottomTabNavigator();
+  const [user, setUser] = useState(null);
+
+  getUserData().then(user => setUser(user));
 
   return (
     <Tab.Navigator
@@ -41,11 +45,13 @@ export default function HomePage({ route, navigation }) {
     >
       <Tab.Screen name="Cats" component={DiscoverMainScreen} />
       <Tab.Screen name="Catteries" component={FindBreederMainScreen} />
-      <Tab.Screen
+      {
+        user && user.isCattery &&
+        <Tab.Screen
         name="Post"
         component={PostNewCatScreen}
         screenOptions={{ tabBarLabel: "Add" }}
-      />
+      />}
       <Tab.Screen name="Like" component={StarListScreen} />
       <Tab.Screen name="Profile" component={UserProfile} />
     </Tab.Navigator>

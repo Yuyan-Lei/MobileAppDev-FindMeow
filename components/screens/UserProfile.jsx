@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 30,
     marginBottom: 40,
-    height: 230,
     width: '88%'
   },
   button: {
