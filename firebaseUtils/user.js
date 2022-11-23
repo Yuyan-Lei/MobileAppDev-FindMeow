@@ -80,3 +80,7 @@ export async function updateCattery({
     };
     return await updateToDB(email, collectionName, updatedCattery);
 }
+
+export async function getCattery(email) {
+    return await getFromDB(email, collectionName).then((docSnap) => docSnap.data());
+}

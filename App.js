@@ -26,6 +26,9 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     Montserrat: require("./resources/fonts/Montserrat-Regular.ttf"),
     Poppins: require("./resources/fonts/Poppins-Regular.ttf"),
+    PoppinsBold: require("./resources/fonts/Poppins-Bold.ttf"),
+    PoppinsSemiBold: require("./resources/fonts/Poppins-SemiBold.ttf"),
+    PoppinsMedium: require("./resources/fonts/Poppins-Medium.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
