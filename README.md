@@ -1,14 +1,14 @@
 ## Begin to use
 1. **Set the environment**: Download the whole file pack. Create a new `.env` file, and add the following environment variables to this file:
    ```
-   REACT_APP_FIREBASE_API_KEY=AIzaSyCjsV1an6ny8Wl80hZ8WXQAFi9dMkwxyi8
-   REACT_APP_FIREBASE_AUTH_DOMAIN=cs5520-findmeow.firebaseapp.com
-   REACT_APP_FIREBASE_PROJECT_ID=cs5520-findmeow
-   REACT_APP_FIREBASE_STORAGE_BUCKET=cs5520-findmeow.appspot.com
-   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=228457534053
-   REACT_APP_FIREBASE_APP_ID=1:228457534053:web:80750c99d9a1363832ec8c
-   REACT_APP_FIREBASE_MEASUREMENT_ID=G-FRD99ZP2JN
-   REACT_APP_GOOGLE_MAP_APP_KEY=AIzaSyCwee2kdz90UKNlj8nnWGzJw70cAmu1MUo
+   REACT_APP_FIREBASE_API_KEY=
+   REACT_APP_FIREBASE_AUTH_DOMAIN=
+   REACT_APP_FIREBASE_PROJECT_ID=
+   REACT_APP_FIREBASE_STORAGE_BUCKET=
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
+   REACT_APP_FIREBASE_APP_ID=
+   REACT_APP_FIREBASE_MEASUREMENT_ID=
+   REACT_APP_GOOGLE_MAP_APP_KEY=
    ```
    
 2. **Installation**: Open the terminal in your IDE, and then enter `npm install` to the terminal.
