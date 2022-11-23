@@ -47,6 +47,7 @@ export default function CatteryProfileScreen({ route }) {
       month: age,
       sex: cat.Gender,
       price: cat.Price,
+      cattery: cat.Cattery,
       photo: cat.Picture,
     }
   };

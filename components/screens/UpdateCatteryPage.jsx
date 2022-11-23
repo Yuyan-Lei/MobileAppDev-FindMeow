@@ -10,7 +10,7 @@ import { writeImageToDB } from "../../firebaseUtils/firestore";
 import { FillAndroidTopBar, FillAndroidButtomBar} from "../FillAndroidBar";
 
 export default function UpdateCatteryPage({ route, navigation }) {
-    const user = route.params.user;
+    const user = route.params.cattery;
     const [catteryName, setCatteryName] = useState(user.catteryName);
     const [image, setImage] = useState(user.picture);
     const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
