@@ -2,7 +2,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useCallback } from "react";
+import * as Font from 'expo-font';
+import React, { useCallback, useState, useEffect } from "react";
 import { LogBox, StyleSheet, useWindowDimensions, View, Text, TextInput } from "react-native";
 import { navigationRef } from "./components/RootNavigation";
 import CatInformation from "./components/screens/CatInformation";
@@ -14,6 +15,7 @@ import ProfileCatteryPage from "./components/screens/ProfileCatteryPage";
 import StarListScreen from "./components/screens/StarListScreen";
 import UpdateCatteryPage from "./components/screens/UpdateCatteryPage";
 
+// Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 LogBox.ignoreLogs(["Remote debugger"]);
 LogBox.ignoreAllLogs();
@@ -23,21 +25,48 @@ TextInput.defaultProps = Text.defaultProps || {};
 TextInput.defaultProps.allowFontScaling = false;
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    Montserrat: require("./resources/fonts/Montserrat-Regular.ttf"),
-    Poppins: require("./resources/fonts/Poppins-Regular.ttf"),
-    PoppinsBold: require("./resources/fonts/Poppins-Bold.ttf"),
-    PoppinsSemiBold: require("./resources/fonts/Poppins-SemiBold.ttf"),
-    PoppinsMedium: require("./resources/fonts/Poppins-Medium.ttf"),
-  });
+  const [appIsReady, setAppIsReady] = useState(false);
+  const { height, weight } = useWindowDimensions();
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Pre-load fonts, make any API calls you need to do here
+        await Font.loadAsync( {
+          Montserrat: require("./resources/fonts/Montserrat-Regular.ttf"),
+          Poppins: require("./resources/fonts/Poppins-Regular.ttf"),
+          PoppinsBold: require("./resources/fonts/Poppins-Bold.ttf"),
+          PoppinsSemiBold: require("./resources/fonts/Poppins-SemiBold.ttf"),
+          PoppinsMedium: require("./resources/fonts/Poppins-Medium.ttf"),
+          PoppinsLight: require("./resources/fonts/Poppins-Light.ttf"),
+            }
+        );
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
+    if (appIsReady) {
+      // This tells the splash screen to hide immediately! If we call this after
+      // `setAppIsReady`, then we may see a blank screen while the app is
+      // loading its initial state and rendering its first pixels. So instead,
+      // we hide the splash screen once we know the root view has already
+      // performed layout.
       await SplashScreen.hideAsync();
     }
-  }, [fontsLoaded]);
+  }, [appIsReady]);
 
-  const { height, weight } = useWindowDimensions();
+  if (!appIsReady) {
+    return null;
+  }
+
   const Stack = createNativeStackNavigator();
 
   return (

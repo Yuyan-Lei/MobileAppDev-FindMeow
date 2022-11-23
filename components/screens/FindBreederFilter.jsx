@@ -271,7 +271,7 @@ const FindBreederFilter = ({
 
   return (
     <ScrollView style={styles.filterContainer}>
-      <OrangeTitleText>Filter</OrangeTitleText>
+      <Text style={styles.filterText}>Filter</Text>
 
       <Text style={styles.reminderText}>
         Arrange Based On The Following Choices
@@ -324,6 +324,15 @@ const FindBreederFilter = ({
 const styles = StyleSheet.create({
   filterContainer: {
     marginHorizontal: 15,
+  },  
+  filterText: {
+    fontFamily: "PoppinsBold",
+    fontSize: 26,
+    textAlign: "left",
+    color: "#F59156",
+    marginTop: 20,
+    marginLeft: 5,
+    marginBottom: 5,
   },
   button: {
     margin: 10,
@@ -349,6 +358,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   reminderText: {
+    fontFamily: "PoppinsLight",
     fontSize: 14,
     textAlign: "left", 
     color: Colors.gray 
@@ -367,10 +377,11 @@ const styles = StyleSheet.create({
     width: 150,
   },
   submitText: {
+    fontFamily: "PoppinsSemiBold",
     alignItems: "center", 
     textAlign: "center",
     color: "white", 
-    fontSize: 19 
+    fontSize: 18
   }
 });
 

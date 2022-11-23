@@ -171,7 +171,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
             width: 100,
           },
         }}
-        height={650}
+        height={670}
       >
         <DiscoverFilter
           states={{
