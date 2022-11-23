@@ -30,9 +30,13 @@ export default function ProfileCatteryPage({ route, navigation }) {
   const { height, width } = useWindowDimensions();
   
   const [user, setUser] = useState(null);
-  getUserData().then(user => setUser(user));
-  let userShortAddress = user.address.split(", ")[1] + ", " + user.address.split(", ")[2];
-  let userFullAddress = user.address.split(", ")[0] + ", " + user.address.split(", ")[1] + ", " + user.address.split(", ")[2];
+  const [userShortAddress, setUserShortAddress] = useState("");
+  const [userFullAddress, setUserFullAddress] = useState("");
+  getUserData().then ((user) => {
+    setUser(user);
+    setUserShortAddress(user.address.split(", ")[1] + ", " + user.address.split(", ")[2]);
+    setUserFullAddress(user.address.split(", ")[0] + ", " + user.address.split(", ")[1] + ", " + user.address.split(", ")[2]);
+  });
 
   const onUpdateCattery = () => {
     navigation.navigate("UpdateCatteryPage", { user });
