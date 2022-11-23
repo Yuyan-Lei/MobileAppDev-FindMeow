@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, StyleSheet, Image, Alert } from "react-native";
-import { userUnLikeACat, userLikeACat } from "../../firebaseUtils/user";
+import { userUnLikeACat, userLikeACat, getCattery } from "../../firebaseUtils/user";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
@@ -10,6 +10,11 @@ import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 export function CatCard({ cat }) {
   const [likeCats, setLikeCats] = useState([]);
+  const [cattery, setCattery] = useState(null);
+
+  if (cat.cattery) {
+    getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+  }
 
   useEffect(() => {
     const unSubscribe = 
@@ -39,21 +44,22 @@ export function CatCard({ cat }) {
 
         <View style={styles.descriptionView}>
           {/* cat name */}
-          <Text style={[styles.fontStyle, styles.catNameStyle]}>
+          <Text style={styles.catNameStyle}>
             {cat.name}
           </Text>
 
           {/* cat details */}
-          <Text style={[styles.fontStyle, styles.catDetailStyle]}>
+          <Text style={styles.catDetailStyle}>
             {cat.sex}, {cat.month} {cat.month === 1 ? "month" : "months"}
           </Text>
 
           {/* cat location */}
           <LocationText
-            textStyle={[styles.fontStyle, styles.locationStyle]}
+            textStyle={styles.locationStyle}
             locationIconColor={styles.locationIconStyle.color}
           >
-            {cat.location}
+            {cattery && cattery.address ? 
+              cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2] : 'Loading'}
           </LocationText>
         </View>
       </Pressable>
@@ -67,14 +73,20 @@ export function CatCard({ cat }) {
       </View>
 
       <View style={styles.priceView}>
-        <Text style={styles.orangeText}>${cat.price}</Text>
+        <Text style={styles.priceTag}>
+          ${cat.price}
+        </Text>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { margin: 8, justifyContent: "center", width: "45%" },
+  container: { 
+    margin: 8, 
+    justifyContent: "center", 
+    width: "45%" 
+  },
   imageView: {
     aspectRatio: 0.834,
     // backgroundColor: "gray",
@@ -93,27 +105,25 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
-    padding: 12,
+    padding: 9,
     backgroundColor: "#F9F9F9",
     borderRadius: 5,
-    height: 90,
-  },
-  fontStyle: {
-    fontFamily: "Poppins",
-    fontWeight: "500",
+    height: 77,
   },
   catNameStyle: {
-    color: Colors.black,
+    color: "#2E2525",
+    fontFamily: "PoppinsMedium",
     fontSize: 14,
+    marginBottom: 2,
   },
   catDetailStyle: {
+    marginTop: 5,
     color: "rgba(46, 37, 37, 0.67)",
     fontSize: 12,
-    fontWeight: "400",
   },
   locationStyle: {
     fontSize: 10,
-    color: Colors.black,
+    color: "#2E2525",
   },
   locationIconStyle: {
     color: "#F59156",
@@ -126,7 +136,7 @@ const styles = StyleSheet.create({
   priceView: {
     position: "absolute",
     top: 12,
-    right: 12,
+    right: 6,
     paddingHorizontal: 8,
     paddingVertical: 2,
     backgroundColor: "#F9F9F9",
@@ -134,7 +144,9 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(245, 145, 86, 0.19)",
     marginHorizontal: 4,
   },
-  orangeText: {
-    color: "orange",
+  priceTag: {
+    color: "#F6AC3D",
+    fontFamily: "PoppinsMedium",
+    fontSize: 14,
   },
 });

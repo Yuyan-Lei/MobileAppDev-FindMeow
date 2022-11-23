@@ -7,12 +7,16 @@ export function LocationText({ textStyle, locationIconColor, children }) {
     <View style={{ flexDirection: "row" }}>
       <View style={{ position: "relative", top: 5 }}>
         <Ionicons
-          name="location-outline"
+          name="location-sharp"
           color={locationIconColor || "#F59156"}
-          size={8}
+          size={12}
         />
       </View>
-      <Text style={[{ fontSize: 12, color: "gray" }, textStyle]}>
+      <Text style={[{ 
+        fontSize: 12, 
+        color: "gray",
+        marginTop: 6,
+        }, textStyle]}>
         {" "}
         {children}
       </Text>

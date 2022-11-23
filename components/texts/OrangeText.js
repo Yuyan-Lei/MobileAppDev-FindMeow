@@ -8,12 +8,10 @@ export function OrangeText({ children }) {
 
 const styles = StyleSheet.create({
   titleText: {
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "bold",
+    fontFamily: "PoppinsSemiBold",
     fontSize: 15,
     textAlign: "left",
-    color: Colors.orangeText,
+    color: "#F59156",
     marginTop: 20,
     marginLeft: 5,
     marginBottom: 5,

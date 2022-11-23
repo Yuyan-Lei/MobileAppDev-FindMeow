@@ -88,6 +88,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
             price: entry.data().Price,
             month: age,
             photo: entry.data().Picture,
+            cattery: entry.data().Cattery,
             uploadTime: entry.data().UploadTime,
           };
         })
@@ -170,7 +171,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
             width: 100,
           },
         }}
-        height={650}
+        height={670}
       >
         <DiscoverFilter
           states={{

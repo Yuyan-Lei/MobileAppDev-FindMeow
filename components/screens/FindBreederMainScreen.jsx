@@ -101,7 +101,7 @@ export default function FindBreederMainScreen() {
               width: 100,
             },
           }}
-          height={470}
+          height={495}
         >
           <FindBreederFilter
             states={{

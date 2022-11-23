@@ -46,7 +46,9 @@
     "react-native-svg": "^13.6.0",
     "react-native-web": "~0.18.9",
     "rn-range-slider": "^2.2.2",
-    "teaset": "^0.7.5"
+    "teaset": "^0.7.5",
+    "expo-font": "~11.0.1",
+    "expo-app-loading": "~2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
