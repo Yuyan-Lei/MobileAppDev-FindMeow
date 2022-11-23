@@ -49,6 +49,7 @@ export default function CatteryProfileScreen({ route }) {
       birthday.getMonth() +
       12 * (now.getFullYear() - birthday.getFullYear());
     return {
+      id: cat.id,
       name: cat.Name,
       month: age, 
       sex: cat.Gender,

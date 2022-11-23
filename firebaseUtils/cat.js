@@ -71,5 +71,7 @@ export async function getAllCats() {
 
 export async function getCats(catIds) {
   return await getMultipleFromDB(catIds, collectionName)
-  .then((catsSnap) => catsSnap.docs.map(doc => doc.data()));
+  .then((catsSnap) => catsSnap.docs.map(doc => {return {
+    id: doc.id,
+    ...doc.data()}}));
 }
