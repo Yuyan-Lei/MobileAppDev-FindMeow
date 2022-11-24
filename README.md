@@ -1,24 +1,30 @@
 ## Begin to use
-1. **Set the environment**: Download the whole file pack. Create a new `.env` file, and add the following environment variables to this file:
+1. **Set the environment**: Download the whole file pack. Create a `.env` file in the root folder, and add the following environment variables to this file:
    ```
-   REACT_APP_FIREBASE_API_KEY=AIzaSyCjsV1an6ny8Wl80hZ8WXQAFi9dMkwxyi8
-   REACT_APP_FIREBASE_AUTH_DOMAIN=cs5520-findmeow.firebaseapp.com
-   REACT_APP_FIREBASE_PROJECT_ID=cs5520-findmeow
-   REACT_APP_FIREBASE_STORAGE_BUCKET=cs5520-findmeow.appspot.com
-   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=228457534053
-   REACT_APP_FIREBASE_APP_ID=1:228457534053:web:80750c99d9a1363832ec8c
-   REACT_APP_FIREBASE_MEASUREMENT_ID=G-FRD99ZP2JN
-   REACT_APP_GOOGLE_MAP_APP_KEY=AIzaSyCwee2kdz90UKNlj8nnWGzJw70cAmu1MUo
+   REACT_APP_FIREBASE_API_KEY=
+   REACT_APP_FIREBASE_AUTH_DOMAIN=
+   REACT_APP_FIREBASE_PROJECT_ID=
+   REACT_APP_FIREBASE_STORAGE_BUCKET=
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
+   REACT_APP_FIREBASE_APP_ID=
+   REACT_APP_FIREBASE_MEASUREMENT_ID=
+
+   REACT_APP_GOOGLE_MAP_APP_KEY=
    ```
    
 2. **Installation**: Open the terminal in your IDE, and then enter `npm install` to the terminal.
-3. **Load the App**: After installation, type `expo r` and press enter in the terminal. Now the App is ready to use!
+3. **Load the App**: After installation, type `npx expo r` and press enter in the terminal. Now the App is ready to use!
 4. **Reload the App**: If there is any loading issue, type `r` and press enter in the terminal to reload the App.
 5. Due to some latent bugs, the App can somentimes be choking, especially for the filter component. This issue will be solved in the next iteration.
 6. **Testing accounts**: For better experience, you can use our pre-prepared testing accounts, as follows. 
    ```
-   Buyer account: buyer@admin.com, password: 123456
-   Cattery account: cattery@admin.com, password: 123456
+   Buyer account:
+      Email: buyer@admin.com
+      Password: 123456
+
+   Cattery account:
+      Email: cattery@admin.com
+      Password: 123456
    ```
    Feel free to sign up for your own accounts! (But please do not try to enter any invalid characters, the input verification feature is still on the way:) 
 
@@ -30,41 +36,60 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 
 **Cuichan Wu**:
 1. Designed and implemented the CatInfomation screen.
-2. Designed and implemented the discover-cat filter.(Use a slider bar component for the price column, and RBSheet for the filter feature)
-3. Designed and implemented the find-breeder filter. (Use the RBSheet for the filter feature)
-4. Designed the StarList screen.
-5. Designed the UserProfile screen.
+2. Designed and implemented the discover-cat filter.
+3. Implemented SliderBar component for the price column, and RBSheet for the filter feature.
+4. Designed and implemented the find-breeder filter. (Use the RBSheet for the filter feature)
+5. Spent time finding appropriate sliding components for CatInformation screen and optimized interaction.
+6. Designed and established the StarList screen.
+7. Designed the UserProfile screen.
+8. Implemented PhoneButton and MessageButtons.
+9. Designed Colors file for general propose.
+10. Tested and fixed bugs in the user interface.
 
 **Yuyan Lei**:
-1. Designed the database structure, and implemented the firebase CRUD.
-2. Built the navigation bar, and enabled it to display different menus to buyers / cattery owners. 
-3. Built the login&signup screen, and implemented the authentication & registration feature.
-4. Built the post screen, and implemented the post-new-cat feature. (Collect images, database CRUD and assign the cattery ID to this cat)
-5. Implemented the star-a-cat feature. (Database CRUD, and auto-delete all related likes when deleting a cat, by using the observer&subscriber design pattern)
-6. Built the profile screen, displayed an extra cattery-profile-page button for cattery owners, and implemented the logout feature.
-7. Built the cattery profile screen, implemented the realtime display of profile information and available cats.
-8. Built the updateCattery screen, and implemented the update-cattery-info feature. (Collect images, use the map API and database CRUD)
-9. Implemented the realtime display on the cat card component. 
-10. Implemented the realtime display on the cattery card component. 
-11. Refined the layouts of the catCard component, FindBreeders screen and two filter components.
-12. Wrote font loading functions.  
+1. Designed and refined app user interface by Figma as a significant reference for the overall coding process.
+2. Designed the database structure, and implemented the firebase CRUD.
+3. Built the navigation bar, and enabled it to display different menus to buyers/cattery owners. 
+4. Built the login&signup screen, and implemented the authentication & registration feature.
+5. Built the post screen, and implemented the post-new-cat feature. (Collect images, database CRUD, and assign the cattery ID to this cat)
+6. Implemented the star-a-cat feature. (Database CRUD, and auto-delete all related likes when deleting a cat, by using subscribers)
+7. Built the profile screen, displayed an extra cattery-profile-page button for cattery owners, and implemented the logout feature.
+8. Built the cattery profile screen, and implemented the real-time display of profile information and available cats.
+9. Built the UpdateCattery screen, and implemented the update-cattery-info feature. (Collect images, use the map API and database CRUD)
+10. Implemented the real-time display on the cat card component. 
+11. Implemented the real-time display on the cattery card component. 
+12. Refined the layouts of the CatCard component, FindBreeders screen, and two filter components.
+13. Rewrote font loading functions.  
+14. Finished most of the parts of the README files.
 
 **Zhongyi Lu**:
-1.
+1. Established firebase database for app and basic CURD functions.
+2. Implemented the navigation bar and locate bugs causing navigation lagging.
+3. Built Sorting Buttons for the DiscoverMain screen and FindBreederMain screen.
+4. Implemented CatCard and BreederCard.
+5. Built TextInput Box for general use.
+6. Implemented HeartButton and ReturnButton.
+7. Built DiscoverMain screen for displaying cat information.
+8. Built FindBreederMain screen for showing cattery information.
+9. Built CatteryProfile screen for showing detailed information.
+10. Implemented font loading for adding custom font.
+11. Maintained Firebase database for app storage.
+12. Tested and designed styling for Android devices.
+13. Tested and fixed bugs in the user interface.
 
 
-### Features, bugs, styling issues remaining to resolve in the next iteration
+### Features, bugs, and styling issues remaining to resolve in the next iteration
 
 **Features to expect**:
-1. Input verifications in each form.
+1. Input verifications in each of the input forms.
 2. Implement the display-nearby-cats feature on the DiscoverCat screen.
 3. Implement the map feature for the discoverCat screen. 
-4. Enable users to star a cattery.
-5. Display the realtime cattery collection list.
-6. Display available cats on the cattery profile screen.
+4. Implement the filter feature for both discoverCat screen and findBreeder screen.
+5. Enable users to star a cattery.
+6. Display the realtime cattery collection list.
 7. Display th realtime cat infomation on the CatInfo screen.
-9. Enable users to change their profile photos and passwords
-10. Enable users to receive notifications when a nearby cat is posted. 
+8. Enable users to change their profile photos and passwords
+9. Enable users to receive notifications when a nearby cat is posted. 
 
 **Known Bugs**
 1. Overloading issues in some screens and two filters.
@@ -103,7 +128,7 @@ FindMeow is an app designed for pet lovers to select and buy your favorite cats 
  
 
 
-## Goals
+### Goals
 In short, the application helps cat purchasers find and buy their favorite cats more easily and conveniently, and it helps cattery owners sell cats faster.
 
 Specifically, in the United States, there are mainly three niches for the cat-trading market: unpaid or low cost adoptions, private sellers selling personally bred ones, and catteries selling high quality cats.
@@ -114,7 +139,7 @@ Catteries are used to setting up their own web pages, uploading the information 
 
 The advent of our app will revolutionize their transactions, transforming an antiquated, complex, time-consuming, and delayed transaction process into a new, simple, and convenient real-time one.
 
-## Advantages Over Competitors
+### Advantages Over Competitors
 Although there are many pet buying apps on the market, they share two major characteristics:
 
 One is that they tend to encompass all types of pets. Although that choice makes these apps available to a broader audience, they are often hard to be perfect in either category.
