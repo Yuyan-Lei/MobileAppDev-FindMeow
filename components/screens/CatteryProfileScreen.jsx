@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
-import { FlatList, Pressable, Text, View, Image, StyleSheet, Alert } from "react-native";
-import { CatCard } from "../cards/CatCard";
-import { FilterButton } from "../pressable/FilterButton";
-import { FilterButtons } from "../pressable/FilterButtons";
-import { TitleText } from "../texts/TitleText";
-import { useWindowDimensions } from "react-native";
-import { HeartButton } from "../pressable/HeartButton";
-import { LocationText } from "../texts/LocationText";
-import { rootStackNavigateBack } from "../RootNavigation";
-import { Colors } from "../styles/Colors";
-import { getCats } from "../../firebaseUtils/cat";
 import { collection, documentId, onSnapshot, query, where } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Alert, FlatList, Image, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { CatCard } from "../cards/CatCard";
+import { HeartButton } from "../pressable/HeartButton";
+import { rootStackNavigateBack } from "../RootNavigation";
+import { LocationText } from "../texts/LocationText";
 
 
 export default function CatteryProfileScreen({ route }) {
@@ -70,7 +64,7 @@ export default function CatteryProfileScreen({ route }) {
           </View>
         </View>
 
-        <View style={{ margin: 32, top: -80 }}>
+        <View style={{ margin: 32, top: -80, marginBottom: 32 - 80 }}>
 
           {/* cattery name & address */}
           <View
@@ -139,7 +133,7 @@ export default function CatteryProfileScreen({ route }) {
               data={cats}
               renderItem={({ item, index }) => <CatCard cat={buildCatItem(item)} />}
               numColumns={2}
-              ListFooterComponent={<View style={{ height: 60 }} />}
+            // ListFooterComponent={<View style={{ height: 60 }} />}
             />
           </View>
 
@@ -148,12 +142,12 @@ export default function CatteryProfileScreen({ route }) {
 
       {/* floating components */}
       <View style={{ position: "absolute", top: 40, right: 32 }}>
-        <HeartButton 
-          onPress={() =>{
-              Alert.alert("Feature for this button is coming soon~", "See you next time!", [
-                {text: "Sad"},
-                {text: "Wait for you"},
-              ])
+        <HeartButton
+          onPress={() => {
+            Alert.alert("Feature for this button is coming soon~", "See you next time!", [
+              { text: "Sad" },
+              { text: "Wait for you" },
+            ])
           }}
         />
       </View>
