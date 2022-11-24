@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Text, View, TextInput, StyleSheet, ScrollView, KeyboardAvoidingView } from "react-native";
+import { Text, View, TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Alert } from "react-native";
 import { TitleText } from "../texts/TitleText";
 import { Pressable } from "@react-native-material/core";
 import CatImagePicker from "./CatImagePicker";
@@ -23,15 +23,26 @@ export default function UpdateCatteryPage({ route, navigation }) {
         ref.current?.setAddressText(address || '');
     }, []);
 
-    const onUpdateCattery = () => {
-        if (image === user.picture) {
-            updateCattery({catteryName, picture: user.picture, phoneNumber, website, placeId, address}).then(() => navigation.goBack());
-        } else {
-            writeImageToDB(image)
-                .then(url => updateCattery({catteryName, picture: url, phoneNumber, website, placeId, address}))
-                .then(() => navigation.goBack());
+    let onUpdateCatteryLocked = false;
+    async function onUpdateCattery (){
+        if (onUpdateCatteryLocked) return;
+        onUpdateCatteryLocked = true;
+        try{
+            if (image === user.picture) {
+                await updateCattery({catteryName, picture: user.picture, phoneNumber, website, placeId, address})
+                navigation.goBack();
+            } else {
+                const url = await writeImageToDB(image)
+                await updateCattery({catteryName, picture: url, phoneNumber, website, placeId, address})
+                navigation.goBack();
+            }
+        } catch {
+            Alert.alert("Update failed. Check network.");
+        } finally {
+            onUpdateCatteryLocked = false;
         }
     };
+
     return (
         <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
