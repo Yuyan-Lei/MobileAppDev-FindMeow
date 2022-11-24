@@ -101,19 +101,20 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 3. Require to unify colors.
 
 ## ScreenShots
-![](screenshots/Cattery's.jpg)
-
-
-![](screenshots/Cattery.jpg)
+![](screenshots/Login.jpg)
 
 
 ![](screenshots/Cat.jpg)
 
 
-![](screenshots/Login.jpg)
+![](screenshots/Cattery.jpg)
 
 
 ![](screenshots/User.jpg)
+
+
+![](screenshots/Cattery's.jpg)
+
 
 
 ## Project Descriptions
