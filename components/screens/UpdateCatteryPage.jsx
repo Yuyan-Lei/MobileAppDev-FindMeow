@@ -25,7 +25,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
 
     const onUpdateCattery = () => {
         if (image === user.picture) {
-            updateCattery({catteryName, picture: user.picture, phoneNumber, website, placeId, address}).then(() => navigation.navigate("Home"));
+            updateCattery({catteryName, picture: user.picture, phoneNumber, website, placeId, address}).then(() => navigation.goBack());
         } else {
             writeImageToDB(image)
                 .then(url => updateCattery({catteryName, picture: url, phoneNumber, website, placeId, address}))

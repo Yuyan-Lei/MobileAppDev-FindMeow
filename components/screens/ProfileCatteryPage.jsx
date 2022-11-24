@@ -9,19 +9,32 @@ import { useWindowDimensions } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 import { rootStackNavigateBack } from "../RootNavigation";
-import { collection, documentId, onSnapshot, query, where } from "firebase/firestore";
+import { collection, doc, documentId, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { getCats } from "../../firebaseUtils/cat";
 
 
 export default function ProfileCatteryPage({ route, navigation }) {
   const { height, width } = useWindowDimensions();
   const [cats, setCats] = useState([]);
-  const cattery = route.params.user;
-  const catteryShortAddress = cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2];
-  const catteryFullAddress = cattery.address.split(", ")[0] + ", " + cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2];
+  const [cattery, setCattery] = useState(null);
+  const [catteryShortAddress, setCatteryShortAddress] = useState("");
+  const [catteryFullAddress, setCatteryFullAddress] = useState("");
+  useEffect(() => {
+    const docRef = doc(db, "Users", getCurrentUserEmail());
+    const unSubscribe = onSnapshot(docRef, (snapshot) => {
+      setCattery(snapshot.data());
+      setCatteryShortAddress(snapshot.data().address.split(", ")[1] + ", " + snapshot.data().address.split(", ")[2]);
+      setCatteryFullAddress(snapshot.data().address.split(", ")[0] + ", " + snapshot.data().address.split(", ")[1] + ", " + snapshot.data().address.split(", ")[2]);
+      getCats(snapshot.data().cats).then((cats) => setCats(cats));
+    });
+
+    return () => unSubscribe();
+  }, []);
 
   useEffect(() => {
-    if (cattery.cats.length === 0) {
+    if (!cattery || cattery.cats.length === 0) {
       return;
     }
     const q = query(collection(db, "Cats"), where(documentId(), "in", cattery.cats));
