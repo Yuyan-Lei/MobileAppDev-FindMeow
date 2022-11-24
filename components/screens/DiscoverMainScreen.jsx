@@ -26,11 +26,6 @@ export default function DiscoverMainScreen({ route, navigation }) {
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState(0);
 
-  const [check1, setCheck1] = useState(false);
-  const [check2, setCheck2] = useState(false);
-  const [check3, setCheck3] = useState(false);
-  const [check4, setCheck4] = useState(false);
-
   const [selectedBreed, setSelectedBreed] = useState("All");
   const [selectedAge, setSelectedAge] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
@@ -42,11 +37,6 @@ export default function DiscoverMainScreen({ route, navigation }) {
 
   function resetAllFilters() {
     setValue(0);
-
-    setCheck1(false);
-    setCheck2(false);
-    setCheck3(false);
-    setCheck4(false);
 
     setSelectedBreed("");
     setSelectedAge("");
@@ -102,7 +92,6 @@ export default function DiscoverMainScreen({ route, navigation }) {
 
   /* events for top filter tags - start */
   const onFilterChange = (value) => {
-    console.log(value);
     let dataCopy = data;
     // 1. newer post
     if (value === 0) {
@@ -110,16 +99,10 @@ export default function DiscoverMainScreen({ route, navigation }) {
     }
     // 2. nearby Post
     else if (value === 1) {
-      Alert.alert("The button function is coming soon~", "See you next time!", [
-        {
-          text: "Sad",
-          onPress: () => console.log("Feel Sad about no button function now"),
-        },
-        {
-          text: "Wait for you",
-          onPress: () => console.log("Wait for coming button function"),
-        },
-      ]);
+      Alert.alert("Feature for this button is coming soon~", "See you next time!", [
+        {text: "Sad"},
+        {text: "Wait for you"},
+      ])
     }
     // 3. Lower Price
     else if (value === 2) {
@@ -179,15 +162,6 @@ export default function DiscoverMainScreen({ route, navigation }) {
             setVisible,
             value,
             setValue,
-
-            check1,
-            setCheck1,
-            check2,
-            setCheck2,
-            check3,
-            setCheck3,
-            check4,
-            setCheck4,
 
             selectedState,
             setSelectedState,

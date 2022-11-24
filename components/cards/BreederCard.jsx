@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, Pressable, StyleSheet, Text, View, Image } from "react-native";
+import { Platform, Pressable, StyleSheet, Text, View, Image, Alert } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
@@ -12,27 +12,43 @@ export function BreederCard({ cattery }) {
     <View style={{ marginHorizontal: 10}}>
       <Pressable onPress={() => rootStackNavigate("CatteryProfile", {cattery})}>
         <View style={[styles.cardView, styles.shadowView]}>
+
+          {/* Cattery photo */}
           <View style={styles.imageView}>
-            {/* Cattery photo */}
             <Image source={{ uri: cattery.picture }} style={styles.image} />
           </View>
 
           <View style={styles.detailView}>
+            {/* Cattery Avatar */}
             <Text style={styles.breederNameText}>{cattery.catteryName}</Text>
+
+            {/* Cattery Breed */}
             <Text style={styles.breedText}>{cattery.breed}</Text>
+
+            {/* Available Kitten Display */}
             <Text style={styles.availableKittenText}>
-              {cattery.cats.length > 0
-                ? `${cattery.cats.length} Available Kittens`
+              {cattery.cats.length > 0 ? 
+                cattery.cats.length === 1 ? `${cattery.cats.length} Available Kitten` : `${cattery.cats.length} Available Kittens`
                 : ""}
             </Text>
-            <LocationText>{cattery.address.split(", ")[1] 
-              + ", " + cattery.address.split(", ")[2]}</LocationText>
+            
+            {/* Cattery Location */}
+            <LocationText>
+              {cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2]}
+            </LocationText>
           </View>
         </View>
       </Pressable>
 
       <View style={styles.heartButtonView}>
-        <HeartButton />
+        <HeartButton 
+            onPress={() =>{
+                Alert.alert("Feature for this button is coming soon~", "See you next time!", [
+                  {text: "Sad"},
+                  {text: "Wait for you"},
+                ])
+            }}
+          />
       </View>
     </View>
   );

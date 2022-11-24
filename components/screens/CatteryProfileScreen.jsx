@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
-import { FlatList, Pressable, Text, View, Image, StyleSheet } from "react-native";
+import { FlatList, Pressable, Text, View, Image, StyleSheet, Alert } from "react-native";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -14,24 +14,6 @@ import { getCats } from "../../firebaseUtils/cat";
 import { collection, documentId, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
 
-const mockCats = [
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-  { name: "aaa", month: 3, sex: "Male", location: "San Jose", price: 1000 },
-  { name: "bbb", month: 5, sex: "Female", location: "Palo Alto", price: 1500 },
-];
-
-// const cattery = {
-//   cats,
-//   name: "Angel Girls",
-//   location: "Sunnyvale, CA",
-// };
 
 export default function CatteryProfileScreen({ route }) {
   const { height, width } = useWindowDimensions();
@@ -65,6 +47,7 @@ export default function CatteryProfileScreen({ route }) {
       month: age,
       sex: cat.Gender,
       price: cat.Price,
+      cattery: cat.Cattery,
       photo: cat.Picture,
     }
   };
@@ -78,6 +61,7 @@ export default function CatteryProfileScreen({ route }) {
           </View>
         </View>
 
+        {/* Top left button - back */}
         <View style={{ position: "absolute", top: 48, left: 12 }}>
           <View>
             <Pressable onPress={rootStackNavigateBack}>
@@ -164,7 +148,14 @@ export default function CatteryProfileScreen({ route }) {
 
       {/* floating components */}
       <View style={{ position: "absolute", top: 40, right: 32 }}>
-        <HeartButton />
+        <HeartButton 
+          onPress={() =>{
+              Alert.alert("Feature for this button is coming soon~", "See you next time!", [
+                {text: "Sad"},
+                {text: "Wait for you"},
+              ])
+          }}
+        />
       </View>
     </View>
   );

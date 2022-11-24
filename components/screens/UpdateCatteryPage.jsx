@@ -10,7 +10,7 @@ import { writeImageToDB } from "../../firebaseUtils/firestore";
 import { FillAndroidTopBar, FillAndroidButtomBar} from "../FillAndroidBar";
 
 export default function UpdateCatteryPage({ route, navigation }) {
-    const user = route.params.user;
+    const user = route.params.cattery;
     const [catteryName, setCatteryName] = useState(user.catteryName);
     const [image, setImage] = useState(user.picture);
     const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
@@ -25,7 +25,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
 
     const onUpdateCattery = () => {
         if (image === user.picture) {
-            updateCattery({catteryName, picture: user.picture, phoneNumber, website, placeId, address}).then(() => navigation.navigate("Home"));
+            updateCattery({catteryName, picture: user.picture, phoneNumber, website, placeId, address}).then(() => navigation.goBack());
         } else {
             writeImageToDB(image)
                 .then(url => updateCattery({catteryName, picture: url, phoneNumber, website, placeId, address}))

@@ -597,16 +597,10 @@ const DiscoverFilter = ({
     // setSelectedState(selectedState);
     // setSelectedGender(selectedGender);
     // setVisible(!visible);
-    Alert.alert("The button function is coming soon~", "See you next time!", [
-      {
-        text: "Sad",
-        onPress: () => console.log("Feel Sad about no button function now"),
-      },
-      {
-        text: "Wait for you",
-        onPress: () => console.log("Wait for coming button function"),
-      },
-    ]);
+    Alert.alert("Feature for this button is coming soon~", "See you next time!", [
+      {text: "Sad"},
+      {text: "Wait for you"},
+    ])
     refRBSheet.current.close();
   };
 
@@ -692,42 +686,6 @@ const DiscoverFilter = ({
         save="value"
         defaultOption={{ key: selectedState, value: selectedState }}
       />
-
-      {/* <View style={{ flexDirection: "row" }}>
-        <CheckBox
-          center
-          title="Vaccinated"
-          checked={check1}
-          onPress={() => setCheck1(!check1)}
-        />
-        <CheckBox
-          center
-          title="Vet Checked"
-          checked={check2}
-          onPress={() => setCheck2(!check2)}
-        />
-        <CheckBox
-          center
-          title="Dewormed"
-          checked={check3}
-          onPress={() => setCheck3(!check3)}
-        />
-      </View>
-
-      <View style={{ flexDirection: "row" }}>
-        <CheckBox
-          center
-          title="Ready to go home"
-          checked={check4}
-          onPress={() => setCheck4(!check4)}
-        />
-        <CheckBox
-          center
-          title="Neutered / Spayed"
-          checked={check5}
-          onPress={() => setCheck5(!check5)}
-        />
-      </View> */}
 
 
       <View style={styles.submitButtonContainer}>
