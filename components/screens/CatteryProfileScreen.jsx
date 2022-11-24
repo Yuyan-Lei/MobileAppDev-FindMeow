@@ -1,4 +1,5 @@
 import { Feather } from "@expo/vector-icons";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { collection, documentId, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Alert, FlatList, Image, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
@@ -7,6 +8,7 @@ import { CatCard } from "../cards/CatCard";
 import { HeartButton } from "../pressable/HeartButton";
 import { rootStackNavigateBack } from "../RootNavigation";
 import { LocationText } from "../texts/LocationText";
+import CatInformation from "./CatInformation";
 
 
 export default function CatteryProfileScreen({ route }) {
@@ -45,8 +47,9 @@ export default function CatteryProfileScreen({ route }) {
       photo: cat.Picture,
     }
   };
-  return (
-    <View style={{ backgroundColor: "rgb(250,250,250)" }}>
+
+  function MainScreen() {
+    return (<View style={{ backgroundColor: "rgb(250,250,250)" }}>
       <View>
         <View>
           <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
@@ -152,8 +155,20 @@ export default function CatteryProfileScreen({ route }) {
         />
       </View>
     </View>
-  );
+    );
+  }
+
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}
+      initialRouteName="MainScreen">
+      <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="CatInformation" component={CatInformation} />
+    </Stack.Navigator>
+  )
 }
+
+
 
 const styles = StyleSheet.create({
   catteryName: {
