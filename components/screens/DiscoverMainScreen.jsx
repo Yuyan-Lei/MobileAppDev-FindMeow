@@ -1,27 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
-import { FlatList, StyleSheet, Text, View, Button, Alert } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  collection,
+  onSnapshot, orderBy, query
+} from "firebase/firestore";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, FlatList, View } from "react-native";
+import RBSheet from "react-native-raw-bottom-sheet";
+import { db } from "../../firebaseUtils/firebase-setup";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
-import { rootStackNavigate } from "../RootNavigation";
+import CatInformation from "./CatInformation";
 import DiscoverFilter from "./DiscoverFilter";
-import {
-  collection,
-  onSnapshot,
-  query,
-  orderBy,
-  doc,
-} from "firebase/firestore";
-import { db } from "../../firebaseUtils/firebase-setup";
-import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import RBSheet from "react-native-raw-bottom-sheet";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export default function DiscoverMainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  
+
   /* values used for DiscoverFilter start */
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState(0);
@@ -49,7 +45,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
   const [data, setData] = useState([]);
   useEffect(() => {
     let q;
-    // 1. Newer Post
+    // 1. Newer Post  
     if (selectedIndex == 0) {
       q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
     }
@@ -72,7 +68,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
             birthday.getMonth() +
             12 * (now.getFullYear() - birthday.getFullYear());
           // age cannot be negative
-          if (age === undefined || isNaN(age) || age < 0){
+          if (age === undefined || isNaN(age) || age < 0) {
             age = 0;
           }
 
@@ -105,8 +101,8 @@ export default function DiscoverMainScreen({ route, navigation }) {
     // 2. nearby Post
     else if (value === 1) {
       Alert.alert("Feature for this button is coming soon~", "See you next time!", [
-        {text: "Sad"},
-        {text: "Wait for you"},
+        { text: "Sad" },
+        { text: "Wait for you" },
       ])
     }
     // 3. Lower Price
@@ -118,8 +114,8 @@ export default function DiscoverMainScreen({ route, navigation }) {
   /* events for top filter tags - end */
 
 
-  return (
-    <View
+  function MainScreen() {
+    return (<View
       style={{
         paddingHorizontal: 16,
         paddingTop: 55,
@@ -176,7 +172,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
             setSelectedAge,
             selectedGender,
             setSelectedGender,
-            
+
             resetAllFilters,
             refRBSheet,
           }}
@@ -197,6 +193,16 @@ export default function DiscoverMainScreen({ route, navigation }) {
           ListFooterComponent={<View style={{ height: 80 }} />}
         />
       </View>
-    </View>
-  );
+    </View>)
+  }
+
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}
+      initialRouteName="MainScreen">
+      <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="CatInformation" component={CatInformation} />
+    </Stack.Navigator>
+  )
 }
+
