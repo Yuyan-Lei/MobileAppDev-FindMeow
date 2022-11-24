@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TextInput, StyleSheet, ScrollView, Pressable, KeyboardAvoidingView } from "react-native";
+import { Text, View, TextInput, StyleSheet, ScrollView, Pressable, KeyboardAvoidingView, Alert } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import CatBreedSelector from "./CatBreedSelector";
 import DatePicker from 'react-native-datepicker';
@@ -36,7 +36,12 @@ export default function PostNewCatScreen({route, navigation: {navigate}}) {
         return () => unSubscribe();
       }, []);
 
-    const onPostNewCat = () => {
+    let onPostNewCatLocked = false;
+    async function onPostNewCat () {
+        /* Fix double clicking */
+        if (onPostNewCatLocked) return;
+        onPostNewCatLocked = true;
+
         const tags = [];
         if (vaccinated) {
             tags.push('Vaccinated');
@@ -53,21 +58,27 @@ export default function PostNewCatScreen({route, navigation: {navigate}}) {
         if (neutered) {
             tags.push('Neutered');
         }
-        writeImageToDB(image).
-            then(url => {
-                createCat({
-                    Name: catName, 
-                    Breed: breed, 
-                    Birthday: birthDate,
-                    Picture: url, 
-                    Gender: gender, 
-                    Price: price, 
-                    Description: description, 
-                    Tags: tags, 
-                    Cattery: getCurrentUserEmail(), 
-                    Contact: userPhone, 
-                    UploadTime: new Date().getTime()})
-            }).then(navigate('Cats'));
+        try {
+            const url = await writeImageToDB(image);
+            await createCat({
+                Name: catName, 
+                Breed: breed, 
+                Birthday: birthDate,
+                Picture: url, 
+                Gender: gender, 
+                Price: price, 
+                Description: description, 
+                Tags: tags, 
+                Cattery: getCurrentUserEmail(), 
+                Contact: userPhone, 
+                UploadTime: new Date().getTime()
+            })
+            navigate('Cats');
+        } catch {
+            Alert.alert("Posting cats failed.");
+        } finally {
+            onPostNewCatLocked = false;
+        };
     };
 
     return (
