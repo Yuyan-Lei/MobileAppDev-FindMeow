@@ -45,6 +45,7 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 8. Implemented PhoneButton and MessageButtons.
 9. Designed Colors file for general propose.
 10. Tested and fixed bugs in the user interface.
+11. Tested styling for iOS devices.
 
 **Yuyan Lei**:
 1. Designed and refined app user interface by Figma as a significant reference for the overall coding process.
