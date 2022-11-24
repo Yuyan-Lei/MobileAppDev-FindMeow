@@ -1,5 +1,5 @@
 ## Begin to use
-1. **Set the environment**: Download the whole file pack. Create a new `.env` file, and add the following environment variables to this file:
+1. **Set the environment**: Download the whole file pack. Create a `.env` file in the root folder, and add the following environment variables to this file:
    ```
    REACT_APP_FIREBASE_API_KEY=
    REACT_APP_FIREBASE_AUTH_DOMAIN=
@@ -8,17 +8,23 @@
    REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
    REACT_APP_FIREBASE_APP_ID=
    REACT_APP_FIREBASE_MEASUREMENT_ID=
+
    REACT_APP_GOOGLE_MAP_APP_KEY=
    ```
    
 2. **Installation**: Open the terminal in your IDE, and then enter `npm install` to the terminal.
-3. **Load the App**: After installation, type `expo r` and press enter in the terminal. Now the App is ready to use!
+3. **Load the App**: After installation, type `npx expo r` and press enter in the terminal. Now the App is ready to use!
 4. **Reload the App**: If there is any loading issue, type `r` and press enter in the terminal to reload the App.
 5. Due to some latent bugs, the App can somentimes be choking, especially for the filter component. This issue will be solved in the next iteration.
 6. **Testing accounts**: For better experience, you can use our pre-prepared testing accounts, as follows. 
    ```
-   Buyer account: buyer@admin.com, password: 123456
-   Cattery account: cattery@admin.com, password: 123456
+   Buyer account:
+      Email: buyer@admin.com
+      Password: 123456
+
+   Cattery account:
+      Email: cattery@admin.com
+      Password: 123456
    ```
    Feel free to sign up for your own accounts! (But please do not try to enter any invalid characters, the input verification feature is still on the way:) 
 
@@ -30,27 +36,46 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 
 **Cuichan Wu**:
 1. Designed and implemented the CatInfomation screen.
-2. Designed and implemented the discover-cat filter.(Use a slider bar component for the price column, and RBSheet for the filter feature)
-3. Designed and implemented the find-breeder filter. (Use the RBSheet for the filter feature)
-4. Designed the StarList screen.
-5. Designed the UserProfile screen.
+2. Designed and implemented the discover-cat filter.
+3. Implemented SliderBar component for the price column, and RBSheet for the filter feature.
+4. Designed and implemented the find-breeder filter. (Use the RBSheet for the filter feature)
+5. Spent time finding appropriate sliding components for CatInformation screen and optimized interaction.
+6. Designed and established the StarList screen.
+7. Designed the UserProfile screen.
+8. Implemented PhoneButton and MessageButtons.
+9. Designed Colors file for general propose.
+10. Tested and fixed bugs in the user interface.
 
 **Yuyan Lei**:
-1. Designed the database structure, and implemented the firebase CRUD.
-2. Built the navigation bar, and enabled it to display different menus to buyers / cattery owners. 
-3. Built the login&signup screen, and implemented the authentication & registration feature.
-4. Built the post screen, and implemented the post-new-cat feature. (Collect images, database CRUD and assign the cattery ID to this cat)
-5. Implemented the star-a-cat feature. (Database CRUD, and auto-delete all related likes when deleting a cat, by using subscribers)
-6. Built the profile screen, displayed an extra cattery-profile-page button for cattery owners, and implemented the logout feature.
-7. Built the cattery profile screen, and implemented the realtime display of profile information and available cats.
-8. Built the updateCattery screen, and implemented the update-cattery-info feature. (Collect images, use the map API and database CRUD)
-9. Implemented the realtime display on the cat card component. 
-10. Implemented the realtime display on the cattery card component. 
-11. Refined the layouts of the catCard component, FindBreeders screen and two filter components.
-12. Wrote font loading functions.  
+1. Designed and refined app user interface by Figma as a significant reference for the overall coding process.
+2. Designed the database structure, and implemented the firebase CRUD.
+3. Built the navigation bar, and enabled it to display different menus to buyers/cattery owners. 
+4. Built the login&signup screen, and implemented the authentication & registration feature.
+5. Built the post screen, and implemented the post-new-cat feature. (Collect images, database CRUD, and assign the cattery ID to this cat)
+6. Implemented the star-a-cat feature. (Database CRUD, and auto-delete all related likes when deleting a cat, by using subscribers)
+7. Built the profile screen, displayed an extra cattery-profile-page button for cattery owners, and implemented the logout feature.
+8. Built the cattery profile screen, and implemented the real-time display of profile information and available cats.
+9. Built the UpdateCattery screen, and implemented the update-cattery-info feature. (Collect images, use the map API and database CRUD)
+10. Implemented the real-time display on the cat card component. 
+11. Implemented the real-time display on the cattery card component. 
+12. Refined the layouts of the CatCard component, FindBreeders screen, and two filter components.
+13. Rewrote font loading functions.  
+14. Finished most of the parts of the README files.
 
 **Zhongyi Lu**:
-1.
+1. Established firebase database for app and basic CURD functions.
+2. Implemented the navigation bar and locate bugs causing navigation lagging.
+3. Built Sorting Buttons for the DiscoverMain screen and FindBreederMain screen.
+4. Implemented CatCard and BreederCard.
+5. Built TextInput Box for general use.
+6. Implemented HeartButton and ReturnButton.
+7. Built DiscoverMain screen for displaying cat information.
+8. Built FindBreederMain screen for showing cattery information.
+9. Built CatteryProfile screen for showing detailed information.
+10. Implemented font loading for adding custom font.
+11. Maintained Firebase database for app storage.
+12. Tested and designed styling for Android devices.
+13. Tested and fixed bugs in the user interface.
 
 
 ### Features, bugs, and styling issues remaining to resolve in the next iteration
