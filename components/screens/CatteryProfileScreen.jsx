@@ -11,7 +11,7 @@ import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
 
 
-export default function CatteryProfileScreen({ route }) {
+export default function CatteryProfileScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
   const [cats, setCats] = useState([]);
   const cattery = route.params.cattery;
@@ -48,7 +48,7 @@ export default function CatteryProfileScreen({ route }) {
     }
   };
 
-  function MainScreen() {
+  function MainScreen({ route, navigation }) {
     return (<View style={{ backgroundColor: "rgb(250,250,250)" }}>
       <View>
         <View>
@@ -134,7 +134,10 @@ export default function CatteryProfileScreen({ route }) {
             </View>
             <FlatList
               data={cats}
-              renderItem={({ item, index }) => <CatCard cat={buildCatItem(item)} />}
+              renderItem={({ item, index }) =>
+                <CatCard
+                  cat={buildCatItem(item)}
+                  navigation={navigation} />}
               numColumns={2}
             // ListFooterComponent={<View style={{ height: 60 }} />}
             />

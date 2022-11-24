@@ -114,7 +114,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
   /* events for top filter tags - end */
 
 
-  function MainScreen() {
+  function MainScreen({ route, navigation }) {
     return (<View
       style={{
         paddingHorizontal: 16,
@@ -188,7 +188,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
       <View style={{ padding: 12 }}>
         <FlatList
           data={data}
-          renderItem={({ item, index }) => <CatCard cat={item} />}
+          renderItem={({ item, index }) => <CatCard cat={item} navigation={navigation} />}
           numColumns={2}
           ListFooterComponent={<View style={{ height: 80 }} />}
         />

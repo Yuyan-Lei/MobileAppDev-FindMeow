@@ -10,6 +10,8 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { getAllCatteries } from "../../firebaseUtils/user";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import CatteryProfileScreen from "./CatteryProfileScreen";
 
 
 export default function FindBreederMainScreen() {
@@ -41,8 +43,9 @@ export default function FindBreederMainScreen() {
     return () => unSubscribe();
   }, []);
 
-  return (
-    <View style={styles.containter}>
+
+  function MainScreen({ route, navigation }) {
+    return (<View style={styles.containter}>
       <View style={styles.cardView}>
         <TitleText>Find Breeders</TitleText>
       </View>
@@ -79,7 +82,7 @@ export default function FindBreederMainScreen() {
             states={{
               visible,
               setVisible,
-              
+
               selectedBreed,
               setSelectedBreed,
               selectedState,
@@ -96,12 +99,22 @@ export default function FindBreederMainScreen() {
       <View style={styles.listView}>
         <FlatList
           data={catteries}
-          renderItem={({ item }) => <BreederCard cattery={item} />}
+          renderItem={({ item }) => <BreederCard cattery={item} navigation={navigation} />}
           ListFooterComponent={<View style={{ height: 250 }} />}
         />
       </View>
     </View>
-  );
+    );
+  }
+
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}
+      initialRouteName="MainScreen">
+      <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
+    </Stack.Navigator>
+  )
 }
 
 const styles = StyleSheet.create({

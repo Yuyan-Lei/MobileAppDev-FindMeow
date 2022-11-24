@@ -8,7 +8,7 @@ import { LocationText } from "../texts/LocationText";
 import { onSnapshot, doc } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-export function CatCard({ cat }) {
+export function CatCard({ cat, navigation }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
 
@@ -17,17 +17,17 @@ export function CatCard({ cat }) {
   }
 
   useEffect(() => {
-    const unSubscribe = 
-      onSnapshot(doc(db, 'Users', getCurrentUserEmail()), 
+    const unSubscribe =
+      onSnapshot(doc(db, 'Users', getCurrentUserEmail()),
         (snapshot) => {
           const likeCats = snapshot.data().likeCats;
           setLikeCats(likeCats);
         });
-    
+
     return () => unSubscribe();
   }, []);
   const onClickLikeButton = () => {
-    if(!likeCats.includes(cat.id)) {
+    if (!likeCats.includes(cat.id)) {
       userLikeACat(cat.id);
     } else {
       userUnLikeACat(cat.id);
@@ -36,7 +36,7 @@ export function CatCard({ cat }) {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => rootStackNavigate("CatInformation")}>
+      <Pressable onPress={() => navigation.navigate("CatInformation")}>
         <View style={styles.imageView}>
           {/* cat photo */}
           <Image source={{ uri: cat.photo }} style={styles.image} />
@@ -58,7 +58,7 @@ export function CatCard({ cat }) {
             textStyle={styles.locationStyle}
             locationIconColor={styles.locationIconStyle.color}
           >
-            {cattery && cattery.address ? 
+            {cattery && cattery.address ?
               cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2] : 'Loading'}
           </LocationText>
         </View>
@@ -66,7 +66,7 @@ export function CatCard({ cat }) {
 
       {/* floating components */}
       <View style={styles.heartButtonView}>
-        <HeartButton 
+        <HeartButton
           notSelectedColor="white"
           isLiked={likeCats.includes(cat.id)}
           onPress={onClickLikeButton} />
@@ -82,10 +82,10 @@ export function CatCard({ cat }) {
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    margin: 8, 
-    justifyContent: "center", 
-    width: "45%" 
+  container: {
+    margin: 8,
+    justifyContent: "center",
+    width: "45%"
   },
   imageView: {
     aspectRatio: 0.834,
