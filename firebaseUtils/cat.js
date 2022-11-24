@@ -1,4 +1,11 @@
-import { deleteFromDB, getAllFromDB, updateToDB, wrtieToDB, getMultipleFromDB } from "./firestore";
+import { arrayUnion } from "firebase/firestore";
+import {
+  deleteFromDB,
+  getAllFromDB,
+  updateToDB,
+  wrtieToDB,
+  getMultipleFromDB,
+} from "./firestore";
 
 const collectionName = "Cats";
 
@@ -13,7 +20,7 @@ export async function createCat({
   Tags,
   Cattery,
   Contact,
-  UploadTime
+  UploadTime,
 }) {
   const newCat = {
     Name,
@@ -29,7 +36,14 @@ export async function createCat({
     UploadTime,
   };
 
-  return await wrtieToDB(newCat, collectionName);
+  const cat = await wrtieToDB(newCat, collectionName);
+
+  /* link cat to cattery */
+  const newCatEntry = {
+    cats: arrayUnion(cat.id),
+  };
+
+  return await updateToDB(Cattery, "Users", newCatEntry);
 }
 
 export async function updateCat({
@@ -70,8 +84,12 @@ export async function getAllCats() {
 }
 
 export async function getCats(catIds) {
-  return await getMultipleFromDB(catIds, collectionName)
-  .then((catsSnap) => catsSnap.docs.map(doc => {return {
-    id: doc.id,
-    ...doc.data()}}));
+  return await getMultipleFromDB(catIds, collectionName).then((catsSnap) =>
+    catsSnap.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    })
+  );
 }

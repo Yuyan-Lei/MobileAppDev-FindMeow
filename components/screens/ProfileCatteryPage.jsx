@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from "react";
 import { Feather } from "@expo/vector-icons";
-import { FlatList, Pressable, Text, View, Image, StyleSheet } from "react-native";
-import { CatCard } from "../cards/CatCard";
-import { FilterButton } from "../pressable/FilterButton";
-import { FilterButtons } from "../pressable/FilterButtons";
-import { TitleText } from "../texts/TitleText";
-import { useWindowDimensions } from "react-native";
-import { HeartButton } from "../pressable/HeartButton";
-import { LocationText } from "../texts/LocationText";
-import { rootStackNavigateBack } from "../RootNavigation";
 import { collection, doc, documentId, onSnapshot, query, where } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { FlatList, Image, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { getCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { getCats } from "../../firebaseUtils/cat";
+import { CatCard } from "../cards/CatCard";
+import { rootStackNavigateBack } from "../RootNavigation";
+import { LocationText } from "../texts/LocationText";
 
 
 export default function ProfileCatteryPage({ route, navigation }) {
@@ -44,7 +39,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
 
     return () => unSubscribe();
   }, []);
-  
+
 
   const buildCatItem = (cat) => {
     const birthday = new Date(cat.Birthday);
@@ -95,7 +90,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
     </View>
 
 
-    <View style={{ margin: 32, top: -80 }}>
+    <View style={{ margin: 32, top: -80, marginBottom: 32 - 80 }}>
       {/* cattery name & address */}
       <View
         style={{
@@ -115,7 +110,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
       </View>
 
       <View style={{ height: 24 }} />
-      
+
 
       {/* cattery info: phone number, website, address */}
       <View
@@ -163,7 +158,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
           data={cats}
           renderItem={({ item, index }) => <CatCard cat={buildCatItem(item)} />}
           numColumns={2}
-          ListFooterComponent={<View style={{ height: 60 }} />}
+        // ListFooterComponent={<View style={{ height: 60 }} />}
         />
       </View>
 
@@ -178,23 +173,23 @@ export default function ProfileCatteryPage({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  catteryName:{
-    color: "#F59156", 
-    fontWeight: "800", 
+  catteryName: {
+    color: "#F59156",
+    fontWeight: "800",
     fontSize: 24,
   },
-  infoTitle:{
-    color: "#F59156", 
-    fontSize:18,
+  infoTitle: {
+    color: "#F59156",
+    fontSize: 18,
     fontWeight: "600",
     marginBottom: 10,
   },
-  infoSubTitle:{
-    fontWeight: "600", 
+  infoSubTitle: {
+    fontWeight: "600",
     fontSize: 14,
     marginBottom: 8,
   },
-  infoText :{
+  infoText: {
     fontSize: 14,
   }
 });

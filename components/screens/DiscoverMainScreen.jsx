@@ -67,10 +67,15 @@ export default function DiscoverMainScreen({ route, navigation }) {
         snapshot.docs.map((entry) => {
           const birthday = new Date(entry.data().Birthday);
           const now = new Date();
-          const age =
+          let age =
             now.getMonth() -
             birthday.getMonth() +
             12 * (now.getFullYear() - birthday.getFullYear());
+          // age cannot be negative
+          if (age === undefined || isNaN(age) || age < 0){
+            age = 0;
+          }
+
           return {
             id: entry.id,
             name: entry.data().Breed,
