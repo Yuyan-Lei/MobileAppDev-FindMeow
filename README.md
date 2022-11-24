@@ -101,27 +101,19 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 3. Require to unify colors.
 
 ## ScreenShots
-### Login and Sign up
-![Login](/screenshots/Login.PNG)
-![SignUp](/screenshots/SignUp.PNG)
+![](screenshots/Cattery's.jpg)
 
-### Cat
-![DiscoverMain](/screenshots/DiscoverMain.PNG)
-![DiscoverFilter](/screenshots/DiscoverFilter.PNG)
-![CatInformation](/screenshots/CatInformation.PNG)
 
-### Cattery
-![FindBreeders](/screenshots/FindBreeders.PNG)
-![FindBreedersFilter](/screenshots/FindBreedersFilter.PNG)
-![CatteryInformation](/screenshots/CatteryInformation.PNG)
+![](screenshots/Cattery.jpg)
 
-### User
-![StarList](/screenshots/StarList.PNG)
-![UserProfile](/screenshots/UserProfile.PNG)
 
-### Post and Update Cat
-![PostCat](/screenshots/PostCat.PNG)
-![UpdateCattery](/screenshots/UpdateCattery.PNG)
+![](screenshots/Cat.jpg)
+
+
+![](screenshots/Login.jpg)
+
+
+![](screenshots/User.jpg)
 
 
 ## Project Descriptions
