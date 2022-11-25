@@ -1,17 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { BreederCard } from "../cards/BreederCard";
-import { SearchBar } from "../pressable/SearchBar";
-import { TitleText } from "../texts/TitleText";
-import FindBreederFilter from "./FindBreederFilter";
-import { FilterButton } from "../pressable/FilterButton";
-import { Colors } from "../styles/Colors";
-import RBSheet from "react-native-raw-bottom-sheet";
-import { getAllCatteries } from "../../firebaseUtils/user";
-import { collection, getDocs, onSnapshot, query, QuerySnapshot, where } from "firebase/firestore";
-import { db } from "../../firebaseUtils/firebase-setup";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import React, { useEffect, useRef, useState } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+import RBSheet from "react-native-raw-bottom-sheet";
+import { db } from "../../firebaseUtils/firebase-setup";
+import { BreederCard } from "../cards/BreederCard";
+import { FilterButton } from "../pressable/FilterButton";
+import { SearchBar } from "../pressable/SearchBar";
+import { Colors } from "../styles/Colors";
+import { TitleText } from "../texts/TitleText";
 import CatteryProfileScreen from "./CatteryProfileScreen";
+import FindBreederFilter from "./FindBreederFilter";
 
 
 function MainScreen({ route, navigation }) {

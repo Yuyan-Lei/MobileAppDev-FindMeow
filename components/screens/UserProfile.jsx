@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import {
   Alert, Pressable, StyleSheet,
-  Text, useWindowDimensions, View
+  Text, View
 } from "react-native";
 import { Divider } from 'react-native-elements';
 import { auth } from "../../firebaseUtils/firebase-setup";

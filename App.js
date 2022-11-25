@@ -1,25 +1,19 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
-import React, { useCallback, useState, useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   LogBox,
   StyleSheet,
-  useWindowDimensions,
-  View,
   Text,
   TextInput,
+  useWindowDimensions,
+  View,
 } from "react-native";
 import { navigationRef } from "./components/RootNavigation";
-import CatInformation from "./components/screens/CatInformation";
-import CatteryProfileScreen from "./components/screens/CatteryProfileScreen";
-import DiscoverFilter from "./components/screens/DiscoverFilter";
 import HomePage from "./components/screens/HomePage";
 import LoginOrSignUpPage from "./components/screens/LoginOrSignUpPage";
-import ProfileCatteryPage from "./components/screens/ProfileCatteryPage";
-import StarListScreen from "./components/screens/StarListScreen";
 import UpdateCatteryPage from "./components/screens/UpdateCatteryPage";
 
 // Keep the splash screen visible while we fetch resources

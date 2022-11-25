@@ -2,9 +2,9 @@ import { arrayUnion } from "firebase/firestore";
 import {
   deleteFromDB,
   getAllFromDB,
+  getMultipleFromDB,
   updateToDB,
   wrtieToDB,
-  getMultipleFromDB,
 } from "./firestore";
 
 const collectionName = "Cats";

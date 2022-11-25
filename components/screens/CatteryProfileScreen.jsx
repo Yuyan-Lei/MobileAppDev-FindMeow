@@ -6,7 +6,6 @@ import { Alert, FlatList, Image, Pressable, StyleSheet, Text, useWindowDimension
 import { db } from "../../firebaseUtils/firebase-setup";
 import { CatCard } from "../cards/CatCard";
 import { HeartButton } from "../pressable/HeartButton";
-import { rootStackNavigateBack } from "../RootNavigation";
 import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
 

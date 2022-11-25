@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View, Alert } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { collection, doc, onSnapshot, orderBy, query } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Alert, FlatList, View } from "react-native";
+import { getAllCats } from "../../firebaseUtils/cat";
+import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { getUserLikeCats } from "../../firebaseUtils/user";
 import { CatCard } from "../cards/CatCard";
 import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
-import { collection, onSnapshot, query, orderBy, doc } from "firebase/firestore";
-import { db } from "../../firebaseUtils/firebase-setup";
-import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { getAllCats } from "../../firebaseUtils/cat";
-import { getUserLikeCats } from "../../firebaseUtils/user";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CatInformation from "./CatInformation";
 
 function MainScreen({ route, navigation }) {

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Pressable, Image, View, Text, StyleSheet } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
 import { Entypo } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+import React from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
-export default function CatImagePicker({image, setImage}) {
+export default function CatImagePicker({ image, setImage }) {
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -21,28 +21,28 @@ export default function CatImagePicker({image, setImage}) {
 
   return (
     <Pressable style={
-      image ? 
-        { width: 200, height: 200, backgroundColor: 'white', borderRadius: 12} : 
-        { width: "100%", height: 200, backgroundColor: 'white', borderRadius: 12}} 
-        onPress={pickImage} >
-    {image ? 
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> : 
+      image ?
+        { width: 200, height: 200, backgroundColor: 'white', borderRadius: 12 } :
+        { width: "100%", height: 200, backgroundColor: 'white', borderRadius: 12 }}
+      onPress={pickImage} >
+      {image ?
+        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> :
         <View style={styles.container}>
-            <Entypo name="camera" size={57} color="#ADADAD" />
-            <Text style={styles.text}>Upload Image</Text>
+          <Entypo name="camera" size={57} color="#ADADAD" />
+          <Text style={styles.text}>Upload Image</Text>
         </View>}
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        padding: 50,
-    },
-    text: {
-        color: '#ADADAD',
-        fontSize: 17
-    }
-  });
+  container: {
+    flex: 1,
+    alignItems: "center",
+    padding: 50,
+  },
+  text: {
+    color: '#ADADAD',
+    fontSize: 17
+  }
+});

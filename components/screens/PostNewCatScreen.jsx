@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Text, View, TextInput, StyleSheet, ScrollView, Pressable, KeyboardAvoidingView, Alert } from "react-native";
-import { SelectList } from "react-native-dropdown-select-list";
-import CatBreedSelector from "./CatBreedSelector";
-import DatePicker from 'react-native-datepicker';
 import { Chip } from '@rneui/themed';
-import CatImagePicker from "./CatImagePicker";
-import { createCat } from "../../firebaseUtils/cat";
-import { getCurrentUserEmail, writeImageToDB } from "../../firebaseUtils/firestore";
-import { getUserData } from "../../firebaseUtils/user";
 import { doc, onSnapshot } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Alert, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import DatePicker from 'react-native-datepicker';
+import { SelectList } from "react-native-dropdown-select-list";
+import { createCat } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail, writeImageToDB } from "../../firebaseUtils/firestore";
+import CatBreedSelector from "./CatBreedSelector";
+import CatImagePicker from "./CatImagePicker";
 
-export default function PostNewCatScreen({route, navigation: {navigate}}) {
+export default function PostNewCatScreen({ route, navigation: { navigate } }) {
     const [catName, setCatName] = useState('');
     const [image, setImage] = useState(null);
     const [breed, setBreed] = useState('');
@@ -26,18 +25,18 @@ export default function PostNewCatScreen({route, navigation: {navigate}}) {
     const [neutered, setNeutered] = useState(false);
 
     const [userPhone, setUserPhone] = useState("");
-    
+
     useEffect(() => {
         const docRef = doc(db, "Users", getCurrentUserEmail());
         const unSubscribe = onSnapshot(docRef, (snapshot) => {
-          setUserPhone(snapshot.data().phoneNumber);
+            setUserPhone(snapshot.data().phoneNumber);
         });
-    
+
         return () => unSubscribe();
-      }, []);
+    }, []);
 
     let onPostNewCatLocked = false;
-    async function onPostNewCat () {
+    async function onPostNewCat() {
         /* Fix double clicking */
         if (onPostNewCatLocked) return;
         onPostNewCatLocked = true;
@@ -61,16 +60,16 @@ export default function PostNewCatScreen({route, navigation: {navigate}}) {
         try {
             const url = await writeImageToDB(image);
             await createCat({
-                Name: catName, 
-                Breed: breed, 
+                Name: catName,
+                Breed: breed,
                 Birthday: birthDate,
-                Picture: url, 
-                Gender: gender, 
-                Price: price, 
-                Description: description, 
-                Tags: tags, 
-                Cattery: getCurrentUserEmail(), 
-                Contact: userPhone, 
+                Picture: url,
+                Gender: gender,
+                Price: price,
+                Description: description,
+                Tags: tags,
+                Cattery: getCurrentUserEmail(),
+                Contact: userPhone,
                 UploadTime: new Date().getTime()
             })
             navigate('Cats');
@@ -83,100 +82,101 @@ export default function PostNewCatScreen({route, navigation: {navigate}}) {
 
     return (
         <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                style={{ flex: 1}}
-                >
-        <ScrollView style={styles.container}>
-            <View style={{ 
-                flexDirection: "row", 
-                marginTop: "25%",
-                alignItems: "center",
-                marginBottom: 20}}>
-                <Text style={styles.title}>Upload Cat</Text>
-                <View style={{ flex: 1}}></View>
-                <Pressable style={styles.submitButton} onPress={onPostNewCat}>
-                    <Text style={styles.submitButtonText}>Submit</Text>
-                </Pressable>
-            </View>
-            <CatImagePicker image={image} setImage={setImage}></CatImagePicker>
-            <Text style={styles.subTitle}>Cat Name</Text>
-            <TextInput 
-                placeholder="Name" 
-                style={styles.textInput}
-                value={catName}
-                onChangeText={setCatName}></TextInput>
-            <Text style={styles.subTitle}>Breed</Text>
-            <CatBreedSelector selectedBreed={breed} setSelectedBreed={setBreed}/>
-            <Text style={styles.subTitle}>Birthdate</Text>
-            <DatePicker 
-                mode="date" 
-                date={birthDate}
-                onDateChange={setBirthDate}
-                showIcon={false}/>
-            <Text style={styles.subTitle}>Gender</Text>
-            <SelectList
-                setSelected={setGender}
-                data={[{key: "Female", value: "Female"}, {key: "Male", value: "Male"}]}
-                save="value"
-                defaultOption={{ key: gender, value: gender }}
-                placeholder="Select Gender"
-                boxStyles={{
-                    backgroundColor: "white",
-                    borderWidth: 0
-                }}
-                search={false}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{ flex: 1 }}
+        >
+            <ScrollView style={styles.container}>
+                <View style={{
+                    flexDirection: "row",
+                    marginTop: "25%",
+                    alignItems: "center",
+                    marginBottom: 20
+                }}>
+                    <Text style={styles.title}>Upload Cat</Text>
+                    <View style={{ flex: 1 }}></View>
+                    <Pressable style={styles.submitButton} onPress={onPostNewCat}>
+                        <Text style={styles.submitButtonText}>Submit</Text>
+                    </Pressable>
+                </View>
+                <CatImagePicker image={image} setImage={setImage}></CatImagePicker>
+                <Text style={styles.subTitle}>Cat Name</Text>
+                <TextInput
+                    placeholder="Name"
+                    style={styles.textInput}
+                    value={catName}
+                    onChangeText={setCatName}></TextInput>
+                <Text style={styles.subTitle}>Breed</Text>
+                <CatBreedSelector selectedBreed={breed} setSelectedBreed={setBreed} />
+                <Text style={styles.subTitle}>Birthdate</Text>
+                <DatePicker
+                    mode="date"
+                    date={birthDate}
+                    onDateChange={setBirthDate}
+                    showIcon={false} />
+                <Text style={styles.subTitle}>Gender</Text>
+                <SelectList
+                    setSelected={setGender}
+                    data={[{ key: "Female", value: "Female" }, { key: "Male", value: "Male" }]}
+                    save="value"
+                    defaultOption={{ key: gender, value: gender }}
+                    placeholder="Select Gender"
+                    boxStyles={{
+                        backgroundColor: "white",
+                        borderWidth: 0
+                    }}
+                    search={false}
                 />
-            <Text style={styles.subTitle}>Price</Text>
-            <View style={styles.priceInput}>
-                <TextInput 
-                    placeholder="100"
-                    value={price}
-                    keyboardType="number-pad"
-                    style={{ width: '95%'}}
-                    onChangeText={setPrice} />
-                <Text>$</Text>
-            </View>
-            <Text style={styles.subTitle}>Description</Text>
-            <TextInput 
-                placeholder="Describe the kitten" 
-                style={styles.textInput}
-                multiline={true}
-                value={description}
-                onChangeText={setDescription}/>
-            <Text style={styles.subTitle}>Labels</Text>
-            <View style={styles.chipContainer}>
-                <Chip 
-                    title="Vaccinated" 
-                    type={vaccinated ? "solid" : "outline"}
-                    containerStyle={styles.chip}
-                    color="#F59156"
-                    onPress={() => setVaccinated(!vaccinated)}></Chip>
-                <Chip 
-                    title="Vet Checked"
-                    type={vetChecked ? "solid" : "outline"}
-                    containerStyle={styles.chip}
-                    color="#F59156"
-                    onPress={() => setVetChecked(!vetChecked)}></Chip>
-                <Chip 
-                    title="Dewormed" 
-                    type={dewormed ? "solid" : "outline"}
-                    containerStyle={styles.chip}
-                    color="#F59156"
-                    onPress={() => setDewormed(!dewormed)}></Chip>
-                <Chip 
-                    title="Ready to go home" 
-                    type={ready ? "solid" : "outline"}
-                    containerStyle={styles.chip}
-                    color="#F59156"
-                    onPress={() => setReady(!ready)}></Chip>
-                <Chip 
-                    title="Neutered / Spayed"
-                    type={neutered ? "solid" : "outline"}
-                    containerStyle={styles.chip}
-                    color="#F59156"
-                    onPress={() => setNeutered(!neutered)}></Chip>
-            </View>
-        </ScrollView>
+                <Text style={styles.subTitle}>Price</Text>
+                <View style={styles.priceInput}>
+                    <TextInput
+                        placeholder="100"
+                        value={price}
+                        keyboardType="number-pad"
+                        style={{ width: '95%' }}
+                        onChangeText={setPrice} />
+                    <Text>$</Text>
+                </View>
+                <Text style={styles.subTitle}>Description</Text>
+                <TextInput
+                    placeholder="Describe the kitten"
+                    style={styles.textInput}
+                    multiline={true}
+                    value={description}
+                    onChangeText={setDescription} />
+                <Text style={styles.subTitle}>Labels</Text>
+                <View style={styles.chipContainer}>
+                    <Chip
+                        title="Vaccinated"
+                        type={vaccinated ? "solid" : "outline"}
+                        containerStyle={styles.chip}
+                        color="#F59156"
+                        onPress={() => setVaccinated(!vaccinated)}></Chip>
+                    <Chip
+                        title="Vet Checked"
+                        type={vetChecked ? "solid" : "outline"}
+                        containerStyle={styles.chip}
+                        color="#F59156"
+                        onPress={() => setVetChecked(!vetChecked)}></Chip>
+                    <Chip
+                        title="Dewormed"
+                        type={dewormed ? "solid" : "outline"}
+                        containerStyle={styles.chip}
+                        color="#F59156"
+                        onPress={() => setDewormed(!dewormed)}></Chip>
+                    <Chip
+                        title="Ready to go home"
+                        type={ready ? "solid" : "outline"}
+                        containerStyle={styles.chip}
+                        color="#F59156"
+                        onPress={() => setReady(!ready)}></Chip>
+                    <Chip
+                        title="Neutered / Spayed"
+                        type={neutered ? "solid" : "outline"}
+                        containerStyle={styles.chip}
+                        color="#F59156"
+                        onPress={() => setNeutered(!neutered)}></Chip>
+                </View>
+            </ScrollView>
         </KeyboardAvoidingView>
     );
 };
@@ -212,12 +212,12 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         alignItems: "center",
         backgroundColor: "#FFFFFF",
-        fontSize: 14, 
+        fontSize: 14,
         padding: 10
     },
     priceInput: {
         flexDirection: 'row',
-        backgroundColor: "#FFFFFF", 
+        backgroundColor: "#FFFFFF",
         height: 60,
         borderRadius: 20,
         alignItems: "center",
@@ -231,4 +231,4 @@ const styles = StyleSheet.create({
     chip: {
         margin: 5
     }
-  });
+});

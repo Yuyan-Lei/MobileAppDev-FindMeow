@@ -1,6 +1,6 @@
-import React from "react";
-import { View, Alert, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import React from "react";
+import { Alert, Pressable, View } from "react-native";
 import { Colors } from "../styles/Colors";
 
 export function PhoneButton({ onPress }) {

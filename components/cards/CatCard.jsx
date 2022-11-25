@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Pressable, StyleSheet, Image, Alert } from "react-native";
-import { userUnLikeACat, userLikeACat, getCattery } from "../../firebaseUtils/user";
-import { HeartButton } from "../pressable/HeartButton";
-import { rootStackNavigate } from "../RootNavigation";
-import { Colors } from "../styles/Colors";
-import { LocationText } from "../texts/LocationText";
-import { onSnapshot, doc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { getCattery, userLikeACat, userUnLikeACat } from "../../firebaseUtils/user";
+import { HeartButton } from "../pressable/HeartButton";
+import { LocationText } from "../texts/LocationText";
 export function CatCard({ cat, navigation }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);

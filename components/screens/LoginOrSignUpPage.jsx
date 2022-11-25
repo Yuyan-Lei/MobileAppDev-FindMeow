@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View, Alert, KeyboardAvoidingView, ScrollView } from "react-native";
-import { TextInput, Pressable } from "@react-native-material/core";
+import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
+import { Entypo, Feather, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { Pressable, TextInput } from "@react-native-material/core";
 import { CheckBox } from '@rneui/themed';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebaseUtils/firebase-setup";
-import { createUser, createCattery, getUserData } from "../../firebaseUtils/user";
-import { MaterialCommunityIcons, Entypo, MaterialIcons, Feather } from "@expo/vector-icons";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
+import { auth } from "../../firebaseUtils/firebase-setup";
+import { createCattery, createUser, getUserData } from "../../firebaseUtils/user";
 
 export default function LoginOrSignUpPage({ route, navigation }) {
     const [pageState, setPageState] = useState(0);
@@ -37,7 +37,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 if (!isCattery) {
                     return createUser(email);
                 } else {
-                    return createCattery(email, { catteryName: name, phoneNumber, website, placeId, address});
+                    return createCattery(email, { catteryName: name, phoneNumber, website, placeId, address });
                 }
             }).then(() => navigation.navigate('Home'))
             .catch((error) => {
@@ -81,14 +81,14 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
                     <TextInput
-                        inputStyle={{fontFamily: "Poppins"}}
+                        inputStyle={{ fontFamily: "Poppins" }}
                         label="EMAIL"
                         value={userName}
                         leading={props => <MaterialCommunityIcons name="email" {...props} />}
                         color="#F59156"
                         onChangeText={setUserName} />
                     <TextInput
-                        inputStyle={{fontFamily: "Poppins"}}
+                        inputStyle={{ fontFamily: "Poppins" }}
                         label="PASSWORD"
                         secureTextEntry={true}
                         leading={props => <Entypo name="lock" {...props} />}
@@ -146,7 +146,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                                                 setAddress(data.description);
                                                 setPlaceId(data.place_id);
                                             }}
-                                            textInputProps= {{
+                                            textInputProps={{
                                                 InputComp: TextInput,
                                                 label: "Cattery Address",
                                                 color: "#F59156",
@@ -156,16 +156,16 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                                                 container: {
                                                     padding: -20
                                                 },
-                                            textInput: {
-                                                height: 52,
-                                                width: '100%',
-                                                color: '#2E2525',
-                                                backgroundColor: 'rgb(246,245,245)',
-                                                fontSize: 16,
-                                            },
-                                            container: {
-                                                color: '#2E2525',
-                                            }
+                                                textInput: {
+                                                    height: 52,
+                                                    width: '100%',
+                                                    color: '#2E2525',
+                                                    backgroundColor: 'rgb(246,245,245)',
+                                                    fontSize: 16,
+                                                },
+                                                container: {
+                                                    color: '#2E2525',
+                                                }
                                             }}
                                             onFail={(error) => console.error(error)}
                                         />

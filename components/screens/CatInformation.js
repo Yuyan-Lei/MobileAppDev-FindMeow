@@ -1,12 +1,11 @@
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Chip } from "@rneui/themed";
 import React from "react";
-import { Pressable, StyleSheet, Text, View, Image } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import BottomDrawer from "react-native-bottom-drawer-view";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
-import { rootStackNavigateBack } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
-import BottomDrawer from "react-native-bottom-drawer-view";
 
 export default class CatInformation extends React.Component {
   renderContent = () => {

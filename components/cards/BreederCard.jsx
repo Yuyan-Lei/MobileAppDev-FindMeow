@@ -1,7 +1,6 @@
 import React from "react";
-import { Platform, Pressable, StyleSheet, Text, View, Image, Alert } from "react-native";
+import { Alert, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
-import { rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 // import DropShadow from "react-native-drop-shadow";

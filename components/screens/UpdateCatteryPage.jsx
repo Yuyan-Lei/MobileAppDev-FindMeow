@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Text, View, TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Alert } from "react-native";
-import { TitleText } from "../texts/TitleText";
-import { Pressable } from "@react-native-material/core";
-import CatImagePicker from "./CatImagePicker";
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
-import { updateCattery } from "../../firebaseUtils/user";
+import { Pressable } from "@react-native-material/core";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { writeImageToDB } from "../../firebaseUtils/firestore";
-import { FillAndroidTopBar, FillAndroidButtomBar} from "../FillAndroidBar";
+import { updateCattery } from "../../firebaseUtils/user";
+import { FillAndroidButtomBar, FillAndroidTopBar } from "../FillAndroidBar";
+import { TitleText } from "../texts/TitleText";
+import CatImagePicker from "./CatImagePicker";
 
 export default function UpdateCatteryPage({ route, navigation }) {
     const user = route.params.cattery;
@@ -24,16 +24,16 @@ export default function UpdateCatteryPage({ route, navigation }) {
     }, []);
 
     let onUpdateCatteryLocked = false;
-    async function onUpdateCattery (){
+    async function onUpdateCattery() {
         if (onUpdateCatteryLocked) return;
         onUpdateCatteryLocked = true;
-        try{
+        try {
             if (image === user.picture) {
-                await updateCattery({catteryName, picture: user.picture, phoneNumber, website, placeId, address})
+                await updateCattery({ catteryName, picture: user.picture, phoneNumber, website, placeId, address })
                 navigation.goBack();
             } else {
                 const url = await writeImageToDB(image)
-                await updateCattery({catteryName, picture: url, phoneNumber, website, placeId, address})
+                await updateCattery({ catteryName, picture: url, phoneNumber, website, placeId, address })
                 navigation.goBack();
             }
         } catch {
@@ -45,55 +45,55 @@ export default function UpdateCatteryPage({ route, navigation }) {
 
     return (
         <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                style={{ flex: 1}}
-                >
-                    <FillAndroidTopBar/>
-                    <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
-                        <View style={{ margin: 12 }}>
-                            <TitleText>Update Cattery</TitleText>
-                            <CatImagePicker image={image} setImage={setImage}></CatImagePicker> 
-                            <Text style={styles.subTitle}>Address</Text>
-                            <GooglePlacesAutocomplete
-                                placeholder="Search"
-                                ref={ref}
-                                query={{
-                                    key: REACT_APP_GOOGLE_MAP_APP_KEY,
-                                    language: 'en', // language of the results
-                                }}
-                                onPress={(data, details = null) => {
-                                    setAddress(data.description);
-                                    setPlaceId(data.place_id);
-                                }}
-                                onFail={(error) => console.error(error)}
-                            />
-                            <Text style={styles.subTitle}>Cattery Name</Text>
-                            <TextInput 
-                                placeholder="Name" 
-                                style={styles.textInput}
-                                value={catteryName}
-                                onChangeText={setCatteryName}></TextInput>
-                            <Text style={styles.subTitle}>Phone Number</Text>
-                            <TextInput 
-                                placeholder="Phone Number" 
-                                style={styles.textInput}
-                                value={phoneNumber}
-                                onChangeText={setPhoneNumber}></TextInput>
-                            <Text style={styles.subTitle}>Website</Text>
-                            <TextInput 
-                                placeholder="www.xxx.com" 
-                                style={styles.textInput}
-                                value={website}
-                                onChangeText={setWebsite}></TextInput>
-                            <Pressable
-                                onPress={onUpdateCattery}
-                                style={styles.SubmitButton}>
-                                <Text style={styles.SubmitButtonText}>Submit</Text>
-                            </Pressable>
-                        </View>
-                        <FillAndroidButtomBar/>
-                    </ScrollView>
-                </KeyboardAvoidingView>
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{ flex: 1 }}
+        >
+            <FillAndroidTopBar />
+            <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+                <View style={{ margin: 12 }}>
+                    <TitleText>Update Cattery</TitleText>
+                    <CatImagePicker image={image} setImage={setImage}></CatImagePicker>
+                    <Text style={styles.subTitle}>Address</Text>
+                    <GooglePlacesAutocomplete
+                        placeholder="Search"
+                        ref={ref}
+                        query={{
+                            key: REACT_APP_GOOGLE_MAP_APP_KEY,
+                            language: 'en', // language of the results
+                        }}
+                        onPress={(data, details = null) => {
+                            setAddress(data.description);
+                            setPlaceId(data.place_id);
+                        }}
+                        onFail={(error) => console.error(error)}
+                    />
+                    <Text style={styles.subTitle}>Cattery Name</Text>
+                    <TextInput
+                        placeholder="Name"
+                        style={styles.textInput}
+                        value={catteryName}
+                        onChangeText={setCatteryName}></TextInput>
+                    <Text style={styles.subTitle}>Phone Number</Text>
+                    <TextInput
+                        placeholder="Phone Number"
+                        style={styles.textInput}
+                        value={phoneNumber}
+                        onChangeText={setPhoneNumber}></TextInput>
+                    <Text style={styles.subTitle}>Website</Text>
+                    <TextInput
+                        placeholder="www.xxx.com"
+                        style={styles.textInput}
+                        value={website}
+                        onChangeText={setWebsite}></TextInput>
+                    <Pressable
+                        onPress={onUpdateCattery}
+                        style={styles.SubmitButton}>
+                        <Text style={styles.SubmitButtonText}>Submit</Text>
+                    </Pressable>
+                </View>
+                <FillAndroidButtomBar />
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         alignItems: "center",
         backgroundColor: "#FFFFFF",
-        fontSize: 14, 
+        fontSize: 14,
         padding: 10
     },
     SubmitButton: {
@@ -139,4 +139,4 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontWeight: '600',
     },
-  });
+});
