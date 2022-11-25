@@ -34,7 +34,7 @@ export function CatCard({ cat, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => navigation.navigate("CatInformation")}>
+      <Pressable onPress={() => navigation.navigate("CatInformation", { catId: cat.id })}>
         <View style={styles.imageView}>
           {/* cat photo */}
           <Image source={{ uri: cat.photo }} style={styles.image} />

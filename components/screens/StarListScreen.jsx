@@ -16,45 +16,6 @@ function MainScreen({ route, navigation }) {
 
   const [data, setData] = useState([]);
 
-  /* subscribe database to detect cat deletion - start */
-  useEffect(() => {
-    let q;
-    if (selectedIndex == 0) {
-      q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
-    } else {
-      q = query(collection(db, "Cats"), orderBy("Price", "desc"));
-    }
-    const unSubscribe = onSnapshot(q, (snapshot) => {
-      getUserLikeCats().then((likeCats) => {
-        setData(
-          snapshot.docs.map((entry) => {
-            const birthday = new Date(entry.data().Birthday);
-            const now = new Date();
-            const age =
-              now.getMonth() -
-              birthday.getMonth() +
-              12 * (now.getFullYear() - birthday.getFullYear());
-            return {
-              id: entry.id,
-              name: entry.data().Breed,
-              sex: entry.data().Gender,
-              price: entry.data().Price,
-              month: age,
-              photo: entry.data().Picture,
-              cattery: entry.data().Cattery,
-              uploadTime: entry.data().UploadTime,
-            };
-          }).filter(entry =>
-            likeCats.includes(entry.id))
-        );
-      });
-    });
-
-    return () => unSubscribe();
-  }, []);
-  /* subscribe database to detect cat deletion - end */
-
-
   /* subscribe user likes to display liked cats - start */
   useEffect(() => {
     const unSubscribe =
