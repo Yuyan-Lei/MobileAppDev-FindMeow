@@ -14,7 +14,7 @@ import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import DiscoverFilter from "./DiscoverFilter";
 
-export default function DiscoverMainScreen({ route, navigation }) {
+function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
 
@@ -114,8 +114,9 @@ export default function DiscoverMainScreen({ route, navigation }) {
   /* events for top filter tags - end */
 
 
-  function MainScreen({ route, navigation }) {
-    return (<View
+
+  return (
+    <View
       style={{
         paddingHorizontal: 16,
         paddingTop: 55,
@@ -194,7 +195,9 @@ export default function DiscoverMainScreen({ route, navigation }) {
         />
       </View>
     </View>)
-  }
+}
+
+export default function DiscoverMainScreen({ route, navigation }) {
 
   const Stack = createNativeStackNavigator();
   return (
