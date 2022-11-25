@@ -14,7 +14,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 
 
-export default function FindBreederMainScreen() {
+function MainScreen({ route, navigation }) {
   const [searchName, setSearchName] = useState("");
 
   /* values used for DiscoverFilter start */
@@ -25,7 +25,6 @@ export default function FindBreederMainScreen() {
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCatNum, setSelectedCatNum] = useState("All");
 
-  const [renewHook, setRenewHook] = useState(false);
 
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
@@ -44,11 +43,10 @@ export default function FindBreederMainScreen() {
     });
 
     return () => unSubscribe();
-  }, [needRenew]);
+  }, []);
 
-
-  function MainScreen({ route, navigation }) {
-    return (<View style={styles.containter}>
+  return (
+    <View style={styles.containter}>
       <View style={styles.cardView}>
         <TitleText>Find Breeders</TitleText>
       </View>
@@ -104,13 +102,13 @@ export default function FindBreederMainScreen() {
           data={catteries}
           renderItem={({ item }) => <BreederCard cattery={item} navigation={navigation} />}
           ListFooterComponent={<View style={{ height: 250 }} />}
-          onScrollEndDrag={() => setRenewHook(!renewHook)}
         />
       </View>
     </View>
-    );
-  }
+  );
+}
 
+export default function FindBreederMainScreen() {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
