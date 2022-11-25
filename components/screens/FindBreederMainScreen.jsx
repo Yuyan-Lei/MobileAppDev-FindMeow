@@ -8,7 +8,7 @@ import { FilterButton } from "../pressable/FilterButton";
 import { Colors } from "../styles/Colors";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { getAllCatteries } from "../../firebaseUtils/user";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query, QuerySnapshot, where } from "firebase/firestore";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CatteryProfileScreen from "./CatteryProfileScreen";
@@ -25,6 +25,8 @@ export default function FindBreederMainScreen() {
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCatNum, setSelectedCatNum] = useState("All");
 
+  const [renewHook, setRenewHook] = useState(false);
+
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
@@ -35,13 +37,14 @@ export default function FindBreederMainScreen() {
   }
 
   useEffect(() => {
+    console.log("fetch breeders");
     const q = query(collection(db, "Users"), where('isCattery', '==', true));
     const unSubscribe = onSnapshot(q, (snapshot) => {
       setCatteries(snapshot.docs.map((entry) => entry.data()));
     });
 
     return () => unSubscribe();
-  }, []);
+  }, [needRenew]);
 
 
   function MainScreen({ route, navigation }) {
@@ -101,6 +104,7 @@ export default function FindBreederMainScreen() {
           data={catteries}
           renderItem={({ item }) => <BreederCard cattery={item} navigation={navigation} />}
           ListFooterComponent={<View style={{ height: 250 }} />}
+          onScrollEndDrag={() => setRenewHook(!renewHook)}
         />
       </View>
     </View>
