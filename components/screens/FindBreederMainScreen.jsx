@@ -36,7 +36,6 @@ function MainScreen({ route, navigation }) {
   }
 
   useEffect(() => {
-    console.log("fetch breeders");
     const q = query(collection(db, "Users"), where('isCattery', '==', true));
     const unSubscribe = onSnapshot(q, (snapshot) => {
       setCatteries(snapshot.docs.map((entry) => entry.data()));

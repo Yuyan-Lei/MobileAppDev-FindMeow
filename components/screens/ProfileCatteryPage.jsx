@@ -11,8 +11,7 @@ import { rootStackNavigateBack } from "../RootNavigation";
 import { LocationText } from "../texts/LocationText";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 
-
-export default function ProfileCatteryPage({ route, navigation }) {
+function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
   const [cats, setCats] = useState([]);
   const [cattery, setCattery] = useState(null);
@@ -65,8 +64,8 @@ export default function ProfileCatteryPage({ route, navigation }) {
     navigation.navigate("UpdateCatteryPage", { cattery });
   };
 
-  function MainScreen({ route, navigation }) {
-    return (cattery ? (
+  return (
+    cattery ? (
       <View style={{ backgroundColor: "rgb(250,250,250)" }}>
         <View>
           <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
@@ -172,8 +171,9 @@ export default function ProfileCatteryPage({ route, navigation }) {
         </View>
       </View>)
       : <Text>Loading</Text>)
-  };
+};
 
+export default function ProfileCatteryPage({ route, navigation }) {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

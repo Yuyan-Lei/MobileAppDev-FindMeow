@@ -11,7 +11,7 @@ import { getUserLikeCats } from "../../firebaseUtils/user";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CatInformation from "./CatInformation";
 
-export default function StarListScreen({ route, navigation }) {
+function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [data, setData] = useState([]);
@@ -105,8 +105,8 @@ export default function StarListScreen({ route, navigation }) {
     setSelectedIndex(value);
   };
 
-  function MainScreen({ route, navigation }) {
-    return (<View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
+  return (
+    <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
       <View style={{ margin: 12 }}>
         <View>
           <TitleText>Collections</TitleText>
@@ -127,8 +127,9 @@ export default function StarListScreen({ route, navigation }) {
         />
       </View>
     </View>)
-  }
+}
 
+export default function StarListScreen({ route, navigation }) {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

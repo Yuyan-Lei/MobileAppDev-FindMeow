@@ -13,7 +13,7 @@ import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 
-export default function UserProfile({ route, navigation }) {
+function MainScreen({ route, navigation }) {
   const user = route.params.user;
 
   const buttonHandler = () => {
@@ -36,9 +36,9 @@ export default function UserProfile({ route, navigation }) {
   }
 
 
-  function MainScreen({ route, navigation }) {
-    const onViewCatteryPage = () => navigation.navigate('ProfileCatteryPage', { user });
-    return (<View style={styles.container}>
+  const onViewCatteryPage = () => navigation.navigate('ProfileCatteryPage', { user });
+  return (
+    <View style={styles.container}>
       <View style={{ margin: 12 }}>
         <View>
           <TitleText>Profile</TitleText>
@@ -95,17 +95,19 @@ export default function UserProfile({ route, navigation }) {
         </Pressable>
       </View>
     </View>
-    )
-  };
+  )
+};
 
+export default function UserProfile({ route, navigation }) {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="MainScreen"
+        component={MainScreen}
+        initialParams={{ user: route.params.user }} />
       <Stack.Screen name="ProfileCatteryPage" component={ProfileCatteryPage} />
     </Stack.Navigator>
   )
-
 }
 
 const styles = StyleSheet.create({
