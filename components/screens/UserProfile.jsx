@@ -1,36 +1,25 @@
-import React, { useState, useEffect } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  useWindowDimensions,
-  Alert,
-} from "react-native";
-import { CatCard } from "../cards/CatCard";
-import { FilterButton } from "../pressable/FilterButton";
-import { FilterButtons } from "../pressable/FilterButtons";
-import { TitleText } from "../texts/TitleText";
-import { rootStackNavigate } from "../RootNavigation";
-import DiscoverFilter from "./DiscoverFilter";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
-import { db } from "../../firebaseUtils/firebase-setup";
-import { Colors } from "../styles/Colors";
 import { Avatar } from "@react-native-material/core";
-import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { auth } from "../../firebaseUtils/firebase-setup";
-import { getUserData } from "../../firebaseUtils/user";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import {
+  Alert, Pressable, StyleSheet,
+  Text, useWindowDimensions, View
+} from "react-native";
 import { Divider } from 'react-native-elements';
+import { auth } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { rootStackNavigate } from "../RootNavigation";
+import { Colors } from "../styles/Colors";
+import { TitleText } from "../texts/TitleText";
+import ProfileCatteryPage from "./ProfileCatteryPage";
 
 export default function UserProfile({ route, navigation }) {
-  const { height, width } = useWindowDimensions();
   const user = route.params.user;
 
   const buttonHandler = () => {
     Alert.alert("Feature for this button is coming soon~", "See you next time!", [
-      {text: "Sad"},
-      {text: "Wait for you"},
+      { text: "Sad" },
+      { text: "Wait for you" },
     ])
   };
 
@@ -41,24 +30,24 @@ export default function UserProfile({ route, navigation }) {
       },
       {
         text: "Confirm",
-        onPress: () => auth.signOut().then(() => navigation.navigate('LoginOrSignUp')),
+        onPress: () => auth.signOut().then(() => rootStackNavigate('LoginOrSignUp')),
       }
     ]);
   }
 
 
-  const onViewCatteryPage = () => navigation.navigate('ProfileCatteryPage', {user});
-  return (
-    <View style={styles.container}>
+  function MainScreen({ route, navigation }) {
+    const onViewCatteryPage = () => navigation.navigate('ProfileCatteryPage', { user });
+    return (<View style={styles.container}>
       <View style={{ margin: 12 }}>
         <View>
           <TitleText>Profile</TitleText>
         </View>
       </View>
 
-      <View style={{ 
-        alignItems: "center", 
-        marginTop: 20 
+      <View style={{
+        alignItems: "center",
+        marginTop: 20
       }}>
         <Avatar
           label={user && user.isCattery ? user.catteryName : getCurrentUserEmail()}
@@ -106,11 +95,21 @@ export default function UserProfile({ route, navigation }) {
         </Pressable>
       </View>
     </View>
-  );
+    )
+  };
+
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="ProfileCatteryPage" component={ProfileCatteryPage} />
+    </Stack.Navigator>
+  )
+
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     paddingHorizontal: 16,
     paddingTop: 55,
     paddingBottom: 200,

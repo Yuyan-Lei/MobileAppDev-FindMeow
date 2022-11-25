@@ -87,7 +87,7 @@ export default class CatInformation extends React.Component {
         ></Image>
         <View style={{ position: "absolute", top: 48, left: 12 }}>
           <View style={{ opacity: 0.5 }}>
-            <Pressable onPress={rootStackNavigateBack}>
+            <Pressable onPress={this.props.navigation.goBack}>
               <Feather name="arrow-left-circle" size={24} color="white" />
             </Pressable>
           </View>

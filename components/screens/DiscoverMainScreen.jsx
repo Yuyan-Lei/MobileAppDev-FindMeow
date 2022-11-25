@@ -198,8 +198,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
 
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}
-      initialRouteName="MainScreen">
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="CatInformation" component={CatInformation} />
     </Stack.Navigator>

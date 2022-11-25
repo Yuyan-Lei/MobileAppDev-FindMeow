@@ -61,7 +61,7 @@ export default function CatteryProfileScreen({ route, navigation }) {
         {/* Top left button - back */}
         <View style={{ position: "absolute", top: 48, left: 12 }}>
           <View>
-            <Pressable onPress={rootStackNavigateBack}>
+            <Pressable onPress={navigation.goBack}>
               <Feather name="arrow-left-circle" size={24} color="black" />
             </Pressable>
           </View>
