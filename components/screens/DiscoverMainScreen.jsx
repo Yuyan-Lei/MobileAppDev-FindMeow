@@ -4,7 +4,7 @@ import {
   onSnapshot, orderBy, query
 } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, FlatList, View } from "react-native";
+import { Alert, FlatList, StyleSheet, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { CatCard } from "../cards/CatCard";
@@ -117,17 +117,13 @@ function MainScreen({ route, navigation }) {
 
   return (
     <View
-      style={{
-        paddingHorizontal: 16,
-        paddingTop: 55,
-        paddingBottom: 200,
-      }}
+      style={styles.container}
     >
-      <View style={{ padding: 12 }}>
+      <View style={styles.headerView}>
         <View>
           <TitleText>Discover</TitleText>
         </View>
-        <View style={{ position: "absolute", right: 24, top: 18 }}>
+        <View style={styles.filterButtonView}>
           <FilterButton
             onPress={() => refRBSheet.current.open()}
             size={18}
@@ -144,18 +140,7 @@ function MainScreen({ route, navigation }) {
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={true}
-        customStyles={{
-          wrapper: {
-            backgroundColor: "transparent",
-          },
-          container: {
-            borderRadius: 28,
-          },
-          draggableIcon: {
-            backgroundColor: "#EFEFEF",
-            width: 100,
-          },
-        }}
+        customStyles={styles.RBSheetCustomStyles}
         height={670}
       >
         <DiscoverFilter
@@ -208,3 +193,31 @@ export default function DiscoverMainScreen({ route, navigation }) {
   )
 }
 
+
+const styles = StyleSheet.create({
+  RBSheetCustomStyles: {
+    wrapper: {
+      backgroundColor: "transparent",
+      container: {
+        borderRadius: 28,
+      },
+      draggableIcon: {
+        backgroundColor: "#EFEFEF",
+        width: 100,
+      },
+    },
+  },
+  filterButtonView: {
+    position: "absolute",
+    right: 24,
+    top: 18,
+  },
+  headerView: {
+    padding: 12,
+  },
+  container: {
+    paddingHorizontal: 16,
+    paddingTop: 55,
+    paddingBottom: 200,
+  },
+})

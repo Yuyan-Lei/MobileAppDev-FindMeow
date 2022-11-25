@@ -3,12 +3,10 @@ import { Alert, Image, Platform, Pressable, StyleSheet, Text, View } from "react
 import { HeartButton } from "../pressable/HeartButton";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
-// import DropShadow from "react-native-drop-shadow";
-// import { Shadow } from "react-native-shadow-2";
 
 export function BreederCard({ cattery, navigation }) {
   return (
-    <View style={{ marginHorizontal: 10 }}>
+    <View style={styles.breederView}>
       <Pressable onPress={() => navigation.navigate("CatteryProfile", { cattery })}>
         <View style={[styles.cardView, styles.shadowView]}>
 
@@ -54,6 +52,9 @@ export function BreederCard({ cattery, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  breederView: {
+    marginHorizontal: 10,
+  },
   heartButtonView: {
     position: "absolute",
     top: 20,

@@ -21,15 +21,15 @@ export default class CatInformation extends React.Component {
           <View style={styles.label}>
             <View style={styles.tags}>
               <Text style={styles.tagText}>Gender</Text>
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>Female</Text>
+              <Text style={styles.tagInfoText}>Female</Text>
             </View>
             <View style={styles.tags}>
               <Text style={styles.tagText}>Age</Text>
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>1 year</Text>
+              <Text style={styles.tagInfoText}>1 year</Text>
             </View>
             <View style={styles.tags}>
               <Text style={styles.tagText}>Breed</Text>
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>Unknown</Text>
+              <Text style={styles.tagInfoText}>Unknown</Text>
             </View>
           </View>
         </View>
@@ -106,6 +106,10 @@ export default class CatInformation extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  tagInfoText: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
   button: {
     margin: 10,
     marginTop: 1000,

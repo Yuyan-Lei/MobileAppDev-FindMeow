@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { collection, doc, onSnapshot, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList, View } from "react-native";
+import { Alert, FlatList, StyleSheet, View } from "react-native";
 import { getAllCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
@@ -106,7 +106,7 @@ function MainScreen({ route, navigation }) {
   };
 
   return (
-    <View style={{ marginHorizontal: 16, marginTop: 55, marginBottom: 200 }}>
+    <View style={styles.container}>
       <View style={{ margin: 12 }}>
         <View>
           <TitleText>Collections</TitleText>
@@ -138,3 +138,11 @@ export default function StarListScreen({ route, navigation }) {
     </Stack.Navigator>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 16,
+    marginTop: 55,
+    marginBottom: 200,
+  },
+})

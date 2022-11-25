@@ -63,18 +63,7 @@ function MainScreen({ route, navigation }) {
           closeOnPressMask={true}
           keyboardAvoidingViewEnabled={true}
           animationType="slide"
-          customStyles={{
-            wrapper: {
-              backgroundColor: "transparent",
-            },
-            container: {
-              borderRadius: 28,
-            },
-            draggableIcon: {
-              backgroundColor: "#EFEFEF",
-              width: 100,
-            },
-          }}
+          customStyles={styles.RBSheetCustomStyles}
           height={495}
         >
           <FindBreederFilter
@@ -117,6 +106,18 @@ export default function FindBreederMainScreen() {
 }
 
 const styles = StyleSheet.create({
+  RBSheetCustomStyles: {
+    wrapper: {
+      backgroundColor: "transparent",
+      container: {
+        borderRadius: 28,
+      },
+      draggableIcon: {
+        backgroundColor: "#EFEFEF",
+        width: 100,
+      },
+    },
+  },
   containter: {
     alignItems: "center",
     paddingTop: 55,

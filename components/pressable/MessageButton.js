@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { Alert, Pressable, View } from "react-native";
+import { Alert, Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
 
 export function MessageButton({ onPress }) {
@@ -16,16 +16,7 @@ export function MessageButton({ onPress }) {
   };
   return (
     <View style={{ width: 60, height: 40, top: 4 }}>
-      <Pressable
-        onPress={onPress}
-        style={{
-          backgroundColor: Colors.messageButton,
-          padding: 8,
-          borderRadius: 100,
-          height: 40,
-          width: 40,
-        }}
-      >
+      <Pressable onPress={onPress} style={styles.buttonView}>
         <MaterialIcons
           name="textsms"
           size={24}
@@ -37,3 +28,13 @@ export function MessageButton({ onPress }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonView: {
+    backgroundColor: Colors.messageButton,
+    padding: 8,
+    borderRadius: 100,
+    height: 40,
+    width: 40,
+  },
+});

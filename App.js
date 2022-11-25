@@ -82,13 +82,6 @@ export default function App() {
             component={HomePage}
             options={{ gestureEnabled: false }}
           />
-          {/* <Stack.Screen name="CatInformation" component={CatInformation} />
-          <Stack.Screen
-            name="CatteryProfile"
-            component={CatteryProfileScreen}
-          />
-          <Stack.Screen name="DiscoverFilter" component={DiscoverFilter} />
-          <Stack.Screen name="ProfileCatteryPage" component={ProfileCatteryPage} /> */}
           <Stack.Screen
             name="UpdateCatteryPage"
             component={UpdateCatteryPage}

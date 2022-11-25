@@ -66,7 +66,7 @@ function MainScreen({ route, navigation }) {
 
   return (
     cattery ? (
-      <View style={{ backgroundColor: "rgb(250,250,250)" }}>
+      <View style={styles.container}>
         <View>
           <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
             {cattery.picture &&
@@ -75,7 +75,7 @@ function MainScreen({ route, navigation }) {
         </View>
 
         {/* Top left - back button */}
-        <View style={{ position: "absolute", top: 48, left: 12 }}>
+        <View style={styles.backButtonView}>
           <View>
             <Pressable onPress={rootStackNavigateBack}>
               <Feather name="arrow-left-circle" size={24} color="black" />
@@ -84,7 +84,7 @@ function MainScreen({ route, navigation }) {
         </View>
 
         {/* Top right - update cattery button */}
-        <View style={{ position: "absolute", top: 48, right: 12 }}>
+        <View style={styles.updateButtonView}>
           <View>
             <Pressable onPress={onUpdateCattery}>
               <Feather name="edit" size={24} color="black" />
@@ -93,15 +93,10 @@ function MainScreen({ route, navigation }) {
         </View>
 
 
-        <View style={{ margin: 32, top: -80, marginBottom: 32 - 80 }}>
+        <View style={styles.catterDetailView}>
           {/* cattery name & address */}
           <View
-            style={{
-              alignItems: "center",
-              backgroundColor: "white",
-              padding: 16,
-              borderRadius: 12,
-            }}
+            style={styles.nameAndAddressView}
           >
             <Text style={styles.catteryName}>
               {cattery.catteryName}
@@ -150,7 +145,7 @@ function MainScreen({ route, navigation }) {
 
           {/* available kittens */}
           <View
-            style={{ padding: 16, backgroundColor: "white", borderRadius: 12 }}
+            style={styles.kittensView}
           >
             <View style={{ margin: 8 }}>
               <Text style={styles.infoTitle}>
@@ -164,7 +159,6 @@ function MainScreen({ route, navigation }) {
                   cat={buildCatItem(item)}
                   navigation={navigation} />}
               numColumns={2}
-            // ListFooterComponent={<View style={{ height: 60 }} />}
             />
           </View>
 
@@ -184,6 +178,35 @@ export default function ProfileCatteryPage({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  kittensView: {
+    padding: 16,
+    backgroundColor: "white",
+    borderRadius: 12,
+  },
+  nameAndAddressView: {
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 16,
+    borderRadius: 12,
+  },
+  catterDetailView: {
+    margin: 32,
+    top: -80,
+    marginBottom: 32 - 80,
+  },
+  updateButtonView: {
+    position: "absolute",
+    top: 48,
+    right: 12,
+  },
+  backButtonView: {
+    position: "absolute",
+    top: 48,
+    left: 12,
+  },
+  container: {
+    backgroundColor: "rgb(250,250,250)",
+  },
   catteryName: {
     color: "#F59156",
     fontWeight: "800",

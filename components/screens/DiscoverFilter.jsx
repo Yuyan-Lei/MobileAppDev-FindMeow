@@ -96,18 +96,9 @@ const DiscoverFilter = ({
         step={100}
         minimumTrackTintColor={Colors.orangeText}
         allowTouchTrack
-        style={{
-          marginLeft: 15,
-          marginRight: 15,
-        }}
-        trackStyle={{
-          height: 5,
-          color: Colors.orange,
-        }}
-        thumbStyle={{
-          height: 1,
-          width: 1,
-        }}
+        style={styles.sliderStyle}
+        trackStyle={styles.sliderTrackStyle}
+        thumbStyle={styles.sliderThumbStyle}
         thumbProps={{
           children: (
             <Icon
@@ -116,7 +107,7 @@ const DiscoverFilter = ({
               size={10}
               color={Colors.orangeText}
               reverse
-              containerStyle={{ bottom: 20, right: 20 }}
+              containerStyle={styles.sliderThumbContainerStyle}
             />
           ),
         }}
@@ -170,6 +161,22 @@ const DiscoverFilter = ({
 };
 
 const styles = StyleSheet.create({
+  sliderThumbContainerStyle: {
+    bottom: 20,
+    right: 20,
+  },
+  sliderThumbStyle: {
+    height: 1,
+    width: 1,
+  },
+  sliderTrackStyle: {
+    height: 5,
+    color: Colors.orange,
+  },
+  sliderStyle: {
+    marginLeft: 15,
+    marginRight: 15,
+  },
   filterContainer: {
     marginHorizontal: 15,
   },
