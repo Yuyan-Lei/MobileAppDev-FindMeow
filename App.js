@@ -83,7 +83,11 @@ export default function App() {
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="LoginOrSignUp" component={LoginOrSignUpPage} />
-          <Stack.Screen name="Home" component={HomePage} />
+          <Stack.Screen
+            name="Home"
+            component={HomePage}
+            options={{ gestureEnabled: false }}
+          />
           {/* <Stack.Screen name="CatInformation" component={CatInformation} />
           <Stack.Screen
             name="CatteryProfile"
