@@ -35,13 +35,24 @@ function MainScreen({ route, navigation }) {
   }
 
   useEffect(() => {
-    const q = query(collection(db, "Users"), where('isCattery', '==', true));
+    let q = null;
+    if (searchName === "") {
+      q = query(collection(db, "Users"),
+        where('isCattery', '==', true));
+    } else {
+      /* search `catteryName` starting with `searchName` */
+      q = query(collection(db, "Users"),
+        where('isCattery', '==', true)
+        , where("catteryName", ">=", searchName)
+        , where("catteryName", "<", searchName + "z"));
+    }
+
     const unSubscribe = onSnapshot(q, (snapshot) => {
       setCatteries(snapshot.docs.map((entry) => entry.data()));
     });
 
-    return () => unSubscribe();
-  }, []);
+    return unSubscribe;
+  }, [searchName]);
 
   return (
     <View style={styles.containter}>

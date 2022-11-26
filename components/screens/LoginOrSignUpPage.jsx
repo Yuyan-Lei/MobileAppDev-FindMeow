@@ -31,7 +31,6 @@ export default function LoginOrSignUpPage({ route, navigation }) {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
         return user.email;
       }).then((email) => {
         if (!isCattery) {
