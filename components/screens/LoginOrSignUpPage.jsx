@@ -14,6 +14,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
     const [isCattery, setIsCattery] = useState(false);
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [website, setWebsite] = useState('');
@@ -26,12 +27,29 @@ export default function LoginOrSignUpPage({ route, navigation }) {
         ref.current?.setAddressText(address || '');
     }, []);
 
+    const verifyPassword = (password) => {
+        // Valid password pattern:
+        // 1. Contains both digit and word character
+        // 2. More than 6 characters
+        const validPasswordPattern = /(?=.*[0-9]+)(?=.*[a-zA-Z]+).{6,}/g;
+        return password.match(validPasswordPattern);
+    };
+
     const onCreateAccount = () => {
+        if (password !== confirmPassword) {
+            Alert.alert('SignUp Failed', "The password doesn't match, please update your password.");
+            setPassword('');
+            return;
+        }
+        if (!verifyPassword(password)) {
+            Alert.alert('SignUp Failed', "The password is invalid, please update your password.");
+            setPassword('');
+            return;
+        }
         createUserWithEmailAndPassword(auth, userName, password)
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                console.log(user);
                 return user.email;
             }).then((email) => {
                 if (!isCattery) {
@@ -42,8 +60,24 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             }).then(() => navigation.navigate('Home'))
             .catch((error) => {
                 const errorCode = error.code;
-                const errorMessage = error.message;
-                Alert.alert('SignUp Failed', errorMessage);
+                switch (errorCode) {
+                    case "auth/email-already-in-use":
+                        Alert.alert('SignUp Failed', "The email is already registered, please use another email.");
+                        setUserName('');
+                        setPassword('');
+                        break;
+                    case "auth/invalid-email":
+                        Alert.alert('SignUp Failed', "The email is invalid, please correct your email address.");
+                        setUserName('');
+                        setPassword('');
+                        break;
+                    case "auth/weak-password":
+                        Alert.alert('SignUp Failed', "The password is too weak, please update your password.");
+                        setPassword('');
+                        break;
+                    default:
+                        Alert.alert('SignUp Failed', "Error happened while signing up, please try again later.");
+                }
             });
     };
 
@@ -95,6 +129,14 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         value={password}
                         color="#F59156"
                         onChangeText={setPassword} />
+                    <TextInput
+                        inputStyle={{fontFamily: "Poppins"}}
+                        label="CONFIRM PASSWORD"
+                        secureTextEntry={true}
+                        leading={props => <Entypo name="lock" {...props} />}
+                        value={confirmPassword}
+                        color="#F59156"
+                        onChangeText={setConfirmPassword} />
                     {
                         pageState === 0 ?
                             <View>
