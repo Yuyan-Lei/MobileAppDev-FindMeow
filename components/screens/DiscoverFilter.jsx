@@ -7,6 +7,7 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { Colors } from "../styles/Colors";
 import { OrangeText } from "../texts/OrangeText";
 import { ALL_BREEDS } from "./allBreeds";
+import { ALL_STATES } from "./allStates";
 
 const DiscoverFilter = ({
   states: {
@@ -42,16 +43,7 @@ const DiscoverFilter = ({
 
   const state = [
     { key: "All", value: "All" },
-    { key: "Alabama", value: "Alabama" },
-    { key: "Alaska", value: "Alaska" },
-    { key: "Arizona", value: "Arizona" },
-    { key: "Arkansas", value: "Arkansas" },
-    { key: "California", value: "California" },
-    { key: "Colorado", value: "Colorado" },
-    { key: "Connecticut", value: "Connecticut" },
-    { key: "Delaware", value: "Delaware" },
-    { key: "Florida", value: "Florida" },
-    { key: "Georgia", value: "Georgia" },
+    ...ALL_STATES,
   ];
 
   const gender = [
