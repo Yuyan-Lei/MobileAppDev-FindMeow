@@ -2,11 +2,11 @@ import {
   AntDesign,
   FontAwesome5,
   Ionicons,
-  MaterialIcons,
+  MaterialIcons
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { doc, onSnapshot } from "firebase/firestore";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import DiscoverMainScreen from "./DiscoverMainScreen";
@@ -57,11 +57,11 @@ export default function HomePage({ route, navigation }) {
       {
         user && user.isCattery &&
         <Tab.Screen
-        name="Post"
-        component={PostNewCatScreen}
-        screenOptions={{ tabBarLabel: "Add" }}
-        initialParams={{ user }}
-      />}
+          name="Post"
+          component={PostNewCatScreen}
+          screenOptions={{ tabBarLabel: "Add" }}
+          initialParams={{ user }}
+        />}
       <Tab.Screen name="Like" component={StarListScreen} />
       <Tab.Screen name="Profile" component={UserProfile} initialParams={{ user }} />
     </Tab.Navigator>

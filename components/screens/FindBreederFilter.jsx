@@ -1,15 +1,10 @@
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Alert,
-  ScrollView,
+  Alert, Pressable, ScrollView, StyleSheet, Text, View
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
-import { OrangeText } from "../texts/OrangeText";
 import { Colors } from "../styles/Colors";
+import { OrangeText } from "../texts/OrangeText";
 
 const FindBreederFilter = ({
   states: {

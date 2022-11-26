@@ -1,15 +1,24 @@
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Chip } from "@rneui/themed";
-import React from "react";
-import { Pressable, StyleSheet, Text, View, Image } from "react-native";
+import {
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  query,
+  QuerySnapshot,
+  where,
+} from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import BottomDrawer from "react-native-bottom-drawer-view";
+import { db } from "../../firebaseUtils/firebase-setup";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
-import { rootStackNavigateBack } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
-import BottomDrawer from "react-native-bottom-drawer-view";
 
-export default class CatInformation extends React.Component {
-  renderContent = () => {
+export default function CatInformation({ route, navigation }) {
+  function RenderContent() {
     return (
       <View style={{ marginHorizontal: 15 }}>
         <View
@@ -22,21 +31,23 @@ export default class CatInformation extends React.Component {
           <View style={styles.label}>
             <View style={styles.tags}>
               <Text style={styles.tagText}>Gender</Text>
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>Female</Text>
+              <Text style={styles.tagInfoText}>{cat.Gender}</Text>
             </View>
             <View style={styles.tags}>
               <Text style={styles.tagText}>Age</Text>
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>1 year</Text>
+              <Text style={styles.tagInfoText}>
+                {cat.month} {cat.month === 1 ? "month" : "months"}
+              </Text>
             </View>
             <View style={styles.tags}>
               <Text style={styles.tagText}>Breed</Text>
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>Unknown</Text>
+              <Text style={styles.tagInfoText}>{cat.Breed}</Text>
             </View>
           </View>
         </View>
 
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textPrimary}>Kaka</Text>
+          <Text style={styles.textPrimary}>{cat.Name}</Text>
           <Text
             style={{
               textAlign: "right",
@@ -47,20 +58,25 @@ export default class CatInformation extends React.Component {
               marginVertical: 20,
             }}
           >
-            $200
+            ${cat.Price}
           </Text>
         </View>
 
+        {/* TODO: CATTERY LOCATION */}
         <View style={{ flexDirection: "row" }}>
           <Ionicons name="location-sharp" size={24} color={Colors.darkOrange} />
-          <Text style={styles.textSecondary}>Santa Clara (0.8km)</Text>
+          <Text style={styles.textSecondary}>{cattery.address}</Text>
         </View>
 
-        <Text style={styles.date}>Nov 17, 2022</Text>
+        <Text style={styles.date}>{cat.Birthday}</Text>
         <View style={styles.chipBox}>
-          <Chip title="Vaccinated" containerStyle={styles.chip} />
-          <Chip title="Vet Checked" containerStyle={styles.chip} />
-          <Chip title="Dewormed" containerStyle={styles.chip} />
+          {cat.Tags ? (
+            cat.Tags.map((tag) => (
+              <Chip title={tag} containerStyle={styles.chip} />
+            ))
+          ) : (
+            <></>
+          )}
         </View>
 
         <Text style={styles.contact}>Contact Info</Text>
@@ -76,37 +92,75 @@ export default class CatInformation extends React.Component {
         </View>
       </View>
     );
-  };
-  render() {
-    return (
-      <View>
-        <Image
-          source={require("../pictures/kaka.jpg")}
-          resizeMode="cover"
-          style={{ height: 450, width: 500 }}
-        ></Image>
-        <View style={{ position: "absolute", top: 48, left: 12 }}>
-          <View style={{ opacity: 0.5 }}>
-            <Pressable onPress={rootStackNavigateBack}>
-              <Feather name="arrow-left-circle" size={24} color="white" />
-            </Pressable>
-          </View>
-        </View>
-        <BottomDrawer
-          containerHeight={800}
-          downDisplay={300}
-          startUp={false}
-          backgroundColor={Colors.dimGray}
-          borderRadius={30}
-        >
-          {this.renderContent()}
-        </BottomDrawer>
-      </View>
-    );
   }
+
+  const catId = route.params.catId;
+  const [cat, setCat] = useState({});
+  const [cattery, setCattery] = useState({});
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(doc(db, "Cats", catId), async (catEntry) => {
+      const catData = catEntry.data();
+      const birthday = new Date(catData.Birthday);
+      const now = new Date();
+      let age =
+        now.getMonth() -
+        birthday.getMonth() +
+        12 * (now.getFullYear() - birthday.getFullYear());
+      // age cannot be negative
+      if (age === undefined || isNaN(age) || age < 0) {
+        age = 0;
+      }
+
+      /* Group cat object */
+      setCat({
+        ...catData,
+        id: catEntry.id,
+        month: age,
+      });
+
+      /* Get cattery */
+      const catteryRef = doc(db, "Users", catData.Cattery);
+      const catterySnap = await getDoc(catteryRef);
+
+      setCattery(catterySnap.data());
+    });
+
+    return () => unSubscribe();
+  }, []);
+
+  return (
+    <View>
+      <Image
+        source={{ url: cat.Picture }}
+        resizeMode="cover"
+        style={{ height: 450, width: 500 }}
+      ></Image>
+      <View style={{ position: "absolute", top: 48, left: 12 }}>
+        <View style={{ opacity: 0.5 }}>
+          <Pressable onPress={navigation.goBack}>
+            <Feather name="arrow-left-circle" size={24} color="white" />
+          </Pressable>
+        </View>
+      </View>
+      <BottomDrawer
+        containerHeight={800}
+        downDisplay={300}
+        startUp={false}
+        backgroundColor={Colors.dimGray}
+        borderRadius={30}
+      >
+        <RenderContent />
+      </BottomDrawer>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
+  tagInfoText: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
   button: {
     margin: 10,
     marginTop: 1000,
@@ -148,8 +202,8 @@ const styles = StyleSheet.create({
     marginLeft: 6,
   },
   chip: {
-    marginVertical: 15,
-    marginHorizontal: 10,
+    marginVertical: 8,
+    marginHorizontal: 6,
     height: 35,
   },
   contact: {
@@ -171,7 +225,8 @@ const styles = StyleSheet.create({
   },
   chipBox: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    flexWrap: "wrap",
+    // justifyContent: "space-evenly",
   },
   date: {
     color: Colors.gray,

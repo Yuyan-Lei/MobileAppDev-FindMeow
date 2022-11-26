@@ -7,17 +7,17 @@ export default function CatBreedSelector(props) {
         ...ALL_BREEDS,
     ];
 
-    return (
-        <SelectList
-          setSelected={props.setSelectedBreed}
-          data={breed}
-          save="value"
-          placeholder="Select Type"
-          boxStyles={{
-            backgroundColor: "white",
-            borderWidth: 0
-          }}
-          defaultOption={{ key: props.selectedBreed, value: props.selectedBreed }}
-        />
-    );
+  return (
+    <SelectList
+      setSelected={props.setSelectedBreed}
+      data={breed}
+      save="value"
+      placeholder="Select Type"
+      boxStyles={{
+        backgroundColor: "white",
+        borderWidth: 0
+      }}
+      defaultOption={{ key: props.selectedBreed, value: props.selectedBreed }}
+    />
+  );
 };

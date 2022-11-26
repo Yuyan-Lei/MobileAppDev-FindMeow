@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export function HeartButton({
   onPress,
@@ -19,11 +19,9 @@ export function HeartButton({
     <Pressable onPress={onPress}>
       <View style={{ padding: 8 }}>
         <Text
-          style={{
-            color: isLiked ? selectedColor : notSelectedColor,
-            fontSize: 24,
-            fontWeight: "600",
-          }}
+          style={[{
+            color: isLiked ? selectedColor : notSelectedColor
+          }, styles.heartText]}
         >
           ♡
         </Text>
@@ -31,3 +29,10 @@ export function HeartButton({
     </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  heartText: {
+    fontSize: 24,
+    fontWeight: "600",
+  },
+})
