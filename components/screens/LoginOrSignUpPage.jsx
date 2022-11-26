@@ -27,6 +27,12 @@ export default function LoginOrSignUpPage({ route, navigation }) {
     ref.current?.setAddressText(address || '');
   }, []);
 
+  useEffect(() => {
+    setUserName('');
+    setPassword('');
+    setConfirmPassword('');
+  }, [pageState]);
+
     const verifyPassword = (password) => {
         // Valid password pattern:
         // 1. Contains both digit and word character
@@ -37,13 +43,15 @@ export default function LoginOrSignUpPage({ route, navigation }) {
 
     const onCreateAccount = () => {
         if (password !== confirmPassword) {
-            Alert.alert('SignUp Failed', "The password doesn't match, please update your password.");
+            Alert.alert('SignUp Failed', "Those passwords don't match. Please try again.");
             setPassword('');
+            setConfirmPassword('');
             return;
         }
         if (!verifyPassword(password)) {
-            Alert.alert('SignUp Failed', "The password is invalid, please update your password.");
+            Alert.alert('SignUp Failed', "Please use 6 or more characters with a mix of numbers and letters.");
             setPassword('');
+            setConfirmPassword('');
             return;
         }
         createUserWithEmailAndPassword(auth, userName, password)
@@ -65,15 +73,18 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         Alert.alert('SignUp Failed', "The email is already registered, please use another email.");
                         setUserName('');
                         setPassword('');
+                        setConfirmPassword('');
                         break;
                     case "auth/invalid-email":
                         Alert.alert('SignUp Failed', "The email is invalid, please correct your email address.");
                         setUserName('');
                         setPassword('');
+                        setConfirmPassword('');
                         break;
                     case "auth/weak-password":
                         Alert.alert('SignUp Failed', "The password is too weak, please update your password.");
                         setPassword('');
+                        setConfirmPassword('');
                         break;
                     default:
                         Alert.alert('SignUp Failed', "Error happened while signing up, please try again later.");
@@ -141,11 +152,11 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                             <View>
                                 <TextInput
                                     inputStyle={{fontFamily: "Poppins"}}
-                                    label="CONFIRM PASSWORD"
+                                    label={ confirmPassword !== '' && confirmPassword !== password ? "PASSWORDS NOT MATCH" : "CONFIRM PASSWORD"}
                                     secureTextEntry={true}
                                     leading={props => <Entypo name="lock" {...props} />}
                                     value={confirmPassword}
-                                    color="#F59156"
+                                    color={ confirmPassword !== '' && confirmPassword !== password ? "red" : "#F59156"}
                                     onChangeText={setConfirmPassword} />
                                 <CheckBox
                                     title="I'm a cattery owner"
