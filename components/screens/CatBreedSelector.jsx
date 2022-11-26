@@ -1,17 +1,11 @@
 import { SelectList } from "react-native-dropdown-select-list";
+import { ALL_BREEDS } from "./allBreeds";
 
 export default function CatBreedSelector(props) {
-  const breed = [
-    { key: "All", value: "All" },
-    { key: "Siamese", value: "Siamese" },
-    { key: "Maine-Coon", value: "Maine-Coon" },
-    { key: "British-Shorthair", value: "British-Shorthair" },
-    { key: "Persian", value: "Persian" },
-    { key: "Ragdoll", value: "Ragdoll" },
-    { key: "Sphynx", value: "Sphynx" },
-    { key: "Birman", value: "Birman" },
-    { key: "American-Shorthair", value: "American-Shorthair" },
-  ];
+    const breed = props.hideAllOption ? ALL_BREEDS : [
+        { key: "All", value: "All" },
+        ...ALL_BREEDS,
+    ];
 
   return (
     <SelectList
