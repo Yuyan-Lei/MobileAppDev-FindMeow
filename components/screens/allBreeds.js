@@ -55,5 +55,5 @@ export const ALL_BREEDS = [
     { key: "Toyger", value: "Toyger"},
     { key: "Turkish Angora", value: "Turkish Angora"},
     { key: "Turkish Van", value: "Turkish Van"},
-    { key: "Other", value: "Other"},
+    { key: "Others", value: "Others"},
 ];
