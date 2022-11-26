@@ -100,7 +100,34 @@ export default function LoginOrSignUpPage({ route, navigation }) {
         })
             .catch((error) => {
                 const errorCode = error.code;
-                const errorMessage = error.message;
+                let errorMessage = "";
+                switch (errorCode) {
+                    case "auth/invalid-email":
+                        errorMessage = "The email is invalid, please correct your email address.";
+                        setUserName('');
+                        setPassword('');
+                        setConfirmPassword('');
+                        break;
+                    case "auth/user-disabled":
+                        errorMessage = "The user corresponding to the given email has been disabled."
+                        setUserName('');
+                        setPassword('');
+                        setConfirmPassword('');
+                        break;
+                    case "auth/user-not-found":
+                        errorMessage = "No user was found using the email."
+                        setUserName('');
+                        setPassword('');
+                        setConfirmPassword('');
+                        break;
+                    case "auth/wrong-password":
+                        errorMessage = "Wrong password. Please try again."
+                        setPassword('');
+                        setConfirmPassword('');
+                        break;
+                    default:
+                        errorMessage = "Error happened while logging in, please try again later.";
+                }
                 Alert.alert('Login Failed', errorMessage);
             });
     }
