@@ -15,6 +15,7 @@ import BottomDrawer from "react-native-bottom-drawer-view";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
+import { HeartButton } from "../pressable/HeartButton";
 import { Colors } from "../styles/Colors";
 
 export default function CatInformation({ route, navigation }) {
@@ -79,15 +80,18 @@ export default function CatInformation({ route, navigation }) {
           )}
         </View>
 
-        <Text style={styles.contact}>Contact Info</Text>
-        <View style={{ flexDirection: "row" }}>
-          <View>
-            <Text>Angel Girls</Text>
-            <Text style={styles.date}>Cattery</Text>
-          </View>
-          <View style={styles.buttonView}>
-            <PhoneButton />
-            <MessageButton />
+        <View style={styles.contactLabel}>
+          <Text style={styles.contact}>Contact Info</Text>
+          <View style={{ flexDirection: "row" }}>
+            <View>
+              <Text>Angel Girls</Text>
+              <Text style={styles.date}>Cattery</Text>
+            </View>
+            <View style={{ width: 200 }}></View>
+            <View style={styles.buttonView}>
+              <PhoneButton />
+              <MessageButton />
+            </View>
           </View>
         </View>
       </View>
@@ -96,13 +100,14 @@ export default function CatInformation({ route, navigation }) {
 
   const catId = route.params.catId;
   const [cat, setCat] = useState({});
-  const [cattery, setCattery] = useState({});
+  const [cattery, setCattery] = useState([]);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(doc(db, "Cats", catId), async (catEntry) => {
       const catData = catEntry.data();
       const birthday = new Date(catData.Birthday);
       const now = new Date();
+
       let age =
         now.getMonth() -
         birthday.getMonth() +
@@ -129,13 +134,28 @@ export default function CatInformation({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
+  // const onClickLikeButton = () => {
+  //   if (!likeCats.includes(cat.id)) {
+  //     userLikeACat(cat.id);
+  //   } else {
+  //     userUnLikeACat(cat.id);
+  //   }
+  // };
+
   return (
     <View>
       <Image
-        source={{ url: cat.Picture }}
+        source={{ uri: cat.Picture }}
         resizeMode="cover"
         style={{ height: 450, width: 500 }}
       ></Image>
+      <View style={styles.floatingView}>
+        <HeartButton
+          notSelectedColor="white"
+          // isLiked={likeCats.includes(cat.id)}
+          // onPress={onClickLikeButton}
+        />
+      </View>
       <View style={{ position: "absolute", top: 48, left: 12 }}>
         <View style={{ opacity: 0.5 }}>
           <Pressable onPress={navigation.goBack}>
@@ -189,6 +209,14 @@ const styles = StyleSheet.create({
     width: 80,
     textAlign: "center",
   },
+  contactLabel: {
+    backgroundColor: "white",
+
+    alignItems: "center",
+    padding: 8,
+    borderRadius: 12,
+    marginTop: 10,
+  },
   textPrimary: {
     textAlign: "left",
     fontSize: 28,
@@ -209,6 +237,7 @@ const styles = StyleSheet.create({
   contact: {
     fontWeight: "bold",
     marginBottom: 20,
+    marginRight: "auto",
   },
   buttonView: {
     flexDirection: "row",
@@ -235,5 +264,10 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 20,
     marginBottom: 10,
+  },
+  floatingView: {
+    position: "absolute",
+    top: 40,
+    right: 32,
   },
 });
