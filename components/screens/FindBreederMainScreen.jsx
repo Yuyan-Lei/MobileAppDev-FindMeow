@@ -35,13 +35,47 @@ function MainScreen({ route, navigation }) {
   }
 
   useEffect(() => {
-    const q = query(collection(db, "Users"), where('isCattery', '==', true));
+    /* Grouping constraints starts */
+    let clauseSearchName1, clauseSearchName2, clauseBreed, clauseState, clauseCatNum;
+
+    if (searchName !== "") {
+      clauseSearchName1 = where("catteryName", ">=", searchName);
+      clauseSearchName2 = where("catteryName", "<", searchName + "z");
+    }
+
+    if (selectedBreed !== "All") {
+      // TODO: how?
+    }
+
+    if (selectedState !== "All") {
+      // TODO
+    }
+
+    if (selectedCatNum.toLowerCase() === "yes") {
+      clauseCatNum = where("cats", "!=", []);
+    } else if (selectedCatNum.toLowerCase() === "no") {
+      clauseCatNum = where("cats", "==", []);
+    }
+
+    const candidates = [clauseSearchName1,
+      clauseSearchName2,
+      clauseBreed,
+      clauseState,
+      clauseCatNum];
+
+    const constraints = candidates.filter((item) => item !== undefined)
+    /* Grouping constraints ends */
+
+    const q = query(collection(db, "Users"),
+      where('isCattery', '==', true),
+      ...constraints);
+
     const unSubscribe = onSnapshot(q, (snapshot) => {
       setCatteries(snapshot.docs.map((entry) => entry.data()));
     });
 
-    return () => unSubscribe();
-  }, []);
+    return unSubscribe;
+  }, [searchName, selectedBreed, selectedState, selectedCatNum]);
 
   return (
     <View style={styles.containter}>

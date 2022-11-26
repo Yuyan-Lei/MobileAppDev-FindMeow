@@ -97,7 +97,6 @@ export default function CatInformation({ route, navigation }) {
   const catId = route.params.catId;
   const [cat, setCat] = useState({});
   const [cattery, setCattery] = useState({});
-  console.log(cat);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(doc(db, "Cats", catId), async (catEntry) => {
