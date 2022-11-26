@@ -129,14 +129,6 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         value={password}
                         color="#F59156"
                         onChangeText={setPassword} />
-                    <TextInput
-                        inputStyle={{fontFamily: "Poppins"}}
-                        label="CONFIRM PASSWORD"
-                        secureTextEntry={true}
-                        leading={props => <Entypo name="lock" {...props} />}
-                        value={confirmPassword}
-                        color="#F59156"
-                        onChangeText={setConfirmPassword} />
                     {
                         pageState === 0 ?
                             <View>
@@ -147,6 +139,14 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                                 </Pressable>
                             </View> :
                             <View>
+                                <TextInput
+                                    inputStyle={{fontFamily: "Poppins"}}
+                                    label="CONFIRM PASSWORD"
+                                    secureTextEntry={true}
+                                    leading={props => <Entypo name="lock" {...props} />}
+                                    value={confirmPassword}
+                                    color="#F59156"
+                                    onChangeText={setConfirmPassword} />
                                 <CheckBox
                                     title="I'm a cattery owner"
                                     checked={isCattery}

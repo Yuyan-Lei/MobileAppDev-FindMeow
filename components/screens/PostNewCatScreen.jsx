@@ -95,7 +95,7 @@ export default function PostNewCatScreen({route, navigation: {navigate}}) {
                 value={catName}
                 onChangeText={setCatName}></TextInput>
             <Text style={styles.subTitle}>Breed</Text>
-            <CatBreedSelector selectedBreed={breed} setSelectedBreed={setBreed}/>
+            <CatBreedSelector hideAllOption selectedBreed={breed} setSelectedBreed={setBreed}/>
             <Text style={styles.subTitle}>Birthdate</Text>
             <DatePicker 
                 mode="date" 
