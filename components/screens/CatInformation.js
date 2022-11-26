@@ -80,15 +80,18 @@ export default function CatInformation({ route, navigation }) {
           )}
         </View>
 
-        <Text style={styles.contact}>Contact Info</Text>
-        <View style={{ flexDirection: "row" }}>
-          <View>
-            <Text>Angel Girls</Text>
-            <Text style={styles.date}>Cattery</Text>
-          </View>
-          <View style={styles.buttonView}>
-            <PhoneButton />
-            <MessageButton />
+        <View style={styles.contactLabel}>
+          <Text style={styles.contact}>Contact Info</Text>
+          <View style={{ flexDirection: "row" }}>
+            <View>
+              <Text>Angel Girls</Text>
+              <Text style={styles.date}>Cattery</Text>
+            </View>
+            <View style={{ width: 200 }}></View>
+            <View style={styles.buttonView}>
+              <PhoneButton />
+              <MessageButton />
+            </View>
           </View>
         </View>
       </View>
@@ -206,6 +209,14 @@ const styles = StyleSheet.create({
     width: 80,
     textAlign: "center",
   },
+  contactLabel: {
+    backgroundColor: "white",
+
+    alignItems: "center",
+    padding: 8,
+    borderRadius: 12,
+    marginTop: 10,
+  },
   textPrimary: {
     textAlign: "left",
     fontSize: 28,
@@ -226,6 +237,7 @@ const styles = StyleSheet.create({
   contact: {
     fontWeight: "bold",
     marginBottom: 20,
+    marginRight: "auto",
   },
   buttonView: {
     flexDirection: "row",
