@@ -1,18 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { BreederCard } from "../cards/BreederCard";
-import { SearchBar } from "../pressable/SearchBar";
-import { TitleText } from "../texts/TitleText";
-import FindBreederFilter from "./FindBreederFilter";
-import { FilterButton } from "../pressable/FilterButton";
-import { Colors } from "../styles/Colors";
-import RBSheet from "react-native-raw-bottom-sheet";
-import { getAllCatteries } from "../../firebaseUtils/user";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
+import React, { useEffect, useRef, useState } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { BreederCard } from "../cards/BreederCard";
+import { FilterButton } from "../pressable/FilterButton";
+import { SearchBar } from "../pressable/SearchBar";
+import { Colors } from "../styles/Colors";
+import { TitleText } from "../texts/TitleText";
+import CatteryProfileScreen from "./CatteryProfileScreen";
+import FindBreederFilter from "./FindBreederFilter";
 
 
-export default function FindBreederMainScreen() {
+function MainScreen({ route, navigation }) {
   const [searchName, setSearchName] = useState("");
 
   /* values used for DiscoverFilter start */
@@ -22,6 +23,7 @@ export default function FindBreederMainScreen() {
   const [selectedBreed, setSelectedBreed] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCatNum, setSelectedCatNum] = useState("All");
+
 
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
@@ -61,25 +63,14 @@ export default function FindBreederMainScreen() {
           closeOnPressMask={true}
           keyboardAvoidingViewEnabled={true}
           animationType="slide"
-          customStyles={{
-            wrapper: {
-              backgroundColor: "transparent",
-            },
-            container: {
-              borderRadius: 28,
-            },
-            draggableIcon: {
-              backgroundColor: "#EFEFEF",
-              width: 100,
-            },
-          }}
+          customStyles={styles.RBSheetCustomStyles}
           height={495}
         >
           <FindBreederFilter
             states={{
               visible,
               setVisible,
-              
+
               selectedBreed,
               setSelectedBreed,
               selectedState,
@@ -96,7 +87,7 @@ export default function FindBreederMainScreen() {
       <View style={styles.listView}>
         <FlatList
           data={catteries}
-          renderItem={({ item }) => <BreederCard cattery={item} />}
+          renderItem={({ item }) => <BreederCard cattery={item} navigation={navigation} />}
           ListFooterComponent={<View style={{ height: 250 }} />}
         />
       </View>
@@ -104,7 +95,29 @@ export default function FindBreederMainScreen() {
   );
 }
 
+export default function FindBreederMainScreen() {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
+    </Stack.Navigator>
+  )
+}
+
 const styles = StyleSheet.create({
+  RBSheetCustomStyles: {
+    wrapper: {
+      backgroundColor: "transparent",
+      container: {
+        borderRadius: 28,
+      },
+      draggableIcon: {
+        backgroundColor: "#EFEFEF",
+        width: 100,
+      },
+    },
+  },
   containter: {
     alignItems: "center",
     paddingTop: 55,

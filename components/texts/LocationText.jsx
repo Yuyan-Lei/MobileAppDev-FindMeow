@@ -1,4 +1,4 @@
-import { EvilIcons, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Text, View } from "react-native";
 
@@ -12,11 +12,11 @@ export function LocationText({ textStyle, locationIconColor, children }) {
           size={12}
         />
       </View>
-      <Text style={[{ 
-        fontSize: 12, 
+      <Text style={[{
+        fontSize: 12,
         color: "gray",
         marginTop: 6,
-        }, textStyle]}>
+      }, textStyle]}>
         {" "}
         {children}
       </Text>

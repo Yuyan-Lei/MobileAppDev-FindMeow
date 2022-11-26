@@ -1,6 +1,6 @@
-import React from "react";
-import { View, Alert, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import React from "react";
+import { Alert, Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
 
 export function PhoneButton({ onPress }) {
@@ -16,16 +16,7 @@ export function PhoneButton({ onPress }) {
   };
   return (
     <View style={{ width: 60, height: 40, top: 4, marginBottom: 10 }}>
-      <Pressable
-        onPress={onPress}
-        style={{
-          backgroundColor: Colors.phoneButton,
-          padding: 8,
-          borderRadius: 100,
-          height: 40,
-          width: 40,
-        }}
-      >
+      <Pressable onPress={onPress} style={styles.buttonView}>
         <MaterialIcons
           name="phone-in-talk"
           size={24}
@@ -36,3 +27,13 @@ export function PhoneButton({ onPress }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonView: {
+    backgroundColor: Colors.phoneButton,
+    padding: 8,
+    borderRadius: 100,
+    height: 40,
+    width: 40,
+  },
+});

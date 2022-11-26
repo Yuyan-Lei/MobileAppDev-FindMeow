@@ -1,16 +1,13 @@
 import React from "react";
-import { Platform, Pressable, StyleSheet, Text, View, Image, Alert } from "react-native";
+import { Alert, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
-import { rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
-// import DropShadow from "react-native-drop-shadow";
-// import { Shadow } from "react-native-shadow-2";
 
-export function BreederCard({ cattery }) {
+export function BreederCard({ cattery, navigation }) {
   return (
-    <View style={{ marginHorizontal: 10}}>
-      <Pressable onPress={() => rootStackNavigate("CatteryProfile", {cattery})}>
+    <View style={styles.breederView}>
+      <Pressable onPress={() => navigation.navigate("CatteryProfile", { cattery })}>
         <View style={[styles.cardView, styles.shadowView]}>
 
           {/* Cattery photo */}
@@ -27,11 +24,11 @@ export function BreederCard({ cattery }) {
 
             {/* Available Kitten Display */}
             <Text style={styles.availableKittenText}>
-              {cattery.cats.length > 0 ? 
+              {cattery.cats.length > 0 ?
                 cattery.cats.length === 1 ? `${cattery.cats.length} Available Kitten` : `${cattery.cats.length} Available Kittens`
                 : ""}
             </Text>
-            
+
             {/* Cattery Location */}
             <LocationText>
               {cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2]}
@@ -41,20 +38,23 @@ export function BreederCard({ cattery }) {
       </Pressable>
 
       <View style={styles.heartButtonView}>
-        <HeartButton 
-            onPress={() =>{
-                Alert.alert("Feature for this button is coming soon~", "See you next time!", [
-                  {text: "Sad"},
-                  {text: "Wait for you"},
-                ])
-            }}
-          />
+        <HeartButton
+          onPress={() => {
+            Alert.alert("Feature for this button is coming soon~", "See you next time!", [
+              { text: "Sad" },
+              { text: "Wait for you" },
+            ])
+          }}
+        />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  breederView: {
+    marginHorizontal: 10,
+  },
   heartButtonView: {
     position: "absolute",
     top: 20,

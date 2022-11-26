@@ -1,4 +1,5 @@
 import { Feather } from "@expo/vector-icons";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { collection, doc, documentId, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { FlatList, Image, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
@@ -8,9 +9,9 @@ import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { CatCard } from "../cards/CatCard";
 import { rootStackNavigateBack } from "../RootNavigation";
 import { LocationText } from "../texts/LocationText";
+import CatteryProfileScreen from "./CatteryProfileScreen";
 
-
-export default function ProfileCatteryPage({ route, navigation }) {
+function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
   const [cats, setCats] = useState([]);
   const [cattery, setCattery] = useState(null);
@@ -63,116 +64,149 @@ export default function ProfileCatteryPage({ route, navigation }) {
     navigation.navigate("UpdateCatteryPage", { cattery });
   };
 
-  const majorPage = cattery ? (<View>
-    <View>
-      <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
-        {cattery.picture &&
-          <Image source={{ uri: cattery.picture }} style={{ width: "100%", height: "100%" }} />}
-      </View>
-    </View>
-
-    {/* Top left - back button */}
-    <View style={{ position: "absolute", top: 48, left: 12 }}>
-      <View>
-        <Pressable onPress={rootStackNavigateBack}>
-          <Feather name="arrow-left-circle" size={24} color="black" />
-        </Pressable>
-      </View>
-    </View>
-
-    {/* Top right - update cattery button */}
-    <View style={{ position: "absolute", top: 48, right: 12 }}>
-      <View>
-        <Pressable onPress={onUpdateCattery}>
-          <Feather name="edit" size={24} color="black" />
-        </Pressable>
-      </View>
-    </View>
-
-
-    <View style={{ margin: 32, top: -80, marginBottom: 32 - 80 }}>
-      {/* cattery name & address */}
-      <View
-        style={{
-          alignItems: "center",
-          backgroundColor: "white",
-          padding: 16,
-          borderRadius: 12,
-        }}
-      >
-        <Text style={styles.catteryName}>
-          {cattery.catteryName}
-        </Text>
-
-        <View style={{ padding: 4 }}>
-          <LocationText>{catteryShortAddress}</LocationText>
-        </View>
-      </View>
-
-      <View style={{ height: 24 }} />
-
-
-      {/* cattery info: phone number, website, address */}
-      <View
-        style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
-      >
-        <Text style={styles.infoTitle}>
-          About
-        </Text>
-
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.infoSubTitle}>
-            Phone:{" "}
-          </Text>
-          <Text>{cattery.phoneNumber}</Text>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.infoSubTitle}>
-            Website:{" "}
-          </Text>
-          <Text>{cattery.website}</Text>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.infoSubTitle}>
-            Address:{" "}
-          </Text>
-          <Text>{catteryFullAddress}</Text>
-        </View>
-      </View>
-
-      <View style={{ height: 24 }} />
-
-
-      {/* available kittens */}
-      <View
-        style={{ padding: 16, backgroundColor: "white", borderRadius: 12 }}
-      >
-        <View style={{ margin: 8 }}>
-          <Text style={styles.infoTitle}>
-            Available Kittens
-          </Text>
-        </View>
-        <FlatList
-          data={cats}
-          renderItem={({ item, index }) => <CatCard cat={buildCatItem(item)} />}
-          numColumns={2}
-        // ListFooterComponent={<View style={{ height: 60 }} />}
-        />
-      </View>
-
-    </View>
-  </View>) : <Text>Loading</Text>;
-
   return (
-    <View style={{ backgroundColor: "rgb(250,250,250)" }}>
-      {majorPage}
-    </View>
-  );
+    cattery ? (
+      <View style={styles.container}>
+        <View>
+          <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
+            {cattery.picture &&
+              <Image source={{ uri: cattery.picture }} style={{ width: "100%", height: "100%" }} />}
+          </View>
+        </View>
+
+        {/* Top left - back button */}
+        <View style={styles.backButtonView}>
+          <View>
+            <Pressable onPress={rootStackNavigateBack}>
+              <Feather name="arrow-left-circle" size={24} color="black" />
+            </Pressable>
+          </View>
+        </View>
+
+        {/* Top right - update cattery button */}
+        <View style={styles.updateButtonView}>
+          <View>
+            <Pressable onPress={onUpdateCattery}>
+              <Feather name="edit" size={24} color="black" />
+            </Pressable>
+          </View>
+        </View>
+
+
+        <View style={styles.catterDetailView}>
+          {/* cattery name & address */}
+          <View
+            style={styles.nameAndAddressView}
+          >
+            <Text style={styles.catteryName}>
+              {cattery.catteryName}
+            </Text>
+
+            <View style={{ padding: 4 }}>
+              <LocationText>{catteryShortAddress}</LocationText>
+            </View>
+          </View>
+
+          <View style={{ height: 24 }} />
+
+
+          {/* cattery info: phone number, website, address */}
+          <View
+            style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
+          >
+            <Text style={styles.infoTitle}>
+              About
+            </Text>
+
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.infoSubTitle}>
+                Phone:{" "}
+              </Text>
+              <Text>{cattery.phoneNumber}</Text>
+            </View>
+
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.infoSubTitle}>
+                Website:{" "}
+              </Text>
+              <Text>{cattery.website}</Text>
+            </View>
+
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.infoSubTitle}>
+                Address:{" "}
+              </Text>
+              <Text>{catteryFullAddress}</Text>
+            </View>
+          </View>
+
+          <View style={{ height: 24 }} />
+
+
+          {/* available kittens */}
+          <View
+            style={styles.kittensView}
+          >
+            <View style={{ margin: 8 }}>
+              <Text style={styles.infoTitle}>
+                Available Kittens
+              </Text>
+            </View>
+            <FlatList
+              data={cats}
+              renderItem={({ item, index }) =>
+                <CatCard
+                  cat={buildCatItem(item)}
+                  navigation={navigation} />}
+              numColumns={2}
+            />
+          </View>
+
+        </View>
+      </View>)
+      : <Text>Loading</Text>)
+};
+
+export default function ProfileCatteryPage({ route, navigation }) {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
+    </Stack.Navigator>
+  )
 }
 
 const styles = StyleSheet.create({
+  kittensView: {
+    padding: 16,
+    backgroundColor: "white",
+    borderRadius: 12,
+  },
+  nameAndAddressView: {
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 16,
+    borderRadius: 12,
+  },
+  catterDetailView: {
+    margin: 32,
+    top: -80,
+    marginBottom: 32 - 80,
+  },
+  updateButtonView: {
+    position: "absolute",
+    top: 48,
+    right: 12,
+  },
+  backButtonView: {
+    position: "absolute",
+    top: 48,
+    left: 12,
+  },
+  container: {
+    backgroundColor: "rgb(250,250,250)",
+  },
   catteryName: {
     color: "#F59156",
     fontWeight: "800",
