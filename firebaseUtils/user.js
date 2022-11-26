@@ -34,6 +34,22 @@ export async function userUnLikeACat(catId) {
   return await updateToDB(email, collectionName, newLikesArrayEntry);
 }
 
+export async function userLikeACattery(catteryEmail) {
+  const email = getCurrentUserEmail();
+  const newLikesArrayEntry = {
+    likeCatteries: arrayUnion(catteryEmail),
+  };
+  return await updateToDB(email, collectionName, newLikesArrayEntry);
+}
+
+export async function userUnLikeACattery(catteryEmail) {
+  const email = getCurrentUserEmail();
+  const newLikesArrayEntry = {
+    likeCatteries: arrayRemove(catteryEmail),
+  };
+  return await updateToDB(email, collectionName, newLikesArrayEntry);
+}
+
 export async function getUserLikeCats() {
   const email = getCurrentUserEmail();
 

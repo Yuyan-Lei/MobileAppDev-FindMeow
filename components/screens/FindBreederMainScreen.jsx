@@ -71,7 +71,12 @@ function MainScreen({ route, navigation }) {
       ...constraints);
 
     const unSubscribe = onSnapshot(q, (snapshot) => {
-      setCatteries(snapshot.docs.map((entry) => entry.data()));
+      setCatteries(snapshot.docs.map((entry) => {
+        return {
+          email: entry.id,
+          ...entry.data()
+        }
+      }));
     });
 
     return unSubscribe;

@@ -1,10 +1,34 @@
-import React from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
 import { Alert, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
 import { HeartButton } from "../pressable/HeartButton";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 
 export function BreederCard({ cattery, navigation }) {
+  const [likeCatteries, setLikeCatteries] = useState([]);
+
+  useEffect(() => {
+    const unSubscribe =
+      onSnapshot(doc(db, 'Users', getCurrentUserEmail()),
+        (snapshot) => {
+          const likeCatteries = snapshot.data().likeCatteries || [];
+          setLikeCatteries(likeCatteries);
+        });
+
+    return () => unSubscribe();
+  }, []);
+  const onClickLikeButton = () => {
+    if (!likeCatteries.includes(cattery.email)) {
+      userLikeACattery(cattery.email);
+    } else {
+      userUnLikeACattery(cattery.email);
+    }
+  };
+
   return (
     <View style={styles.breederView}>
       <Pressable onPress={() => navigation.navigate("CatteryProfile", { cattery })}>
@@ -39,12 +63,8 @@ export function BreederCard({ cattery, navigation }) {
 
       <View style={styles.heartButtonView}>
         <HeartButton
-          onPress={() => {
-            Alert.alert("Feature for this button is coming soon~", "See you next time!", [
-              { text: "Sad" },
-              { text: "Wait for you" },
-            ])
-          }}
+          isLiked={likeCatteries.includes(cattery.email)}
+          onPress={onClickLikeButton}
         />
       </View>
     </View>
