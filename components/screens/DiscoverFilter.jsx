@@ -1,7 +1,12 @@
 import { Icon, Slider } from "@rneui/themed";
-import React from "react";
+import React, { useState } from "react";
 import {
-  Alert, Pressable, ScrollView, StyleSheet, Text, View
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { Colors } from "../styles/Colors";
@@ -27,10 +32,12 @@ const DiscoverFilter = ({
     refRBSheet,
   },
 }) => {
-  const breed = [
-    { key: "All", value: "All" },
-    ...ALL_BREEDS,
-  ];
+  const [breedLocal, setBreedLocal] = useState(selectedBreed);
+  const [ageLocal, setAgeLocal] = useState(selectedAge);
+  const [stateLocal, setStateLocal] = useState(selectedState);
+  const [genderLocal, setGenderLocal] = useState(selectedGender);
+
+  const breed = [{ key: "All", value: "All" }, ...ALL_BREEDS];
 
   const age = [
     { key: "All", value: "All" },
@@ -41,10 +48,7 @@ const DiscoverFilter = ({
     { key: "> 1 year", value: "> 1 year" },
   ];
 
-  const state = [
-    { key: "All", value: "All" },
-    ...ALL_STATES,
-  ];
+  const state = [{ key: "All", value: "All" }, ...ALL_STATES];
 
   const gender = [
     { key: "All", value: "All" },
@@ -53,10 +57,19 @@ const DiscoverFilter = ({
   ];
 
   const resetHandler = () => {
+    setBreedLocal(selectedBreed);
+    setAgeLocal(selectedAge);
+    setStateLocal(selectedState);
+    setGenderLocal(selectedGender);
     resetAllFilters();
   };
 
   const applyHandler = () => {
+    setBreedLocal(breedLocal);
+    setAgeLocal(ageLocal);
+    setStateLocal(stateLocal);
+    setGenderLocal(genderLocal);
+
     Alert.alert(
       "Feature for this button is coming soon~",
       "See you next time!",
@@ -101,7 +114,7 @@ const DiscoverFilter = ({
 
       <OrangeText>Breed</OrangeText>
       <SelectList
-        setSelected={(val) => setSelectedBreed(val)}
+        setSelected={(val) => setBreedLocal(val)}
         data={breed}
         save="value"
         defaultOption={{ key: selectedBreed, value: selectedBreed }}
@@ -109,7 +122,7 @@ const DiscoverFilter = ({
 
       <OrangeText>Age</OrangeText>
       <SelectList
-        setSelected={(val) => setSelectedAge(val)}
+        setSelected={(val) => setAgeLocal(val)}
         data={age}
         save="value"
         defaultOption={{ key: selectedAge, value: selectedAge }}
@@ -118,7 +131,7 @@ const DiscoverFilter = ({
 
       <OrangeText>Gender</OrangeText>
       <SelectList
-        setSelected={(val) => setSelectedGender(val)}
+        setSelected={(val) => setGenderLocal(val)}
         data={gender}
         save="value"
         defaultOption={{ key: selectedGender, value: selectedGender }}
@@ -127,7 +140,7 @@ const DiscoverFilter = ({
 
       <OrangeText>Location</OrangeText>
       <SelectList
-        setSelected={(val) => setSelectedState(val)}
+        setSelected={(val) => setStateLocal(val)}
         data={state}
         save="value"
         defaultOption={{ key: selectedState, value: selectedState }}
