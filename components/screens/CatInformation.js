@@ -15,6 +15,7 @@ import BottomDrawer from "react-native-bottom-drawer-view";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
+import { HeartButton } from "../pressable/HeartButton";
 import { Colors } from "../styles/Colors";
 
 export default function CatInformation({ route, navigation }) {
@@ -96,13 +97,14 @@ export default function CatInformation({ route, navigation }) {
 
   const catId = route.params.catId;
   const [cat, setCat] = useState({});
-  const [cattery, setCattery] = useState({});
+  const [cattery, setCattery] = useState([]);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(doc(db, "Cats", catId), async (catEntry) => {
       const catData = catEntry.data();
       const birthday = new Date(catData.Birthday);
       const now = new Date();
+
       let age =
         now.getMonth() -
         birthday.getMonth() +
@@ -129,6 +131,14 @@ export default function CatInformation({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
+  // const onClickLikeButton = () => {
+  //   if (!likeCats.includes(cat.id)) {
+  //     userLikeACat(cat.id);
+  //   } else {
+  //     userUnLikeACat(cat.id);
+  //   }
+  // };
+
   return (
     <View>
       <Image
@@ -136,6 +146,13 @@ export default function CatInformation({ route, navigation }) {
         resizeMode="cover"
         style={{ height: 450, width: 500 }}
       ></Image>
+      <View style={styles.floatingView}>
+        <HeartButton
+          notSelectedColor="white"
+          // isLiked={likeCats.includes(cat.id)}
+          // onPress={onClickLikeButton}
+        />
+      </View>
       <View style={{ position: "absolute", top: 48, left: 12 }}>
         <View style={{ opacity: 0.5 }}>
           <Pressable onPress={navigation.goBack}>
@@ -235,5 +252,10 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 20,
     marginBottom: 10,
+  },
+  floatingView: {
+    position: "absolute",
+    top: 40,
+    right: 32,
   },
 });
