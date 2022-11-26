@@ -13,6 +13,7 @@ export async function createUser(userEmail) {
   const newUser = {
     isCattery: false,
     likeCats: [],
+    likeCatteries: [],
   };
   return await wrtieToDB(newUser, collectionName, userEmail);
 }
