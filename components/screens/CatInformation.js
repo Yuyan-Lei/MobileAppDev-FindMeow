@@ -145,7 +145,7 @@ export default function CatInformation({ route, navigation }) {
   return (
     <View>
       <Image
-        source={{ url: cat.Picture }}
+        source={{ uri: cat.Picture }}
         resizeMode="cover"
         style={{ height: 450, width: 500 }}
       ></Image>
