@@ -52,9 +52,9 @@ function MainScreen({ route, navigation }) {
     }
 
     if (selectedCatNum.toLowerCase() === "yes") {
-      clauseCatNum = where("selectedCatNum", ">", 0);
+      clauseCatNum = where("cats", "!=", []);
     } else if (selectedCatNum.toLowerCase() === "no") {
-      clauseCatNum = where("selectedCatNum", "==", 0);
+      clauseCatNum = where("cats", "==", []);
     }
 
     const candidates = [clauseSearchName1,
