@@ -44,6 +44,7 @@ const FindBreederFilter = ({
     setSelectedBreed(selectedBreed);
     setSelectedState(selectedState);
     setSelectedCatNum(selectedCatNum);
+    resetAllFilters();
   };
 
   const applyHandler = () => {
