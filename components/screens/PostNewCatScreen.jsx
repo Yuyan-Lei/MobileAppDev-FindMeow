@@ -19,8 +19,8 @@ import {
   getCurrentUserEmail,
   writeImageToDB,
 } from "../../firebaseUtils/firestore";
-import CatBreedSelector from "./CatBreedSelector";
-import CatImagePicker from "./CatImagePicker";
+import CatBreedSelector from "../pressable/CatBreedSelector";
+import CatImagePicker from "../pressable/CatImagePicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Platform } from "react-native";
 // import { Button } from "react-native";
@@ -150,6 +150,8 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
       style={{ flex: 1 }}
     >
       <ScrollView style={styles.container}>
+
+        {/* Screen Title */}
         <View
           style={{
             flexDirection: "row",
@@ -160,7 +162,11 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
         >
           <Text style={styles.title}>Upload Cat</Text>
         </View>
+
+        {/* Image picker */}
         <CatImagePicker image={image} setImage={setImage}></CatImagePicker>
+
+        {/* Cat Name */}
         <Text style={styles.subTitle}>Cat Name</Text>
         <TextInput
           placeholder="Name"
@@ -168,13 +174,17 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
           value={catName}
           onChangeText={setCatName}
         ></TextInput>
+
+        {/* Breed */}
         <Text style={styles.subTitle}>Breed</Text>
         <CatBreedSelector
           hideAllOption
           selectedBreed={breed}
           setSelectedBreed={setBreed}
         />
-        <Text style={styles.subTitle}>Birthdate</Text>
+
+        {/* Birthday */}
+        <Text style={styles.subTitle}>Birthday</Text>
 
         {/* Date picker */}
         {Platform.OS === "ios" ? (
@@ -208,6 +218,8 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             )}
           </View>
         )}
+
+        {/* Gender */}
         <Text style={styles.subTitle}>Gender</Text>
         <SelectList
           setSelected={setGender}
@@ -222,8 +234,11 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             backgroundColor: "white",
             borderWidth: 0,
           }}
+          fontFamily= "Poppins"
           search={false}
         />
+
+        {/* Price */}
         <Text style={styles.subTitle}>Price</Text>
         <View style={styles.priceInput}>
           <TextInput
@@ -235,6 +250,8 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
           />
           <Text>$</Text>
         </View>
+
+        {/* Descriptions */}
         <Text style={styles.subTitle}>Description</Text>
         <TextInput
           placeholder="Describe the kitten"
@@ -243,6 +260,8 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
           value={description}
           onChangeText={setDescription}
         />
+
+        {/* Chips */}
         <Text style={styles.subTitle}>Labels</Text>
         <View style={styles.ButtonContainer}>
           <Button
@@ -305,17 +324,19 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               neutered
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? { color: "white", fontSize: 14, fontFamily: "PoppinsSemiBold"}
+                : { color: Colors.orangeText, fontSize: 14, fontFamily: "Poppins"}
             }
             onPress={() => setNeutered(!neutered)}
           ></Button>
         </View>
 
+        {/* Submit Button */}
         <Pressable onPress={onPostNewCat} style={styles.submitButton}>
           <Text style={styles.submitButtonText}>Submit</Text>
         </Pressable>
 
+        {/* Empty Footer */}
         <View style={{ height: 20 }} />
       </ScrollView>
     </KeyboardAvoidingView>
@@ -324,6 +345,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
 
 const styles = StyleSheet.create({
   dateButtonText: {
+    fontFamily: "Poppins",
     textAlign: "center",
     fontSize: 16,
     color: "#FFFFFF",
@@ -350,6 +372,7 @@ const styles = StyleSheet.create({
     marginTop: "10%",
   },
   submitButtonText: {
+    fontFamily: "PoppinsSemiBold",
     textAlign: "center",
     fontSize: 16,
     color: "#FFFFFF",
@@ -357,6 +380,7 @@ const styles = StyleSheet.create({
     paddingTop: 3,
   },
   title: {
+    fontFamily: "PoppinsSemiBold",
     color: Colors.orangeText,
     fontStyle: "normal",
     fontWeight: "600",
@@ -364,6 +388,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   subTitle: {
+    fontFamily: "PoppinsSemiBold",
     color: Colors.orangeText,
     marginTop: 10,
     marginBottom: 10,
@@ -371,6 +396,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   textInput: {
+    fontFamily: "Poppins",
     height: 60,
     borderRadius: 20,
     alignItems: "center",
@@ -379,6 +405,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   priceInput: {
+    fontFamily: "Poppins",
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
     height: 60,

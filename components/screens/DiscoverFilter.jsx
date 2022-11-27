@@ -11,8 +11,8 @@ import {
 import { SelectList } from "react-native-dropdown-select-list";
 import { Colors } from "../styles/Colors";
 import { OrangeText } from "../texts/OrangeText";
-import { ALL_BREEDS } from "./allBreeds";
-import { ALL_STATES } from "./allStates";
+import { ALL_BREEDS } from "../listContents/allBreeds";
+import { ALL_STATES } from "../listContents/allStates";
 
 const DiscoverFilter = ({
   states: {

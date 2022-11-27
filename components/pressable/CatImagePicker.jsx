@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     padding: 50,
   },
   text: {
+    fontFamily: "Poppins",
     color: '#ADADAD',
     fontSize: 17
   },
