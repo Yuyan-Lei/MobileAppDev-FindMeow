@@ -152,7 +152,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
           <View style={{ flexDirection: "row" }}>
             <DateTimePicker
               testID="dateTimePicker"
-              value={birthDate}
+              value={birthDate || new Date()}
               mode="date"
               onChange={onChange}
             />
