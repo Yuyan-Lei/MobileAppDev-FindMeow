@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Alert, Pressable, ScrollView, StyleSheet, Text, View
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { Colors } from "../styles/Colors";
@@ -21,15 +26,13 @@ const FindBreederFilter = ({
     refRBSheet,
   },
 }) => {
-  const breed = [
-    { key: "All", value: "All" },
-    ...ALL_BREEDS,
-  ];
+  const [breedLocal, setBreedLocal] = useState(selectedBreed);
+  const [stateLocal, setStateLocal] = useState(selectedState);
+  const [catNumLocal, setCatNumLocal] = useState(selectedCatNum);
 
-  const state = [
-    { key: "All", value: "All" },
-    ...ALL_STATES,
-  ];
+  const breed = [{ key: "All", value: "All" }, ...ALL_BREEDS];
+
+  const state = [{ key: "All", value: "All" }, ...ALL_STATES];
 
   const catNum = [
     { key: "All", value: "All" },
@@ -38,19 +41,22 @@ const FindBreederFilter = ({
   ];
 
   const resetHandler = () => {
+    setSelectedBreed(selectedBreed);
+    setSelectedState(selectedState);
+    setSelectedCatNum(selectedCatNum);
     resetAllFilters();
   };
 
   const applyHandler = () => {
-    setSelectedBreed(selectedBreed);
-    setSelectedCatNum(selectedCatNum);
-    setSelectedState(selectedState);
+    setSelectedBreed(breedLocal);
+    setSelectedState(stateLocal);
+    setSelectedCatNum(catNumLocal);
 
-    Alert.alert(
-      "Feature for this button is coming soon~",
-      "See you next time!",
-      [{ text: "Sad" }, { text: "Wait for you" }]
-    );
+    // Alert.alert(
+    //   "Feature for this button is coming soon~",
+    //   "See you next time!",
+    //   [{ text: "Sad" }, { text: "Wait for you" }]
+    // );
     refRBSheet.current.close();
   };
 
@@ -64,7 +70,7 @@ const FindBreederFilter = ({
 
       <OrangeText>Breed</OrangeText>
       <SelectList
-        setSelected={(val) => setSelectedBreed(val)}
+        setSelected={(val) => setBreedLocal(val)}
         data={breed}
         save="value"
         defaultOption={{ key: selectedBreed, value: selectedBreed }}
@@ -72,7 +78,7 @@ const FindBreederFilter = ({
 
       <OrangeText>Location</OrangeText>
       <SelectList
-        setSelected={(val) => setSelectedState(val)}
+        setSelected={(val) => setStateLocal(val)}
         data={state}
         save="value"
         defaultOption={{ key: selectedState, value: selectedState }}
@@ -80,7 +86,7 @@ const FindBreederFilter = ({
 
       <OrangeText>Has Avaliable Kitten</OrangeText>
       <SelectList
-        setSelected={(val) => setSelectedCatNum(val)}
+        setSelected={(val) => setCatNumLocal(val)}
         data={catNum}
         save="value"
         defaultOption={{ key: selectedCatNum, value: selectedCatNum }}
