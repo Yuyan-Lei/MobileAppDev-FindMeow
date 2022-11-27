@@ -17,6 +17,8 @@ export default function CatImagePicker({ image, setImage }) {
       quality: 1,
     });
 
+    setIsBottomSheetVisible(false);
+
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
