@@ -14,7 +14,7 @@ export default function CatImagePicker({ image, setImage }) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0,
     });
 
     setIsBottomSheetVisible(false);
@@ -36,7 +36,7 @@ export default function CatImagePicker({ image, setImage }) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0,
     });
 
     setIsBottomSheetVisible(false);
