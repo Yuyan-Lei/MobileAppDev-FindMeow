@@ -295,6 +295,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#FFFFFF",
     fontWeight: "600",
+    paddingTop: 3,
   },
   title: {
     color: "#F59156",
@@ -333,5 +334,6 @@ const styles = StyleSheet.create({
   },
   chip: {
     margin: 5,
+    borderColor: "#F59156",
   },
 });
