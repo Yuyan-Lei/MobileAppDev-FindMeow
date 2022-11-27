@@ -84,7 +84,7 @@ export default function CatInformation({ route, navigation }) {
           <Text style={styles.contact}>Contact Info</Text>
           <View style={{ flexDirection: "row" }}>
             <View>
-              <Text>Angel Girls</Text>
+              <Text>{cattery.catteryName}</Text>
               <Text style={styles.date}>Cattery</Text>
             </View>
             <View style={{ width: 200 }}></View>
