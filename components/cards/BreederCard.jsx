@@ -1,15 +1,25 @@
 import React from "react";
-import { Alert, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { HeartButton } from "../pressable/HeartButton";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
+import { AntDesign } from "@expo/vector-icons";
 
 export function BreederCard({ cattery, navigation }) {
   return (
     <View style={styles.breederView}>
-      <Pressable onPress={() => navigation.navigate("CatteryProfile", { cattery })}>
+      <Pressable
+        onPress={() => navigation.navigate("CatteryProfile", { cattery })}
+      >
         <View style={[styles.cardView, styles.shadowView]}>
-
           {/* Cattery photo */}
           <View style={styles.imageView}>
             <Image source={{ uri: cattery.picture }} style={styles.image} />
@@ -24,28 +34,35 @@ export function BreederCard({ cattery, navigation }) {
 
             {/* Available Kitten Display */}
             <Text style={styles.availableKittenText}>
-              {cattery.cats.length > 0 ?
-                cattery.cats.length === 1 ? `${cattery.cats.length} Available Kitten` : `${cattery.cats.length} Available Kittens`
+              {cattery.cats.length > 0
+                ? cattery.cats.length === 1
+                  ? `${cattery.cats.length} Available Kitten`
+                  : `${cattery.cats.length} Available Kittens`
                 : ""}
             </Text>
 
             {/* Cattery Location */}
             <LocationText>
-              {cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2]}
+              {cattery.address.split(", ")[1] +
+                ", " +
+                cattery.address.split(", ")[2]}
             </LocationText>
           </View>
         </View>
       </Pressable>
 
       <View style={styles.heartButtonView}>
-        <HeartButton
+        <Pressable
           onPress={() => {
-            Alert.alert("Feature for this button is coming soon~", "See you next time!", [
-              { text: "Sad" },
-              { text: "Wait for you" },
-            ])
+            Alert.alert(
+              "Feature for this button is coming soon~",
+              "See you next time!",
+              [{ text: "Sad" }, { text: "Wait for you" }]
+            );
           }}
-        />
+        >
+          <AntDesign name="hearto" size={18} style={styles.heartButtonView} />
+        </Pressable>
       </View>
     </View>
   );
@@ -57,8 +74,10 @@ const styles = StyleSheet.create({
   },
   heartButtonView: {
     position: "absolute",
-    top: 20,
-    right: 24,
+    top: 30,
+    right: 20,
+    color: "gray",
+    alignItems: "center",
   },
   availableKittenText: {
     color: "orange",
@@ -95,7 +114,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   shadowView: {
-    shadowColor: Platform.OS === 'ios' ? Colors.purple : Colors.shadowWhiteAndroid,
+    shadowColor:
+      Platform.OS === "ios" ? Colors.purple : Colors.shadowWhiteAndroid,
     shadowOffset: {
       width: 40,
       height: 80,
@@ -103,5 +123,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.0468,
     shadowRadius: 20,
     elevation: 17,
-  }
+  },
 });
