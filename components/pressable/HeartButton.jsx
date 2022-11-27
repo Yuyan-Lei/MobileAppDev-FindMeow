@@ -14,7 +14,7 @@ export function HeartButton({
   }
 
   if (notSelectedColor === undefined) {
-    notSelectedColor = "gray";
+    notSelectedColor = "white";
   }
 
   return (
