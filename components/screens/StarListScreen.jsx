@@ -34,7 +34,7 @@ function CatsScreen({ navigation, cats }) {
 function CatteriesScreen({ navigation, catteries }) {
 
   return (
-    <View style={{ padding: 12 }}>
+    <View style={{ width: "100%" }}>
       <FlatList
         data={catteries}
         renderItem={({ item, index }) => {
@@ -145,8 +145,9 @@ export default function StarListScreen({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 16,
-    marginTop: 55,
-    marginBottom: 200,
+    alignItems: "center",
+    paddingTop: 55,
+    backgroundColor: "white",
+    flex: 1,
   },
 })
