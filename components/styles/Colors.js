@@ -24,4 +24,5 @@ export const Colors = {
   grayText: "rgba(46, 37, 37, 0.7)",
   purple: "#402ec5",
   shadowWhiteAndroid: "#babacf",
+  heartBackground: "rgba(229, 229, 229, 0.2)",
 };

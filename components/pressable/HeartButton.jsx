@@ -1,5 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { Colors } from "../styles/Colors";
 
 export function HeartButton({
   onPress,
@@ -17,14 +19,24 @@ export function HeartButton({
 
   return (
     <Pressable onPress={onPress}>
-      <View style={{ padding: 8 }}>
-        <Text
-          style={[{
-            color: isLiked ? selectedColor : notSelectedColor
-          }, styles.heartText]}
-        >
-          ♡
-        </Text>
+      <View
+        style={{
+          padding: 5,
+          backgroundColor: Colors.heartBackground,
+          borderRadius: 20,
+          marginTop: 10,
+          marginLeft: 10,
+        }}
+      >
+        <AntDesign
+          name="heart"
+          style={[
+            {
+              color: isLiked ? selectedColor : notSelectedColor,
+            },
+            styles.heartText,
+          ]}
+        />
       </View>
     </Pressable>
   );
@@ -32,7 +44,7 @@ export function HeartButton({
 
 const styles = StyleSheet.create({
   heartText: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "600",
   },
-})
+});
