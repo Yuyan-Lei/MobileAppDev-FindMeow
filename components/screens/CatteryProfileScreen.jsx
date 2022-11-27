@@ -1,28 +1,57 @@
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, documentId, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  documentId,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList, Image, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { CatCard } from "../cards/CatCard";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
+import { Colors } from "../styles/Colors";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
   const [cats, setCats] = useState([]);
   const cattery = route.params.cattery;
-  const catteryShortAddress = cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2];
-  const catteryFullAddress = cattery.address.split(", ")[0] + ", " + cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2];
+  const catteryShortAddress =
+    cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2];
+  const catteryFullAddress =
+    cattery.address.split(", ")[0] +
+    ", " +
+    cattery.address.split(", ")[1] +
+    ", " +
+    cattery.address.split(", ")[2];
 
   useEffect(() => {
     if (cattery.cats.length === 0) {
       return;
     }
-    const q = query(collection(db, "Cats"), where(documentId(), "in", cattery.cats));
+    const q = query(
+      collection(db, "Cats"),
+      where(documentId(), "in", cattery.cats)
+    );
     const unSubscribe = onSnapshot(q, (snapshot) => {
-      setCats(snapshot.docs.map((entry) => { return { id: entry.id, ...entry.data() } }));
+      setCats(
+        snapshot.docs.map((entry) => {
+          return { id: entry.id, ...entry.data() };
+        })
+      );
     });
 
     return () => unSubscribe();
@@ -43,19 +72,25 @@ function MainScreen({ route, navigation }) {
       price: cat.Price,
       cattery: cat.Cattery,
       photo: cat.Picture,
-    }
+    };
   };
 
   return (
     <View style={styles.container}>
       <View>
         <View>
-          <View style={{
-            height: width * 0.7,
-            backgroundColor: "gray",
-          }}>
-            {cattery.picture &&
-              <Image source={{ uri: cattery.picture }} style={{ width: "100%", height: "100%" }} />}
+          <View
+            style={{
+              height: width * 0.7,
+              backgroundColor: "gray",
+            }}
+          >
+            {cattery.picture && (
+              <Image
+                source={{ uri: cattery.picture }}
+                style={{ width: "100%", height: "100%" }}
+              />
+            )}
           </View>
         </View>
 
@@ -63,19 +98,15 @@ function MainScreen({ route, navigation }) {
         <View style={styles.backButtonView}>
           <View>
             <Pressable onPress={navigation.goBack}>
-              <Feather name="arrow-left-circle" size={24} color="black" />
+              <Ionicons name="chevron-back" size={24} color="white" />
             </Pressable>
           </View>
         </View>
 
         <View style={styles.catterDetailView}>
           {/* cattery name & address */}
-          <View
-            style={styles.nameAndAddressView}
-          >
-            <Text style={styles.catteryName}>
-              {cattery.catteryName}
-            </Text>
+          <View style={styles.nameAndAddressView}>
+            <Text style={styles.catteryName}>{cattery.catteryName}</Text>
 
             <View style={{ padding: 4 }}>
               <LocationText>{catteryShortAddress}</LocationText>
@@ -84,59 +115,41 @@ function MainScreen({ route, navigation }) {
 
           <View style={{ height: 24 }} />
 
-
           {/* cattery info: phone number, website, address */}
-          <View
-            style={styles.infoView}
-          >
-            <Text style={styles.infoTitle}>
-              About
-            </Text>
+          <View style={styles.infoView}>
+            <Text style={styles.infoTitle}>About</Text>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>
-                Phone:{" "}
-              </Text>
+              <Text style={styles.infoSubTitle}>Phone: </Text>
               <Text>{cattery.phoneNumber}</Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>
-                Website:{" "}
-              </Text>
+              <Text style={styles.infoSubTitle}>Website: </Text>
               <Text>{cattery.website}</Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>
-                Address:{" "}
-              </Text>
+              <Text style={styles.infoSubTitle}>Address: </Text>
               <Text>{catteryFullAddress}</Text>
             </View>
           </View>
 
           <View style={{ height: 24 }} />
 
-
           {/* available kittens */}
-          <View
-            style={styles.kittensView}
-          >
+          <View style={styles.kittensView}>
             <View style={{ margin: 8 }}>
-              <Text style={styles.infoTitle}>
-                Available Kittens
-              </Text>
+              <Text style={styles.infoTitle}>Available Kittens</Text>
             </View>
             <FlatList
               data={cats}
-              renderItem={({ item, index }) =>
-                <CatCard
-                  cat={buildCatItem(item)}
-                  navigation={navigation} />}
+              renderItem={({ item, index }) => (
+                <CatCard cat={buildCatItem(item)} navigation={navigation} />
+              )}
               numColumns={2}
             />
           </View>
-
         </View>
       </View>
 
@@ -144,10 +157,11 @@ function MainScreen({ route, navigation }) {
       <View style={styles.floatingView}>
         <HeartButton
           onPress={() => {
-            Alert.alert("Feature for this button is coming soon~", "See you next time!", [
-              { text: "Sad" },
-              { text: "Wait for you" },
-            ])
+            Alert.alert(
+              "Feature for this button is coming soon~",
+              "See you next time!",
+              [{ text: "Sad" }, { text: "Wait for you" }]
+            );
           }}
         />
       </View>
@@ -158,16 +172,19 @@ function MainScreen({ route, navigation }) {
 export default function CatteryProfileScreen({ route, navigation }) {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}
-      initialRouteName="MainScreen">
-      <Stack.Screen name="MainScreen"
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="MainScreen"
+    >
+      <Stack.Screen
+        name="MainScreen"
         component={MainScreen}
-        initialParams={{ cattery: route.params.cattery }} />
+        initialParams={{ cattery: route.params.cattery }}
+      />
       <Stack.Screen name="CatInformation" component={CatInformation} />
     </Stack.Navigator>
-  )
+  );
 }
-
 
 const styles = StyleSheet.create({
   kittensView: {
@@ -198,8 +215,14 @@ const styles = StyleSheet.create({
   },
   backButtonView: {
     position: "absolute",
-    top: 48,
+    top: 40,
     left: 12,
+    opacity: 0.5,
+    padding: 5,
+    backgroundColor: Colors.arrowBackground,
+    borderRadius: 13,
+    marginTop: 10,
+    marginLeft: 10,
   },
   container: {
     backgroundColor: "rgb(250,250,250)",
@@ -222,5 +245,5 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 14,
-  }
+  },
 });

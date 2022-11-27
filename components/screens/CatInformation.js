@@ -156,13 +156,13 @@ export default function CatInformation({ route, navigation }) {
           // onPress={onClickLikeButton}
         />
       </View>
-      <View style={{ position: "absolute", top: 48, left: 12 }}>
+      <View style={{ position: "absolute", top: 40, left: 12 }}>
         <View
           style={{
             opacity: 0.5,
             padding: 5,
             backgroundColor: Colors.arrowBackground,
-            borderRadius: 20,
+            borderRadius: 13,
             marginTop: 10,
             marginLeft: 10,
           }}
