@@ -7,7 +7,7 @@ import { writeImageToDB } from "../../firebaseUtils/firestore";
 import { updateCattery } from "../../firebaseUtils/user";
 import { FillAndroidButtomBar, FillAndroidTopBar } from "../FillAndroidBar";
 import { TitleText } from "../texts/TitleText";
-import CatImagePicker from "./CatImagePicker";
+import CatImagePicker from "../pressable/CatImagePicker";
 
 export default function UpdateCatteryPage({ route, navigation }) {
   const user = route.params.cattery;
@@ -80,10 +80,15 @@ export default function UpdateCatteryPage({ route, navigation }) {
       <FillAndroidTopBar />
       <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
         <View style={{ margin: 12 }}>
+
+          {/* Screen Title */}
           <TitleText>Update Cattery</TitleText>
           <CatImagePicker image={image} setImage={setImage}></CatImagePicker>
+
+          {/* Address */}
           <Text style={styles.subTitle}>Address</Text>
           <GooglePlacesAutocomplete
+            fontFamily="Poppins"
             placeholder="Search"
             ref={ref}
             query={{
@@ -96,12 +101,16 @@ export default function UpdateCatteryPage({ route, navigation }) {
             }}
             onFail={(error) => console.error(error)}
           />
+
+          {/* Cattery Name */}
           <Text style={styles.subTitle}>Cattery Name</Text>
           <TextInput
             placeholder="Name"
             style={styles.textInput}
             value={catteryName}
             onChangeText={setCatteryName}></TextInput>
+
+          {/* Phone Number */}
           <Text style={styles.subTitle}>Phone Number</Text>
           <TextInput
             placeholder="Phone Number"
@@ -109,12 +118,16 @@ export default function UpdateCatteryPage({ route, navigation }) {
             value={phoneNumber}
             keyboardType="phone-pad"
             onChangeText={setPhoneNumber}></TextInput>
+
+          {/* Website */}
           <Text style={styles.subTitle}>Website</Text>
           <TextInput
             placeholder="www.xxx.com"
             style={styles.textInput}
             value={website}
             onChangeText={setWebsite}></TextInput>
+
+          {/* Submit Button */}
           <Pressable
             onPress={onUpdateCattery}
             style={styles.SubmitButton}>
@@ -134,6 +147,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFCF6",
   },
   title: {
+    fontFamily: "PoppinsSemiBold",
     color: '#F59156',
     fontStyle: "normal",
     fontWeight: "600",
@@ -141,6 +155,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   subTitle: {
+    fontFamily: "PoppinsSemiBold",
     color: '#F59156',
     marginTop: 10,
     marginBottom: 10,
@@ -148,6 +163,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   textInput: {
+    fontFamily: "Poppins",
     height: 60,
     borderRadius: 20,
     alignItems: "center",
