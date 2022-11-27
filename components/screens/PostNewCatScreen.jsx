@@ -33,7 +33,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
   const [image, setImage] = useState(null);
   const [breed, setBreed] = useState("");
   const [gender, setGender] = useState("");
-  const [birthDate, setBirthDate] = useState(new Date());
+  const [birthDate, setBirthDate] = useState(null);
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [vaccinated, setVaccinated] = useState(false);
@@ -46,11 +46,14 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
 
   const [show, setShow] = useState(false);
 
+  const convertDateToStr = (date) => {
+    return moment(date).format("YYYY-MM-DD");
+  };
+
   const onChange = (event, selectedDate) => {
     console.log(selectedDate);
     setShow(false);
     setBirthDate(selectedDate);
-    console.log(moment(birthDate).format("YYYY-MM-DD"));
   };
 
   useEffect(() => {
@@ -93,7 +96,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
       await createCat({
         Name: catName,
         Breed: breed,
-        Birthday: moment(birthDate).format("YYYY-MM-DD"),
+        Birthday: convertDateToStr(birthDate),
         Picture: url,
         Gender: gender,
         Price: price,
@@ -156,11 +159,20 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
           </View>
         ) : (
           <View>
-            <Button title="Pick a date" onPress={() => setShow(true)} />
+            <Pressable
+              onPress={() => setShow(true)}
+              style={styles.dateButtonView}
+            >
+              <Text style={styles.dateButtonText}>
+                {birthDate === null
+                  ? "Pick a date"
+                  : convertDateToStr(birthDate)}
+              </Text>
+            </Pressable>
             {show && (
               <DateTimePicker
                 testID="dateTimePicker"
-                value={birthDate}
+                value={birthDate === null ? new Date() : birthDate}
                 mode="date"
                 onChange={onChange}
               />
@@ -252,6 +264,20 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
 }
 
 const styles = StyleSheet.create({
+  dateButtonText: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "#FFFFFF",
+    fontWeight: "600",
+  },
+  dateButtonView: {
+    backgroundColor: "#FFB801",
+    borderRadius: 20,
+    height: 40,
+    alignItems: "center",
+    padding: 6,
+    width: 120,
+  },
   container: {
     paddingHorizontal: 30,
     backgroundColor: "#FFFCF6",
