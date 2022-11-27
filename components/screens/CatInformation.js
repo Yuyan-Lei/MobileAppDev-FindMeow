@@ -17,6 +17,7 @@ import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 import { HeartButton } from "../pressable/HeartButton";
 import { Colors } from "../styles/Colors";
+// import { Chip } from "../pressable/Chip";
 
 export default function CatInformation({ route, navigation }) {
   function RenderContent() {
@@ -46,7 +47,6 @@ export default function CatInformation({ route, navigation }) {
             </View>
           </View>
         </View>
-
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.textPrimary}>{cat.Name}</Text>
           <Text
@@ -62,24 +62,28 @@ export default function CatInformation({ route, navigation }) {
             ${cat.Price}
           </Text>
         </View>
-
         {/* TODO: CATTERY LOCATION */}
         <View style={{ flexDirection: "row" }}>
           <Ionicons name="location-sharp" size={24} color={Colors.darkOrange} />
           <Text style={styles.textSecondary}>{cattery.address}</Text>
         </View>
-
         <Text style={styles.date}>{cat.Birthday}</Text>
         <View style={styles.chipBox}>
           {cat.Tags ? (
             cat.Tags.map((tag, index) => (
-              <Chip title={tag} key={index} containerStyle={styles.chip} />
+              <Chip
+                title={tag}
+                key={index}
+                containerStyle={styles.chip}
+                color="#F59156"
+              />
             ))
           ) : (
             <></>
           )}
         </View>
 
+        {/* contact info label */}
         <View style={styles.contactLabel}>
           <Text style={styles.contact}>Contact Info</Text>
           <View style={{ flexDirection: "row" }}>
@@ -92,6 +96,13 @@ export default function CatInformation({ route, navigation }) {
               <PhoneButton />
               <MessageButton />
             </View>
+          </View>
+        </View>
+        {/* contact info label end */}
+        <View style={styles.detailLabel}>
+          <Text style={styles.contact}>Details</Text>
+          <View>
+            <Text>{cat.Description}</Text>
           </View>
         </View>
       </View>
@@ -221,11 +232,15 @@ const styles = StyleSheet.create({
   },
   contactLabel: {
     backgroundColor: "white",
-
     alignItems: "center",
     padding: 8,
     borderRadius: 12,
     marginTop: 10,
+  },
+  detailLabel: {
+    textAlign: "left",
+    marginTop: 10,
+    padding: 8,
   },
   textPrimary: {
     textAlign: "left",
@@ -248,6 +263,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     marginRight: "auto",
+    marginTop: 5,
+    fontSize: 16,
   },
   buttonView: {
     flexDirection: "row",

@@ -1,4 +1,4 @@
-import { Chip } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
@@ -23,10 +23,11 @@ import CatBreedSelector from "./CatBreedSelector";
 import CatImagePicker from "./CatImagePicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Platform } from "react-native";
-import { Button } from "react-native";
+// import { Button } from "react-native";
 import { Keyboard } from "react-native";
 import moment from "moment";
 import { Colors } from "../styles/Colors";
+import { colors } from "react-native-elements";
 
 export default function PostNewCatScreen({ route, navigation: { navigate } }) {
   const [catName, setCatName] = useState("");
@@ -215,42 +216,72 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
           onChangeText={setDescription}
         />
         <Text style={styles.subTitle}>Labels</Text>
-        <View style={styles.chipContainer}>
-          <Chip
+        <View style={styles.ButtonContainer}>
+          <Button
             title="Vaccinated"
             type={vaccinated ? "solid" : "outline"}
-            containerStyle={styles.chip}
-            color="#F59156"
+            containerStyle={styles.Button}
+            color={Colors.orangeText}
+            buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
+            titleStyle={
+              vaccinated
+                ? { color: "white", fontSize: 14 }
+                : { color: Colors.orangeText, fontSize: 14 }
+            }
             onPress={() => setVaccinated(!vaccinated)}
-          ></Chip>
-          <Chip
+          ></Button>
+          <Button
             title="Vet Checked"
             type={vetChecked ? "solid" : "outline"}
-            containerStyle={styles.chip}
-            color="#F59156"
+            containerStyle={styles.Button}
+            color={Colors.orangeText}
+            buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
+            titleStyle={
+              vetChecked
+                ? { color: "white", fontSize: 14 }
+                : { color: Colors.orangeText, fontSize: 14 }
+            }
             onPress={() => setVetChecked(!vetChecked)}
-          ></Chip>
-          <Chip
+          ></Button>
+          <Button
             title="Dewormed"
             type={dewormed ? "solid" : "outline"}
-            containerStyle={styles.chip}
-            color="#F59156"
+            containerStyle={styles.Button}
+            color={Colors.orangeText}
+            buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
+            titleStyle={
+              dewormed
+                ? { color: "white", fontSize: 14 }
+                : { color: Colors.orangeText, fontSize: 14 }
+            }
             onPress={() => setDewormed(!dewormed)}
-          ></Chip>
-          <Chip
+          ></Button>
+          <Button
             title="Ready to go home"
             type={ready ? "solid" : "outline"}
-            containerStyle={styles.chip}
-            color="#F59156"
+            containerStyle={styles.Button}
+            color={Colors.orangeText}
+            buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
+            titleStyle={
+              ready
+                ? { color: "white", fontSize: 14 }
+                : { color: Colors.orangeText, fontSize: 14 }
+            }
             onPress={() => setReady(!ready)}
-          ></Chip>
-          <Chip
+          ></Button>
+          <Button
             title="Neutered / Spayed"
             type={neutered ? "solid" : "outline"}
-            containerStyle={styles.chip}
-            color="#F59156"
+            containerStyle={styles.Button}
+            color={Colors.orangeText}
+            buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
+            titleStyle={
+              neutered
+                ? { color: "white", fontSize: 14 }
+                : { color: Colors.orangeText, fontSize: 14 }
+            }
             onPress={() => setNeutered(!neutered)}
-          ></Chip>
+          ></Button>
         </View>
 
         <Pressable onPress={onPostNewCat} style={styles.submitButton}>
@@ -295,16 +326,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#FFFFFF",
     fontWeight: "600",
+    paddingTop: 3,
   },
   title: {
-    color: "#F59156",
+    color: Colors.orangeText,
     fontStyle: "normal",
     fontWeight: "600",
     fontSize: 24,
     textAlign: "center",
   },
   subTitle: {
-    color: "#F59156",
+    color: Colors.orangeText,
     marginTop: 10,
     marginBottom: 10,
     fontSize: 14,
@@ -327,11 +359,12 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "100%",
   },
-  chipContainer: {
+  ButtonContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
   },
-  chip: {
+  Button: {
     margin: 5,
+    borderColor: Colors.orangeText,
   },
 });
