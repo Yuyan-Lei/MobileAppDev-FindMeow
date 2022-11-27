@@ -79,7 +79,7 @@ export default function CatInformation({ route, navigation }) {
             <></>
           )}
         </View>
-
+        {/* contact info label */}
         <View style={styles.contactLabel}>
           <Text style={styles.contact}>Contact Info</Text>
           <View style={{ flexDirection: "row" }}>
@@ -92,6 +92,13 @@ export default function CatInformation({ route, navigation }) {
               <PhoneButton />
               <MessageButton />
             </View>
+          </View>
+        </View>
+        {/* contact info label end */}
+        <View style={styles.detailLabel}>
+          <Text style={styles.contact}>Details</Text>
+          <View>
+            <Text>{cat.Description}</Text>
           </View>
         </View>
       </View>
@@ -221,11 +228,15 @@ const styles = StyleSheet.create({
   },
   contactLabel: {
     backgroundColor: "white",
-
     alignItems: "center",
     padding: 8,
     borderRadius: 12,
     marginTop: 10,
+  },
+  detailLabel: {
+    textAlign: "left",
+    marginTop: 10,
+    padding: 8,
   },
   textPrimary: {
     textAlign: "left",
@@ -248,6 +259,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     marginRight: "auto",
+    marginTop: 5,
+    fontSize: 16,
   },
   buttonView: {
     flexDirection: "row",
