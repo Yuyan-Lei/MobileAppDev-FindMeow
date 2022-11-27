@@ -21,21 +21,22 @@ export function HeartButton({
     <Pressable onPress={onPress}>
       <View
         style={{
-          padding: 8,
+          padding: 5,
           backgroundColor: Colors.heartBackground,
           borderRadius: 20,
+          marginTop: 10,
+          marginLeft: 10,
         }}
       >
-        <Text
+        <AntDesign
+          name="heart"
           style={[
             {
               color: isLiked ? selectedColor : notSelectedColor,
             },
             styles.heartText,
           ]}
-        >
-          <AntDesign name="heart" color="black" />
-        </Text>
+        />
       </View>
     </Pressable>
   );
@@ -43,7 +44,7 @@ export function HeartButton({
 
 const styles = StyleSheet.create({
   heartText: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "600",
   },
 });
