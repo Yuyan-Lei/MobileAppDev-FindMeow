@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { getCattery, userLikeACat, userUnLikeACat } from "../../firebaseUtils/user";
+import {
+  getCattery,
+  userLikeACat,
+  userUnLikeACat,
+} from "../../firebaseUtils/user";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 export function CatCard({ cat, navigation }) {
@@ -17,12 +21,13 @@ export function CatCard({ cat, navigation }) {
   }, [cat]);
 
   useEffect(() => {
-    const unSubscribe =
-      onSnapshot(doc(db, 'Users', getCurrentUserEmail()),
-        (snapshot) => {
-          const likeCats = snapshot.data().likeCats;
-          setLikeCats(likeCats);
-        });
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikeCats(likeCats);
+      }
+    );
 
     return () => unSubscribe();
   }, []);
@@ -36,7 +41,9 @@ export function CatCard({ cat, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => navigation.navigate("CatInformation", { catId: cat.id })}>
+      <Pressable
+        onPress={() => navigation.navigate("CatInformation", { catId: cat.id })}
+      >
         <View style={styles.imageView}>
           {/* cat photo */}
           <Image source={{ uri: cat.photo }} style={styles.image} />
@@ -44,9 +51,7 @@ export function CatCard({ cat, navigation }) {
 
         <View style={styles.descriptionView}>
           {/* cat name */}
-          <Text style={styles.catNameStyle}>
-            {cat.name}
-          </Text>
+          <Text style={styles.catNameStyle}>{cat.name}</Text>
 
           {/* cat details */}
           <Text style={styles.catDetailStyle}>
@@ -58,8 +63,11 @@ export function CatCard({ cat, navigation }) {
             textStyle={styles.locationStyle}
             locationIconColor={styles.locationIconStyle.color}
           >
-            {cattery && cattery.address ?
-              cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2] : 'Loading'}
+            {cattery && cattery.address
+              ? cattery.address.split(", ")[1] +
+                ", " +
+                cattery.address.split(", ")[2]
+              : "Loading"}
           </LocationText>
         </View>
       </Pressable>
@@ -69,13 +77,12 @@ export function CatCard({ cat, navigation }) {
         <HeartButton
           notSelectedColor="white"
           isLiked={likeCats.includes(cat.id)}
-          onPress={onClickLikeButton} />
+          onPress={onClickLikeButton}
+        />
       </View>
 
       <View style={styles.priceView}>
-        <Text style={styles.priceTag}>
-          ${cat.price}
-        </Text>
+        <Text style={styles.priceTag}>${cat.price}</Text>
       </View>
     </View>
   );
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
   container: {
     margin: 8,
     justifyContent: "center",
-    width: "45%"
+    width: "45%",
   },
   imageView: {
     aspectRatio: 0.834,
