@@ -26,6 +26,7 @@ import { Platform } from "react-native";
 import { Button } from "react-native";
 import { Keyboard } from "react-native";
 import moment from "moment";
+import { Colors } from "../styles/Colors";
 
 export default function PostNewCatScreen({ route, navigation: { navigate } }) {
   const [catName, setCatName] = useState("");
@@ -126,10 +127,6 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
           }}
         >
           <Text style={styles.title}>Upload Cat</Text>
-          <View style={{ flex: 1 }}></View>
-          <Pressable style={styles.submitButton} onPress={onPostNewCat}>
-            <Text style={styles.submitButtonText}>Submit</Text>
-          </Pressable>
         </View>
         <CatImagePicker image={image} setImage={setImage}></CatImagePicker>
         <Text style={styles.subTitle}>Cat Name</Text>
@@ -243,6 +240,12 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             onPress={() => setNeutered(!neutered)}
           ></Chip>
         </View>
+
+        <Pressable onPress={onPostNewCat} style={styles.submitButton}>
+          <Text style={styles.submitButtonText}>Submit</Text>
+        </Pressable>
+
+        <View style={{ height: 20 }} />
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -254,11 +257,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFCF6",
   },
   submitButton: {
-    // alignSelf: "flex-end",
+    backgroundColor: "#FFB801",
+    borderRadius: 18,
+    height: 60,
+    alignItems: "center",
+    padding: 16,
+    marginTop: "10%",
   },
   submitButtonText: {
-    color: "#F59156",
     textAlign: "center",
+    fontSize: 16,
+    color: "#FFFFFF",
+    fontWeight: "600",
   },
   title: {
     color: "#F59156",
