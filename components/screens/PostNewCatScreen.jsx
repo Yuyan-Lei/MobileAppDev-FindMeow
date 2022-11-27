@@ -61,7 +61,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
     if (birthDate === null) {
       return "You didn't specify the birth date of the cat, please fill that.";
     }
-    if (isNaN(parsedPrice) || parsedPrice <= 0) {
+    if (isNaN(price) || price <= 0) {
       return "You didn't specify the price or set an invalid price, please fill or fix that."
     }
     if (gender === '') {
