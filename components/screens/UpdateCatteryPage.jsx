@@ -19,6 +19,26 @@ export default function UpdateCatteryPage({ route, navigation }) {
   const [address, setAddress] = useState(user.address);
   const ref = useRef();
 
+  // Verify all the inputs in this page and return the error message if any errors.
+  const verifyInput = () => {
+    if (catteryName === '') {
+      return "You didn't specify a cattery name, please fill that.";
+    }
+    if (phoneNumber === '') {
+      return "You didn't specify a phone number, please fill that.";
+    }
+    if (website === '') {
+      return "You didn't specify a website, please fill that.";
+    }
+    if (address === '') {
+      return "You didn't specify the address of the cattery, please fill that.";
+    }
+    if (image === null || image === undefined) {
+      return "You didn't specify the image of the cattery, please fill that.";
+    }
+    return '';
+  };
+
   useEffect(() => {
     ref.current?.setAddressText(address || '');
   }, []);
@@ -26,6 +46,11 @@ export default function UpdateCatteryPage({ route, navigation }) {
   let onUpdateCatteryLocked = false;
   async function onUpdateCattery() {
     if (onUpdateCatteryLocked) return;
+    const errorInInput = verifyInput();
+    if (errorInInput !== '') {
+      Alert.alert("Update failed", errorInInput);
+      return;
+    }
     onUpdateCatteryLocked = true;
     try {
       if (image === user.picture) {
