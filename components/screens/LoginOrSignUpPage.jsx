@@ -23,6 +23,27 @@ export default function LoginOrSignUpPage({ route, navigation }) {
 
   const ref = useRef();
 
+  // Verify all the inputs in this page and return the error message if any errors.
+  const verifyInput = () => {
+    // Don't verify anything if the user is not a cattery.
+    if (!isCattery) {
+        return '';
+    }
+    if (name === '') {
+        return "You didn't specify the cattery name, please fill that.";
+    }
+    if (phoneNumber === '') {
+        return "You didn't specify the phone number, please fill that.";
+    }
+    if (website === '') {
+        return "You didn't specify the website of the cattery, please fill that.";
+    }
+    if (address === '') {
+        return "You didn't specify the address, please fill that.";
+    }
+    return '';
+  }; 
+
   useEffect(() => {
     ref.current?.setAddressText(address || '');
   }, []);
@@ -52,6 +73,10 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             Alert.alert('SignUp Failed', "Please use 6 or more characters with a mix of numbers and letters.");
             setPassword('');
             setConfirmPassword('');
+            return;
+        }
+        if (isCattery && verifyInput() !== '') {
+            Alert.alert('SignUp Failed', verifyInput());
             return;
         }
         createUserWithEmailAndPassword(auth, userName, password)
