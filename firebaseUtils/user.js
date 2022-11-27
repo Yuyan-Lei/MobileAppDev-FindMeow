@@ -119,8 +119,8 @@ export async function getAllCatteries() {
       .filter((snap) => snap.data().isCattery)
       .map((snap) => {
         return {
-          catteryEmail: snap.id,
-          catteryData: snap.data(),
+          email: snap.id,
+          ...snap.data(),
         };
       })
   );
