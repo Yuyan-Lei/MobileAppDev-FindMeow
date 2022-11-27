@@ -1,4 +1,5 @@
-import React from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
 import {
   Alert,
   Image,
@@ -8,12 +9,35 @@ import {
   Text,
   View,
 } from "react-native";
+import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
 import { HeartButton } from "../pressable/HeartButton";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
-import { AntDesign } from "@expo/vector-icons";
 
 export function BreederCard({ cattery, navigation }) {
+  const [likeCatteries, setLikeCatteries] = useState([]);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCatteries = snapshot.data().likeCatteries || [];
+        setLikeCatteries(likeCatteries);
+      }
+    );
+
+    return () => unSubscribe();
+  }, []);
+  const onClickLikeButton = () => {
+    if (!likeCatteries.includes(cattery.email)) {
+      userLikeACattery(cattery.email);
+    } else {
+      userUnLikeACattery(cattery.email);
+    }
+  };
+
   return (
     <View style={styles.breederView}>
       <Pressable
@@ -52,17 +76,10 @@ export function BreederCard({ cattery, navigation }) {
       </Pressable>
 
       <View style={styles.heartButtonView}>
-        <Pressable
-          onPress={() => {
-            Alert.alert(
-              "Feature for this button is coming soon~",
-              "See you next time!",
-              [{ text: "Sad" }, { text: "Wait for you" }]
-            );
-          }}
-        >
-          <AntDesign name="hearto" size={18} style={styles.heartButtonView} />
-        </Pressable>
+        <HeartButton
+          isLiked={likeCatteries.includes(cattery.email)}
+          onPress={onClickLikeButton}
+        />
       </View>
     </View>
   );
@@ -74,10 +91,8 @@ const styles = StyleSheet.create({
   },
   heartButtonView: {
     position: "absolute",
-    top: 30,
-    right: 20,
-    color: "gray",
-    alignItems: "center",
+    top: 20,
+    right: 24,
   },
   availableKittenText: {
     color: "orange",
