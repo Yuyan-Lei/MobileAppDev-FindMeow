@@ -148,6 +148,7 @@ function MainScreen({ route, navigation }) {
                 <CatCard cat={buildCatItem(item)} navigation={navigation} />
               )}
               numColumns={2}
+              ListFooterComponent={<View style={{height: 2150}}/>}
             />
           </View>
         </View>
