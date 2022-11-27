@@ -32,8 +32,12 @@ export default function LoginOrSignUpPage({ route, navigation }) {
     if (name === '') {
         return "You didn't specify the cattery name, please fill that.";
     }
-    if (phoneNumber === '') {
-        return "You didn't specify the phone number, please fill that.";
+    if (name.length > 20) {
+        return "Cattery name must be no more than 20 characters, please fix that.";
+    }
+    const validPhoneNumberPattern = /[0-9]+/g;
+    if (!phoneNumber.match(validPhoneNumberPattern) || phoneNumber.length !== 10) {
+        return "You didn't specify the phone number or set an invalid phone number, please fill or fix that.";
     }
     if (website === '') {
         return "You didn't specify the website of the cattery, please fill that.";
@@ -231,6 +235,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                                             label="Cattery Phone"
                                             value={phoneNumber}
                                             color="#F59156"
+                                            keyboardType="phone-pad"
                                             leading={props => <Feather name="phone" {...props} />}
                                             onChangeText={setPhoneNumber} />
                                         <TextInput

@@ -24,8 +24,12 @@ export default function UpdateCatteryPage({ route, navigation }) {
     if (catteryName === '') {
       return "You didn't specify a cattery name, please fill that.";
     }
-    if (phoneNumber === '') {
-      return "You didn't specify a phone number, please fill that.";
+    if (catteryName.length > 20) {
+      return "Cattery name must be no more than 20 characters, please fix that.";
+    }
+    const validPhoneNumberPattern = /[0-9]+/g;
+    if (!phoneNumber.match(validPhoneNumberPattern) || phoneNumber.length !== 10) {
+        return "You didn't specify the phone number or set an invalid phone number, please fill or fix that.";
     }
     if (website === '') {
       return "You didn't specify a website, please fill that.";
@@ -103,6 +107,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
             placeholder="Phone Number"
             style={styles.textInput}
             value={phoneNumber}
+            keyboardType="phone-pad"
             onChangeText={setPhoneNumber}></TextInput>
           <Text style={styles.subTitle}>Website</Text>
           <TextInput
