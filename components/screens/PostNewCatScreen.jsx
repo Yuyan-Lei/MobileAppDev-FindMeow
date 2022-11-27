@@ -47,6 +47,29 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
 
   const [show, setShow] = useState(false);
 
+  // Verify all the inputs in this page and return the error message if any errors.
+  const verifyInput = () => {
+    if (catName === '') {
+      return "You didn't specify a cat name, please fill that.";
+    }
+    if (image === null) {
+      return "You didn't set the image, please take a photo or upload a local image.";
+    }
+    if (breed === '') {
+      return "You didn't specify the breed of the cat, please fill that.";
+    }
+    if (birthDate === null) {
+      return "You didn't specify the birth date of the cat, please fill that.";
+    }
+    if (isNaN(parsedPrice) || parsedPrice <= 0) {
+      return "You didn't specify the price or set an invalid price, please fill or fix that."
+    }
+    if (gender === '') {
+      return "You didn't specify the gender of the cat, please fill that.";
+    }
+    return '';
+  };
+
   const convertDateToStr = (date) => {
     return moment(date).format("YYYY-MM-DD");
   };
@@ -74,6 +97,11 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
   async function onPostNewCat() {
     /* Fix double clicking */
     if (onPostNewCatLocked) return;
+    const errorInInput = verifyInput();
+    if (errorInInput !== '') {
+      Alert.alert("Post new cat failed", errorInInput);
+      return;
+    }
     onPostNewCatLocked = true;
 
     const tags = [];
@@ -203,7 +231,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             value={price}
             keyboardType="number-pad"
             style={{ width: "95%" }}
-            onChangeText={setPrice}
+            onChangeText={price => setPrice(parseInt(price, 10))}
           />
           <Text>$</Text>
         </View>
