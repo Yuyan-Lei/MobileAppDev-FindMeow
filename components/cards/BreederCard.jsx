@@ -13,6 +13,7 @@ import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
 import { HeartButton } from "../pressable/HeartButton";
+import { HeartButton2 } from "../pressable/HeartButton2";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 
@@ -76,7 +77,7 @@ export function BreederCard({ cattery, navigation }) {
       </Pressable>
 
       <View style={styles.heartButtonView}>
-        <HeartButton
+        <HeartButton2
           isLiked={likeCatteries.includes(cattery.email)}
           onPress={onClickLikeButton}
         />
