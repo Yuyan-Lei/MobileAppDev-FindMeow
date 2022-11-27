@@ -13,6 +13,7 @@ export async function createUser(userEmail) {
   const newUser = {
     isCattery: false,
     likeCats: [],
+    likeCatteries: [],
   };
   return await wrtieToDB(newUser, collectionName, userEmail);
 }
@@ -29,6 +30,22 @@ export async function userUnLikeACat(catId) {
   const email = getCurrentUserEmail();
   const newLikesArrayEntry = {
     likeCats: arrayRemove(catId),
+  };
+  return await updateToDB(email, collectionName, newLikesArrayEntry);
+}
+
+export async function userLikeACattery(catteryEmail) {
+  const email = getCurrentUserEmail();
+  const newLikesArrayEntry = {
+    likeCatteries: arrayUnion(catteryEmail),
+  };
+  return await updateToDB(email, collectionName, newLikesArrayEntry);
+}
+
+export async function userUnLikeACattery(catteryEmail) {
+  const email = getCurrentUserEmail();
+  const newLikesArrayEntry = {
+    likeCatteries: arrayRemove(catteryEmail),
   };
   return await updateToDB(email, collectionName, newLikesArrayEntry);
 }
@@ -102,8 +119,8 @@ export async function getAllCatteries() {
       .filter((snap) => snap.data().isCattery)
       .map((snap) => {
         return {
-          catteryEmail: snap.id,
-          catteryData: snap.data(),
+          email: snap.id,
+          ...snap.data(),
         };
       })
   );

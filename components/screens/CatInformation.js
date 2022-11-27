@@ -72,8 +72,8 @@ export default function CatInformation({ route, navigation }) {
         <Text style={styles.date}>{cat.Birthday}</Text>
         <View style={styles.chipBox}>
           {cat.Tags ? (
-            cat.Tags.map((tag) => (
-              <Chip title={tag} containerStyle={styles.chip} />
+            cat.Tags.map((tag, index) => (
+              <Chip title={tag} key={index} containerStyle={styles.chip} />
             ))
           ) : (
             <></>
