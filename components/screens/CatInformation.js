@@ -156,10 +156,20 @@ export default function CatInformation({ route, navigation }) {
           // onPress={onClickLikeButton}
         />
       </View>
-      <View style={{ position: "absolute", top: 48, left: 12 }}>
-        <View style={{ opacity: 0.5 }}>
+      <View style={{ position: "absolute", top: 40, left: 12 }}>
+        <View
+          style={{
+            opacity: 0.5,
+            padding: 5,
+            backgroundColor: Colors.arrowBackground,
+            borderRadius: 13,
+            marginTop: 10,
+            marginLeft: 10,
+          }}
+        >
           <Pressable onPress={navigation.goBack}>
-            <Feather name="arrow-left-circle" size={24} color="white" />
+            {/* <Feather name="arrow-left-circle" size={24} color="white" /> */}
+            <Ionicons name="chevron-back" size={24} color="white" />
           </Pressable>
         </View>
       </View>

@@ -14,7 +14,7 @@ export function HeartButton({
   }
 
   if (notSelectedColor === undefined) {
-    notSelectedColor = "gray";
+    notSelectedColor = "white";
   }
 
   return (
@@ -45,6 +45,5 @@ export function HeartButton({
 const styles = StyleSheet.create({
   heartText: {
     fontSize: 18,
-    fontWeight: "600",
   },
 });

@@ -1,6 +1,14 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
-import { Alert, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
@@ -12,12 +20,13 @@ export function BreederCard({ cattery, navigation }) {
   const [likeCatteries, setLikeCatteries] = useState([]);
 
   useEffect(() => {
-    const unSubscribe =
-      onSnapshot(doc(db, 'Users', getCurrentUserEmail()),
-        (snapshot) => {
-          const likeCatteries = snapshot.data().likeCatteries || [];
-          setLikeCatteries(likeCatteries);
-        });
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCatteries = snapshot.data().likeCatteries || [];
+        setLikeCatteries(likeCatteries);
+      }
+    );
 
     return () => unSubscribe();
   }, []);
@@ -31,9 +40,10 @@ export function BreederCard({ cattery, navigation }) {
 
   return (
     <View style={styles.breederView}>
-      <Pressable onPress={() => navigation.navigate("CatteryProfile", { cattery })}>
+      <Pressable
+        onPress={() => navigation.navigate("CatteryProfile", { cattery })}
+      >
         <View style={[styles.cardView, styles.shadowView]}>
-
           {/* Cattery photo */}
           <View style={styles.imageView}>
             <Image source={{ uri: cattery.picture }} style={styles.image} />
@@ -48,14 +58,18 @@ export function BreederCard({ cattery, navigation }) {
 
             {/* Available Kitten Display */}
             <Text style={styles.availableKittenText}>
-              {cattery.cats.length > 0 ?
-                cattery.cats.length === 1 ? `${cattery.cats.length} Available Kitten` : `${cattery.cats.length} Available Kittens`
+              {cattery.cats.length > 0
+                ? cattery.cats.length === 1
+                  ? `${cattery.cats.length} Available Kitten`
+                  : `${cattery.cats.length} Available Kittens`
                 : ""}
             </Text>
 
             {/* Cattery Location */}
             <LocationText>
-              {cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2]}
+              {cattery.address.split(", ")[1] +
+                ", " +
+                cattery.address.split(", ")[2]}
             </LocationText>
           </View>
         </View>
@@ -115,7 +129,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   shadowView: {
-    shadowColor: Platform.OS === 'ios' ? Colors.purple : Colors.shadowWhiteAndroid,
+    shadowColor:
+      Platform.OS === "ios" ? Colors.purple : Colors.shadowWhiteAndroid,
     shadowOffset: {
       width: 40,
       height: 80,
@@ -123,5 +138,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.0468,
     shadowRadius: 20,
     elevation: 17,
-  }
+  },
 });

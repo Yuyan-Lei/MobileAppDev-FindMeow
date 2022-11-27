@@ -75,7 +75,7 @@ export function CatCard({ cat, navigation }) {
       {/* floating components */}
       <View style={styles.heartButtonView}>
         <HeartButton
-          notSelectedColor="white"
+          // notSelectedColor="white"
           isLiked={likeCats.includes(cat.id)}
           onPress={onClickLikeButton}
         />
