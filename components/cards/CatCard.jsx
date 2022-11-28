@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
 import {
   getCattery,
   userLikeACat,
@@ -10,9 +11,36 @@ import {
 } from "../../firebaseUtils/user";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
-export function CatCard({ cat, navigation }) {
+import {Client} from "@googlemaps/google-maps-services-js";
+export function CatCard({ cat, navigation, location }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
+  const [distance, setDistance] = useState('Distance Loading');
+
+  // Function to calculate distance between 2 points.
+  function haversine_distance(mk1, mk2) {
+    var R = 3958.8; // Radius of the Earth in miles
+    var rlat1 = mk1.lat * (Math.PI / 180); // Convert degrees to radians
+    var rlat2 = mk2.lat * (Math.PI / 180); // Convert degrees to radians
+    var difflat = rlat2 - rlat1; // Radian difference (latitudes)
+    var difflon = (mk2.lng - mk1.lng) * (Math.PI / 180); // Radian difference (longitudes)
+
+    var d = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat / 2) * Math.sin(difflat / 2) + Math.cos(rlat1) * Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));
+    return d.toFixed(2);
+  }
+
+  /* Calculate distance to the cat if both user location and cattery location are provided. */ 
+  useEffect(() => {
+    if (cattery && cattery.placeId && location) {
+      const googleMapClient = new Client({});
+      googleMapClient.placeDetails({params: {
+        place_id: cattery.placeId,
+        key: REACT_APP_GOOGLE_MAP_APP_KEY
+      }}).then((resp) => {
+        setDistance(haversine_distance(location, resp.data.result.geometry.location) + 'mi');
+      })
+    }
+  }, [cattery, location]);
 
   useEffect(() => {
     if (cat.cattery) {
@@ -78,7 +106,7 @@ export function CatCard({ cat, navigation }) {
             {cattery && cattery.address
               ? cattery.address.split(", ")[1] +
                 ", " +
-                cattery.address.split(", ")[2]
+                cattery.address.split(", ")[2] + " (" + distance + ")"
               : "Loading"}
           </LocationText>
         </View>

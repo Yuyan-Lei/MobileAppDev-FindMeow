@@ -13,10 +13,11 @@ import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import DiscoverFilter from "./DiscoverFilter";
+import * as Location from 'expo-location';
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-
+  const [location, setLocation] = useState(null);
 
   /* values used for DiscoverFilter start */
   const [visible, setVisible] = useState(false);
@@ -40,6 +41,23 @@ function MainScreen({ route, navigation }) {
     setSelectedGender("");
   }
 
+  /* Set user location. */
+  useEffect(() => {
+    (async () => {
+
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission to access location was denied, you will not get access to any location related features.');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation({
+        lat: location.coords.latitude,
+        lng: location.coords.longitude
+      });
+    })();
+  }, []);
 
   /* data collector used for top filter tags - start */
   const [data, setData] = useState([]);
@@ -174,8 +192,13 @@ function MainScreen({ route, navigation }) {
       <View>
         <FlatList
           data={data}
-          renderItem={({ item, index }) => <CatCard cat={item} navigation={navigation} />}
+          renderItem={({ item, index }) => 
+            <CatCard 
+              cat={item} 
+              navigation={navigation}
+              location={location} />}
           numColumns={2}
+          extraData={location}
           ListFooterComponent={<View style={{ height: 80 }} />}
         />
       </View>
