@@ -10,9 +10,11 @@ import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import DiscoverFilter from "./DiscoverFilter";
+import { getUserLocation } from "../../firebaseUtils/user";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [location, setLocation] = useState(null);
 
   /* values used for DiscoverFilter start */
   const [visible, setVisible] = useState(false);
@@ -35,6 +37,15 @@ function MainScreen({ route, navigation }) {
     setSelectedGender("");
   }
 
+  /* Set user location. */
+  useEffect(() => {
+    (async () => {
+
+      let location = await getUserLocation();
+      setLocation(location);
+    })();
+  }, []);
+
   /* data collector used for top filter tags - start */
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -46,7 +57,7 @@ function MainScreen({ route, navigation }) {
     // 2. Nearby Post
     else if (selectedIndex == 1) {
       q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
-      // todo ...
+      // TODO ...
     }
     // 3. Lower Price
     else if (selectedIndex == 2) {
@@ -164,10 +175,13 @@ function MainScreen({ route, navigation }) {
       <View>
         <FlatList
           data={data}
-          renderItem={({ item, index }) => (
-            <CatCard cat={item} navigation={navigation} />
-          )}
+          renderItem={({ item, index }) => 
+            <CatCard 
+              cat={item} 
+              navigation={navigation}
+              location={location} />}
           numColumns={2}
+          extraData={location}
           ListFooterComponent={<View style={{ height: 80 }} />}
         />
       </View>
