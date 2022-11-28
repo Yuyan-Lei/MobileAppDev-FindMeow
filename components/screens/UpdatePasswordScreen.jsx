@@ -70,12 +70,10 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 16,
         paddingTop: 55,
-        backgroundColor: "#FFFCF6",
         flex: 1,
     },
     title: {
         fontFamily: "PoppinsSemiBold",
-        color: '#F59156',
         fontStyle: "normal",
         fontWeight: "600",
         fontSize: 24,
