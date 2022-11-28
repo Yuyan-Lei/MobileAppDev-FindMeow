@@ -45,7 +45,7 @@ export default function UpdatePasswordScreen({ navigation }) {
     return (
         <View style={styles.container}>
             {/* Screen Title */}
-            <Text style={styles.title}>Update Password</Text>
+            <Text style={styles.title}>Set Password</Text>
 
             {/* Password Input boxes */}
             <View style={styles.inputsContainer}>
