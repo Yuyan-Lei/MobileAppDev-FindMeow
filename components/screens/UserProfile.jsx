@@ -12,6 +12,7 @@ import { rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import ProfileCatteryPage from "./ProfileCatteryPage";
+import UpdatePasswordScreen from "./UpdatePasswordScreen";
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
@@ -37,6 +38,7 @@ function MainScreen({ route, navigation }) {
 
 
   const onViewCatteryPage = () => navigation.navigate('ProfileCatteryPage', { user });
+  const onUpdatePassword = () => navigation.navigate('UpdatePasswordPage');
   return (
     <View style={styles.container}>
       <View style={{ margin: 12 }}>
@@ -74,7 +76,7 @@ function MainScreen({ route, navigation }) {
           </Pressable>
           <Divider style={styles.divider} />
 
-          <Pressable onPress={buttonHandler} style={styles.button}>
+          <Pressable onPress={onUpdatePassword} style={styles.button}>
             <Text style={styles.buttonText}>Change Password</Text>
           </Pressable>
           <Divider style={styles.divider} />
@@ -106,6 +108,7 @@ export default function UserProfile({ route, navigation }) {
         component={MainScreen}
         initialParams={{ user: route.params.user }} />
       <Stack.Screen name="ProfileCatteryPage" component={ProfileCatteryPage} />
+      <Stack.Screen name="UpdatePasswordPage" component={UpdatePasswordScreen} />
     </Stack.Navigator>
   )
 }
