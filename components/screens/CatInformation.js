@@ -545,7 +545,7 @@ const styles = StyleSheet.create({
   detailLabel: {
     textAlign: "left",
     marginTop: 10,
-    padding: 8,
+    paddingVertical: 8,
   },
   textPrimary: {
     textAlign: "left",
