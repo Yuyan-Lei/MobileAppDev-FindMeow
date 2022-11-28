@@ -13,7 +13,7 @@ import {
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 import {Client} from "@googlemaps/google-maps-services-js";
-export function CatCard({ cat, navigation, location }) {
+export function CatCard({ cat, navigation, location, hideLocation }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
   const [distance, setDistance] = useState('Distance Loading');
@@ -88,7 +88,7 @@ export function CatCard({ cat, navigation, location }) {
           </Text>
 
           {/* cat location */}
-          <LocationText
+          {!hideLocation && <LocationText
             textStyle={styles.locationStyle}
             locationIconColor={styles.locationIconStyle.color}
           >
@@ -97,7 +97,7 @@ export function CatCard({ cat, navigation, location }) {
                 ", " +
                 cattery.address.split(", ")[2] + " (" + distance + ")"
               : "Loading"}
-          </LocationText>
+          </LocationText>}
         </View>
       </Pressable>
 
