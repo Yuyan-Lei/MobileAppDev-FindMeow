@@ -3,16 +3,33 @@ import React, { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
 import {
   getCattery,
+  haversine_distance,
   userLikeACat,
   userUnLikeACat,
 } from "../../firebaseUtils/user";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
-export function CatCard({ cat, navigation }) {
+import {Client} from "@googlemaps/google-maps-services-js";
+export function CatCard({ cat, navigation, location, hideLocation }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
+  const [distance, setDistance] = useState('Distance Loading');
+
+  /* Calculate distance to the cat if both user location and cattery location are provided. */ 
+  useEffect(() => {
+    if (cattery && cattery.placeId && location) {
+      const googleMapClient = new Client({});
+      googleMapClient.placeDetails({params: {
+        place_id: cattery.placeId,
+        key: REACT_APP_GOOGLE_MAP_APP_KEY
+      }}).then((resp) => {
+        setDistance(haversine_distance(location, resp.data.result.geometry.location) + 'mi');
+      })
+    }
+  }, [cattery, location]);
 
   useEffect(() => {
     if (cat.cattery) {
@@ -71,16 +88,16 @@ export function CatCard({ cat, navigation }) {
           </Text>
 
           {/* cat location */}
-          <LocationText
+          {!hideLocation && <LocationText
             textStyle={styles.locationStyle}
             locationIconColor={styles.locationIconStyle.color}
           >
             {cattery && cattery.address
               ? cattery.address.split(", ")[1] +
                 ", " +
-                cattery.address.split(", ")[2]
+                cattery.address.split(", ")[2] + " (" + distance + ")"
               : "Loading"}
-          </LocationText>
+          </LocationText>}
         </View>
       </Pressable>
 
@@ -104,7 +121,7 @@ const styles = StyleSheet.create({
   container: {
     margin: 8,
     justifyContent: "center",
-    width: "45%",
+    width: "46%",
   },
   imageView: {
     aspectRatio: 0.834,
@@ -116,7 +133,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 115,
+    height: 125,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },

@@ -17,6 +17,9 @@ import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 import { HeartButton } from "../pressable/HeartButton";
 import { Colors } from "../styles/Colors";
+import { getUserLocation, haversine_distance } from "../../firebaseUtils/user";
+import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
+import {Client} from "@googlemaps/google-maps-services-js";
 // import { Chip } from "../pressable/Chip";
 
 export default function CatInformation({ route, navigation }) {
@@ -65,7 +68,7 @@ export default function CatInformation({ route, navigation }) {
         {/* TODO: CATTERY LOCATION */}
         <View style={{ flexDirection: "row" }}>
           <Ionicons name="location-sharp" size={24} color={Colors.darkOrange} />
-          <Text style={styles.textSecondary}>{cattery.address}</Text>
+          <Text style={styles.textSecondary}>{cattery.address} ({distance})</Text>
         </View>
         <Text style={styles.date}>{cat.Birthday}</Text>
         <View style={styles.chipBox}>
@@ -112,6 +115,30 @@ export default function CatInformation({ route, navigation }) {
   const catId = route.params.catId;
   const [cat, setCat] = useState({});
   const [cattery, setCattery] = useState([]);
+  const [location, setLocation] = useState(null);
+  const [distance, setDistance] = useState('Distance Loading');
+
+  /* Set user location. */
+  useEffect(() => {
+    (async () => {
+
+      let location = await getUserLocation();
+      setLocation(location);
+    })();
+  }, []);
+
+  /* Calculate distance to the cat if both user location and cattery location are provided. */ 
+  useEffect(() => {
+    if (cattery && cattery.placeId && location) {
+      const googleMapClient = new Client({});
+      googleMapClient.placeDetails({params: {
+        place_id: cattery.placeId,
+        key: REACT_APP_GOOGLE_MAP_APP_KEY
+      }}).then((resp) => {
+        setDistance(haversine_distance(location, resp.data.result.geometry.location) + 'mi');
+      })
+    }
+  }, [cattery, location]);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(doc(db, "Cats", catId), async (catEntry) => {

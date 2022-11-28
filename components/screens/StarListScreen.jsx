@@ -5,7 +5,7 @@ import { Alert, FlatList, StyleSheet, View, Text } from "react-native";
 import { getAllCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { getAllCatteries, getUserLikeCats } from "../../firebaseUtils/user";
+import { getAllCatteries, getUserLikeCats, getUserLocation } from "../../firebaseUtils/user";
 import { BreederCard } from "../cards/BreederCard";
 import { CatCard } from "../cards/CatCard";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -15,16 +15,32 @@ import CatteryProfileScreen from "./CatteryProfileScreen";
 
 function CatsScreen({ navigation, cats }) {
 
+  const [location, setLocation] = useState(null);
+
+  /* Set user location. */
+  useEffect(() => {
+    (async () => {
+
+      let location = await getUserLocation();
+      setLocation(location);
+    })();
+  }, []);
+
   return (
-    <View style={{ padding: 12 }}>
+    <View style={{
+      paddingHorizontal: 16,
+      paddingBottom: 200,
+    }}>
       <FlatList
         data={cats}
         renderItem={({ item, index }) => {
             return <CatCard 
               key={item.id}
               cat={item} 
+              location={location}
               navigation={navigation} />}}
         numColumns={2}
+        extraData={location}
         ListFooterComponent={<View style={{ height: 60 }} />}
       />
     </View>
