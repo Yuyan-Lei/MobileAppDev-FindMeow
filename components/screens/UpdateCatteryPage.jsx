@@ -82,7 +82,17 @@ export default function UpdateCatteryPage({ route, navigation }) {
         <View style={{ margin: 12 }}>
 
           {/* Screen Title */}
-          <TitleText>Update Cattery</TitleText>
+          <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 20,
+          }}
+          >
+            <Text style={styles.title}>Update Cattery</Text>
+          </View>
+
+          {/* Image Picker*/}
           <CatImagePicker image={image} setImage={setImage}></CatImagePicker>
 
           {/* Address */}
@@ -184,5 +194,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#FFFFFF',
     fontWeight: '600',
+    marginTop:5,
   },
 });

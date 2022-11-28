@@ -155,7 +155,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
         <View
           style={{
             flexDirection: "row",
-            marginTop: "25%",
+            marginTop: "20%",
             alignItems: "center",
             marginBottom: 20,
           }}
