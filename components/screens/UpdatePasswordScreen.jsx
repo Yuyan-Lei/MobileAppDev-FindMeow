@@ -45,7 +45,7 @@ export default function UpdatePasswordScreen({ navigation }) {
     return (
         <View style={styles.container}>
             {/* Screen Title */}
-            <Text style={styles.title}>Set Password</Text>
+            <titleText>Set Password</titleText>
 
             {/* Password Input boxes */}
             <View style={styles.inputsContainer}>
@@ -78,14 +78,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingTop: 55,
         flex: 1,
-    },
-    title: {
-        fontFamily: "PoppinsSemiBold",
-        fontStyle: "normal",
-        fontWeight: "600",
-        fontSize: 24,
-        textAlign: "center",
-        margin: 12
     },
     inputsContainer: {
         backgroundColor: "white",

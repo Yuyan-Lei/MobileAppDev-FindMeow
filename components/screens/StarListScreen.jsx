@@ -16,7 +16,10 @@ import CatteryProfileScreen from "./CatteryProfileScreen";
 function CatsScreen({ navigation, cats }) {
 
   return (
-    <View style={{ padding: 12 }}>
+    <View style={{
+      paddingHorizontal: 16,
+      paddingBottom: 200,
+    }}>
       <FlatList
         data={cats}
         renderItem={({ item, index }) => {

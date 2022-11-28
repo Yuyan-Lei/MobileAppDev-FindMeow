@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   container: {
     margin: 8,
     justifyContent: "center",
-    width: "45%",
+    width: "46%",
   },
   imageView: {
     aspectRatio: 0.834,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 115,
+    height: 125,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },

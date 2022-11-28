@@ -52,7 +52,7 @@ function MainScreen({ route, navigation }) {
     // 2. Nearby Post
     else if (selectedIndex == 1) {
       q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
-      // todo ...
+      // TODO ...
     }
     // 3. Lower Price
     else if (selectedIndex == 2) {
@@ -171,7 +171,7 @@ function MainScreen({ route, navigation }) {
         buttons={["Newer Post", "Nearby", "Lower Price"]}
       />
 
-      <View style={{ padding: 12 }}>
+      <View>
         <FlatList
           data={data}
           renderItem={({ item, index }) => <CatCard cat={item} navigation={navigation} />}
