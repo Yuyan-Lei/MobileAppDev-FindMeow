@@ -23,6 +23,31 @@ export default function LoginOrSignUpPage({ route, navigation }) {
 
   const ref = useRef();
 
+  // Verify all the inputs in this page and return the error message if any errors.
+  const verifyInput = () => {
+    // Don't verify anything if the user is not a cattery.
+    if (!isCattery) {
+        return '';
+    }
+    if (name === '') {
+        return "You didn't specify the cattery name, please fill that.";
+    }
+    if (name.length > 20) {
+        return "Cattery name must be no more than 20 characters, please fix that.";
+    }
+    const validPhoneNumberPattern = /[0-9]+/g;
+    if (!phoneNumber.match(validPhoneNumberPattern) || phoneNumber.length !== 10) {
+        return "You didn't specify the phone number or set an invalid phone number, please fill or fix that.";
+    }
+    if (website === '') {
+        return "You didn't specify the website of the cattery, please fill that.";
+    }
+    if (address === '') {
+        return "You didn't specify the address, please fill that.";
+    }
+    return '';
+  }; 
+
   useEffect(() => {
     ref.current?.setAddressText(address || '');
   }, []);
@@ -52,6 +77,10 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             Alert.alert('SignUp Failed', "Please use 6 or more characters with a mix of numbers and letters.");
             setPassword('');
             setConfirmPassword('');
+            return;
+        }
+        if (isCattery && verifyInput() !== '') {
+            Alert.alert('SignUp Failed', verifyInput());
             return;
         }
         createUserWithEmailAndPassword(auth, userName, password)
@@ -206,6 +235,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                                             label="Cattery Phone"
                                             value={phoneNumber}
                                             color="#F59156"
+                                            keyboardType="phone-pad"
                                             leading={props => <Feather name="phone" {...props} />}
                                             onChangeText={setPhoneNumber} />
                                         <TextInput

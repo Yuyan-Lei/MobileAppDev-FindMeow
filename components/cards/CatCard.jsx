@@ -31,6 +31,7 @@ export function CatCard({ cat, navigation }) {
 
     return () => unSubscribe();
   }, []);
+
   const onClickLikeButton = () => {
     if (!likeCats.includes(cat.id)) {
       userLikeACat(cat.id);
@@ -38,6 +39,17 @@ export function CatCard({ cat, navigation }) {
       userUnLikeACat(cat.id);
     }
   };
+
+  let catMonthText = "";
+  if (cat.month <= 1) {
+    catMonthText = "< 1 month";
+  }
+  else if (cat.month === 1) {
+    catMonthText = cat.month + " month";
+  }
+  else {
+    catMonthText = cat.month + " months";
+  }
 
   return (
     <View style={styles.container}>
@@ -55,7 +67,7 @@ export function CatCard({ cat, navigation }) {
 
           {/* cat details */}
           <Text style={styles.catDetailStyle}>
-            {cat.sex}, {cat.month} {cat.month === 1 ? "month" : "months"}
+            {cat.sex}, {catMonthText}
           </Text>
 
           {/* cat location */}
