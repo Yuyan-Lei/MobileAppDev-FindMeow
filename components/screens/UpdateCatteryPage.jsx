@@ -7,7 +7,7 @@ import { writeImageToDB } from "../../firebaseUtils/firestore";
 import { updateCattery } from "../../firebaseUtils/user";
 import { FillAndroidButtomBar, FillAndroidTopBar } from "../FillAndroidBar";
 import { TitleText } from "../texts/TitleText";
-import CatImagePicker from "./CatImagePicker";
+import CatImagePicker from "../pressable/CatImagePicker";
 
 export default function UpdateCatteryPage({ route, navigation }) {
   const user = route.params.cattery;
@@ -19,6 +19,30 @@ export default function UpdateCatteryPage({ route, navigation }) {
   const [address, setAddress] = useState(user.address);
   const ref = useRef();
 
+  // Verify all the inputs in this page and return the error message if any errors.
+  const verifyInput = () => {
+    if (catteryName === '') {
+      return "You didn't specify a cattery name, please fill that.";
+    }
+    if (catteryName.length > 20) {
+      return "Cattery name must be no more than 20 characters, please fix that.";
+    }
+    const validPhoneNumberPattern = /[0-9]+/g;
+    if (!phoneNumber.match(validPhoneNumberPattern) || phoneNumber.length !== 10) {
+        return "You didn't specify the phone number or set an invalid phone number, please fill or fix that.";
+    }
+    if (website === '') {
+      return "You didn't specify a website, please fill that.";
+    }
+    if (address === '') {
+      return "You didn't specify the address of the cattery, please fill that.";
+    }
+    if (image === null || image === undefined) {
+      return "You didn't specify the image of the cattery, please fill that.";
+    }
+    return '';
+  };
+
   useEffect(() => {
     ref.current?.setAddressText(address || '');
   }, []);
@@ -26,6 +50,11 @@ export default function UpdateCatteryPage({ route, navigation }) {
   let onUpdateCatteryLocked = false;
   async function onUpdateCattery() {
     if (onUpdateCatteryLocked) return;
+    const errorInInput = verifyInput();
+    if (errorInInput !== '') {
+      Alert.alert("Update failed", errorInInput);
+      return;
+    }
     onUpdateCatteryLocked = true;
     try {
       if (image === user.picture) {
@@ -51,10 +80,25 @@ export default function UpdateCatteryPage({ route, navigation }) {
       <FillAndroidTopBar />
       <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
         <View style={{ margin: 12 }}>
-          <TitleText>Update Cattery</TitleText>
+
+          {/* Screen Title */}
+          <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 20,
+          }}
+          >
+            <Text style={styles.title}>Update Cattery</Text>
+          </View>
+
+          {/* Image Picker*/}
           <CatImagePicker image={image} setImage={setImage}></CatImagePicker>
+
+          {/* Address */}
           <Text style={styles.subTitle}>Address</Text>
           <GooglePlacesAutocomplete
+            fontFamily="Poppins"
             placeholder="Search"
             ref={ref}
             query={{
@@ -67,24 +111,33 @@ export default function UpdateCatteryPage({ route, navigation }) {
             }}
             onFail={(error) => console.error(error)}
           />
+
+          {/* Cattery Name */}
           <Text style={styles.subTitle}>Cattery Name</Text>
           <TextInput
             placeholder="Name"
             style={styles.textInput}
             value={catteryName}
             onChangeText={setCatteryName}></TextInput>
+
+          {/* Phone Number */}
           <Text style={styles.subTitle}>Phone Number</Text>
           <TextInput
             placeholder="Phone Number"
             style={styles.textInput}
             value={phoneNumber}
+            keyboardType="phone-pad"
             onChangeText={setPhoneNumber}></TextInput>
+
+          {/* Website */}
           <Text style={styles.subTitle}>Website</Text>
           <TextInput
             placeholder="www.xxx.com"
             style={styles.textInput}
             value={website}
             onChangeText={setWebsite}></TextInput>
+
+          {/* Submit Button */}
           <Pressable
             onPress={onUpdateCattery}
             style={styles.SubmitButton}>
@@ -104,6 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFCF6",
   },
   title: {
+    fontFamily: "PoppinsSemiBold",
     color: '#F59156',
     fontStyle: "normal",
     fontWeight: "600",
@@ -111,6 +165,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   subTitle: {
+    fontFamily: "PoppinsSemiBold",
     color: '#F59156',
     marginTop: 10,
     marginBottom: 10,
@@ -118,6 +173,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   textInput: {
+    fontFamily: "Poppins",
     height: 60,
     borderRadius: 20,
     alignItems: "center",
@@ -138,5 +194,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#FFFFFF',
     fontWeight: '600',
+    marginTop:5,
   },
 });
