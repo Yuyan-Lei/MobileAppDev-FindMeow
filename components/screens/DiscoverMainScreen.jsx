@@ -13,7 +13,7 @@ import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import DiscoverFilter from "./DiscoverFilter";
-import * as Location from 'expo-location';
+import { getUserLocation } from "../../firebaseUtils/user";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -45,17 +45,8 @@ function MainScreen({ route, navigation }) {
   useEffect(() => {
     (async () => {
 
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Permission to access location was denied, you will not get access to any location related features.');
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation({
-        lat: location.coords.latitude,
-        lng: location.coords.longitude
-      });
+      let location = await getUserLocation();
+      setLocation(location);
     })();
   }, []);
 
