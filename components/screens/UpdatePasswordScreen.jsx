@@ -6,6 +6,7 @@ import { TextInput, View, StyleSheet, Pressable } from "react-native";
 import { auth } from "../../firebaseUtils/firebase-setup";
 import { Divider } from 'react-native-elements';
 import { Colors } from "../styles/Colors";
+import { TitleText } from "../texts/TitleText";
 
 export default function UpdatePasswordScreen({ navigation }) {
     const [newPassword, setNewPassword] = useState('');
@@ -45,7 +46,7 @@ export default function UpdatePasswordScreen({ navigation }) {
     return (
         <View style={styles.container}>
             {/* Screen Title */}
-            <titleText>Set Password</titleText>
+            <TitleText>Set Password</TitleText>
 
             {/* Password Input boxes */}
             <View style={styles.inputsContainer}>
@@ -76,7 +77,7 @@ export default function UpdatePasswordScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 16,
-        paddingTop: 55,
+        paddingTop: 65,
         flex: 1,
     },
     inputsContainer: {
