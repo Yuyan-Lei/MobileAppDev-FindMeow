@@ -1,8 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  collection,
-  onSnapshot, orderBy, query
-} from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -31,7 +28,6 @@ function MainScreen({ route, navigation }) {
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
-
   function resetAllFilters() {
     setValue(0);
 
@@ -54,7 +50,7 @@ function MainScreen({ route, navigation }) {
   const [data, setData] = useState([]);
   useEffect(() => {
     let q;
-    // 1. Newer Post  
+    // 1. Newer Post
     if (selectedIndex == 0) {
       q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
     }
@@ -99,7 +95,6 @@ function MainScreen({ route, navigation }) {
   }, []);
   /* data collector used for top filter tags - end */
 
-
   /* events for top filter tags - start */
   const onFilterChange = (value) => {
     let dataCopy = data;
@@ -109,10 +104,11 @@ function MainScreen({ route, navigation }) {
     }
     // 2. nearby Post
     else if (value === 1) {
-      Alert.alert("Feature for this button is coming soon~", "See you next time!", [
-        { text: "Sad" },
-        { text: "Wait for you" },
-      ])
+      Alert.alert(
+        "Feature for this button is coming soon~",
+        "See you next time!",
+        [{ text: "Sad" }, { text: "Wait for you" }]
+      );
     }
     // 3. Lower Price
     else if (value === 2) {
@@ -122,12 +118,8 @@ function MainScreen({ route, navigation }) {
   };
   /* events for top filter tags - end */
 
-
-
   return (
-    <View
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <View style={styles.headerView}>
         <View>
           <TitleText>Discover</TitleText>
@@ -193,20 +185,19 @@ function MainScreen({ route, navigation }) {
           ListFooterComponent={<View style={{ height: 80 }} />}
         />
       </View>
-    </View>)
+    </View>
+  );
 }
 
 export default function DiscoverMainScreen({ route, navigation }) {
-
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="CatInformation" component={CatInformation} />
     </Stack.Navigator>
-  )
+  );
 }
-
 
 const styles = StyleSheet.create({
   RBSheetCustomStyles: {
@@ -230,8 +221,8 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingTop: 55,
     paddingBottom: 200,
   },
-})
+});

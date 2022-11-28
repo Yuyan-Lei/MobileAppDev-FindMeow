@@ -1,3 +1,305 @@
+// import { Feather, Ionicons } from "@expo/vector-icons";
+// import { Chip } from "@rneui/themed";
+// import {
+//   collection,
+//   doc,
+//   getDoc,
+//   onSnapshot,
+//   query,
+//   QuerySnapshot,
+//   where,
+// } from "firebase/firestore";
+// import React, { useEffect, useState } from "react";
+// import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+// import BottomDrawer from "react-native-bottom-drawer-view";
+// import { db } from "../../firebaseUtils/firebase-setup";
+// import { MessageButton } from "../pressable/MessageButton";
+// import { PhoneButton } from "../pressable/PhoneButton";
+// import { HeartButton } from "../pressable/HeartButton";
+// import { Colors } from "../styles/Colors";
+// // import { Chip } from "../pressable/Chip";
+
+// export default function CatInformation({ route, navigation }) {
+//   function RenderContent() {
+//     return (
+//       <View style={{ marginHorizontal: 15 }}>
+//         <View
+//           style={{
+//             flexDirection: "row",
+//             justifyContent: "space-evenly",
+//             marginVertical: 20,
+//           }}
+//         >
+//           <View style={styles.label}>
+//             <View style={styles.tags}>
+//               <Text style={styles.tagText}>Gender</Text>
+//               <Text style={styles.tagInfoText}>{cat.Gender}</Text>
+//             </View>
+//             <View style={styles.tags}>
+//               <Text style={styles.tagText}>Age</Text>
+//               <Text style={styles.tagInfoText}>
+//                 {cat.month} {cat.month === 1 ? "month" : "months"}
+//               </Text>
+//             </View>
+//             <View style={styles.tags}>
+//               <Text style={styles.tagText}>Breed</Text>
+//               <Text style={styles.tagInfoText}>{cat.Breed}</Text>
+//             </View>
+//           </View>
+//         </View>
+//         <View style={{ flexDirection: "row" }}>
+//           <Text style={styles.textPrimary}>{cat.Name}</Text>
+//           <Text
+//             style={{
+//               textAlign: "right",
+//               fontSize: 20,
+//               fontWeight: "bold",
+//               color: Colors.darkOrange,
+//               marginLeft: "auto",
+//               marginVertical: 20,
+//             }}
+//           >
+//             ${cat.Price}
+//           </Text>
+//         </View>
+//         {/* TODO: CATTERY LOCATION */}
+//         <View style={{ flexDirection: "row" }}>
+//           <Ionicons name="location-sharp" size={24} color={Colors.darkOrange} />
+//           <Text style={styles.textSecondary}>{cattery.address}</Text>
+//         </View>
+//         <Text style={styles.date}>{cat.Birthday}</Text>
+//         <View style={styles.chipBox}>
+//           {cat.Tags ? (
+//             cat.Tags.map((tag, index) => (
+//               <Chip
+//                 title={tag}
+//                 key={index}
+//                 containerStyle={styles.chip}
+//                 color={Colors.orangeText}
+//               />
+//             ))
+//           ) : (
+//             <></>
+//           )}
+//         </View>
+
+//         {/* contact info label */}
+//         <View style={styles.contactLabel}>
+//           <Text style={styles.contact}>Contact Info</Text>
+//           <View style={{ flexDirection: "row" }}>
+//             <View>
+//               <Text>{cattery.catteryName}</Text>
+//               <Text style={styles.date}>Cattery</Text>
+//             </View>
+//             <View style={{ width: 200 }}></View>
+//             <View style={styles.buttonView}>
+//               <PhoneButton />
+//               <MessageButton />
+//             </View>
+//           </View>
+//         </View>
+//         {/* contact info label end */}
+//         <View style={styles.detailLabel}>
+//           <Text style={styles.contact}>Details</Text>
+//           <View>
+//             <Text>{cat.Description}</Text>
+//           </View>
+//         </View>
+//       </View>
+//     );
+//   }
+
+//   const catId = route.params.catId;
+//   const [cat, setCat] = useState({});
+//   const [cattery, setCattery] = useState([]);
+
+//   useEffect(() => {
+//     const unSubscribe = onSnapshot(doc(db, "Cats", catId), async (catEntry) => {
+//       const catData = catEntry.data();
+//       const birthday = new Date(catData.Birthday);
+//       const now = new Date();
+
+//       let age =
+//         now.getMonth() -
+//         birthday.getMonth() +
+//         12 * (now.getFullYear() - birthday.getFullYear());
+//       // age cannot be negative
+//       if (age === undefined || isNaN(age) || age < 0) {
+//         age = 0;
+//       }
+
+//       /* Group cat object */
+//       setCat({
+//         ...catData,
+//         id: catEntry.id,
+//         month: age,
+//       });
+
+//       /* Get cattery */
+//       const catteryRef = doc(db, "Users", catData.Cattery);
+//       const catterySnap = await getDoc(catteryRef);
+
+//       setCattery(catterySnap.data());
+//     });
+
+//     return () => unSubscribe();
+//   }, []);
+
+//   // const onClickLikeButton = () => {
+//   //   if (!likeCats.includes(cat.id)) {
+//   //     userLikeACat(cat.id);
+//   //   } else {
+//   //     userUnLikeACat(cat.id);
+//   //   }
+//   // };
+
+//   return (
+//     <View>
+//       <Image
+//         source={{ uri: cat.Picture }}
+//         resizeMode="cover"
+//         style={{ height: 450, width: 500 }}
+//       ></Image>
+//       <View style={styles.floatingView}>
+//         <HeartButton
+//           notSelectedColor="white"
+//           // isLiked={likeCats.includes(cat.id)}
+//           // onPress={onClickLikeButton}
+//         />
+//       </View>
+//       <View style={{ position: "absolute", top: 40, left: 12 }}>
+//         <View
+//           style={{
+//             opacity: 0.5,
+//             padding: 5,
+//             backgroundColor: Colors.arrowBackground,
+//             borderRadius: 13,
+//             marginTop: 10,
+//             marginLeft: 10,
+//           }}
+//         >
+//           <Pressable onPress={navigation.goBack}>
+//             {/* <Feather name="arrow-left-circle" size={24} color="white" /> */}
+//             <Ionicons name="chevron-back" size={24} color="white" />
+//           </Pressable>
+//         </View>
+//       </View>
+//       <BottomDrawer
+//         containerHeight={800}
+//         downDisplay={300}
+//         startUp={false}
+//         backgroundColor={Colors.dimGray}
+//         borderRadius={30}
+//       >
+//         <RenderContent />
+//       </BottomDrawer>
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   tagInfoText: {
+//     fontWeight: "bold",
+//     fontSize: 16,
+//   },
+//   button: {
+//     margin: 10,
+//     marginTop: 1000,
+//     width: 100,
+//     alignSelf: "flex-end",
+//   },
+//   card: {
+//     width: "100%",
+//     position: "absolute",
+//     bottom: 0,
+//   },
+//   label: {
+//     alignItems: "center",
+//     flexDirection: "row",
+//   },
+//   tags: {
+//     backgroundColor: "white",
+//     marginHorizontal: 20,
+//     alignItems: "center",
+//     padding: 8,
+//     borderRadius: 12,
+//   },
+//   tagText: {
+//     color: Colors.gray,
+//     padding: 5,
+//     width: 80,
+//     textAlign: "center",
+//   },
+//   contactLabel: {
+//     backgroundColor: "white",
+//     alignItems: "center",
+//     padding: 8,
+//     borderRadius: 12,
+//     marginTop: 10,
+//   },
+//   detailLabel: {
+//     textAlign: "left",
+//     marginTop: 10,
+//     padding: 8,
+//   },
+//   textPrimary: {
+//     textAlign: "left",
+//     fontSize: 28,
+//     fontWeight: "bold",
+//     marginVertical: 20,
+//   },
+//   textSecondary: {
+//     marginBottom: 10,
+//     textAlign: "left",
+//     fontSize: 14,
+//     marginLeft: 6,
+//   },
+//   chip: {
+//     marginVertical: 8,
+//     marginHorizontal: 6,
+//     height: 35,
+//   },
+//   contact: {
+//     fontWeight: "bold",
+//     marginBottom: 20,
+//     marginRight: "auto",
+//     marginTop: 5,
+//     fontSize: 16,
+//   },
+//   buttonView: {
+//     flexDirection: "row",
+//     marginLeft: "auto",
+//   },
+//   roundButton: {
+//     width: 30,
+//     height: 30,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     padding: 10,
+//     borderRadius: 100,
+//     backgroundColor: "#fff",
+//   },
+//   chipBox: {
+//     flexDirection: "row",
+//     flexWrap: "wrap",
+//     // justifyContent: "space-evenly",
+//   },
+//   date: {
+//     color: Colors.gray,
+//     marginVertical: 8,
+//   },
+//   text: {
+//     marginTop: 20,
+//     marginBottom: 10,
+//   },
+//   floatingView: {
+//     position: "absolute",
+//     top: 40,
+//     right: 32,
+//   },
+// });
+
+//new version using scrollable for whole screen
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Chip } from "@rneui/themed";
 import {
@@ -17,6 +319,12 @@ import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 import { HeartButton } from "../pressable/HeartButton";
 import { Colors } from "../styles/Colors";
+import {
+  useWindowDimensions,
+  Button,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
 import { getUserLocation, haversine_distance } from "../../firebaseUtils/user";
 import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
 import {Client} from "@googlemaps/google-maps-services-js";
@@ -172,65 +480,147 @@ export default function CatInformation({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
-  // const onClickLikeButton = () => {
-  //   if (!likeCats.includes(cat.id)) {
-  //     userLikeACat(cat.id);
-  //   } else {
-  //     userUnLikeACat(cat.id);
-  //   }
-  // };
-
   return (
-    <View>
-      <Image
-        source={{ uri: cat.Picture }}
-        resizeMode="cover"
-        style={{ height: 450, width: 500 }}
-      ></Image>
-      <View style={styles.floatingView}>
-        <HeartButton
-          notSelectedColor="white"
-          // isLiked={likeCats.includes(cat.id)}
-          // onPress={onClickLikeButton}
-        />
-      </View>
-      <View style={{ position: "absolute", top: 40, left: 12 }}>
-        <View
-          style={{
-            opacity: 0.5,
-            padding: 5,
-            backgroundColor: Colors.arrowBackground,
-            borderRadius: 13,
-            marginTop: 10,
-            marginLeft: 10,
-          }}
-        >
-          <Pressable onPress={navigation.goBack}>
-            {/* <Feather name="arrow-left-circle" size={24} color="white" /> */}
-            <Ionicons name="chevron-back" size={24} color="white" />
-          </Pressable>
+    <SafeAreaView>
+      <ScrollView>
+        <View>
+          <Image
+            source={{ uri: cat.Picture }}
+            resizeMode="cover"
+            style={{ height: 450, width: 500 }}
+          ></Image>
+          {/* START: goBack button and heart button */}
+          <View style={styles.floatingView}>
+            <HeartButton
+              notSelectedColor="white"
+              // isLiked={likeCats.includes(cat.id)}
+              // onPress={onClickLikeButton}
+            />
+          </View>
+
+          <View
+            style={{
+              opacity: 0.5,
+              padding: 5,
+              backgroundColor: Colors.arrowBackground,
+              borderRadius: 13,
+              position: "absolute",
+              top: 45,
+              left: 22,
+            }}
+          >
+            <Pressable onPress={navigation.goBack}>
+              <Ionicons name="chevron-back" size={24} color="white" />
+            </Pressable>
+          </View>
+          {/* END: goBack button and heart button */}
+          <View style={{ marginHorizontal: 15 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                marginVertical: 20,
+              }}
+            >
+              <View style={styles.label}>
+                <View style={styles.tags}>
+                  <Text style={styles.tagText}>Gender</Text>
+                  <Text style={styles.tagInfoText}>{cat.Gender}</Text>
+                </View>
+                <View style={styles.tags}>
+                  <Text style={styles.tagText}>Age</Text>
+                  <Text style={styles.tagInfoText}>
+                    {cat.month} {cat.month === 1 ? "month" : "months"}
+                  </Text>
+                </View>
+                <View style={styles.tags}>
+                  <Text style={styles.tagText}>Breed</Text>
+                  <Text style={styles.tagInfoText}>{cat.Breed}</Text>
+                </View>
+              </View>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textPrimary}>{cat.Name}</Text>
+              <Text
+                style={{
+                  textAlign: "right",
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: Colors.darkOrange,
+                  marginLeft: "auto",
+                  marginVertical: 20,
+                }}
+              >
+                ${cat.Price}
+              </Text>
+            </View>
+            {/* TODO: CATTERY LOCATION */}
+            <View style={{ flexDirection: "row" }}>
+              <Ionicons
+                name="location-sharp"
+                size={24}
+                color={Colors.darkOrange}
+              />
+              <Text style={styles.textSecondary}>{cattery.address}</Text>
+            </View>
+            {/* <Text style={styles.date}>{cat.Birthday}</Text> */}
+            <Text style={styles.date}>Posted date: {cat.Birthday}</Text>
+            <View style={styles.chipBox}>
+              {cat.Tags ? (
+                cat.Tags.map((tag, index) => (
+                  <Chip
+                    title={tag}
+                    key={index}
+                    containerStyle={styles.chip}
+                    color={Colors.orangeText}
+                  />
+                ))
+              ) : (
+                <></>
+              )}
+            </View>
+
+            {/* contact info label */}
+            <View style={styles.contactLabel}>
+              <Text style={styles.contact}>Contact Info</Text>
+              <View style={{ flexDirection: "row" }}>
+                <View>
+                  <Text>{cattery.catteryName}</Text>
+                  <Text style={styles.date}>Cattery</Text>
+                </View>
+                <View style={{ width: 200 }}></View>
+                <View style={styles.buttonView}>
+                  <PhoneButton />
+                  <MessageButton />
+                </View>
+              </View>
+            </View>
+            {/* contact info label end */}
+            <View style={styles.detailLabel}>
+              <Text style={styles.contact}>Details</Text>
+
+              <View>
+                <Text>{cat.Description}</Text>
+              </View>
+            </View>
+          </View>
         </View>
-      </View>
-      <BottomDrawer
-        containerHeight={800}
-        downDisplay={300}
-        startUp={false}
-        backgroundColor={Colors.dimGray}
-        borderRadius={30}
-      >
-        <RenderContent />
-      </BottomDrawer>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  image: {
+    height: 450,
+    width: 500,
+  },
   tagInfoText: {
     fontWeight: "bold",
     fontSize: 16,
   },
   button: {
-    margin: 10,
+    // margin: 10,
     marginTop: 1000,
     width: 100,
     alignSelf: "flex-end",
@@ -246,7 +636,7 @@ const styles = StyleSheet.create({
   },
   tags: {
     backgroundColor: "white",
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     alignItems: "center",
     padding: 8,
     borderRadius: 12,
@@ -267,7 +657,7 @@ const styles = StyleSheet.create({
   detailLabel: {
     textAlign: "left",
     marginTop: 10,
-    padding: 8,
+    paddingVertical: 8,
   },
   textPrimary: {
     textAlign: "left",
@@ -279,11 +669,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "left",
     fontSize: 14,
-    marginLeft: 6,
+    // marginLeft: 6,
   },
   chip: {
     marginVertical: 8,
-    marginHorizontal: 6,
+    // marginHorizontal: 6,
+    marginRight: 10,
     height: 35,
   },
   contact: {
