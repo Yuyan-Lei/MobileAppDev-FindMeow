@@ -389,6 +389,7 @@ export default function CatInformation({ route, navigation }) {
                 key={index}
                 containerStyle={styles.chip}
                 color="#F59156"
+                titleStyle={"Poppins"}
               />
             ))
           ) : (
@@ -401,7 +402,7 @@ export default function CatInformation({ route, navigation }) {
           <Text style={styles.contact}>Contact Info</Text>
           <View style={{ flexDirection: "row" }}>
             <View>
-              <Text>{cattery.catteryName}</Text>
+              <Text style={styles.text}>{cattery.catteryName}</Text>
               <Text style={styles.date}>Cattery</Text>
             </View>
             <View style={{ width: 200 }}></View>
@@ -625,6 +626,7 @@ const styles = StyleSheet.create({
   tagInfoText: {
     fontWeight: "bold",
     fontSize: 16,
+    fontFamily: "Poppins",
   },
   button: {
     // margin: 10,
@@ -653,6 +655,7 @@ const styles = StyleSheet.create({
     padding: 5,
     width: 80,
     textAlign: "center",
+    fontFamily: "Poppins",
   },
   contactLabel: {
     backgroundColor: "white",
@@ -665,17 +668,21 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginTop: 10,
     paddingVertical: 8,
+    fontFamily: "Poppins",
+    marginBottom: 50,
   },
   textPrimary: {
     textAlign: "left",
     fontSize: 28,
     fontWeight: "bold",
     marginVertical: 20,
+    fontFamily: "Poppins",
   },
   textSecondary: {
     marginBottom: 10,
     textAlign: "left",
     fontSize: 14,
+    fontFamily: "Poppins",
     // marginLeft: 6,
   },
   chip: {
@@ -685,11 +692,11 @@ const styles = StyleSheet.create({
     height: 35,
   },
   contact: {
-    fontWeight: "bold",
     marginBottom: 20,
     marginRight: "auto",
     marginTop: 5,
     fontSize: 16,
+    fontFamily: "PoppinsSemiBold",
   },
   buttonView: {
     flexDirection: "row",
@@ -712,10 +719,12 @@ const styles = StyleSheet.create({
   date: {
     color: Colors.gray,
     marginVertical: 8,
+    fontFamily: "Poppins",
   },
   text: {
     marginTop: 20,
     marginBottom: 10,
+    fontFamily: "Poppins",
   },
   floatingView: {
     position: "absolute",
