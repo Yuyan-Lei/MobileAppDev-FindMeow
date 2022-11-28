@@ -13,7 +13,7 @@ export default function UpdatePasswordScreen({ navigation }) {
 
     const verifyPassword = (password) => {
         // Valid password pattern:
-        // 1. Contains both digit and word character
+        // 1. Contains both numbers and letters
         // 2. More than 6 characters
         const validPasswordPattern = /(?=.*[0-9]+)(?=.*[a-zA-Z]+).{6,}/g;
         return password.match(validPasswordPattern);
@@ -44,7 +44,10 @@ export default function UpdatePasswordScreen({ navigation }) {
     };
     return (
         <View style={styles.container}>
+            {/* Screen Title */}
             <Text style={styles.title}>Update Password</Text>
+
+            {/* Password Input boxes */}
             <View style={styles.inputsContainer}>
                 <TextInput placeholder="Set New Password"
                     value={newPassword}
@@ -58,7 +61,11 @@ export default function UpdatePasswordScreen({ navigation }) {
                     secureTextEntry
                     onChangeText={setConfirmPassword} />
             </View>
-            <Text style={styles.reminderText}>More than 6 letters or numbers</Text>
+
+            {/* Helper Text */}
+            <Text style={styles.reminderText}>Please use 6 or more characters with a mix of numbers and letters.</Text>
+
+            {/* Submit Button */}
             <Pressable onPress={onUpdatePassword} style={styles.SubmitButton}>
                 <Text style={styles.SubmitButtonText}>Submit</Text>
             </Pressable>
@@ -113,6 +120,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#FFFFFF',
         fontWeight: '600',
-        marginTop: 5,
+        marginTop: 3,
+        fontFamily: "PoppinsSemiBold",
     },
 });

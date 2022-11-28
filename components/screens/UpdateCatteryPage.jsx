@@ -195,5 +195,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '600',
     marginTop:5,
+    fontFamily: "PoppinsSemiBold",
   },
 });
