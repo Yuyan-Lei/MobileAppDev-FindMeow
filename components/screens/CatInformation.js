@@ -326,8 +326,8 @@ import {
   ScrollView,
 } from "react-native";
 import { getUserLocation, haversine_distance } from "../../firebaseUtils/user";
-import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
-import {Client} from "@googlemaps/google-maps-services-js";
+import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
+import { Client } from "@googlemaps/google-maps-services-js";
 // import { Chip } from "../pressable/Chip";
 
 export default function CatInformation({ route, navigation }) {
@@ -376,7 +376,9 @@ export default function CatInformation({ route, navigation }) {
         {/* TODO: CATTERY LOCATION */}
         <View style={{ flexDirection: "row" }}>
           <Ionicons name="location-sharp" size={24} color={Colors.darkOrange} />
-          <Text style={styles.textSecondary}>{cattery.address} ({distance})</Text>
+          <Text style={styles.textSecondary}>
+            {cattery.address} ({distance})
+          </Text>
         </View>
         <Text style={styles.date}>{cat.Birthday}</Text>
         <View style={styles.chipBox}>
@@ -424,27 +426,33 @@ export default function CatInformation({ route, navigation }) {
   const [cat, setCat] = useState({});
   const [cattery, setCattery] = useState([]);
   const [location, setLocation] = useState(null);
-  const [distance, setDistance] = useState('Distance Loading');
+  const [distance, setDistance] = useState("Distance Loading");
 
   /* Set user location. */
   useEffect(() => {
     (async () => {
-
       let location = await getUserLocation();
       setLocation(location);
     })();
   }, []);
 
-  /* Calculate distance to the cat if both user location and cattery location are provided. */ 
+  /* Calculate distance to the cat if both user location and cattery location are provided. */
   useEffect(() => {
     if (cattery && cattery.placeId && location) {
       const googleMapClient = new Client({});
-      googleMapClient.placeDetails({params: {
-        place_id: cattery.placeId,
-        key: REACT_APP_GOOGLE_MAP_APP_KEY
-      }}).then((resp) => {
-        setDistance(haversine_distance(location, resp.data.result.geometry.location) + 'mi');
-      })
+      googleMapClient
+        .placeDetails({
+          params: {
+            place_id: cattery.placeId,
+            key: REACT_APP_GOOGLE_MAP_APP_KEY,
+          },
+        })
+        .then((resp) => {
+          setDistance(
+            haversine_distance(location, resp.data.result.geometry.location) +
+              "mi"
+          );
+        });
     }
   }, [cattery, location]);
 
@@ -481,132 +489,131 @@ export default function CatInformation({ route, navigation }) {
   }, []);
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View>
-          <Image
-            source={{ uri: cat.Picture }}
-            resizeMode="cover"
-            style={{ height: 450, width: 500 }}
-          ></Image>
-          {/* START: goBack button and heart button */}
-          <View style={styles.floatingView}>
-            <HeartButton
-              notSelectedColor="white"
-              // isLiked={likeCats.includes(cat.id)}
-              // onPress={onClickLikeButton}
-            />
-          </View>
+    <ScrollView>
+      <View>
+        <Image
+          source={{ uri: cat.Picture }}
+          resizeMode="cover"
+          style={{ height: 450, width: 500 }}
+        ></Image>
+        {/* START: goBack button and heart button */}
+        <View style={styles.floatingView}>
+          <HeartButton
+            notSelectedColor="white"
+            // isLiked={likeCats.includes(cat.id)}
+            // onPress={onClickLikeButton}
+          />
+        </View>
 
+        <View
+          style={{
+            opacity: 0.5,
+            padding: 5,
+            backgroundColor: Colors.arrowBackground,
+            borderRadius: 13,
+            position: "absolute",
+            top: 45,
+            left: 22,
+          }}
+        >
+          <Pressable onPress={navigation.goBack}>
+            <Ionicons name="chevron-back" size={24} color="white" />
+          </Pressable>
+        </View>
+        {/* END: goBack button and heart button */}
+        <View style={{ marginHorizontal: 15 }}>
           <View
             style={{
-              opacity: 0.5,
-              padding: 5,
-              backgroundColor: Colors.arrowBackground,
-              borderRadius: 13,
-              position: "absolute",
-              top: 45,
-              left: 22,
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              marginVertical: 20,
             }}
           >
-            <Pressable onPress={navigation.goBack}>
-              <Ionicons name="chevron-back" size={24} color="white" />
-            </Pressable>
+            <View style={styles.label}>
+              <View style={styles.tags}>
+                <Text style={styles.tagText}>Gender</Text>
+                <Text style={styles.tagInfoText}>{cat.Gender}</Text>
+              </View>
+              <View style={styles.tags}>
+                <Text style={styles.tagText}>Age</Text>
+                <Text style={styles.tagInfoText}>
+                  {cat.month} {cat.month === 1 ? "month" : "months"}
+                </Text>
+              </View>
+              <View style={styles.tags}>
+                <Text style={styles.tagText}>Breed</Text>
+                <Text style={styles.tagInfoText}>{cat.Breed}</Text>
+              </View>
+            </View>
           </View>
-          {/* END: goBack button and heart button */}
-          <View style={{ marginHorizontal: 15 }}>
-            <View
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textPrimary}>{cat.Name}</Text>
+            <Text
               style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
+                textAlign: "right",
+                fontSize: 20,
+                fontWeight: "bold",
+                color: Colors.darkOrange,
+                marginLeft: "auto",
                 marginVertical: 20,
+                fontFamily: "Poppins",
               }}
             >
-              <View style={styles.label}>
-                <View style={styles.tags}>
-                  <Text style={styles.tagText}>Gender</Text>
-                  <Text style={styles.tagInfoText}>{cat.Gender}</Text>
-                </View>
-                <View style={styles.tags}>
-                  <Text style={styles.tagText}>Age</Text>
-                  <Text style={styles.tagInfoText}>
-                    {cat.month} {cat.month === 1 ? "month" : "months"}
-                  </Text>
-                </View>
-                <View style={styles.tags}>
-                  <Text style={styles.tagText}>Breed</Text>
-                  <Text style={styles.tagInfoText}>{cat.Breed}</Text>
-                </View>
-              </View>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.textPrimary}>{cat.Name}</Text>
-              <Text
-                style={{
-                  textAlign: "right",
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: Colors.darkOrange,
-                  marginLeft: "auto",
-                  marginVertical: 20,
-                }}
-              >
-                ${cat.Price}
-              </Text>
-            </View>
-            {/* TODO: CATTERY LOCATION */}
-            <View style={{ flexDirection: "row" }}>
-              <Ionicons
-                name="location-sharp"
-                size={24}
-                color={Colors.darkOrange}
-              />
-              <Text style={styles.textSecondary}>{cattery.address}</Text>
-            </View>
-            {/* <Text style={styles.date}>{cat.Birthday}</Text> */}
-            <Text style={styles.date}>Posted date: {cat.Birthday}</Text>
-            <View style={styles.chipBox}>
-              {cat.Tags ? (
-                cat.Tags.map((tag, index) => (
-                  <Chip
-                    title={tag}
-                    key={index}
-                    containerStyle={styles.chip}
-                    color={Colors.orangeText}
-                  />
-                ))
-              ) : (
-                <></>
-              )}
-            </View>
+              ${cat.Price}
+            </Text>
+          </View>
+          {/* TODO: CATTERY LOCATION */}
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons
+              name="location-sharp"
+              size={24}
+              color={Colors.darkOrange}
+            />
+            <Text style={styles.textSecondary}>{cattery.address}</Text>
+          </View>
+          {/* <Text style={styles.date}>{cat.Birthday}</Text> */}
+          <Text style={styles.date}>Posted date: {cat.Birthday}</Text>
+          <View style={styles.chipBox}>
+            {cat.Tags ? (
+              cat.Tags.map((tag, index) => (
+                <Chip
+                  title={tag}
+                  key={index}
+                  containerStyle={styles.chip}
+                  color={Colors.orangeText}
+                />
+              ))
+            ) : (
+              <></>
+            )}
+          </View>
 
-            {/* contact info label */}
-            <View style={styles.contactLabel}>
-              <Text style={styles.contact}>Contact Info</Text>
-              <View style={{ flexDirection: "row" }}>
-                <View>
-                  <Text>{cattery.catteryName}</Text>
-                  <Text style={styles.date}>Cattery</Text>
-                </View>
-                <View style={{ width: 200 }}></View>
-                <View style={styles.buttonView}>
-                  <PhoneButton />
-                  <MessageButton />
-                </View>
-              </View>
-            </View>
-            {/* contact info label end */}
-            <View style={styles.detailLabel}>
-              <Text style={styles.contact}>Details</Text>
-
+          {/* contact info label */}
+          <View style={styles.contactLabel}>
+            <Text style={styles.contact}>Contact Info</Text>
+            <View style={{ flexDirection: "row" }}>
               <View>
-                <Text>{cat.Description}</Text>
+                <Text>{cattery.catteryName}</Text>
+                <Text style={styles.date}>Cattery</Text>
               </View>
+              <View style={{ width: 200 }}></View>
+              <View style={styles.buttonView}>
+                <PhoneButton />
+                <MessageButton />
+              </View>
+            </View>
+          </View>
+          {/* contact info label end */}
+          <View style={styles.detailLabel}>
+            <Text style={styles.contact}>Details</Text>
+
+            <View>
+              <Text>{cat.Description}</Text>
             </View>
           </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </ScrollView>
   );
 }
 

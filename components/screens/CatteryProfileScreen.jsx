@@ -145,13 +145,14 @@ function MainScreen({ route, navigation }) {
             <FlatList
               data={cats}
               renderItem={({ item, index }) => (
-                <CatCard 
+                <CatCard
                   cat={buildCatItem(item)}
                   navigation={navigation}
-                  hideLocation />
+                  hideLocation
+                />
               )}
               numColumns={2}
-              ListFooterComponent={<View style={{height: 2150}}/>}
+              ListFooterComponent={<View style={{ height: 2150 }} />}
             />
           </View>
         </View>
