@@ -25,7 +25,7 @@ export function HeartButton({
           backgroundColor: Colors.heartBackground,
           borderRadius: 20,
           marginTop: 10,
-          marginLeft: 10,
+          marginLeft: 6,
         }}
       >
         <AntDesign
@@ -45,5 +45,6 @@ export function HeartButton({
 const styles = StyleSheet.create({
   heartText: {
     fontSize: 18,
+    marginTop: 1,
   },
 });
