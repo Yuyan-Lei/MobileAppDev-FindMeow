@@ -153,6 +153,7 @@ function MainScreen({ route, navigation }) {
                   cat={buildCatItem(item)}
                   navigation={navigation}
                   hideLocation
+                  showBreed
                 />
               )}
               numColumns={2}
