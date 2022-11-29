@@ -1,8 +1,23 @@
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, doc, documentId, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  documentId,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { getCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
@@ -10,6 +25,7 @@ import { CatCard } from "../cards/CatCard";
 import { rootStackNavigateBack } from "../RootNavigation";
 import { LocationText } from "../texts/LocationText";
 import CatteryProfileScreen from "./CatteryProfileScreen";
+import { Colors } from "../styles/Colors";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -21,8 +37,18 @@ function MainScreen({ route, navigation }) {
     const docRef = doc(db, "Users", getCurrentUserEmail());
     const unSubscribe = onSnapshot(docRef, (snapshot) => {
       setCattery(snapshot.data());
-      setCatteryShortAddress(snapshot.data().address.split(", ")[1] + ", " + snapshot.data().address.split(", ")[2]);
-      setCatteryFullAddress(snapshot.data().address.split(", ")[0] + ", " + snapshot.data().address.split(", ")[1] + ", " + snapshot.data().address.split(", ")[2]);
+      setCatteryShortAddress(
+        snapshot.data().address.split(", ")[1] +
+          ", " +
+          snapshot.data().address.split(", ")[2]
+      );
+      setCatteryFullAddress(
+        snapshot.data().address.split(", ")[0] +
+          ", " +
+          snapshot.data().address.split(", ")[1] +
+          ", " +
+          snapshot.data().address.split(", ")[2]
+      );
       getCats(snapshot.data().cats).then((cats) => setCats(cats));
     });
 
@@ -33,14 +59,20 @@ function MainScreen({ route, navigation }) {
     if (!cattery || cattery.cats.length === 0) {
       return;
     }
-    const q = query(collection(db, "Cats"), where(documentId(), "in", cattery.cats));
+    const q = query(
+      collection(db, "Cats"),
+      where(documentId(), "in", cattery.cats)
+    );
     const unSubscribe = onSnapshot(q, (snapshot) => {
-      setCats(snapshot.docs.map((entry) => { return { id: entry.id, ...entry.data() } }));
+      setCats(
+        snapshot.docs.map((entry) => {
+          return { id: entry.id, ...entry.data() };
+        })
+      );
     });
 
     return () => unSubscribe();
   }, []);
-
 
   const buildCatItem = (cat) => {
     const birthday = new Date(cat.Birthday);
@@ -58,20 +90,24 @@ function MainScreen({ route, navigation }) {
       cattery: cat.Cattery,
       photo: cat.Picture,
       breed: cat.breed,
-    }
+    };
   };
 
   const onUpdateCattery = () => {
     navigation.navigate("UpdateCatteryPage", { cattery });
   };
 
-  return (
-    cattery ? (
-      <View style={styles.container}>
+  return cattery ? (
+    <View style={styles.container}>
+      <View>
         <View>
           <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
-            {cattery.picture &&
-              <Image source={{ uri: cattery.picture }} style={{ width: "100%", height: "100%" }} />}
+            {cattery.picture && (
+              <Image
+                source={{ uri: cattery.picture }}
+                style={{ width: "100%", height: "100%" }}
+              />
+            )}
           </View>
         </View>
 
@@ -79,7 +115,7 @@ function MainScreen({ route, navigation }) {
         <View style={styles.backButtonView}>
           <View>
             <Pressable onPress={rootStackNavigateBack}>
-              <Feather name="arrow-left-circle" size={24} color="black" />
+              <Ionicons name="chevron-back" size={24} color="white" />
             </Pressable>
           </View>
         </View>
@@ -88,20 +124,15 @@ function MainScreen({ route, navigation }) {
         <View style={styles.updateButtonView}>
           <View>
             <Pressable onPress={onUpdateCattery}>
-              <Feather name="edit" size={24} color="black" />
+              <Feather name="edit" size={24} color="white" />
             </Pressable>
           </View>
         </View>
 
-
         <View style={styles.catterDetailView}>
           {/* cattery name & address */}
-          <View
-            style={styles.nameAndAddressView}
-          >
-            <Text style={styles.catteryName}>
-              {cattery.catteryName}
-            </Text>
+          <View style={styles.nameAndAddressView}>
+            <Text style={styles.catteryName}>{cattery.catteryName}</Text>
 
             <View style={{ padding: 4 }}>
               <LocationText>{catteryShortAddress}</LocationText>
@@ -110,66 +141,60 @@ function MainScreen({ route, navigation }) {
 
           <View style={{ height: 24 }} />
 
-
           {/* cattery info: phone number, website, address */}
           <View
             style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
           >
-            <Text style={styles.infoTitle}>
-              About
-            </Text>
+            <Text style={styles.infoTitle}>About</Text>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>
-                Phone:{" "}
+              <Text style={styles.infoSubTitle}>Phone: </Text>
+              <Text style={{ fontFamily: "Poppins" }}>
+                {cattery.phoneNumber}
               </Text>
-              <Text>{cattery.phoneNumber}</Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>
-                Website:{" "}
-              </Text>
-              <Text>{cattery.website}</Text>
+              <Text style={styles.infoSubTitle}>Website: </Text>
+              <Text style={{ fontFamily: "Poppins" }}>{cattery.website}</Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>
-                Address:{" "}
+              <Text style={styles.infoSubTitle}>Address: </Text>
+              <Text style={{ fontFamily: "Poppins" }}>
+                {catteryFullAddress}
               </Text>
-              <Text>{catteryFullAddress}</Text>
             </View>
           </View>
 
           <View style={{ height: 24 }} />
 
-
           {/* available kittens */}
-          <View
-            style={styles.kittensView}
-          >
+          <View style={styles.kittensView}>
             <View style={{ margin: 8 }}>
-              <Text style={styles.infoTitle}>
-                Available Kittens
-              </Text>
+              <Text style={styles.infoTitle}>Available Kittens</Text>
             </View>
             <FlatList
               data={cats}
-              renderItem={({ item, index }) =>
+              renderItem={({ item, index }) => (
                 <CatCard
                   cat={buildCatItem(item)}
-                  navigation={navigation} 
+                  navigation={navigation}
                   hideLocation
-                  showBreed />}
+                  showBreed
+                />
+              )}
               numColumns={2}
-              ListFooterComponent={<View style={{height: 1550}}/>}
-              />
+              ListFooterComponent={<View style={{ height: 1550 }} />}
+            />
           </View>
-
         </View>
-      </View>)
-      : <Text>Loading</Text>)
-};
+      </View>
+    </View>
+  ) : (
+    <Text>Loading</Text>
+  );
+}
 
 export default function ProfileCatteryPage({ route, navigation }) {
   const Stack = createNativeStackNavigator();
@@ -178,7 +203,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
     </Stack.Navigator>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -201,33 +226,45 @@ const styles = StyleSheet.create({
   updateButtonView: {
     position: "absolute",
     top: 48,
-    right: 12,
+    right: 22,
+    opacity: 0.5,
+    padding: 5,
+    backgroundColor: Colors.arrowBackground,
+    borderRadius: 13,
   },
   backButtonView: {
     position: "absolute",
     top: 48,
-    left: 12,
+    left: 22,
+    opacity: 0.5,
+    padding: 5,
+    backgroundColor: Colors.arrowBackground,
+    borderRadius: 13,
   },
   container: {
     backgroundColor: "rgb(250,250,250)",
   },
   catteryName: {
-    color: "#F59156",
+    color: Colors.orangeText,
     fontWeight: "800",
     fontSize: 24,
+    fontFamily: "PoppinsBold",
   },
   infoTitle: {
-    color: "#F59156",
+    color: Colors.orangeText,
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 10,
+    fontFamily: "PoppinsSemiBold",
   },
   infoSubTitle: {
     fontWeight: "600",
     fontSize: 14,
     marginBottom: 8,
+    fontFamily: "PoppinsSemiBold",
   },
   infoText: {
     fontSize: 14,
-  }
+    fontFamily: "Poppins",
+  },
 });
