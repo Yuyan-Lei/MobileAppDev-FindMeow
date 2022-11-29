@@ -146,7 +146,8 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsLight",
     fontSize: 14,
     textAlign: "left",
-    color: Colors.gray,
+    marginLeft: 5,
+    color: "#ADADAD",
   },
   submitButtonContainer: {
     flexDirection: "row",

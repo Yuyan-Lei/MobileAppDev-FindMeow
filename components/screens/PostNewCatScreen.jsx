@@ -21,7 +21,7 @@ import {
 } from "../../firebaseUtils/firestore";
 import CatBreedSelector from "../pressable/CatBreedSelector";
 import CatImagePicker from "../pressable/CatImagePicker";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { Platform } from "react-native";
 // import { Button } from "react-native";
 import { Keyboard } from "react-native";
@@ -188,7 +188,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
         {/* Date picker */}
         {Platform.OS === "ios" ? (
           <View style={{ flexDirection: "row" }}>
-            <DateTimePicker
+            <RNDateTimePicker
               testID="dateTimePicker"
               value={birthDate || new Date()}
               mode="date"
@@ -209,11 +209,12 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
               </Text>
             </Pressable>
             {show && (
-              <DateTimePicker
+              <RNDateTimePicker
                 testID="dateTimePicker"
                 value={birthDate === null ? new Date() : birthDate}
                 mode="date"
                 onChange={onChange}
+                positiveButton={{ label: "OK", textColor: "green" }}
               />
             )}
           </View>
@@ -272,8 +273,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               vaccinated
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setVaccinated(!vaccinated)}
           ></Button>
@@ -285,8 +294,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               vetChecked
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setVetChecked(!vetChecked)}
           ></Button>
@@ -298,8 +315,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               dewormed
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setDewormed(!dewormed)}
           ></Button>
@@ -311,8 +336,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               ready
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setReady(!ready)}
           ></Button>
