@@ -156,16 +156,11 @@ function MainScreen({ route, navigation }) {
             <Text style={{ fontFamily: "Poppins" }}>{cattery.website}</Text>
           </View>
 
-          {/* <View style={{ flexDirection: "row" }}>
-            <Text style={styles.infoSubTitle}>Address: </Text>
-            <Text style={{ fontFamily: "Poppins" }}>{catteryFullAddress}</Text> */}
           <View style={{ height: 24 }} />
 
           {/* available kittens */}
           <View style={styles.kittensView}>
-            <View style={{ margin: 8 }}>
-              <Text style={styles.infoTitle}>Available Kittens</Text>
-            </View>
+            <Text style={styles.infoTitle}>Available Kittens</Text>
             <FlatList
               data={cats}
               renderItem={({ item, index }) => (
@@ -180,22 +175,6 @@ function MainScreen({ route, navigation }) {
               ListFooterComponent={<View style={{ height: 1550 }} />}
             />
           </View>
-        </View>
-
-        <View style={{ height: 24 }} />
-
-        {/* available kittens */}
-        <View style={styles.kittensView}>
-          <View style={{ margin: 8 }}>
-            <Text style={styles.infoTitle}>Available Kittens</Text>
-          </View>
-          <FlatList
-            data={cats}
-            renderItem={({ item, index }) => (
-              <CatCard cat={buildCatItem(item)} navigation={navigation} />
-            )}
-            numColumns={2}
-          />
         </View>
       </View>
     </View>
@@ -216,7 +195,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
 
 const styles = StyleSheet.create({
   kittensView: {
-    padding: 16,
+    // padding: 16,
     backgroundColor: "white",
     borderRadius: 12,
   },
