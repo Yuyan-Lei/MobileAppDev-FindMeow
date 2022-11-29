@@ -202,14 +202,14 @@ export default function DiscoverMainScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   RBSheetCustomStyles: {
     wrapper: {
-      backgroundColor: "transparent",
-      container: {
-        borderRadius: 28,
-      },
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
       draggableIcon: {
         backgroundColor: "#EFEFEF",
         width: 100,
       },
+    },
+    container: {
+      borderRadius: 28,
     },
   },
   filterButtonView: {

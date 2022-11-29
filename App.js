@@ -40,6 +40,7 @@ export default function App() {
           PoppinsSemiBold: require("./resources/fonts/Poppins-SemiBold.ttf"),
           PoppinsMedium: require("./resources/fonts/Poppins-Medium.ttf"),
           PoppinsLight: require("./resources/fonts/Poppins-Light.ttf"),
+          PoppinsRegular: require("./resources/fonts/Poppins-Regular.ttf"),
         });
       } catch (e) {
         console.warn(e);
