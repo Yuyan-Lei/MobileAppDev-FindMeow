@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     color: Colors.orangeText,
     fontWeight: "800",
     fontSize: 24,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: "PoppinsBold",
   },
   infoTitle: {
     color: Colors.orangeText,
