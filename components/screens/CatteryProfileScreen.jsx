@@ -72,6 +72,7 @@ function MainScreen({ route, navigation }) {
       price: cat.Price,
       cattery: cat.Cattery,
       photo: cat.Picture,
+      breed: cat.Breed,
     };
   };
 
