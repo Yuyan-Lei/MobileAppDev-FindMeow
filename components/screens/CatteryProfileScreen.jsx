@@ -72,6 +72,7 @@ function MainScreen({ route, navigation }) {
       price: cat.Price,
       cattery: cat.Cattery,
       photo: cat.Picture,
+      breed: cat.Breed,
     };
   };
 
@@ -153,6 +154,7 @@ function MainScreen({ route, navigation }) {
                   cat={buildCatItem(item)}
                   navigation={navigation}
                   hideLocation
+                  showBreed
                 />
               )}
               numColumns={2}

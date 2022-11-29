@@ -13,10 +13,10 @@ import {
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 import {Client} from "@googlemaps/google-maps-services-js";
-export function CatCard({ cat, navigation, location, hideLocation }) {
+export function CatCard({ cat, navigation, location, hideLocation, showBreed }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
-  const [distance, setDistance] = useState('Distance Loading');
+  const [distance, setDistance] = useState('Loading');
 
   /* Calculate distance to the cat if both user location and cattery location are provided. */ 
   useEffect(() => {
@@ -86,6 +86,13 @@ export function CatCard({ cat, navigation, location, hideLocation }) {
           <Text style={styles.catDetailStyle}>
             {cat.sex}, {catMonthText}
           </Text>
+
+          {/* cat breed */}
+          {showBreed && 
+            <Text style={styles.catDetailStyle}>
+              {cat.breed}
+            </Text>
+          }
 
           {/* cat location */}
           {!hideLocation && <LocationText
