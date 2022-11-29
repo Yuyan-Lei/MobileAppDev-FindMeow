@@ -141,6 +141,16 @@ function MainScreen({ route, navigation }) {
   };
   /* events for top filter tags - end */
 
+  useEffect(() => {
+    setInterval(() => {
+      refreshCatData();
+    }, 10000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
