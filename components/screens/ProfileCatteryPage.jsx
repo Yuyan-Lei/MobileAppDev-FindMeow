@@ -156,9 +156,29 @@ function MainScreen({ route, navigation }) {
             <Text style={{ fontFamily: "Poppins" }}>{cattery.website}</Text>
           </View>
 
-          <View style={{ flexDirection: "row" }}>
+          {/* <View style={{ flexDirection: "row" }}>
             <Text style={styles.infoSubTitle}>Address: </Text>
-            <Text style={{ fontFamily: "Poppins" }}>{catteryFullAddress}</Text>
+            <Text style={{ fontFamily: "Poppins" }}>{catteryFullAddress}</Text> */}
+          <View style={{ height: 24 }} />
+
+          {/* available kittens */}
+          <View style={styles.kittensView}>
+            <View style={{ margin: 8 }}>
+              <Text style={styles.infoTitle}>Available Kittens</Text>
+            </View>
+            <FlatList
+              data={cats}
+              renderItem={({ item, index }) => (
+                <CatCard
+                  cat={buildCatItem(item)}
+                  navigation={navigation}
+                  hideLocation
+                  showBreed
+                />
+              )}
+              numColumns={2}
+              ListFooterComponent={<View style={{ height: 1550 }} />}
+            />
           </View>
         </View>
 
