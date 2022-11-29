@@ -1,8 +1,16 @@
-import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
+import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
 import { Pressable } from "@react-native-material/core";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { writeImageToDB } from "../../firebaseUtils/firestore";
 import { updateCattery } from "../../firebaseUtils/user";
 import { FillAndroidButtomBar, FillAndroidTopBar } from "../FillAndroidBar";
@@ -21,48 +29,65 @@ export default function UpdateCatteryPage({ route, navigation }) {
 
   // Verify all the inputs in this page and return the error message if any errors.
   const verifyInput = () => {
-    if (catteryName === '') {
+    if (catteryName === "") {
       return "You didn't specify a cattery name, please fill that.";
     }
     if (catteryName.length > 20) {
       return "Cattery name must be no more than 20 characters, please fix that.";
     }
     const validPhoneNumberPattern = /[0-9]+/g;
-    if (!phoneNumber.match(validPhoneNumberPattern) || phoneNumber.length !== 10) {
-        return "You didn't specify the phone number or set an invalid phone number, please fill or fix that.";
+    if (
+      !phoneNumber.match(validPhoneNumberPattern) ||
+      phoneNumber.length !== 10
+    ) {
+      return "You didn't specify the phone number or set an invalid phone number, please fill or fix that.";
     }
-    if (website === '') {
+    if (website === "") {
       return "You didn't specify a website, please fill that.";
     }
-    if (address === '') {
+    if (address === "") {
       return "You didn't specify the address of the cattery, please fill that.";
     }
     if (image === null || image === undefined) {
       return "You didn't specify the image of the cattery, please fill that.";
     }
-    return '';
+    return "";
   };
 
   useEffect(() => {
-    ref.current?.setAddressText(address || '');
+    ref.current?.setAddressText(address || "");
   }, []);
 
   let onUpdateCatteryLocked = false;
   async function onUpdateCattery() {
     if (onUpdateCatteryLocked) return;
     const errorInInput = verifyInput();
-    if (errorInInput !== '') {
+    if (errorInInput !== "") {
       Alert.alert("Update failed", errorInInput);
       return;
     }
     onUpdateCatteryLocked = true;
     try {
       if (image === user.picture) {
-        await updateCattery({ catteryName, picture: user.picture, phoneNumber, website, placeId, address })
+        await updateCattery({
+          catteryName,
+          picture: user.picture,
+          phoneNumber,
+          website,
+          placeId,
+          address,
+        });
         navigation.goBack();
       } else {
-        const url = await writeImageToDB(image)
-        await updateCattery({ catteryName, picture: url, phoneNumber, website, placeId, address })
+        const url = await writeImageToDB(image);
+        await updateCattery({
+          catteryName,
+          picture: url,
+          phoneNumber,
+          website,
+          placeId,
+          address,
+        });
         navigation.goBack();
       }
     } catch {
@@ -70,7 +95,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
     } finally {
       onUpdateCatteryLocked = false;
     }
-  };
+  }
 
   return (
     <KeyboardAvoidingView
@@ -80,14 +105,13 @@ export default function UpdateCatteryPage({ route, navigation }) {
       <FillAndroidTopBar />
       <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
         <View style={{ margin: 12 }}>
-
           {/* Screen Title */}
           <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: 20,
-          }}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 20,
+            }}
           >
             <Text style={styles.title}>Update Cattery</Text>
           </View>
@@ -98,12 +122,13 @@ export default function UpdateCatteryPage({ route, navigation }) {
           {/* Address */}
           <Text style={styles.subTitle}>Address</Text>
           <GooglePlacesAutocomplete
-            fontFamily="Poppins"
+            // fontFamily="Poppins"
+            styles={{ textInput: { fontFamily: "Poppins" } }}
             placeholder="Search"
             ref={ref}
             query={{
               key: REACT_APP_GOOGLE_MAP_APP_KEY,
-              language: 'en', // language of the results
+              language: "en", // language of the results
             }}
             onPress={(data, details = null) => {
               setAddress(data.description);
@@ -118,7 +143,8 @@ export default function UpdateCatteryPage({ route, navigation }) {
             placeholder="Name"
             style={styles.textInput}
             value={catteryName}
-            onChangeText={setCatteryName}></TextInput>
+            onChangeText={setCatteryName}
+          ></TextInput>
 
           {/* Phone Number */}
           <Text style={styles.subTitle}>Phone Number</Text>
@@ -127,7 +153,8 @@ export default function UpdateCatteryPage({ route, navigation }) {
             style={styles.textInput}
             value={phoneNumber}
             keyboardType="phone-pad"
-            onChangeText={setPhoneNumber}></TextInput>
+            onChangeText={setPhoneNumber}
+          ></TextInput>
 
           {/* Website */}
           <Text style={styles.subTitle}>Website</Text>
@@ -135,12 +162,11 @@ export default function UpdateCatteryPage({ route, navigation }) {
             placeholder="www.xxx.com"
             style={styles.textInput}
             value={website}
-            onChangeText={setWebsite}></TextInput>
+            onChangeText={setWebsite}
+          ></TextInput>
 
           {/* Submit Button */}
-          <Pressable
-            onPress={onUpdateCattery}
-            style={styles.SubmitButton}>
+          <Pressable onPress={onUpdateCattery} style={styles.SubmitButton}>
             <Text style={styles.SubmitButtonText}>Submit</Text>
           </Pressable>
         </View>
@@ -148,7 +174,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
       </ScrollView>
     </KeyboardAvoidingView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -158,7 +184,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "PoppinsSemiBold",
-    color: '#F59156',
+    color: "#F59156",
     fontStyle: "normal",
     fontWeight: "600",
     fontSize: 24,
@@ -166,11 +192,11 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     fontFamily: "PoppinsSemiBold",
-    color: '#F59156',
+    color: "#F59156",
     marginTop: 10,
     marginBottom: 10,
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   textInput: {
     fontFamily: "Poppins",
@@ -179,7 +205,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     fontSize: 14,
-    padding: 10
+    padding: 10,
   },
   SubmitButton: {
     backgroundColor: "#FFB801",
@@ -187,14 +213,14 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: "center",
     padding: 16,
-    marginTop: '10%'
+    marginTop: "10%",
   },
   SubmitButtonText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 16,
-    color: '#FFFFFF',
-    fontWeight: '600',
-    marginTop:5,
+    color: "#FFFFFF",
+    fontWeight: "600",
+    marginTop: 5,
     fontFamily: "PoppinsSemiBold",
   },
 });
