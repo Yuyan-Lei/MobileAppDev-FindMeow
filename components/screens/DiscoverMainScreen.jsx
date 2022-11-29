@@ -202,7 +202,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   RBSheetCustomStyles: {
     wrapper: {
-      backgroundColor: "transparent",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
       container: {
         borderRadius: 28,
       },
