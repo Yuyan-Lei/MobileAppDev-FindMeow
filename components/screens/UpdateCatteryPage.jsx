@@ -122,7 +122,6 @@ export default function UpdateCatteryPage({ route, navigation }) {
           {/* Address */}
           <Text style={styles.subTitle}>Address</Text>
           <GooglePlacesAutocomplete
-            // fontFamily="Poppins"
             styles={{ textInput: { fontFamily: "Poppins" } }}
             placeholder="Search"
             ref={ref}

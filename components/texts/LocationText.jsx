@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Text, View } from "react-native";
+import { Colors } from "../styles/Colors";
 
 export function LocationText({ textStyle, locationIconColor, children }) {
   return (
@@ -8,15 +9,21 @@ export function LocationText({ textStyle, locationIconColor, children }) {
       <View style={{ position: "relative", top: 5 }}>
         <Ionicons
           name="location-sharp"
-          color={locationIconColor || "#F59156"}
+          color={locationIconColor || Colors.orangeText}
           size={12}
         />
       </View>
-      <Text style={[{
-        fontSize: 12,
-        color: "gray",
-        marginTop: 6,
-      }, textStyle]}>
+      <Text
+        style={[
+          {
+            fontSize: 12,
+            color: "gray",
+            marginTop: 6,
+            fontFamily: "Poppins",
+          },
+          textStyle,
+        ]}
+      >
         {" "}
         {children}
       </Text>

@@ -121,17 +121,21 @@ function MainScreen({ route, navigation }) {
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Phone: </Text>
-              <Text>{cattery.phoneNumber}</Text>
+              <Text style={{ fontFamily: "Poppins" }}>
+                {cattery.phoneNumber}
+              </Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Website: </Text>
-              <Text>{cattery.website}</Text>
+              <Text style={{ fontFamily: "Poppins" }}>{cattery.website}</Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Address: </Text>
-              <Text>{catteryFullAddress}</Text>
+              <Text style={{ fontFamily: "Poppins" }}>
+                {catteryFullAddress}
+              </Text>
             </View>
           </View>
 
@@ -145,13 +149,14 @@ function MainScreen({ route, navigation }) {
             <FlatList
               data={cats}
               renderItem={({ item, index }) => (
-                <CatCard 
+                <CatCard
                   cat={buildCatItem(item)}
                   navigation={navigation}
-                  hideLocation />
+                  hideLocation
+                />
               )}
               numColumns={2}
-              ListFooterComponent={<View style={{height: 2150}}/>}
+              ListFooterComponent={<View style={{ height: 2150 }} />}
             />
           </View>
         </View>
@@ -232,20 +237,23 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(250,250,250)",
   },
   catteryName: {
-    color: "#F59156",
+    color: Colors.orangeText,
     fontWeight: "800",
     fontSize: 24,
+    fontFamily: "PoppinsSemiBold",
   },
   infoTitle: {
-    color: "#F59156",
+    color: Colors.orangeText,
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 10,
+    fontFamily: "PoppinsSemiBold",
   },
   infoSubTitle: {
     fontWeight: "600",
     fontSize: 14,
     marginBottom: 8,
+    fontFamily: "PoppinsSemiBold",
   },
   infoText: {
     fontSize: 14,
