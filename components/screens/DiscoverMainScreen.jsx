@@ -44,6 +44,14 @@ function MainScreen({ route, navigation }) {
     setSelectedGender("");
   }
 
+  function isScrollToTop(event) {
+    return event.nativeEvent.contentOffset.y < 100;
+  }
+
+  function onScrollToTop() {
+    refreshCatData();
+  }
+
   /* Set user location. */
   useEffect(() => {
     (async () => {
@@ -52,51 +60,61 @@ function MainScreen({ route, navigation }) {
     })();
   }, []);
 
+  const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
+  async function refreshCatData() {
+    setRefreshCatDataLock(true);
+    try {
+      let q;
+      // 1. Newer Post
+      if (selectedIndex == 0) {
+        q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
+      }
+      // 2. Nearby Post
+      else if (selectedIndex == 1) {
+        q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
+        // TODO ...
+      }
+      // 3. Lower Price
+      else if (selectedIndex == 2) {
+        q = query(collection(db, "Cats"), orderBy("Price", "desc"));
+      }
+
+      const catSnapShot = await getDocs(q);
+
+      setData(
+        catSnapShot.docs.map((catDoc) => {
+          const birthday = new Date(catDoc.data().Birthday);
+          const now = new Date();
+          let age =
+            now.getMonth() -
+            birthday.getMonth() +
+            12 * (now.getFullYear() - birthday.getFullYear());
+          // age cannot be negative
+          if (age === undefined || isNaN(age) || age < 0) {
+            age = 0;
+          }
+
+          return {
+            id: catDoc.id,
+            name: catDoc.data().Breed,
+            sex: catDoc.data().Gender,
+            price: catDoc.data().Price,
+            month: age,
+            photo: catDoc.data().Picture,
+            cattery: catDoc.data().Cattery,
+            uploadTime: catDoc.data().UploadTime,
+          };
+        })
+      );
+    } finally {
+      setRefreshCatDataLock(false);
+    }
+  }
+
   /* data collector used for top filter tags - start */
   const [data, setData] = useState([]);
-  useEffect(async () => {
-    let q;
-    // 1. Newer Post
-    if (selectedIndex == 0) {
-      q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
-    }
-    // 2. Nearby Post
-    else if (selectedIndex == 1) {
-      q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
-      // TODO ...
-    }
-    // 3. Lower Price
-    else if (selectedIndex == 2) {
-      q = query(collection(db, "Cats"), orderBy("Price", "desc"));
-    }
-
-    const catSnapShot = await getDocs(q);
-
-    setData(
-      catSnapShot.docs.map((catDoc) => {
-        const birthday = new Date(catDoc.data().Birthday);
-        const now = new Date();
-        let age =
-          now.getMonth() -
-          birthday.getMonth() +
-          12 * (now.getFullYear() - birthday.getFullYear());
-        // age cannot be negative
-        if (age === undefined || isNaN(age) || age < 0) {
-          age = 0;
-        }
-
-        return {
-          id: catDoc.id,
-          name: catDoc.data().Breed,
-          sex: catDoc.data().Gender,
-          price: catDoc.data().Price,
-          month: age,
-          photo: catDoc.data().Picture,
-          cattery: catDoc.data().Cattery,
-          uploadTime: catDoc.data().UploadTime,
-        };
-      })
-    );
+  useEffect(() => {
+    refreshCatData();
   }, []);
   /* data collector used for top filter tags - end */
 
@@ -186,6 +204,11 @@ function MainScreen({ route, navigation }) {
           numColumns={2}
           extraData={location}
           ListFooterComponent={<View style={{ height: 80 }} />}
+          onScrollEndDrag={(event) => {
+            if (isScrollToTop(event)) {
+              onScrollToTop();
+            }
+          }}
         />
       </View>
     </View>
