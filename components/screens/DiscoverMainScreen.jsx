@@ -40,7 +40,6 @@ function MainScreen({ route, navigation }) {
   /* Set user location. */
   useEffect(() => {
     (async () => {
-
       let location = await getUserLocation();
       setLocation(location);
     })();
@@ -175,11 +174,9 @@ function MainScreen({ route, navigation }) {
       <View>
         <FlatList
           data={data}
-          renderItem={({ item, index }) => 
-            <CatCard 
-              cat={item} 
-              navigation={navigation}
-              location={location} />}
+          renderItem={({ item, index }) => (
+            <CatCard cat={item} navigation={navigation} location={location} />
+          )}
           numColumns={2}
           extraData={location}
           ListFooterComponent={<View style={{ height: 80 }} />}
