@@ -325,10 +325,16 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import { getUserLocation, haversine_distance } from "../../firebaseUtils/user";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import {
+  getUserLocation,
+  haversine_distance,
+  getCattery,
+  userLikeACat,
+  userUnLikeACat,
+} from "../../firebaseUtils/user";
 import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
 import { Client } from "@googlemaps/google-maps-services-js";
-// import { Chip } from "../pressable/Chip";
 
 export default function CatInformation({ route, navigation }) {
   // function RenderContent() {
@@ -428,6 +434,7 @@ export default function CatInformation({ route, navigation }) {
   const [cattery, setCattery] = useState([]);
   const [location, setLocation] = useState(null);
   const [distance, setDistance] = useState("Distance Loading");
+  const [likeCats, setLikeCats] = useState([]);
 
   /* Set user location. */
   useEffect(() => {
@@ -489,11 +496,29 @@ export default function CatInformation({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikeCats(likeCats);
+      }
+    );
+
+    return () => unSubscribe();
+  }, []);
+
+  const onClickLikeButton = () => {
+    if (!likeCats.includes(cat.id)) {
+      userLikeACat(cat.id);
+    } else {
+      userUnLikeACat(cat.id);
+    }
+  };
+
   return (
     <ScrollView>
-
       <View>
-
         {/* Background Image */}
         <Image
           source={{ uri: cat.Picture }}
@@ -505,8 +530,8 @@ export default function CatInformation({ route, navigation }) {
         <View style={styles.floatingView}>
           <HeartButton
             notSelectedColor="white"
-            // isLiked={likeCats.includes(cat.id)}
-            // onPress={onClickLikeButton}
+            isLiked={likeCats.includes(cat.id)}
+            onPress={onClickLikeButton}
           />
         </View>
 
@@ -528,12 +553,13 @@ export default function CatInformation({ route, navigation }) {
         </View>
         {/* END: goBack button and heart button */}
 
-
         {/* Main Contents */}
-        <View style={{ 
-          marginHorizontal: 15,
-          borderRadius: 40,
-         }}>
+        <View
+          style={{
+            marginHorizontal: 15,
+            borderRadius: 40,
+          }}
+        >
           <View
             style={{
               flexDirection: "row",
@@ -558,14 +584,10 @@ export default function CatInformation({ route, navigation }) {
               </View>
             </View>
           </View>
-          
+
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.catNameText}>{cat.Name}</Text>
-            <Text
-              style={styles.priceText}
-            >
-              ${cat.Price}
-            </Text>
+            <Text style={styles.priceText}>${cat.Price}</Text>
           </View>
           {/* TODO: CATTERY LOCATION */}
           <View style={{ flexDirection: "row" }}>
@@ -575,6 +597,7 @@ export default function CatInformation({ route, navigation }) {
               color={Colors.darkOrange}
             />
             <Text style={styles.addressText}>{cattery.address}</Text>
+            <Text style={styles.addressText}>({distance})</Text>
           </View>
           {/* <Text style={styles.date}>{cat.Birthday}</Text> */}
           <Text style={styles.PostDateText}>Posted in {cat.Birthday}</Text>
@@ -598,7 +621,9 @@ export default function CatInformation({ route, navigation }) {
             <Text style={styles.contactText}>Contact Info</Text>
             <View style={{ flexDirection: "row" }}>
               <View>
-                <Text style={styles.catteryNameText}>{cattery.catteryName}</Text>
+                <Text style={styles.catteryNameText}>
+                  {cattery.catteryName}
+                </Text>
                 <Text style={styles.catteryLabelText}>Cattery</Text>
               </View>
               <View style={{ width: 200 }}></View>
@@ -714,26 +739,26 @@ const styles = StyleSheet.create({
 
   tagTitleText: {
     fontSize: 13,
-    color: 'rgba(46, 37, 37, 0.5)',
+    color: "rgba(46, 37, 37, 0.5)",
     fontFamily: "PoppinsRegular",
     marginVertical: 5,
   },
   tagContentText: {
     fontSize: 15,
-    color: '#2E2525',
+    color: "#2E2525",
     fontFamily: "PoppinsSemiBold",
     marginBottom: 5,
   },
 
   catNameText: {
     fontSize: 28,
-    color: '#2E2525',
+    color: "#2E2525",
     fontFamily: "PoppinsBold",
     marginBottom: 20,
   },
   priceText: {
     fontSize: 23,
-    color: '#F6AC3D',
+    color: "#F6AC3D",
     fontFamily: "PoppinsMedium",
     textAlign: "right",
     marginLeft: "auto",
@@ -742,13 +767,13 @@ const styles = StyleSheet.create({
 
   addressText: {
     fontSize: 15,
-    color: '#2E2525',
+    color: "#2E2525",
     fontFamily: "PoppinsMedium",
     marginLeft: 5,
   },
-  PostDateText : {
+  PostDateText: {
     fontSize: 14,
-    color: 'rgba(46, 37, 37, 0.67)',
+    color: "rgba(46, 37, 37, 0.67)",
     fontFamily: "PoppinsLight",
     marginTop: 8,
     marginBottom: 15,
@@ -771,10 +796,10 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     fontSize: 15,
-    color: 'rgba(46, 37, 37, 0.76)',
+    color: "rgba(46, 37, 37, 0.76)",
     fontFamily: "PoppinsRegular",
   },
-  
+
   contactLabelContainer: {
     backgroundColor: "white",
     alignItems: "center",
@@ -791,12 +816,12 @@ const styles = StyleSheet.create({
   },
   catteryNameText: {
     fontSize: 14,
-    color: '#2E2525',
+    color: "#2E2525",
     fontFamily: "PoppinsMedium",
   },
   catteryLabelText: {
     fontSize: 12,
-    color: 'rgba(46, 37, 37, 0.63)',
+    color: "rgba(46, 37, 37, 0.63)",
     fontFamily: "PoppinsMedium",
     marginTop: 5,
     marginBottom: 15,
