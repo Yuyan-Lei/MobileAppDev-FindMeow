@@ -90,8 +90,7 @@ function MainScreen({ route, navigation }) {
       cattery: cat.Cattery,
       photo: cat.Picture,
       breed: cat.breed,
-    }
-
+    };
   };
 
   const onUpdateCattery = () => {
@@ -172,14 +171,14 @@ function MainScreen({ route, navigation }) {
               renderItem={({ item, index }) => (
                 <CatCard
                   cat={buildCatItem(item)}
-
-                  navigation={navigation} 
+                  navigation={navigation}
                   hideLocation
-                  showBreed />}
+                  showBreed
+                />
+              )}
               numColumns={2}
-              ListFooterComponent={<View style={{height: 1550}}/>}
-              />
-
+              ListFooterComponent={<View style={{ height: 1550 }} />}
+            />
           </View>
         </View>
 
