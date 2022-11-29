@@ -49,25 +49,25 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
 
   // Verify all the inputs in this page and return the error message if any errors.
   const verifyInput = () => {
-    if (catName === '') {
+    if (catName === "") {
       return "You didn't specify a cat name, please fill that.";
     }
     if (image === null) {
       return "You didn't set the image, please take a photo or upload a local image.";
     }
-    if (breed === '') {
+    if (breed === "") {
       return "You didn't specify the breed of the cat, please fill that.";
     }
     if (birthDate === null) {
       return "You didn't specify the birth date of the cat, please fill that.";
     }
     if (isNaN(price) || price <= 0) {
-      return "You didn't specify the price or set an invalid price, please fill or fix that."
+      return "You didn't specify the price or set an invalid price, please fill or fix that.";
     }
-    if (gender === '') {
+    if (gender === "") {
       return "You didn't specify the gender of the cat, please fill that.";
     }
-    return '';
+    return "";
   };
 
   const convertDateToStr = (date) => {
@@ -98,7 +98,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
     /* Fix double clicking */
     if (onPostNewCatLocked) return;
     const errorInInput = verifyInput();
-    if (errorInInput !== '') {
+    if (errorInInput !== "") {
       Alert.alert("Post new cat failed", errorInInput);
       return;
     }
@@ -150,7 +150,6 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
       style={{ flex: 1 }}
     >
       <ScrollView style={styles.container}>
-
         {/* Screen Title */}
         <View
           style={{
@@ -234,7 +233,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             backgroundColor: "white",
             borderWidth: 0,
           }}
-          fontFamily= "Poppins"
+          fontFamily="Poppins"
           search={false}
         />
 
@@ -246,7 +245,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             value={price}
             keyboardType="number-pad"
             style={{ width: "95%" }}
-            onChangeText={price => setPrice(parseInt(price, 10))}
+            onChangeText={(price) => setPrice(parseInt(price, 10))}
           />
           <Text>$</Text>
         </View>
@@ -272,8 +271,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               vaccinated
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setVaccinated(!vaccinated)}
           ></Button>
@@ -285,8 +292,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               vetChecked
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setVetChecked(!vetChecked)}
           ></Button>
@@ -298,8 +313,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               dewormed
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setDewormed(!dewormed)}
           ></Button>
@@ -311,8 +334,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               ready
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setReady(!ready)}
           ></Button>
@@ -324,8 +355,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               neutered
-                ? { color: "white", fontSize: 14, fontFamily: "PoppinsSemiBold"}
-                : { color: Colors.orangeText, fontSize: 14, fontFamily: "Poppins"}
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setNeutered(!neutered)}
           ></Button>
