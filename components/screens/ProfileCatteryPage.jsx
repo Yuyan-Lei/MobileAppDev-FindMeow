@@ -100,67 +100,80 @@ function MainScreen({ route, navigation }) {
   return cattery ? (
     <View style={styles.container}>
       <View>
-        <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
-          {cattery.picture && (
-            <Image
-              source={{ uri: cattery.picture }}
-              style={{ width: "100%", height: "100%" }}
-            />
-          )}
-        </View>
-      </View>
-
-      {/* Top left - back button */}
-      <View style={styles.backButtonView}>
         <View>
-          <Pressable onPress={rootStackNavigateBack}>
-            <Feather name="arrow-left-circle" size={24} color="black" />
-          </Pressable>
-        </View>
-      </View>
-
-      {/* Top right - update cattery button */}
-      <View style={styles.updateButtonView}>
-        <View>
-          <Pressable onPress={onUpdateCattery}>
-            <Feather name="edit" size={24} color="black" />
-          </Pressable>
-        </View>
-      </View>
-
-      <View style={styles.catterDetailView}>
-        {/* cattery name & address */}
-        <View style={styles.nameAndAddressView}>
-          <Text style={styles.catteryName}>{cattery.catteryName}</Text>
-
-          <View style={{ padding: 4 }}>
-            <LocationText>{catteryShortAddress}</LocationText>
+          <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
+            {cattery.picture && (
+              <Image
+                source={{ uri: cattery.picture }}
+                style={{ width: "100%", height: "100%" }}
+              />
+            )}
           </View>
         </View>
 
-        <View style={{ height: 24 }} />
+        {/* Top left - back button */}
+        <View style={styles.backButtonView}>
+          <View>
+            <Pressable onPress={rootStackNavigateBack}>
+              <Feather name="arrow-left-circle" size={24} color="black" />
+            </Pressable>
+          </View>
+        </View>
 
-        {/* cattery info: phone number, website, address */}
-        <View
-          style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
-        >
-          <Text style={styles.infoTitle}>About</Text>
+        {/* Top right - update cattery button */}
+        <View style={styles.updateButtonView}>
+          <View>
+            <Pressable onPress={onUpdateCattery}>
+              <Feather name="edit" size={24} color="black" />
+            </Pressable>
+          </View>
+        </View>
 
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.infoSubTitle}>Phone: </Text>
-            <Text style={{ fontFamily: "Poppins" }}>{cattery.phoneNumber}</Text>
+        <View style={styles.catterDetailView}>
+          {/* cattery name & address */}
+          <View style={styles.nameAndAddressView}>
+            <Text style={styles.catteryName}>{cattery.catteryName}</Text>
+
+            <View style={{ padding: 4 }}>
+              <LocationText>{catteryShortAddress}</LocationText>
+            </View>
           </View>
 
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.infoSubTitle}>Website: </Text>
-            <Text style={{ fontFamily: "Poppins" }}>{cattery.website}</Text>
+          <View style={{ height: 24 }} />
+
+          {/* cattery info: phone number, website, address */}
+          <View
+            style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
+          >
+            <Text style={styles.infoTitle}>About</Text>
+
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.infoSubTitle}>Phone: </Text>
+              <Text style={{ fontFamily: "Poppins" }}>
+                {cattery.phoneNumber}
+              </Text>
+            </View>
+
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.infoSubTitle}>Website: </Text>
+              <Text style={{ fontFamily: "Poppins" }}>{cattery.website}</Text>
+            </View>
+
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.infoSubTitle}>Address: </Text>
+              <Text style={{ fontFamily: "Poppins" }}>
+                {catteryFullAddress}
+              </Text>
+            </View>
           </View>
 
           <View style={{ height: 24 }} />
 
           {/* available kittens */}
           <View style={styles.kittensView}>
-            <Text style={styles.infoTitle}>Available Kittens</Text>
+            <View style={{ margin: 8 }}>
+              <Text style={styles.infoTitle}>Available Kittens</Text>
+            </View>
             <FlatList
               data={cats}
               renderItem={({ item, index }) => (
@@ -195,7 +208,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
 
 const styles = StyleSheet.create({
   kittensView: {
-    // padding: 16,
+    padding: 16,
     backgroundColor: "white",
     borderRadius: 12,
   },
