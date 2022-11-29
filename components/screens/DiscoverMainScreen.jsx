@@ -1,5 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  QuerySnapshot,
+} from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -37,36 +44,46 @@ function MainScreen({ route, navigation }) {
     setSelectedGender("");
   }
 
+  function isScrollToTop(event) {
+    return event.nativeEvent.contentOffset.y < 100;
+  }
+
+  function onScrollToTop() {
+    refreshCatData();
+  }
+
   /* Set user location. */
   useEffect(() => {
     (async () => {
-
       let location = await getUserLocation();
       setLocation(location);
     })();
   }, []);
 
-  /* data collector used for top filter tags - start */
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    let q;
-    // 1. Newer Post
-    if (selectedIndex == 0) {
-      q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
-    }
-    // 2. Nearby Post
-    else if (selectedIndex == 1) {
-      q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
-      // TODO ...
-    }
-    // 3. Lower Price
-    else if (selectedIndex == 2) {
-      q = query(collection(db, "Cats"), orderBy("Price", "desc"));
-    }
-    const unSubscribe = onSnapshot(q, (snapshot) => {
+  const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
+  async function refreshCatData() {
+    setRefreshCatDataLock(true);
+    try {
+      let q;
+      // 1. Newer Post
+      if (selectedIndex == 0) {
+        q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
+      }
+      // 2. Nearby Post
+      else if (selectedIndex == 1) {
+        q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
+        // TODO ...
+      }
+      // 3. Lower Price
+      else if (selectedIndex == 2) {
+        q = query(collection(db, "Cats"), orderBy("Price", "desc"));
+      }
+
+      const catSnapShot = await getDocs(q);
+
       setData(
-        snapshot.docs.map((entry) => {
-          const birthday = new Date(entry.data().Birthday);
+        catSnapShot.docs.map((catDoc) => {
+          const birthday = new Date(catDoc.data().Birthday);
           const now = new Date();
           let age =
             now.getMonth() -
@@ -78,20 +95,26 @@ function MainScreen({ route, navigation }) {
           }
 
           return {
-            id: entry.id,
-            name: entry.data().Breed,
-            sex: entry.data().Gender,
-            price: entry.data().Price,
+            id: catDoc.id,
+            name: catDoc.data().Breed,
+            sex: catDoc.data().Gender,
+            price: catDoc.data().Price,
             month: age,
-            photo: entry.data().Picture,
-            cattery: entry.data().Cattery,
-            uploadTime: entry.data().UploadTime,
+            photo: catDoc.data().Picture,
+            cattery: catDoc.data().Cattery,
+            uploadTime: catDoc.data().UploadTime,
           };
         })
       );
-    });
+    } finally {
+      setRefreshCatDataLock(false);
+    }
+  }
 
-    return () => unSubscribe();
+  /* data collector used for top filter tags - start */
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    refreshCatData();
   }, []);
   /* data collector used for top filter tags - end */
 
@@ -117,6 +140,16 @@ function MainScreen({ route, navigation }) {
     setSelectedIndex(value);
   };
   /* events for top filter tags - end */
+
+  useEffect(() => {
+    setInterval(() => {
+      refreshCatData();
+    }, 10000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -175,14 +208,17 @@ function MainScreen({ route, navigation }) {
       <View>
         <FlatList
           data={data}
-          renderItem={({ item, index }) => 
-            <CatCard 
-              cat={item} 
-              navigation={navigation}
-              location={location} />}
+          renderItem={({ item, index }) => (
+            <CatCard cat={item} navigation={navigation} location={location} />
+          )}
           numColumns={2}
           extraData={location}
           ListFooterComponent={<View style={{ height: 80 }} />}
+          onScrollEndDrag={(event) => {
+            if (isScrollToTop(event)) {
+              onScrollToTop();
+            }
+          }}
         />
       </View>
     </View>
