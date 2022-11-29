@@ -1,5 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  QuerySnapshot,
+} from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -47,7 +54,7 @@ function MainScreen({ route, navigation }) {
 
   /* data collector used for top filter tags - start */
   const [data, setData] = useState([]);
-  useEffect(() => {
+  useEffect(async () => {
     let q;
     // 1. Newer Post
     if (selectedIndex == 0) {
@@ -62,35 +69,34 @@ function MainScreen({ route, navigation }) {
     else if (selectedIndex == 2) {
       q = query(collection(db, "Cats"), orderBy("Price", "desc"));
     }
-    const unSubscribe = onSnapshot(q, (snapshot) => {
-      setData(
-        snapshot.docs.map((entry) => {
-          const birthday = new Date(entry.data().Birthday);
-          const now = new Date();
-          let age =
-            now.getMonth() -
-            birthday.getMonth() +
-            12 * (now.getFullYear() - birthday.getFullYear());
-          // age cannot be negative
-          if (age === undefined || isNaN(age) || age < 0) {
-            age = 0;
-          }
 
-          return {
-            id: entry.id,
-            name: entry.data().Breed,
-            sex: entry.data().Gender,
-            price: entry.data().Price,
-            month: age,
-            photo: entry.data().Picture,
-            cattery: entry.data().Cattery,
-            uploadTime: entry.data().UploadTime,
-          };
-        })
-      );
-    });
+    const catSnapShot = await getDocs(q);
 
-    return () => unSubscribe();
+    setData(
+      catSnapShot.docs.map((catDoc) => {
+        const birthday = new Date(catDoc.data().Birthday);
+        const now = new Date();
+        let age =
+          now.getMonth() -
+          birthday.getMonth() +
+          12 * (now.getFullYear() - birthday.getFullYear());
+        // age cannot be negative
+        if (age === undefined || isNaN(age) || age < 0) {
+          age = 0;
+        }
+
+        return {
+          id: catDoc.id,
+          name: catDoc.data().Breed,
+          sex: catDoc.data().Gender,
+          price: catDoc.data().Price,
+          month: age,
+          photo: catDoc.data().Picture,
+          cattery: catDoc.data().Cattery,
+          uploadTime: catDoc.data().UploadTime,
+        };
+      })
+    );
   }, []);
   /* data collector used for top filter tags - end */
 
