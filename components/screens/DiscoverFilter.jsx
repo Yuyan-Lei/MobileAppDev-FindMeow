@@ -1,4 +1,4 @@
-import { Icon, Slider } from "@rneui/themed";
+import { Icon, Slider, Button } from "@rneui/themed";
 import React, { useState } from "react";
 import {
   Alert,
@@ -55,6 +55,12 @@ const DiscoverFilter = ({
     { key: "Female", value: "Female" },
     { key: "Male", value: "Male" },
   ];
+
+  const [vaccinated, setVaccinated] = useState(false);
+  const [vetChecked, setVetChecked] = useState(false);
+  const [dewormed, setDewormed] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [neutered, setNeutered] = useState(false);
 
   const resetHandler = () => {
     setBreedLocal(selectedBreed);
@@ -146,6 +152,116 @@ const DiscoverFilter = ({
         defaultOption={{ key: selectedState, value: selectedState }}
       />
 
+      <View>
+        <View style={styles.ButtonContainer}>
+          <Button
+            title="Vaccinated"
+            type={vaccinated ? "solid" : "outline"}
+            containerStyle={styles.Button}
+            color={Colors.orangeText}
+            buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
+            titleStyle={
+              vaccinated
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
+            }
+            onPress={() => setVaccinated(!vaccinated)}
+          ></Button>
+          <Button
+            title="Vet Checked"
+            type={vetChecked ? "solid" : "outline"}
+            containerStyle={styles.Button}
+            color={Colors.orangeText}
+            buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
+            titleStyle={
+              vetChecked
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
+            }
+            onPress={() => setVetChecked(!vetChecked)}
+          ></Button>
+          <Button
+            title="Dewormed"
+            type={dewormed ? "solid" : "outline"}
+            containerStyle={styles.Button}
+            color={Colors.orangeText}
+            buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
+            titleStyle={
+              dewormed
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
+            }
+            onPress={() => setDewormed(!dewormed)}
+          ></Button>
+          <Button
+            title="Ready to go home"
+            type={ready ? "solid" : "outline"}
+            containerStyle={styles.Button}
+            color={Colors.orangeText}
+            buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
+            titleStyle={
+              ready
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
+            }
+            onPress={() => setReady(!ready)}
+          ></Button>
+          <Button
+            title="Neutered / Spayed"
+            type={neutered ? "solid" : "outline"}
+            containerStyle={styles.Button}
+            color={Colors.orangeText}
+            buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
+            titleStyle={
+              neutered
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
+            }
+            onPress={() => setNeutered(!neutered)}
+          ></Button>
+        </View>
+      </View>
+
       <View style={styles.submitButtonContainer}>
         <Pressable onPress={resetHandler} style={styles.submitButton}>
           <Text style={styles.submitText}>Reset</Text>
@@ -183,7 +299,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsBold",
     fontSize: 26,
     textAlign: "left",
-    color: "#F59156",
+    color: Colors.orangeText,
     marginTop: 20,
     marginLeft: 5,
     marginBottom: 5,
@@ -234,6 +350,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 18,
+  },
+  ButtonContainer: {
+    marginTop: 25,
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  Button: {
+    margin: 5,
+    borderColor: Colors.orangeText,
   },
 });
 

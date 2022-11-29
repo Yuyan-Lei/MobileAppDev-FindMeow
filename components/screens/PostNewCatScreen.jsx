@@ -273,8 +273,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               vaccinated
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setVaccinated(!vaccinated)}
           ></Button>
@@ -286,8 +294,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               vetChecked
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setVetChecked(!vetChecked)}
           ></Button>
@@ -299,8 +315,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               dewormed
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setDewormed(!dewormed)}
           ></Button>
@@ -312,8 +336,16 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
               ready
-                ? { color: "white", fontSize: 14 }
-                : { color: Colors.orangeText, fontSize: 14 }
+                ? {
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
+                : {
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setReady(!ready)}
           ></Button>
