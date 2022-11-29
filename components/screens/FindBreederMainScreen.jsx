@@ -101,7 +101,6 @@ function MainScreen({ route, navigation }) {
           closeOnDragDown={true}
           closeOnPressMask={true}
           keyboardAvoidingViewEnabled={true}
-          animationType="slide"
           customStyles={styles.RBSheetCustomStyles}
           height={495}
         >
@@ -147,7 +146,7 @@ export default function FindBreederMainScreen() {
 const styles = StyleSheet.create({
   RBSheetCustomStyles: {
     wrapper: {
-      backgroundColor: "transparent",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
       container: {
         borderRadius: 28,
       },

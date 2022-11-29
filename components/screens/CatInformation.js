@@ -726,32 +726,33 @@ const styles = StyleSheet.create({
   },
 
   catNameText: {
-    fontSize: 30,
+    fontSize: 28,
     color: '#2E2525',
     fontFamily: "PoppinsBold",
-    marginVertical: 20,
+    marginBottom: 20,
   },
   priceText: {
-    fontSize: 25,
+    fontSize: 23,
     color: '#F6AC3D',
     fontFamily: "PoppinsMedium",
     textAlign: "right",
     marginLeft: "auto",
-    marginVertical: 20,
+    marginBottom: 20,
   },
 
   addressText: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#2E2525',
     fontFamily: "PoppinsMedium",
     marginLeft: 5,
   },
   PostDateText : {
-    fontSize: 15,
+    fontSize: 14,
     color: 'rgba(46, 37, 37, 0.67)',
     fontFamily: "PoppinsLight",
-    marginTop: 10,
+    marginTop: 8,
     marginBottom: 15,
+    marginLeft: 5,
   },
 
   detailLabel: {
