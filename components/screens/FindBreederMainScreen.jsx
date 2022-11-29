@@ -155,6 +155,9 @@ const styles = StyleSheet.create({
         width: 100,
       },
     },
+    container: {
+      borderRadius: 28,
+    },
   },
   containter: {
     alignItems: "center",

@@ -203,13 +203,13 @@ const styles = StyleSheet.create({
   RBSheetCustomStyles: {
     wrapper: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
-      container: {
-        borderRadius: 28,
-      },
       draggableIcon: {
         backgroundColor: "#EFEFEF",
         width: 100,
       },
+    },
+    container: {
+      borderRadius: 28,
     },
   },
   filterButtonView: {
