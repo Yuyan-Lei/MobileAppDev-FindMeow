@@ -1,4 +1,4 @@
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   collection,
@@ -115,7 +115,7 @@ function MainScreen({ route, navigation }) {
         <View style={styles.backButtonView}>
           <View>
             <Pressable onPress={rootStackNavigateBack}>
-              <Feather name="arrow-left-circle" size={24} color="black" />
+              <Ionicons name="chevron-back" size={24} color="white" />
             </Pressable>
           </View>
         </View>
@@ -124,7 +124,7 @@ function MainScreen({ route, navigation }) {
         <View style={styles.updateButtonView}>
           <View>
             <Pressable onPress={onUpdateCattery}>
-              <Feather name="edit" size={24} color="black" />
+              <Feather name="edit" size={24} color="white" />
             </Pressable>
           </View>
         </View>
@@ -226,12 +226,20 @@ const styles = StyleSheet.create({
   updateButtonView: {
     position: "absolute",
     top: 48,
-    right: 12,
+    right: 22,
+    opacity: 0.5,
+    padding: 5,
+    backgroundColor: Colors.arrowBackground,
+    borderRadius: 13,
   },
   backButtonView: {
     position: "absolute",
     top: 48,
-    left: 12,
+    left: 22,
+    opacity: 0.5,
+    padding: 5,
+    backgroundColor: Colors.arrowBackground,
+    borderRadius: 13,
   },
   container: {
     backgroundColor: "rgb(250,250,250)",
