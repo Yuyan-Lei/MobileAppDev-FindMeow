@@ -197,7 +197,7 @@ function MainScreen({ route, navigation }) {
                 />
               )}
               numColumns={2}
-              ListFooterComponent={<View style={{ height: 1550 }} />}
+              ListFooterComponent={<View style={{ height: 2250 }} />}
             />
           </View>
         </View>
