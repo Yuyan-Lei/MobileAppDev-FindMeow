@@ -26,6 +26,8 @@ import { rootStackNavigateBack } from "../RootNavigation";
 import { LocationText } from "../texts/LocationText";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import { Colors } from "../styles/Colors";
+import { MessageButton } from "../pressable/MessageButton";
+import { PhoneButton } from "../pressable/PhoneButton";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -146,7 +148,17 @@ function MainScreen({ route, navigation }) {
             style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
           >
             <Text style={styles.infoTitle}>About</Text>
-
+            {/* <View
+              style={{
+                flexDirection: "row",
+                alignSelf: "flex-end",
+                position: "absolute",
+                marginTop: 20,
+              }}
+            >
+              <PhoneButton />
+              <MessageButton />
+            </View> */}
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Phone: </Text>
               <Text style={{ fontFamily: "Poppins" }}>

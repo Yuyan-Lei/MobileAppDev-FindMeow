@@ -6,6 +6,7 @@ import {
   onSnapshot,
   query,
   where,
+  doc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
@@ -19,14 +20,19 @@ import {
   View,
 } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { CatCard } from "../cards/CatCard";
 import { HeartButton } from "../pressable/HeartButton";
+import { MessageButton } from "../pressable/MessageButton";
+import { PhoneButton } from "../pressable/PhoneButton";
 import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
 import { Colors } from "../styles/Colors";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
+  const [likeCatteries, setLikeCatteries] = useState([]);
   const [cats, setCats] = useState([]);
   const cattery = route.params.cattery;
   const catteryShortAddress =
@@ -53,9 +59,28 @@ function MainScreen({ route, navigation }) {
         })
       );
     });
+    return () => unSubscribe();
+  }, []);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCatteries = snapshot.data().likeCatteries || [];
+        setLikeCatteries(likeCatteries);
+      }
+    );
 
     return () => unSubscribe();
   }, []);
+
+  const onClickLikeButton = () => {
+    if (!likeCatteries.includes(cattery.email)) {
+      userLikeACattery(cattery.email);
+    } else {
+      userUnLikeACattery(cattery.email);
+    }
+  };
 
   const buildCatItem = (cat) => {
     const birthday = new Date(cat.Birthday);
@@ -119,6 +144,17 @@ function MainScreen({ route, navigation }) {
           {/* cattery info: phone number, website, address */}
           <View style={styles.infoView}>
             <Text style={styles.infoTitle}>About</Text>
+            {/* <View
+              style={{
+                flexDirection: "row",
+                alignSelf: "flex-end",
+                position: "absolute",
+                marginTop: 20,
+              }}
+            >
+              <PhoneButton />
+              <MessageButton />
+            </View> */}
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Phone: </Text>
@@ -167,13 +203,8 @@ function MainScreen({ route, navigation }) {
       {/* floating components */}
       <View style={styles.floatingView}>
         <HeartButton
-          onPress={() => {
-            Alert.alert(
-              "Feature for this button is coming soon~",
-              "See you next time!",
-              [{ text: "Sad" }, { text: "Wait for you" }]
-            );
-          }}
+          isLiked={likeCatteries.includes(cattery.email)}
+          onPress={onClickLikeButton}
         />
       </View>
     </View>
