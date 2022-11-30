@@ -1,22 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  collection,
-  doc,
-  getDoc,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList, StyleSheet, View, Text } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { getAllCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import {
-  getAllCatteries,
-  getUserLikeCats,
-  getUserLocation,
-} from "../../firebaseUtils/user";
+import { getAllCatteries, getUserLocation } from "../../firebaseUtils/user";
 import { BreederCard } from "../cards/BreederCard";
 import { CatCard } from "../cards/CatCard";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -167,14 +156,6 @@ function MainScreen({ route, navigation }) {
   }
 
   /* subscribe user likes to display liked catteries and catteries  - start */
-  // useEffect(() => {
-  //   if (selectedIndex === 0) {
-  //     refreshLikedCatData();
-  //   } else {
-  //     refreshLikedCatteryData();
-  //   }
-  // }, [selectedIndex]);
-
   useEffect(() => {
     refreshLikedCatData();
     refreshLikedCatteryData();
