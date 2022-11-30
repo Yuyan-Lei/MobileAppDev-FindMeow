@@ -6,6 +6,7 @@ import {
   onSnapshot,
   query,
   where,
+  doc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
@@ -19,7 +20,7 @@ import {
   View,
 } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
-import { userLikeACattery, userUnLikeCattery } from "../../firebaseUtils/user";
+import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { CatCard } from "../cards/CatCard";
 import { HeartButton } from "../pressable/HeartButton";
@@ -58,6 +59,18 @@ function MainScreen({ route, navigation }) {
         })
       );
     });
+    return () => unSubscribe();
+  }, []);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCatteries = snapshot.data().likeCatteries || [];
+        setLikeCatteries(likeCatteries);
+      }
+    );
+
     return () => unSubscribe();
   }, []);
 
@@ -131,7 +144,7 @@ function MainScreen({ route, navigation }) {
           {/* cattery info: phone number, website, address */}
           <View style={styles.infoView}>
             <Text style={styles.infoTitle}>About</Text>
-            <View
+            {/* <View
               style={{
                 flexDirection: "row",
                 alignSelf: "flex-end",
@@ -141,7 +154,7 @@ function MainScreen({ route, navigation }) {
             >
               <PhoneButton />
               <MessageButton />
-            </View>
+            </View> */}
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Phone: </Text>

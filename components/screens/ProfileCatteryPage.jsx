@@ -148,7 +148,7 @@ function MainScreen({ route, navigation }) {
             style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
           >
             <Text style={styles.infoTitle}>About</Text>
-            <View
+            {/* <View
               style={{
                 flexDirection: "row",
                 alignSelf: "flex-end",
@@ -158,7 +158,7 @@ function MainScreen({ route, navigation }) {
             >
               <PhoneButton />
               <MessageButton />
-            </View>
+            </View> */}
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Phone: </Text>
               <Text style={{ fontFamily: "Poppins" }}>
