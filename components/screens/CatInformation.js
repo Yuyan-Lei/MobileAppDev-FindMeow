@@ -619,9 +619,13 @@ export default function CatInformation({ route, navigation }) {
           <View style={styles.contactLabelContainer}>
             <Text style={styles.contactText}>Contact Info</Text>
             <View style={{ flexDirection: "row" }}>
-              <Pressable>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("CatteryProfile", { cattery })
+                }
+              >
                 <Image
-                  source={{ uri: cattery.Picture }}
+                  source={{ uri: cat.Picture }}
                   resizeMode="cover"
                   style={{
                     padding: 8,
