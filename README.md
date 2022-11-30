@@ -31,7 +31,7 @@
    ```
 
    Feel free to sign up for your own accounts!
-   
+
 ## Iteration 2
 
 ### Contributions
@@ -41,7 +41,21 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 
 **Cuichan Wu**:
 
+1. Implemented and redesigned heart buttons for cat-information screen and find-breeder screen.
+2. Implemented cattery card in cat-information screen to get real time cattery name.
+3. Redesigned go back button style and icon.
+4. Implemented cat-information screen by adding cat details.
+5. Redesigned cat chip in post-new-cat screen and cat-information screen.
+6. Redesigned style for some screens.
+7. Adjusted datePicker color for iOS users.
+8. Unified font style on all screens.
+9. Added chips and enabled users to filter cats on discover-cat screen.
+10. Added cattery photo in cat-information cattery contact section.
+11. Implemented simple notification.
+12. Enabled users to make a phone call when press the phone button.
+
 **Yuyan Lei**:
+
 1. Implemented verification and error alerts on the login & signup page.
 2. Added the password confirmation to the signup page.
 3. Enabled users to star a cattery and displayed the realtime collection list.
@@ -61,6 +75,7 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 ### Features and bugs remaining to resolve in the next iteration
 
 **Features to expect**:
+
 1. Implement the display-nearby-cats feature on the DiscoverCat screen.
 2. Implement the map feature for the discoverCat screen.
 3. Implement the filter feature for both discoverCat screen and findBreeder screen.
@@ -70,9 +85,9 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 7. Unify the stylesheets and colors.
 
 **Bugs**:
+
 1. Long loading time for distance display.
 2. Long loading time when posting a new cat.
-
 
 ## Iteration 1
 
@@ -98,11 +113,11 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 2. Designed the database structure, and implemented the firebase CRUD.
 3. Built the navigation bar, and enabled it to display different menus to buyers/cattery owners.
 4. Built the login&signup screen, and implemented the authentication & registration feature.
-5. Built the post screen, and implemented the post-new-cat feature. 
-6. Implemented the star-a-cat feature. 
+5. Built the post screen, and implemented the post-new-cat feature.
+6. Implemented the star-a-cat feature.
 7. Built the profile screen, displayed an extra cattery-profile-page button for cattery owners, and implemented the logout feature.
 8. Built the cattery profile screen, and implemented the real-time display of profile information and available cats.
-9. Built the UpdateCattery screen, and implemented the update-cattery-info feature. 
+9. Built the UpdateCattery screen, and implemented the update-cattery-info feature.
 10. Implemented the real-time display on the cat card component.
 11. Implemented the real-time display on the cattery card component.
 12. Refined the layouts of the CatCard component, FindBreeders screen, and two filter components.
@@ -151,20 +166,16 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 3. Require to unify colors.
 
 ### ScreenShots For Iteratio 1
-![](screenshots/Login.jpg)
 
+![](screenshots/Login.jpg)
 
 ![](screenshots/Cat.jpg)
 
-
 ![](screenshots/Cattery.jpg)
-
 
 ![](screenshots/User.jpg)
 
-
 ![](screenshots/Cattery's.jpg)
-
 
 ## Project Descriptions
 
