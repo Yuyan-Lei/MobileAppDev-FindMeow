@@ -329,7 +329,7 @@ import {
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import {
   getUserLocation,
-  haversine_distance,
+  calculateDistance,
   getCattery,
   userLikeACat,
   userUnLikeACat,
@@ -466,8 +466,8 @@ export default function CatInformation({ route, navigation }) {
         })
         .then((resp) => {
           setDistance(
-            haversine_distance(location, resp.data.result.geometry.location) +
-              "mi"
+            calculateDistance(location, resp.data.result.geometry.location) +
+              "km"
           );
         });
     }
@@ -608,7 +608,7 @@ export default function CatInformation({ route, navigation }) {
               color={Colors.darkOrange}
             />
             <Text style={styles.addressText}>{cattery.address}</Text>
-            <Text style={styles.addressText}>({distance})</Text>
+            {distance !== "Distance Loading" && <Text style={styles.addressText}>({distance})</Text>}
           </View>
           {/* <Text style={styles.date}>{cat.Birthday}</Text> */}
           <Text style={styles.PostDateText}>Posted in {cat.Birthday}</Text>
