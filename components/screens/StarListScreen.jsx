@@ -39,7 +39,8 @@ function CatsScreen({ navigation, cats, isScrollToTop, onScrollToTop }) {
     <View
       style={{
         paddingHorizontal: 16,
-        paddingBottom: 200,
+        paddingTop: 0,
+        paddingBottom: 100,
       }}
     >
       <FlatList
