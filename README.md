@@ -30,14 +30,53 @@
       Password: 123456
    ```
 
-   Feel free to sign up for your own accounts! (But please do not try to enter any invalid characters, the input verification feature is still on the way:)
-
-## Iteration 1
+   Feel free to sign up for your own accounts!
+   
+## Iteration 2
 
 ### Contributions
 
 **Group members**:
 Cuichan Wu, Yuyan Lei, Zhongyi Lu.
+
+**Cuichan Wu**:
+
+**Yuyan Lei**:
+1. Implemented verification and error alerts on the login & signup page.
+2. Added the password confirmation to the signup page.
+3. Enabled users to star a cattery and displayed the realtime collection list.
+4. Enabled users to take a photo with the camera and post it as a kitten photo.
+5. Built an edit-posted-cat screen, and enabled users to edit or remove a posted cat.
+6. Built a new update-password screen, and enabled users to update their passwords.
+7. Implemented the distance calculation and added the distance display to the cat card component.
+8. Implemented different input verifications to all input places.
+9. Build a heart button component and an edit button component, which are specially for cat-info page and cattery-profile page.
+10. Unified the text, button, container and component styles on different screens.
+11. Redesigned and rewrote some screens.
+12. Rearranged some components to isolated files.
+13. Fixed some bugs.
+
+**Zhongyi Lu**:
+
+### Features and bugs remaining to resolve in the next iteration
+
+**Features to expect**:
+1. Implement the display-nearby-cats feature on the DiscoverCat screen.
+2. Implement the map feature for the discoverCat screen.
+3. Implement the filter feature for both discoverCat screen and findBreeder screen.
+4. Enable users to receive notifications when a nearby cat is posted.
+5. Enable users to change their profile photos.
+6. Implement automatic line breaks or omissions for text display.
+7. Unify the stylesheets and colors.
+
+**Bugs**:
+1. Long loading time for distance display.
+2. Long loading time when posting a new cat.
+
+
+## Iteration 1
+
+### Contributions
 
 **Cuichan Wu**:
 
@@ -59,11 +98,11 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 2. Designed the database structure, and implemented the firebase CRUD.
 3. Built the navigation bar, and enabled it to display different menus to buyers/cattery owners.
 4. Built the login&signup screen, and implemented the authentication & registration feature.
-5. Built the post screen, and implemented the post-new-cat feature. (Collect images, database CRUD, and assign the cattery ID to this cat)
-6. Implemented the star-a-cat feature. (Database CRUD, and auto-delete all related likes when deleting a cat, by using subscribers)
+5. Built the post screen, and implemented the post-new-cat feature. 
+6. Implemented the star-a-cat feature. 
 7. Built the profile screen, displayed an extra cattery-profile-page button for cattery owners, and implemented the logout feature.
 8. Built the cattery profile screen, and implemented the real-time display of profile information and available cats.
-9. Built the UpdateCattery screen, and implemented the update-cattery-info feature. (Collect images, use the map API and database CRUD)
+9. Built the UpdateCattery screen, and implemented the update-cattery-info feature. 
 10. Implemented the real-time display on the cat card component.
 11. Implemented the real-time display on the cattery card component.
 12. Refined the layouts of the CatCard component, FindBreeders screen, and two filter components.
@@ -111,7 +150,7 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 2. Require to unify style sheets.
 3. Require to unify colors.
 
-## ScreenShots
+### ScreenShots For Iteratio 1
 ![](screenshots/Login.jpg)
 
 
