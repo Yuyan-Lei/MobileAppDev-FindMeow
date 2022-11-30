@@ -143,12 +143,12 @@ function MainScreen({ route, navigation }) {
   /* events for top filter tags - end */
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       refreshCatData();
     }, 10000);
 
     return () => {
-      clearInterval(timer);
+      clearInterval(interval);
     };
   }, []);
 

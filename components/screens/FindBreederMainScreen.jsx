@@ -114,12 +114,12 @@ function MainScreen({ route, navigation }) {
   }, [searchName, selectedBreed, selectedState, selectedCatNum]);
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       refreshCatteryData();
     }, 10000);
 
     return () => {
-      clearInterval(timer);
+      clearInterval(interval);
     };
   }, []);
 
