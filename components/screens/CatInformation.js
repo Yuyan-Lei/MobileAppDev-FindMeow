@@ -526,7 +526,7 @@ export default function CatInformation({ route, navigation }) {
   };
 
   const onClickEditButton = () => {
-    navigation.navigate("PostNewCatScreen", {cat});
+    navigation.navigate("PostNewCatScreen", { cat });
   };
 
   return (
@@ -549,16 +549,16 @@ export default function CatInformation({ route, navigation }) {
         </View>
 
         {/* Edit Button */}
-        {allowEdit && <View style={styles.editButtonView}>
-          <Pressable onPress={onClickEditButton}>
-            <Feather name="edit" size={18} color="white" />
-          </Pressable>
-        </View>}
+        {allowEdit && (
+          <View style={styles.editButtonView}>
+            <Pressable onPress={onClickEditButton}>
+              <Feather name="edit" size={18} color="white" />
+            </Pressable>
+          </View>
+        )}
 
         {/* Back Button*/}
-        <View
-          style={styles.backButtonContainer}
-        >
+        <View style={styles.backButtonContainer}>
           <Pressable onPress={navigation.goBack}>
             <Ionicons name="chevron-back" size={24} color="white" />
           </Pressable>
@@ -760,14 +760,14 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
   },
   backButtonContainer: {
-      padding: 5,
-      backgroundColor: Colors.arrowBackground,
-      borderRadius: 13,
-      position: "absolute",
-      top: 50,
-      left: 22,
-      width: 35,
-      height: 35,
+    padding: 5,
+    backgroundColor: Colors.arrowBackground,
+    borderRadius: 13,
+    position: "absolute",
+    top: 50,
+    left: 22,
+    width: 35,
+    height: 35,
   },
   floatingView: {
     position: "absolute",
