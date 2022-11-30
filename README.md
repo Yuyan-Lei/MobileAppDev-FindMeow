@@ -47,10 +47,10 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 3. Enabled users to star a cattery and displayed the realtime collection list.
 4. Enabled users to take a photo with the camera and post it as a kitten photo.
 5. Built an edit-posted-cat screen, and enabled users to edit or remove a posted cat.
-6. Built a new update-password screen, and enable users to update their passwords.
+6. Built a new update-password screen, and enabled users to update their passwords.
 7. Implemented the distance calculation and added the distance display to the cat card component.
 8. Implemented different input verifications to all input places.
-9. Build a heart button component and an edit button component, which are specially for cat-info-page and cattery-profile-page.
+9. Build a heart button component and an edit button component, which are specially for cat-info page and cattery-profile page.
 10. Unified the text, button, container and component styles on different screens.
 11. Redesigned and rewrote some screens.
 12. Rearranged some components to isolated files.
@@ -65,13 +65,13 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 2. Implement the map feature for the discoverCat screen.
 3. Implement the filter feature for both discoverCat screen and findBreeder screen.
 4. Enable users to receive notifications when a nearby cat is posted.
-5. Enable users to change their profile photos and passwords
+5. Enable users to change their profile photos.
 6. Implement automatic line breaks or omissions for text display.
-7. Unify the stylesheets an colors.
+7. Unify the stylesheets and colors.
 
 **Bugs**:
 1. Long loading time for distance display.
-2. Long loadin time for the submission when posting a new cat.
+2. Long loading time when posting a new cat.
 
 
 ## Iteration 1
