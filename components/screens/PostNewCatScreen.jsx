@@ -35,7 +35,7 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
   const [image, setImage] = useState(params.cat ? params.cat.Picture : null);
   const [breed, setBreed] = useState(params.cat ? params.cat.Breed : "");
   const [gender, setGender] = useState(params.cat ? params.cat.Gender : "");
-  const [birthDate, setBirthDate] = useState(params.cat ? new Date(params.cat.Birthday) : "");
+  const [birthDate, setBirthDate] = useState(params.cat ? new Date(params.cat.Birthday) : null);
   const [price, setPrice] = useState(params.cat ? params.cat.Price + "" : "");
   const [description, setDescription] = useState(params.cat ? params.cat.Description : "");
   const [vaccinated, setVaccinated] = useState(params.cat ? params.cat.Tags.includes("Vaccinated") : false);
@@ -49,6 +49,24 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
   const [userPhone, setUserPhone] = useState("");
 
   const [show, setShow] = useState(false);
+
+  // Reset the screen
+  const reset = () => {
+    setCatName("");
+    setImage(null);
+    setBreed("");
+    setGender("");
+    setBirthDate(null);
+    setPrice("");
+    setDescription("");
+    setVaccinated(false);
+    setVetChecked(false);
+    setDewormed(false);
+    setReady(false);
+    setNeutered(false);
+    setCatId("");
+    setCat(undefined);
+  };
 
   // Verify all the inputs in this page and return the error message if any errors.
   const verifyInput = () => {
@@ -153,6 +171,7 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
         Picture: url,
       });
       Alert.alert("Updated!");
+      reset();
       goBack();
     } catch {
       Alert.alert("Update failed.");
@@ -179,6 +198,7 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
         Picture: url,
       });
       Alert.alert("Posted a cat!");
+      reset();
       navigate("Cats");
     } catch {
       Alert.alert("Posting cats failed.");
@@ -203,6 +223,7 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
             await deleteCatInCattery(catId);
 
             Alert.alert("Deleted!");
+            reset();
             navigate("MainScreen");
           } catch {
             Alert.alert("Posting cats failed.");
