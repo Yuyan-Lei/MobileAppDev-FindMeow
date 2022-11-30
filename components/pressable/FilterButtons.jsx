@@ -8,13 +8,16 @@ export function FilterButtons({ selectedIndex, setSelectedIndex, buttons }) {
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
         <ButtonGroup
+          containerStyle={styles.buttonContainerStyle}
+          innerBorderStyle={{
+            color: "transparent",
+          }}
           buttonStyle={styles.unselectedButtonStyle}
           buttons={buttons}
           selectedIndex={selectedIndex}
           onPress={(value) => {
             setSelectedIndex(value);
           }}
-          containerStyle={styles.buttonContainerStyle}
           selectedButtonStyle={styles.selectedButtonStyle}
           selectedTextStyle={styles.selectedTextStyle}
           textStyle={styles.buttonTextStyle}
@@ -33,13 +36,12 @@ const styles = StyleSheet.create({
   },
   buttonContainerStyle: { 
     height: 40,
-    shadowRadius: 10, 
-    borderRadius: 10,
-    color: "white"
+    color: "white",
+    borderColor: "transparent"
   },
 
   unselectedButtonStyle: {
-    backgroundColor: "#F9F9F9",
+    backgroundColor: "#F7F7F7",
     borderRadius: 10,
     marginHorizontal: 3,
   },
