@@ -127,7 +127,7 @@ function MainScreen({ route, navigation }) {
         <View style={styles.updateButtonView}>
           <View>
             <Pressable onPress={onUpdateCattery}>
-              <Feather name="edit" size={24} color="white" />
+              <Feather name="edit" size={18} color="white" />
             </Pressable>
           </View>
         </View>
@@ -161,19 +161,19 @@ function MainScreen({ route, navigation }) {
               <MessageButton />
             </View> */}
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>Phone: </Text>
+              <Text style={styles.infoSubTitle}>Phone : </Text>
               <Text style={{ fontFamily: "Poppins" }}>
                 {cattery.phoneNumber}
               </Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>Website: </Text>
+              <Text style={styles.infoSubTitle}>Website : </Text>
               <Text style={{ fontFamily: "Poppins" }}>{cattery.website}</Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>Address: </Text>
+              <Text style={styles.infoSubTitle}>Address : </Text>
               <Text style={{ fontFamily: "Poppins" }}>
                 {catteryFullAddress}
               </Text>
@@ -198,7 +198,7 @@ function MainScreen({ route, navigation }) {
                 />
               )}
               numColumns={2}
-              ListFooterComponent={<View style={{ height: 1550 }} />}
+              ListFooterComponent={<View style={{ height: 2250 }} />}
             />
           </View>
         </View>
@@ -238,19 +238,22 @@ const styles = StyleSheet.create({
   },
   updateButtonView: {
     position: "absolute",
-    top: 48,
+    top: 50,
     right: 22,
-    opacity: 0.5,
-    padding: 5,
+    width: 35,
+    height: 35,
     backgroundColor: Colors.arrowBackground,
+    alignItems: "center",
     borderRadius: 13,
+    paddingTop: 8,
   },
   backButtonView: {
     position: "absolute",
-    top: 48,
+    top: 50,
     left: 22,
-    opacity: 0.5,
     padding: 5,
+    height: 35,
+    width: 35,
     backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
   },

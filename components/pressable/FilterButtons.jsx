@@ -8,12 +8,16 @@ export function FilterButtons({ selectedIndex, setSelectedIndex, buttons }) {
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
         <ButtonGroup
+          containerStyle={styles.buttonContainerStyle}
+          innerBorderStyle={{
+            color: "transparent",
+          }}
+          buttonStyle={styles.unselectedButtonStyle}
           buttons={buttons}
           selectedIndex={selectedIndex}
           onPress={(value) => {
             setSelectedIndex(value);
           }}
-          containerStyle={styles.buttonContainerStyle}
           selectedButtonStyle={styles.selectedButtonStyle}
           selectedTextStyle={styles.selectedTextStyle}
           textStyle={styles.buttonTextStyle}
@@ -28,17 +32,35 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    alignSelf: "center",
     margin: 12,
   },
-  buttonContainerStyle: { height: 40, shadowRadius: 10, borderRadius: 10 },
+  buttonContainerStyle: { 
+    height: 40,
+    color: "white",
+    borderColor: "transparent",
+  },
+
+  unselectedButtonStyle: {
+    backgroundColor: "#F7F7F7",
+    borderRadius: 10,
+    marginHorizontal: 3,
+  },
   selectedButtonStyle: {
     backgroundColor: "#FFB801",
+    borderRadius: 10,
+    marginHorizontal: 5,
   },
+
   buttonTextStyle: {
     fontSize: 14,
-    fontFamily: "Poppins",
+    fontFamily: "PoppinsMedium",
     color: "rgba(46, 37, 37, 0.43)",
     fontWeight: "500",
   },
-  selectedTextStyle: { color: "white" },
+  selectedTextStyle: { 
+    color: "white",
+    fontFamily: "PoppinsSemiBold",
+    fontSize: 15
+   },
 });

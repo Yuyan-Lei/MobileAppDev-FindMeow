@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import DatePicker from "react-native-datepicker";
 import { SelectList } from "react-native-dropdown-select-list";
-import { createCat } from "../../firebaseUtils/cat";
+import { createCat, updateCat, deleteCat } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import {
   getCurrentUserEmail,
@@ -28,24 +28,45 @@ import { Keyboard } from "react-native";
 import moment from "moment";
 import { Colors } from "../styles/Colors";
 import { colors } from "react-native-elements";
+import { deleteCatInCattery } from "../../firebaseUtils/user";
 
-export default function PostNewCatScreen({ route, navigation: { navigate } }) {
-  const [catName, setCatName] = useState("");
-  const [image, setImage] = useState(null);
-  const [breed, setBreed] = useState("");
-  const [gender, setGender] = useState("");
-  const [birthDate, setBirthDate] = useState(null);
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const [vaccinated, setVaccinated] = useState(false);
-  const [vetChecked, setVetChecked] = useState(false);
-  const [dewormed, setDewormed] = useState(false);
-  const [ready, setReady] = useState(false);
-  const [neutered, setNeutered] = useState(false);
+export default function PostNewCatScreen({ route: { params }, navigation: { navigate, goBack } }) {
+  const [catName, setCatName] = useState(params.cat ? params.cat.Name : "");
+  const [image, setImage] = useState(params.cat ? params.cat.Picture : null);
+  const [breed, setBreed] = useState(params.cat ? params.cat.Breed : "");
+  const [gender, setGender] = useState(params.cat ? params.cat.Gender : "");
+  const [birthDate, setBirthDate] = useState(params.cat ? new Date(params.cat.Birthday) : null);
+  const [price, setPrice] = useState(params.cat ? params.cat.Price + "" : "");
+  const [description, setDescription] = useState(params.cat ? params.cat.Description : "");
+  const [vaccinated, setVaccinated] = useState(params.cat ? params.cat.Tags.includes("Vaccinated") : false);
+  const [vetChecked, setVetChecked] = useState(params.cat ? params.cat.Tags.includes("Vet Checked") : false);
+  const [dewormed, setDewormed] = useState(params.cat ? params.cat.Tags.includes("Dewormed") : false);
+  const [ready, setReady] = useState(params.cat ? params.cat.Tags.includes("Ready to go home") : false);
+  const [neutered, setNeutered] = useState(params.cat ? params.cat.Tags.includes("Neutered") : false);
+  const [catId, setCatId] = useState(params.cat ? params.cat.id : "");
+  const [cat, setCat] = useState(params.cat);
 
   const [userPhone, setUserPhone] = useState("");
 
   const [show, setShow] = useState(false);
+
+  // Reset the screen
+  const reset = () => {
+    setCatName("");
+    setImage(null);
+    setBreed("");
+    setGender("");
+    setBirthDate(null);
+    setPrice("");
+    setDescription("");
+    setVaccinated(false);
+    setVetChecked(false);
+    setDewormed(false);
+    setReady(false);
+    setNeutered(false);
+    setCatId("");
+    setCat(undefined);
+  };
 
   // Verify all the inputs in this page and return the error message if any errors.
   const verifyInput = () => {
@@ -61,7 +82,8 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
     if (birthDate === null) {
       return "You didn't specify the birth date of the cat, please fill that.";
     }
-    if (isNaN(price) || price <= 0) {
+    const priceInt = parseInt(price, 10);
+    if (isNaN(priceInt) || priceInt <= 0) {
       return "You didn't specify the price or set an invalid price, please fill or fix that.";
     }
     if (gender === "") {
@@ -92,17 +114,8 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
     return () => unSubscribe();
   }, []);
 
-  let onPostNewCatLocked = false;
-  async function onPostNewCat() {
-    /* Fix double clicking */
-    if (onPostNewCatLocked) return;
-    const errorInInput = verifyInput();
-    if (errorInInput !== "") {
-      Alert.alert("Post new cat failed", errorInInput);
-      return;
-    }
-    onPostNewCatLocked = true;
-
+  /* Builds a new cat using all inputs in this page. */
+  const buildCatItem = () => {
     const tags = [];
     if (vaccinated) {
       tags.push("Vaccinated");
@@ -119,22 +132,72 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
     if (neutered) {
       tags.push("Neutered");
     }
+
+    return {
+      Name: catName,
+      Breed: breed,
+      Birthday: convertDateToStr(birthDate),
+      Gender: gender,
+      Price: parseInt(price, 10),
+      Description: description,
+      Tags: tags,
+      Cattery: getCurrentUserEmail(),
+      Contact: userPhone,
+      UploadTime: new Date().getTime(),
+    };
+  };
+
+  let onPostNewCatLocked = false;
+  async function onUpdateCat() {
+    /* Fix double clicking */
+    if (onPostNewCatLocked) return;
+    const errorInInput = verifyInput();
+    if (errorInInput !== "") {
+      Alert.alert("Update cat failed", errorInInput);
+      return;
+    }
+    onPostNewCatLocked = true;
+
+    const CatItem = buildCatItem();
+
+    try {
+      let url = cat.Picture;
+      if (image !== cat.Picture) {
+        url = await writeImageToDB(image);
+      }
+      await updateCat(catId, {
+        ...CatItem,
+        Picture: url,
+      });
+      Alert.alert("Updated!");
+      reset();
+      goBack();
+    } catch {
+      Alert.alert("Update failed.");
+    } finally {
+      onPostNewCatLocked = false;
+    }
+  }
+
+  async function onPostNewCat() {
+    /* Fix double clicking */
+    if (onPostNewCatLocked) return;
+    const errorInInput = verifyInput();
+    if (errorInInput !== "") {
+      Alert.alert("Post new cat failed", errorInInput);
+      return;
+    }
+    onPostNewCatLocked = true;
+
+    const CatItem = buildCatItem();
     try {
       const url = await writeImageToDB(image);
       await createCat({
-        Name: catName,
-        Breed: breed,
-        Birthday: convertDateToStr(birthDate),
+        ...CatItem,
         Picture: url,
-        Gender: gender,
-        Price: price,
-        Description: description,
-        Tags: tags,
-        Cattery: getCurrentUserEmail(),
-        Contact: userPhone,
-        UploadTime: new Date().getTime(),
       });
       Alert.alert("Posted a cat!");
+      reset();
       navigate("Cats");
     } catch {
       Alert.alert("Posting cats failed.");
@@ -142,6 +205,35 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
       onPostNewCatLocked = false;
     }
   }
+
+  async function onDeleteCat() {
+    /* Fix double clicking */
+    if (onPostNewCatLocked) return;
+
+    Alert.alert("Are you sure you want to delete this cat?", "", [
+      { text: "Cancel" },
+      {
+        text: "OK", onPress: async () => {
+          await deleteCat(catId);
+
+          onPostNewCatLocked = true;
+
+          try {
+            await deleteCatInCattery(catId);
+
+            Alert.alert("Deleted!");
+            reset();
+            navigate("MainScreen");
+          } catch {
+            Alert.alert("Posting cats failed.");
+          } finally {
+            onPostNewCatLocked = false;
+          }
+        }
+      }
+    ])
+
+  };
 
   return (
     <KeyboardAvoidingView
@@ -158,7 +250,8 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             marginBottom: 20,
           }}
         >
-          <Text style={styles.title}>Upload Cat</Text>
+          {catId === "" ? <Text style={styles.title}>Upload Cat</Text>
+            : <Text style={styles.title}>Update Cat</Text>}
         </View>
 
         {/* Image picker */}
@@ -246,7 +339,7 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             value={price}
             keyboardType="number-pad"
             style={{ width: "95%" }}
-            onChangeText={(price) => setPrice(parseInt(price, 10))}
+            onChangeText={setPrice}
           />
           <Text>$</Text>
         </View>
@@ -273,15 +366,15 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             titleStyle={
               vaccinated
                 ? {
-                    color: "white",
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
-                  }
+                  color: "white",
+                  fontSize: 14,
+                  fontFamily: "PoppinsSemiBold",
+                }
                 : {
-                    color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                  }
+                  color: Colors.orangeText,
+                  fontSize: 14,
+                  fontFamily: "Poppins",
+                }
             }
             onPress={() => setVaccinated(!vaccinated)}
           ></Button>
@@ -294,15 +387,15 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             titleStyle={
               vetChecked
                 ? {
-                    color: "white",
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
-                  }
+                  color: "white",
+                  fontSize: 14,
+                  fontFamily: "PoppinsSemiBold",
+                }
                 : {
-                    color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                  }
+                  color: Colors.orangeText,
+                  fontSize: 14,
+                  fontFamily: "Poppins",
+                }
             }
             onPress={() => setVetChecked(!vetChecked)}
           ></Button>
@@ -315,15 +408,15 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             titleStyle={
               dewormed
                 ? {
-                    color: "white",
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
-                  }
+                  color: "white",
+                  fontSize: 14,
+                  fontFamily: "PoppinsSemiBold",
+                }
                 : {
-                    color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                  }
+                  color: Colors.orangeText,
+                  fontSize: 14,
+                  fontFamily: "Poppins",
+                }
             }
             onPress={() => setDewormed(!dewormed)}
           ></Button>
@@ -336,15 +429,15 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             titleStyle={
               ready
                 ? {
-                    color: "white",
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
-                  }
+                  color: "white",
+                  fontSize: 14,
+                  fontFamily: "PoppinsSemiBold",
+                }
                 : {
-                    color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                  }
+                  color: Colors.orangeText,
+                  fontSize: 14,
+                  fontFamily: "Poppins",
+                }
             }
             onPress={() => setReady(!ready)}
           ></Button>
@@ -357,24 +450,29 @@ export default function PostNewCatScreen({ route, navigation: { navigate } }) {
             titleStyle={
               neutered
                 ? {
-                    color: "white",
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
-                  }
+                  color: "white",
+                  fontSize: 14,
+                  fontFamily: "PoppinsSemiBold",
+                }
                 : {
-                    color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                  }
+                  color: Colors.orangeText,
+                  fontSize: 14,
+                  fontFamily: "Poppins",
+                }
             }
             onPress={() => setNeutered(!neutered)}
           ></Button>
         </View>
 
         {/* Submit Button */}
-        <Pressable onPress={onPostNewCat} style={styles.submitButton}>
+        <Pressable onPress={catId === "" ? onPostNewCat : onUpdateCat} style={styles.submitButton}>
           <Text style={styles.submitButtonText}>Submit</Text>
         </Pressable>
+
+        {/* Delete Button */}
+        {catId !== "" && <Pressable onPress={onDeleteCat} style={styles.deleteButton}>
+          <Text style={styles.submitButtonText}>Delete</Text>
+        </Pressable>}
 
         {/* Empty Footer */}
         <View style={{ height: 20 }} />
@@ -410,6 +508,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     marginTop: "10%",
+  },
+  deleteButton: {
+    backgroundColor: '#e84f15',
+    borderRadius: 18,
+    height: 60,
+    alignItems: "center",
+    padding: 16,
+    marginTop: "5%",
   },
   submitButtonText: {
     fontFamily: "PoppinsSemiBold",

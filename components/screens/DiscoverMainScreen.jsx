@@ -16,6 +16,7 @@ import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
+import PostNewCatScreen from "./PostNewCatScreen";
 import DiscoverFilter from "./DiscoverFilter";
 import { getUserLocation } from "../../firebaseUtils/user";
 
@@ -206,7 +207,7 @@ function MainScreen({ route, navigation }) {
         buttons={["Newer Post", "Nearby", "Lower Price"]}
       />
 
-      <View>
+      <View style={{paddingHorizontal: 16}}>
         <FlatList
           data={data}
           renderItem={({ item, index }) => (
@@ -232,6 +233,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="CatInformation" component={CatInformation} />
+      <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
     </Stack.Navigator>
   );
 }
@@ -258,8 +260,9 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   container: {
-    paddingHorizontal: 12,
+    // paddingHorizontal: 12,
     paddingTop: 55,
     paddingBottom: 200,
+    backgroundColor: "white",
   },
 });

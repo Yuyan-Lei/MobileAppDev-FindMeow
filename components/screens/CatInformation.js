@@ -318,6 +318,7 @@ import { db } from "../../firebaseUtils/firebase-setup";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 import { HeartButton } from "../pressable/HeartButton";
+import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
 import { Colors } from "../styles/Colors";
 import {
   useWindowDimensions,
@@ -435,6 +436,7 @@ export default function CatInformation({ route, navigation }) {
   const [location, setLocation] = useState(null);
   const [distance, setDistance] = useState("Distance Loading");
   const [likeCats, setLikeCats] = useState([]);
+  const [allowEdit, setAllowEdit] = useState(false);
 
   /* Set user location. */
   useEffect(() => {
@@ -443,6 +445,13 @@ export default function CatInformation({ route, navigation }) {
       setLocation(location);
     })();
   }, []);
+
+  /* Allow edit if user is the cat owner. */
+  useEffect(() => {
+    if (cat && cat.Cattery) {
+      setAllowEdit(cat.Cattery === getCurrentUserEmail());
+    }
+  }, [cat]);
 
   /* Calculate distance to the cat if both user location and cattery location are provided. */
   useEffect(() => {
@@ -516,6 +525,10 @@ export default function CatInformation({ route, navigation }) {
     }
   };
 
+  const onClickEditButton = () => {
+    navigation.navigate("PostNewCatScreen", {cat});
+  };
+
   return (
     <ScrollView>
       <View>
@@ -528,24 +541,23 @@ export default function CatInformation({ route, navigation }) {
 
         {/* Heart button */}
         <View style={styles.floatingView}>
-          <HeartButton
+          <HeartButton_InfoPage
             notSelectedColor="white"
             isLiked={likeCats.includes(cat.id)}
             onPress={onClickLikeButton}
           />
         </View>
 
+        {/* Edit Button */}
+        {allowEdit && <View style={styles.editButtonView}>
+          <Pressable onPress={onClickEditButton}>
+            <Feather name="edit" size={18} color="white" />
+          </Pressable>
+        </View>}
+
         {/* Back Button*/}
         <View
-          style={{
-            opacity: 0.5,
-            padding: 5,
-            backgroundColor: Colors.arrowBackground,
-            borderRadius: 13,
-            position: "absolute",
-            top: 45,
-            left: 22,
-          }}
+          style={styles.backButtonContainer}
         >
           <Pressable onPress={navigation.goBack}>
             <Ionicons name="chevron-back" size={24} color="white" />
@@ -747,10 +759,31 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontFamily: "Poppins",
   },
+  backButtonContainer: {
+      padding: 5,
+      backgroundColor: Colors.arrowBackground,
+      borderRadius: 13,
+      position: "absolute",
+      top: 50,
+      left: 22,
+      width: 35,
+      height: 35,
+  },
   floatingView: {
     position: "absolute",
-    top: 40,
-    right: 32,
+    top: 50,
+    right: 22,
+  },
+  editButtonView: {
+    position: "absolute",
+    top: 50,
+    right: 68,
+    width: 35,
+    height: 35,
+    backgroundColor: Colors.arrowBackground,
+    borderRadius: 13,
+    alignItems: "center",
+    paddingTop: 8,
   },
 
   tagTitleText: {
