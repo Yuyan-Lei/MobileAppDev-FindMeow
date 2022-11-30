@@ -262,5 +262,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingTop: 55,
     paddingBottom: 200,
+    backgroundColor: "white",
   },
 });
