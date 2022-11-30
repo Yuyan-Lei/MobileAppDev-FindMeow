@@ -36,6 +36,7 @@ export function HeartButton_InfoPage({
           iconStyle={
             {
                 fontSize: 18,
+                marginLeft: 3,
             }
           }
         />

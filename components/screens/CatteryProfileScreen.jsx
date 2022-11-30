@@ -240,6 +240,8 @@ const styles = StyleSheet.create({
     top: 50,
     left: 12,
     padding: 5,
+    height: 35,
+    width: 35,
     backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
     marginLeft: 10,
@@ -279,7 +281,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 10,
-    fontFamily: "PoppinsBold",
+    fontFamily: "PoppinsSemiBold",
   },
   infoSubTitle: {
     fontWeight: "600",
