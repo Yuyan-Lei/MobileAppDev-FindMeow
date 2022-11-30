@@ -30,6 +30,7 @@ import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
 import { Colors } from "../styles/Colors";
 import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
+import call from "react-native-phone-call";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -102,6 +103,12 @@ function MainScreen({ route, navigation }) {
     };
   };
 
+  const args = {
+    number: "123-456-7890",
+    prompt: false,
+    skipCanOpen: true,
+  };
+
   return (
     <View style={styles.container}>
       <View>
@@ -159,14 +166,18 @@ function MainScreen({ route, navigation }) {
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Phone : </Text>
-              <Text style={{ fontFamily: "PoppinsRegular" }}>
-                {cattery.phoneNumber}
-              </Text>
+              <Pressable onPress={() => call(args).catch(console.error)}>
+                <Text style={{ fontFamily: "PoppinsRegular" }}>
+                  {cattery.phoneNumber}
+                </Text>
+              </Pressable>
             </View>
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Website : </Text>
-              <Text style={{ fontFamily: "PoppinsRegular" }}>{cattery.website}</Text>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>
+                {cattery.website}
+              </Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
