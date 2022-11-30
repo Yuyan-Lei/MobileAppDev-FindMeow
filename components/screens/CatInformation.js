@@ -318,6 +318,7 @@ import { db } from "../../firebaseUtils/firebase-setup";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 import { HeartButton } from "../pressable/HeartButton";
+import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
 import { Colors } from "../styles/Colors";
 import {
   useWindowDimensions,
@@ -528,7 +529,7 @@ export default function CatInformation({ route, navigation }) {
 
         {/* Heart button */}
         <View style={styles.floatingView}>
-          <HeartButton
+          <HeartButton_InfoPage
             notSelectedColor="white"
             isLiked={likeCats.includes(cat.id)}
             onPress={onClickLikeButton}
@@ -538,13 +539,14 @@ export default function CatInformation({ route, navigation }) {
         {/* Back Button*/}
         <View
           style={{
-            opacity: 0.5,
             padding: 5,
             backgroundColor: Colors.arrowBackground,
             borderRadius: 13,
             position: "absolute",
             top: 45,
             left: 22,
+            width: 35,
+            height: 35,
           }}
         >
           <Pressable onPress={navigation.goBack}>
@@ -749,8 +751,8 @@ const styles = StyleSheet.create({
   },
   floatingView: {
     position: "absolute",
-    top: 40,
-    right: 32,
+    top: 45,
+    right: 22,
   },
 
   tagTitleText: {
