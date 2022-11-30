@@ -9,6 +9,7 @@ import {
 import * as Location from 'expo-location';
 import { Alert } from "react-native";
 import haversine from 'haversine-distance';
+import { globalVariables } from "../utils/globalVariables";
 
 const collectionName = "Users";
 
@@ -21,12 +22,17 @@ export async function createUser(userEmail) {
   return await wrtieToDB(newUser, collectionName, userEmail);
 }
 
+function triggerStarListNeedReload() {
+  globalVariables.starListNeedReload = true;
+}
+
 export async function userLikeACat(catId) {
   const email = getCurrentUserEmail();
   const newLikesArrayEntry = {
     likeCats: arrayUnion(catId),
   };
-  return await updateToDB(email, collectionName, newLikesArrayEntry);
+  await updateToDB(email, collectionName, newLikesArrayEntry);
+  triggerStarListNeedReload()
 }
 
 export async function userUnLikeACat(catId) {
@@ -34,7 +40,8 @@ export async function userUnLikeACat(catId) {
   const newLikesArrayEntry = {
     likeCats: arrayRemove(catId),
   };
-  return await updateToDB(email, collectionName, newLikesArrayEntry);
+  await updateToDB(email, collectionName, newLikesArrayEntry);
+  triggerStarListNeedReload()
 }
 
 export async function userLikeACattery(catteryEmail) {
@@ -42,7 +49,8 @@ export async function userLikeACattery(catteryEmail) {
   const newLikesArrayEntry = {
     likeCatteries: arrayUnion(catteryEmail),
   };
-  return await updateToDB(email, collectionName, newLikesArrayEntry);
+  await updateToDB(email, collectionName, newLikesArrayEntry);
+  triggerStarListNeedReload()
 }
 
 export async function userUnLikeACattery(catteryEmail) {
@@ -50,7 +58,8 @@ export async function userUnLikeACattery(catteryEmail) {
   const newLikesArrayEntry = {
     likeCatteries: arrayRemove(catteryEmail),
   };
-  return await updateToDB(email, collectionName, newLikesArrayEntry);
+  await updateToDB(email, collectionName, newLikesArrayEntry);
+  triggerStarListNeedReload()
 }
 
 export async function getUserLikeCats() {
@@ -155,5 +164,5 @@ export async function getUserLocation() {
 // Function to calculate distance between 2 points.
 export function calculateDistance(mk1, mk2) {
   const distanceInMeter = haversine(mk1, mk2);
-  return (distanceInMeter/1000).toFixed(1);
+  return (distanceInMeter / 1000).toFixed(1);
 }
