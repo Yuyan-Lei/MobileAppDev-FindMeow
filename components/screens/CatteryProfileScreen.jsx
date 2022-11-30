@@ -29,6 +29,7 @@ import { PhoneButton } from "../pressable/PhoneButton";
 import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
 import { Colors } from "../styles/Colors";
+import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -202,7 +203,7 @@ function MainScreen({ route, navigation }) {
 
       {/* floating components */}
       <View style={styles.floatingView}>
-        <HeartButton
+        <HeartButton_InfoPage
           isLiked={likeCatteries.includes(cattery.email)}
           onPress={onClickLikeButton}
         />
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
   floatingView: {
     position: "absolute",
     top: 40,
-    right: 32,
+    right: 22,
   },
   infoView: {
     padding: 24,
@@ -259,11 +260,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 40,
     left: 12,
-    opacity: 0.5,
     padding: 5,
     backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
-    marginTop: 10,
     marginLeft: 10,
   },
   container: {
