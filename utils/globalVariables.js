@@ -1,1 +1,1 @@
-export const globalVariables = {starListNeedReload: false}
+export const globalVariables = { starListNeedReload: false }
