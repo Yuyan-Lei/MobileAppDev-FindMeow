@@ -62,6 +62,7 @@ function MainScreen({ route, navigation }) {
 
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
   async function refreshCatData() {
+    if (refreshCatDataLock) return;
     setRefreshCatDataLock(true);
     try {
       let q;
