@@ -130,7 +130,7 @@ function MainScreen({ route, navigation }) {
           </View>
         </View>
 
-        <View style={styles.catterDetailView}>
+        <View style={styles.catteryDetailView}>
           {/* cattery name & address */}
           <View style={styles.nameAndAddressView}>
             <Text style={styles.catteryName}>{cattery.catteryName}</Text>
@@ -158,20 +158,20 @@ function MainScreen({ route, navigation }) {
             </View> */}
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>Phone: </Text>
-              <Text style={{ fontFamily: "Poppins" }}>
+              <Text style={styles.infoSubTitle}>Phone : </Text>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>
                 {cattery.phoneNumber}
               </Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>Website: </Text>
-              <Text style={{ fontFamily: "Poppins" }}>{cattery.website}</Text>
+              <Text style={styles.infoSubTitle}>Website : </Text>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>{cattery.website}</Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>Address: </Text>
-              <Text style={{ fontFamily: "Poppins" }}>
+              <Text style={styles.infoSubTitle}>Address : </Text>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>
                 {catteryFullAddress}
               </Text>
             </View>
@@ -235,9 +235,18 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 12,
   },
+  backButtonView: {
+    position: "absolute",
+    top: 50,
+    left: 12,
+    padding: 5,
+    backgroundColor: Colors.arrowBackground,
+    borderRadius: 13,
+    marginLeft: 10,
+  },
   floatingView: {
     position: "absolute",
-    top: 40,
+    top: 50,
     right: 22,
   },
   infoView: {
@@ -251,19 +260,10 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
   },
-  catterDetailView: {
+  catteryDetailView: {
     margin: 32,
     top: -80,
     marginBottom: 32 - 80,
-  },
-  backButtonView: {
-    position: "absolute",
-    top: 40,
-    left: 12,
-    padding: 5,
-    backgroundColor: Colors.arrowBackground,
-    borderRadius: 13,
-    marginLeft: 10,
   },
   container: {
     backgroundColor: "rgb(250,250,250)",
@@ -272,14 +272,14 @@ const styles = StyleSheet.create({
     color: Colors.orangeText,
     fontWeight: "800",
     fontSize: 24,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: "PoppinsBold",
   },
   infoTitle: {
     color: Colors.orangeText,
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 10,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: "PoppinsBold",
   },
   infoSubTitle: {
     fontWeight: "600",
