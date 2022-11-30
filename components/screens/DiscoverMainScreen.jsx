@@ -16,6 +16,7 @@ import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
+import PostNewCatScreen from "./PostNewCatScreen";
 import DiscoverFilter from "./DiscoverFilter";
 import { getUserLocation } from "../../firebaseUtils/user";
 
@@ -231,6 +232,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="CatInformation" component={CatInformation} />
+      <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
     </Stack.Navigator>
   );
 }

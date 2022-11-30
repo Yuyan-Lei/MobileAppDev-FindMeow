@@ -436,6 +436,7 @@ export default function CatInformation({ route, navigation }) {
   const [location, setLocation] = useState(null);
   const [distance, setDistance] = useState("Distance Loading");
   const [likeCats, setLikeCats] = useState([]);
+  const [allowEdit, setAllowEdit] = useState(false);
 
   /* Set user location. */
   useEffect(() => {
@@ -444,6 +445,13 @@ export default function CatInformation({ route, navigation }) {
       setLocation(location);
     })();
   }, []);
+
+  /* Allow edit if user is the cat owner. */
+  useEffect(() => {
+    if (cat && cat.Cattery) {
+      setAllowEdit(cat.Cattery === getCurrentUserEmail());
+    }
+  }, [cat]);
 
   /* Calculate distance to the cat if both user location and cattery location are provided. */
   useEffect(() => {
@@ -517,6 +525,10 @@ export default function CatInformation({ route, navigation }) {
     }
   };
 
+  const onClickEditButton = () => {
+    navigation.navigate("PostNewCatScreen", {cat});
+  };
+
   return (
     <ScrollView>
       <View>
@@ -535,6 +547,13 @@ export default function CatInformation({ route, navigation }) {
             onPress={onClickLikeButton}
           />
         </View>
+
+        {/* Edit Button */}
+        {allowEdit && <View style={styles.editButtonView}>
+          <Pressable onPress={onClickEditButton}>
+            <Feather name="edit" size={18} color="white" />
+          </Pressable>
+        </View>}
 
         {/* Back Button*/}
         <View
@@ -753,6 +772,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 45,
     right: 22,
+  },
+  editButtonView: {
+    position: "absolute",
+    top: 45,
+    right: 68,
+    width: 35,
+    height: 35,
+    backgroundColor: Colors.arrowBackground,
+    borderRadius: 13,
+    alignItems: "center",
+    paddingTop: 8,
   },
 
   tagTitleText: {
