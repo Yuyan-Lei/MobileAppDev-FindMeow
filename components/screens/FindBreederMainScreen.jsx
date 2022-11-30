@@ -1,5 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -12,7 +18,6 @@ import { TitleText } from "../texts/TitleText";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import FindBreederFilter from "./FindBreederFilter";
 
-
 function MainScreen({ route, navigation }) {
   const [searchName, setSearchName] = useState("");
 
@@ -24,7 +29,6 @@ function MainScreen({ route, navigation }) {
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCatNum, setSelectedCatNum] = useState("All");
 
-
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
@@ -34,53 +38,90 @@ function MainScreen({ route, navigation }) {
     setSelectedCatNum("");
   }
 
+  function isScrollToTop(event) {
+    return event.nativeEvent.contentOffset.y < 100;
+  }
+
+  function onScrollToTop() {
+    refreshCatteryData();
+  }
+
+  const [refreshCatteryDataLock, setRefreshCatteryData] = useState(false);
+  async function refreshCatteryData() {
+    if (refreshCatteryDataLock) return;
+    setRefreshCatteryData(true);
+
+    try {
+      /* Grouping constraints starts */
+      let clauseSearchName1,
+        clauseSearchName2,
+        clauseBreed,
+        clauseState,
+        clauseCatNum;
+
+      if (searchName !== "") {
+        clauseSearchName1 = where("catteryName", ">=", searchName);
+        clauseSearchName2 = where("catteryName", "<", searchName + "z");
+      }
+
+      if (selectedBreed !== "All") {
+        // TODO: how?
+      }
+
+      if (selectedState !== "All") {
+        // TODO
+      }
+
+      if (selectedCatNum.toLowerCase() === "yes") {
+        clauseCatNum = where("cats", "!=", []);
+      } else if (selectedCatNum.toLowerCase() === "no") {
+        clauseCatNum = where("cats", "==", []);
+      }
+
+      const candidates = [
+        clauseSearchName1,
+        clauseSearchName2,
+        clauseBreed,
+        clauseState,
+        clauseCatNum,
+      ];
+
+      const constraints = candidates.filter((item) => item !== undefined);
+      /* Grouping constraints ends */
+      const q = query(
+        collection(db, "Users"),
+        where("isCattery", "==", true),
+        ...constraints
+      );
+
+      const catterySnap = await getDocs(q);
+
+      setCatteries(
+        catterySnap.docs.map((catteryDoc) => {
+          return {
+            email: catteryDoc.id,
+            ...catteryDoc.data(),
+          };
+        })
+      );
+    } finally {
+      setRefreshCatteryData(false);
+    }
+  }
+
   useEffect(() => {
-    /* Grouping constraints starts */
-    let clauseSearchName1, clauseSearchName2, clauseBreed, clauseState, clauseCatNum;
-
-    if (searchName !== "") {
-      clauseSearchName1 = where("catteryName", ">=", searchName);
-      clauseSearchName2 = where("catteryName", "<", searchName + "z");
-    }
-
-    if (selectedBreed !== "All") {
-      // TODO: how?
-    }
-
-    if (selectedState !== "All") {
-      // TODO
-    }
-
-    if (selectedCatNum.toLowerCase() === "yes") {
-      clauseCatNum = where("cats", "!=", []);
-    } else if (selectedCatNum.toLowerCase() === "no") {
-      clauseCatNum = where("cats", "==", []);
-    }
-
-    const candidates = [clauseSearchName1,
-      clauseSearchName2,
-      clauseBreed,
-      clauseState,
-      clauseCatNum];
-
-    const constraints = candidates.filter((item) => item !== undefined)
-    /* Grouping constraints ends */
-
-    const q = query(collection(db, "Users"),
-      where('isCattery', '==', true),
-      ...constraints);
-
-    const unSubscribe = onSnapshot(q, (snapshot) => {
-      setCatteries(snapshot.docs.map((entry) => {
-        return {
-          email: entry.id,
-          ...entry.data()
-        }
-      }));
-    });
-
-    return unSubscribe;
+    refreshCatteryData();
   }, [searchName, selectedBreed, selectedState, selectedCatNum]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshCatteryData();
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <View style={styles.containter}>
@@ -125,8 +166,15 @@ function MainScreen({ route, navigation }) {
       <View style={styles.listView}>
         <FlatList
           data={catteries}
-          renderItem={({ item }) => <BreederCard cattery={item} navigation={navigation} />}
-          ListFooterComponent={<View style={{ height: 250 }} />}
+          renderItem={({ item }) => (
+            <BreederCard cattery={item} navigation={navigation} />
+          )}
+          ListFooterComponent={<View style={{ height: 120 }} />}
+          onScrollEndDrag={(event) => {
+            if (isScrollToTop(event)) {
+              onScrollToTop();
+            }
+          }}
         />
       </View>
     </View>
@@ -140,7 +188,7 @@ export default function FindBreederMainScreen() {
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
     </Stack.Navigator>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

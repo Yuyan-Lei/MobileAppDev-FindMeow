@@ -26,6 +26,7 @@ import { rootStackNavigateBack } from "../RootNavigation";
 import { LocationText } from "../texts/LocationText";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import { Colors } from "../styles/Colors";
+import CatInformation from "./CatInformation";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 
@@ -213,7 +214,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MainScreen" component={MainScreen} />
-      <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
+      <Stack.Screen name="CatInformation" component={CatInformation} />
     </Stack.Navigator>
   );
 }

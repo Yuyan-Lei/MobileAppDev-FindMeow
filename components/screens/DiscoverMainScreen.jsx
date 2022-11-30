@@ -63,6 +63,7 @@ function MainScreen({ route, navigation }) {
 
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
   async function refreshCatData() {
+    if (refreshCatDataLock) return;
     setRefreshCatDataLock(true);
     try {
       let q;
@@ -143,12 +144,12 @@ function MainScreen({ route, navigation }) {
   /* events for top filter tags - end */
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       refreshCatData();
     }, 10000);
 
     return () => {
-      clearInterval(timer);
+      clearInterval(interval);
     };
   }, []);
 

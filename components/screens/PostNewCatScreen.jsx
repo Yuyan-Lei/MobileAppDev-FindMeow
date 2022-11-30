@@ -97,7 +97,6 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
   };
 
   const onChange = (event, selectedDate) => {
-    console.log(selectedDate);
     setShow(false);
     setBirthDate(selectedDate);
   };

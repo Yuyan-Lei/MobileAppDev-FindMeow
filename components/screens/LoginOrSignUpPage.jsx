@@ -1,6 +1,7 @@
 import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
 import { Entypo, Feather, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Pressable, TextInput } from "@react-native-material/core";
+import { CommonActions } from '@react-navigation/native';
 import { CheckBox } from '@rneui/themed';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useEffect, useRef, useState } from "react";
@@ -66,6 +67,15 @@ export default function LoginOrSignUpPage({ route, navigation }) {
         return password.match(validPasswordPattern);
     };
 
+    function navigateToHomeSafely() {
+        navigation.dispatch(
+            CommonActions.reset({
+            index: 1,
+            routes: [{ name: "Home" }],
+            })
+        );
+    }
+
     const onCreateAccount = () => {
         if (password !== confirmPassword) {
             Alert.alert('SignUp Failed', "Those passwords don't match. Please try again.");
@@ -94,7 +104,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 } else {
                     return createCattery(email, { catteryName: name, phoneNumber, website, placeId, address});
                 }
-            }).then(() => navigation.navigate('Home'))
+            }).then(() => navigateToHomeSafely())
             .catch((error) => {
                 const errorCode = error.code;
                 switch (errorCode) {
@@ -125,7 +135,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
         signInWithEmailAndPassword(auth, userName, password).then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            getUserData().then(user => navigation.navigate('Home'));
+            getUserData().then(user => navigateToHomeSafely());
         })
             .catch((error) => {
                 const errorCode = error.code;
