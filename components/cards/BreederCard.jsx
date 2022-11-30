@@ -28,9 +28,9 @@ export function BreederCard({ cattery, navigation }) {
         setLikeCatteries(likeCatteries);
       }
     );
-
     return () => unSubscribe();
   }, []);
+
   const onClickLikeButton = () => {
     if (!likeCatteries.includes(cattery.email)) {
       userLikeACattery(cattery.email);
