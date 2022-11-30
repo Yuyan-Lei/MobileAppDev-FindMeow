@@ -32,12 +32,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    alignSelf: "center",
     margin: 12,
   },
   buttonContainerStyle: { 
     height: 40,
     color: "white",
-    borderColor: "transparent"
+    borderColor: "transparent",
   },
 
   unselectedButtonStyle: {

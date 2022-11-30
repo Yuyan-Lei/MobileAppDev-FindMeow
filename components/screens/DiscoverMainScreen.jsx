@@ -206,7 +206,7 @@ function MainScreen({ route, navigation }) {
         buttons={["Newer Post", "Nearby", "Lower Price"]}
       />
 
-      <View>
+      <View style={{paddingHorizontal: 16}}>
         <FlatList
           data={data}
           renderItem={({ item, index }) => (
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   container: {
-    paddingHorizontal: 12,
+    // paddingHorizontal: 12,
     paddingTop: 55,
     paddingBottom: 200,
     backgroundColor: "white",
