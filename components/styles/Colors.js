@@ -25,5 +25,5 @@ export const Colors = {
   purple: "#402ec5",
   shadowWhiteAndroid: "#babacf",
   heartBackground: "rgba(229, 229, 229, 0.5)",
-  arrowBackground: "rgba(99,99,99, 0.85)",
+  arrowBackground: "rgba(99,99,99, 0.5)",
 };

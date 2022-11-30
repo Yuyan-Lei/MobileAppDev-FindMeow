@@ -72,6 +72,15 @@ export async function getUserData() {
   );
 }
 
+export async function deleteCatInCattery(catId) {
+  const email = getCurrentUserEmail();
+
+  const newLikesArrayEntry = {
+    cats: arrayRemove(catId),
+  };
+  return await updateToDB(email, collectionName, newLikesArrayEntry);
+}
+
 export async function createCattery(
   userEmail,
   { catteryName, phoneNumber, website, address, placeId }

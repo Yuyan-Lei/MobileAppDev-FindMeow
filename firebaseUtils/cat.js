@@ -46,33 +46,34 @@ export async function createCat({
   return await updateToDB(Cattery, "Users", newCatEntry);
 }
 
-export async function updateCat({
-  key,
-  name,
-  breed,
-  isAvaiable,
-  location,
-  picture,
-  price,
-  description,
-  tags,
-  cattery,
-  contact,
+export async function updateCat(catId, {
+  Name,
+  Breed,
+  Picture,
+  Birthday,
+  Gender,
+  Price,
+  Description,
+  Tags,
+  Cattery,
+  Contact,
+  UploadTime,
 }) {
   const changingDict = {
-    name,
-    breed,
-    isAvaiable,
-    location,
-    picture,
-    price,
-    description,
-    tags,
-    cattery,
-    contact,
+    Name,
+    Breed,
+    Picture,
+    Birthday,
+    Gender,
+    Price,
+    Description,
+    Tags,
+    Cattery,
+    Contact,
+    UploadTime,
   };
 
-  return await updateToDB(key, collectionName, changingDict);
+  return await updateToDB(catId, collectionName, changingDict);
 }
 
 export async function deleteCat(key) {

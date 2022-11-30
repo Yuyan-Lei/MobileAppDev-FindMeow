@@ -29,6 +29,7 @@ import { PhoneButton } from "../pressable/PhoneButton";
 import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
 import { Colors } from "../styles/Colors";
+import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -129,7 +130,7 @@ function MainScreen({ route, navigation }) {
           </View>
         </View>
 
-        <View style={styles.catterDetailView}>
+        <View style={styles.catteryDetailView}>
           {/* cattery name & address */}
           <View style={styles.nameAndAddressView}>
             <Text style={styles.catteryName}>{cattery.catteryName}</Text>
@@ -157,20 +158,20 @@ function MainScreen({ route, navigation }) {
             </View> */}
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>Phone: </Text>
-              <Text style={{ fontFamily: "Poppins" }}>
+              <Text style={styles.infoSubTitle}>Phone : </Text>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>
                 {cattery.phoneNumber}
               </Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>Website: </Text>
-              <Text style={{ fontFamily: "Poppins" }}>{cattery.website}</Text>
+              <Text style={styles.infoSubTitle}>Website : </Text>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>{cattery.website}</Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.infoSubTitle}>Address: </Text>
-              <Text style={{ fontFamily: "Poppins" }}>
+              <Text style={styles.infoSubTitle}>Address : </Text>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>
                 {catteryFullAddress}
               </Text>
             </View>
@@ -194,7 +195,7 @@ function MainScreen({ route, navigation }) {
                 />
               )}
               numColumns={2}
-              ListFooterComponent={<View style={{ height: 2150 }} />}
+              ListFooterComponent={<View style={{ height: 2250 }} />}
             />
           </View>
         </View>
@@ -202,7 +203,7 @@ function MainScreen({ route, navigation }) {
 
       {/* floating components */}
       <View style={styles.floatingView}>
-        <HeartButton
+        <HeartButton_InfoPage
           isLiked={likeCatteries.includes(cattery.email)}
           onPress={onClickLikeButton}
         />
@@ -234,10 +235,21 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 12,
   },
+  backButtonView: {
+    position: "absolute",
+    top: 50,
+    left: 12,
+    padding: 5,
+    height: 35,
+    width: 35,
+    backgroundColor: Colors.arrowBackground,
+    borderRadius: 13,
+    marginLeft: 10,
+  },
   floatingView: {
     position: "absolute",
-    top: 40,
-    right: 32,
+    top: 50,
+    right: 22,
   },
   infoView: {
     padding: 24,
@@ -250,21 +262,10 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
   },
-  catterDetailView: {
+  catteryDetailView: {
     margin: 32,
     top: -80,
     marginBottom: 32 - 80,
-  },
-  backButtonView: {
-    position: "absolute",
-    top: 40,
-    left: 12,
-    opacity: 0.5,
-    padding: 5,
-    backgroundColor: Colors.arrowBackground,
-    borderRadius: 13,
-    marginTop: 10,
-    marginLeft: 10,
   },
   container: {
     backgroundColor: "rgb(250,250,250)",
@@ -273,7 +274,7 @@ const styles = StyleSheet.create({
     color: Colors.orangeText,
     fontWeight: "800",
     fontSize: 24,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: "PoppinsBold",
   },
   infoTitle: {
     color: Colors.orangeText,
