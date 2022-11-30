@@ -526,7 +526,7 @@ export default function CatInformation({ route, navigation }) {
           style={{ height: 450, width: 500 }}
         ></Image>
 
-        {/* START: goBack button and heart button */}
+        {/* Heart button */}
         <View style={styles.floatingView}>
           <HeartButton
             notSelectedColor="white"
@@ -551,7 +551,6 @@ export default function CatInformation({ route, navigation }) {
             <Ionicons name="chevron-back" size={24} color="white" />
           </Pressable>
         </View>
-        {/* END: goBack button and heart button */}
 
         {/* Main Contents */}
         <View
