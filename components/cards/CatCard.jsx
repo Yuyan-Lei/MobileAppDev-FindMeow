@@ -6,7 +6,7 @@ import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
 import {
   getCattery,
-  haversine_distance,
+  calculateDistance,
   userLikeACat,
   userUnLikeACat,
 } from "../../firebaseUtils/user";
@@ -16,7 +16,7 @@ import {Client} from "@googlemaps/google-maps-services-js";
 export function CatCard({ cat, navigation, location, hideLocation, showBreed }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
-  const [distance, setDistance] = useState('Loading');
+  const [distance, setDistance] = useState('');
 
   /* Calculate distance to the cat if both user location and cattery location are provided. */ 
   useEffect(() => {
@@ -26,7 +26,7 @@ export function CatCard({ cat, navigation, location, hideLocation, showBreed }) 
         place_id: cattery.placeId,
         key: REACT_APP_GOOGLE_MAP_APP_KEY
       }}).then((resp) => {
-        setDistance(haversine_distance(location, resp.data.result.geometry.location) + 'mi');
+        setDistance(' (' + calculateDistance(location, resp.data.result.geometry.location) + ' km)');
       })
     }
   }, [cattery, location]);
@@ -102,7 +102,7 @@ export function CatCard({ cat, navigation, location, hideLocation, showBreed }) 
             {cattery && cattery.address
               ? cattery.address.split(", ")[1] +
                 ", " +
-                cattery.address.split(", ")[2] + " (" + distance + ")"
+                cattery.address.split(", ")[2] + distance
               : "Loading"}
           </LocationText>}
         </View>
