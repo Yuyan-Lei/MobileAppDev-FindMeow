@@ -10,6 +10,8 @@ import {
   updateToDB,
   wrtieToDB
 } from "./firestore";
+import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
+import { Client } from "@googlemaps/google-maps-services-js";
 
 const collectionName = "Users";
 
@@ -93,8 +95,16 @@ export async function deleteCatInCattery(catId) {
 
 export async function createCattery(
   userEmail,
-  { catteryName, phoneNumber, website, address, placeId }
+  { catteryName, phoneNumber, website, address, shortAddress, placeId }
 ) {
+  const googleMapClient = new Client({});
+  const catteryPlaceDetails = await googleMapClient
+  .placeDetails({
+    params: {
+      place_id: placeId,
+      key: REACT_APP_GOOGLE_MAP_APP_KEY,
+    },
+  })
   const newCattery = {
     isCattery: true,
     catteryName,
@@ -104,6 +114,8 @@ export async function createCattery(
     placeId,
     cats: [],
     likeCats: [],
+    shortAddress,
+    geoLocation: catteryPlaceDetails.data.result.geometry.location
   };
   return await wrtieToDB(newCattery, collectionName, userEmail);
 }
@@ -113,10 +125,19 @@ export async function updateCattery({
   phoneNumber,
   website,
   address,
+  shortAddress,
   placeId,
   picture,
 }) {
   const email = getCurrentUserEmail();
+  const googleMapClient = new Client({});
+  const catteryPlaceDetails = await googleMapClient
+  .placeDetails({
+    params: {
+      place_id: placeId,
+      key: REACT_APP_GOOGLE_MAP_APP_KEY,
+    },
+  })
   const updatedCattery = {
     catteryName,
     phoneNumber,
@@ -124,6 +145,8 @@ export async function updateCattery({
     address,
     placeId,
     picture,
+    shortAddress,
+    geoLocation: catteryPlaceDetails.data.result.geometry.location
   };
   return await updateToDB(email, collectionName, updatedCattery);
 }
@@ -135,7 +158,7 @@ export async function getCattery(email) {
 }
 
 export async function getAllCatteries() {
-  return await getAllFromDB(collectionName).then((userSnap) =>
+  return await getAllFromDB(collectionName).then((userSnap) => 
     userSnap.docs
       .filter((snap) => snap.data().isCattery)
       .map((snap) => {
@@ -154,7 +177,7 @@ export async function getUserLocation() {
     return;
   }
 
-  let location = await Location.getCurrentPositionAsync({});
+  let location = await Location.getLastKnownPositionAsync({});
   return {
     lat: location.coords.latitude,
     lng: location.coords.longitude
