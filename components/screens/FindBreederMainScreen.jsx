@@ -1,11 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";

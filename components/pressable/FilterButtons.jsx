@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     margin: 12,
   },
-  buttonContainerStyle: { 
+  buttonContainerStyle: {
     height: 40,
     color: "white",
     borderColor: "transparent",
@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
     color: "rgba(46, 37, 37, 0.43)",
     fontWeight: "500",
   },
-  selectedTextStyle: { 
+  selectedTextStyle: {
     color: "white",
     fontFamily: "PoppinsSemiBold",
-    fontSize: 15
-   },
+    fontSize: 15,
+  },
 });

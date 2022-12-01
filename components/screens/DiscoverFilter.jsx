@@ -1,4 +1,4 @@
-import { Icon, Slider, Button } from "@rneui/themed";
+import { Button, Icon, Slider } from "@rneui/themed";
 import React, { useState } from "react";
 import {
   Alert,
@@ -6,13 +6,13 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View,
+  View
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
-import { Colors } from "../styles/Colors";
-import { OrangeText } from "../texts/OrangeText";
 import { ALL_BREEDS } from "../listContents/allBreeds";
 import { ALL_STATES } from "../listContents/allStates";
+import { Colors } from "../styles/Colors";
+import { OrangeText } from "../texts/OrangeText";
 
 const DiscoverFilter = ({
   states: {

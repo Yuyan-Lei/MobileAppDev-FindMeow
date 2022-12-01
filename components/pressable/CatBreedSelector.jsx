@@ -2,10 +2,9 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { ALL_BREEDS } from "../listContents/allBreeds";
 
 export default function CatBreedSelector(props) {
-    const breed = props.hideAllOption ? ALL_BREEDS : [
-        { key: "All", value: "All" },
-        ...ALL_BREEDS,
-    ];
+  const breed = props.hideAllOption
+    ? ALL_BREEDS
+    : [{ key: "All", value: "All" }, ...ALL_BREEDS];
 
   return (
     <SelectList
@@ -21,4 +20,4 @@ export default function CatBreedSelector(props) {
       defaultOption={{ key: props.selectedBreed, value: props.selectedBreed }}
     />
   );
-};
+}

@@ -1,7 +1,6 @@
 import { doc, onSnapshot } from "firebase/firestore";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Alert,
   Image,
   Platform,
   Pressable,
@@ -12,7 +11,6 @@ import {
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
-import { HeartButton } from "../pressable/HeartButton";
 import { HeartButton2 } from "../pressable/HeartButton2";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";

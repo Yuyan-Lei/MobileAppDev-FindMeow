@@ -1,6 +1,6 @@
-import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import React from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
 
 export function HeartButton_InfoPage({
@@ -33,12 +33,10 @@ export function HeartButton_InfoPage({
           name="heart"
           color={isLiked ? selectedColor : notSelectedColor}
           size={18}
-          iconStyle={
-            {
-                fontSize: 18,
-                marginLeft: 3,
-            }
-          }
+          iconStyle={{
+            fontSize: 18,
+            marginLeft: 3,
+          }}
         />
       </View>
     </Pressable>

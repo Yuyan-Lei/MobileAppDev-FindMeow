@@ -1,18 +1,20 @@
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   collection,
+  doc,
   documentId,
   onSnapshot,
   query,
   where,
-  doc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
   Image,
+  Linking,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -20,18 +22,13 @@ import {
   View,
 } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
-import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
 import { CatCard } from "../cards/CatCard";
-import { HeartButton } from "../pressable/HeartButton";
-import { MessageButton } from "../pressable/MessageButton";
-import { PhoneButton } from "../pressable/PhoneButton";
+import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
+import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
-import { Colors } from "../styles/Colors";
-import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
-import call from "react-native-phone-call";
-import { Linking, Platform } from "react-native";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();

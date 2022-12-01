@@ -9,7 +9,7 @@ import {
   Text,
   TextInput,
   useWindowDimensions,
-  View,
+  View
 } from "react-native";
 import { navigationRef } from "./components/RootNavigation";
 import HomePage from "./components/screens/HomePage";
