@@ -1,23 +1,20 @@
+import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
 import { Feather, Ionicons } from "@expo/vector-icons";
+import { Client } from "@googlemaps/google-maps-services-js";
 import { Chip } from "@rneui/themed";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
-import { MessageButton } from "../pressable/MessageButton";
-import { PhoneButton } from "../pressable/PhoneButton";
-import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
-import { Colors } from "../styles/Colors";
-import { ScrollView } from "react-native";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import {
-  getUserLocation,
-  calculateDistance,
-  userLikeACat,
-  userUnLikeACat,
+  calculateDistance, getUserLocation, userLikeACat,
+  userUnLikeACat
 } from "../../firebaseUtils/user";
-import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
-import { Client } from "@googlemaps/google-maps-services-js";
+import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
+import { MessageButton } from "../pressable/MessageButton";
+import { PhoneButton } from "../pressable/PhoneButton";
+import { Colors } from "../styles/Colors";
 
 export default function CatInformation({ route, navigation }) {
   const catId = route.params.catId;
@@ -57,7 +54,7 @@ export default function CatInformation({ route, navigation }) {
         .then((resp) => {
           setDistance(
             calculateDistance(location, resp.data.result.geometry.location) +
-              "km"
+            "km"
           );
         });
     }
