@@ -114,7 +114,7 @@ export default function CatInformation({ route, navigation }) {
   };
 
   const onClickEditButton = () => {
-    navigation.navigate("PostNewCatScreen", { cat });
+    navigation.push("PostNewCatScreen", { cat });
   };
 
   return (
@@ -224,7 +224,7 @@ export default function CatInformation({ route, navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Pressable
                 onPress={() =>
-                  navigation.navigate("CatteryProfile", { cattery })
+                  navigation.push("CatteryProfile", { cattery })
                 }
               ><View style={{ flexDirection: "row" }}>
                   <CachedImage
