@@ -31,7 +31,7 @@
    ```
 
    Feel free to sign up for your own accounts!
-___
+
 ## Iteration 2
 
 ### Contributions
@@ -109,7 +109,7 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 
 1. Long loading time for distance display.
 2. Long loading time when posting a new cat.
-___
+
 ## Iteration 1
 
 ### Contributions
@@ -185,8 +185,8 @@ ___
 1. Require to unify all fonts and font sizes.
 2. Require to unify style sheets.
 3. Require to unify colors.
-___
-## ScreenShots
+
+### ScreenShots For Iteratio 1
 
 ![](screenshots/Login.jpg)
 
@@ -197,7 +197,7 @@ ___
 ![](screenshots/User.jpg)
 
 ![](screenshots/Cattery's.jpg)
-___
+
 ## Project Descriptions
 
 **Find your favorite cat to join your family!**
