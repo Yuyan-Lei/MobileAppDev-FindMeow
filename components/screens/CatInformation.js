@@ -639,7 +639,7 @@ export default function CatInformation({ route, navigation }) {
                 }
               >
                 <Image
-                  source={{ uri: cat.Picture }}
+                  source={{ uri: cattery.picture }}
                   resizeMode="cover"
                   style={{
                     padding: 8,
