@@ -7,6 +7,7 @@ import { getAllCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { getAllCatteries, getUserLocation } from "../../firebaseUtils/user";
+import { globalVariables } from "../../utils/globalVariables";
 import { BreederCard } from "../cards/BreederCard";
 import { CatCard } from "../cards/CatCard";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -169,9 +170,18 @@ function MainScreen({ route, navigation }) {
       refreshLikedCatteryData();
     }, 17000);
 
+    const intervalImmediateRefresh = setInterval(() => {
+      if (globalVariables.starListNeedReload) {
+        globalVariables.starListNeedReload = false;
+        refreshLikedCatData({ forceLoad: true });
+        refreshLikedCatteryData({ forceLoad: true });
+      }
+    }, 200);
+
     return () => {
       clearInterval(intervalCat);
       clearInterval(intervalCattery);
+      clearInterval(intervalImmediateRefresh);
     };
   }, []);
   /* subscribe user likes to display liked catteries and catteries  - end */
