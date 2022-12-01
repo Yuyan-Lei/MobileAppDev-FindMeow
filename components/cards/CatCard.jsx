@@ -13,6 +13,8 @@ import {
 } from "../../firebaseUtils/user";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
+import CachedImage from "react-native-expo-cached-image";
+
 export function CatCard({
   cat,
   navigation,
@@ -87,7 +89,7 @@ export function CatCard({
       >
         <View style={styles.imageView}>
           {/* cat photo */}
-          <Image source={{ uri: cat.photo }} style={styles.image} />
+          <CachedImage source={{ uri: cat.photo }} style={styles.image} />
         </View>
 
         <View style={styles.descriptionView}>

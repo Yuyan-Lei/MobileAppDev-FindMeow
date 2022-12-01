@@ -18,6 +18,7 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
+import CachedImage from "react-native-expo-cached-image";
 import { getCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
@@ -103,7 +104,7 @@ function MainScreen({ route, navigation }) {
         <View>
           <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
             {cattery.picture && (
-              <Image
+              <CachedImage
                 source={{ uri: cattery.picture }}
                 style={{ width: "100%", height: "100%" }}
               />

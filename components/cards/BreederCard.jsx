@@ -8,6 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
+import CachedImage from "react-native-expo-cached-image";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
@@ -45,7 +46,7 @@ export function BreederCard({ cattery, navigation }) {
         <View style={[styles.cardView, styles.shadowView]}>
           {/* Cattery photo */}
           <View style={styles.imageView}>
-            <Image source={{ uri: cattery.picture }} style={styles.image} />
+            <CachedImage source={{ uri: cattery.picture }} style={styles.image} />
           </View>
 
           <View style={styles.detailView}>
