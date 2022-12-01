@@ -5,6 +5,7 @@ import { Chip } from "@rneui/themed";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import CachedImage from "react-native-expo-cached-image";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import {
@@ -120,11 +121,11 @@ export default function CatInformation({ route, navigation }) {
     <ScrollView>
       <View>
         {/* Background Image */}
-        <Image
+        <CachedImage
           source={{ uri: cat.Picture }}
           resizeMode="cover"
           style={{ height: 450, width: 500 }}
-        ></Image>
+        ></CachedImage>
 
         {/* Heart button */}
         <View style={styles.floatingView}>
@@ -226,7 +227,7 @@ export default function CatInformation({ route, navigation }) {
                   navigation.navigate("CatteryProfile", { cattery })
                 }
               >
-                <Image
+                <CachedImage
                   source={{ uri: cattery.picture }}
                   resizeMode="cover"
                   style={{
@@ -236,7 +237,7 @@ export default function CatInformation({ route, navigation }) {
                     width: 40,
                     marginRight: 10,
                   }}
-                ></Image>
+                ></CachedImage>
               </Pressable>
               <View>
                 <Text style={styles.catteryNameText}>
