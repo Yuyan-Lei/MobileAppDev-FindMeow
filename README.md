@@ -76,7 +76,8 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
    2. Linked `CatInformation` with firebase database to show real data.
    3. Linked `SearchBar` to firebase database with searching.
    4. Selected and Added a new `DataPicker` to `PostCat` screen.
-   5. Replaced onSnapShot in `DiscoverMain`, `FindBreeder`, and `LikeList` with an on-demand data refreshing strategies.
+   5. Replaced onSnapShot in `DiscoverMain`, `FindBreeder`, and `LikeList` with an on-demand data refreshing strategies. Added a global trigger for `LikeList` reloading.
+   6. Added swipe gestures for `LikeList`.
 - Fix:
    1. Some buttons do not avoid multiple clicks.
    2. Going back in `CatInformation` leads to the wrong page.
@@ -84,10 +85,10 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
    4. Some dates do not work correctly in `DataPicker` in iOS.
    5. Left slides in `HomePage` leads to `LoginPage`.
 - Style:
-   1. Grouped inline styles to StyleSheet
-   2. Fixed unexpected padding in LikeList
+   1. Grouped inline styles to `StyleSheet`.
+   2. Fixed unexpected padding in `LikeList`.
 - Test:
-   1. Tested all pages
+   1. Tested all pages.
    2. Reviewed and tested 10 pull requests from group members.
 
 ### Features and bugs remaining to resolve in the next iteration
