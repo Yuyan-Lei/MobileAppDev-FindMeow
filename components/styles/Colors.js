@@ -19,4 +19,6 @@ export const Colors = {
   shadowWhiteAndroid: "#babacf",
   heartBackground: "rgba(229, 229, 229, 0.5)",
   arrowBackground: "rgba(99,99,99, 0.5)",
+  priceColor: "#F6AC3D",
+  text: "#2E2525",
 };
