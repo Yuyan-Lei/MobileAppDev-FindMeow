@@ -24,6 +24,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
   const [website, setWebsite] = useState(user.website);
   const [placeId, setPlaceId] = useState(user.placeId);
   const [address, setAddress] = useState(user.address);
+  const [shortAddress, setShortAddress] = useState(user.shortAddress);
   const ref = useRef();
 
   // Verify all the inputs in this page and return the error message if any errors.
@@ -75,6 +76,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
           website,
           placeId,
           address,
+          shortAddress,
         });
         navigation.goBack();
       } else {
@@ -86,6 +88,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
           website,
           placeId,
           address,
+          shortAddress,
         });
         navigation.goBack();
       }
@@ -129,6 +132,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
               language: "en", // language of the results
             }}
             onPress={(data, details = null) => {
+              setShortAddress(data.terms.at(-3).value + ", "+ data.terms.at(-2).value);
               setAddress(data.description);
               setPlaceId(data.place_id);
             }}

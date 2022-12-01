@@ -40,6 +40,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
   const [website, setWebsite] = useState("");
   const [placeId, setPlaceId] = useState("");
   const [address, setAddress] = useState("");
+  const [shortAddress, setShortAddress] = useState("");
 
   const ref = useRef();
 
@@ -137,6 +138,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             website,
             placeId,
             address,
+            shortAddress,
           });
         }
       })
@@ -359,6 +361,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     onPress={(data, details = null) => {
                       setAddress(data.description);
                       setPlaceId(data.place_id);
+                      setShortAddress(data.terms.at(-3).value + ", "+ data.terms.at(-2).value);
                     }}
                     textInputProps={{
                       InputComp: TextInput,
