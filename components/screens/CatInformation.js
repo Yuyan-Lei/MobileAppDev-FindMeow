@@ -622,6 +622,7 @@ export default function CatInformation({ route, navigation }) {
                   key={index}
                   containerStyle={styles.chip}
                   color={Colors.orangeText}
+                  titleStyle={{ fontFamily: "Poppins" }}
                 />
               ))
             ) : (
@@ -828,7 +829,6 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsLight",
     marginTop: 8,
     marginBottom: 15,
-    marginLeft: 5,
   },
 
   detailLabel: {
