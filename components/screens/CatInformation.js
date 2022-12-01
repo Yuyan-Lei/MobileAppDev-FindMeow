@@ -226,26 +226,29 @@ export default function CatInformation({ route, navigation }) {
                 onPress={() =>
                   navigation.navigate("CatteryProfile", { cattery })
                 }
-              >
-                <CachedImage
-                  source={{ uri: cattery.picture }}
-                  resizeMode="cover"
-                  style={{
-                    padding: 8,
-                    borderRadius: 100,
-                    height: 40,
-                    width: 40,
-                    marginRight: 10,
-                  }}
-                ></CachedImage>
+              ><View style={{ flexDirection: "row" }}>
+                  <CachedImage
+                    source={{ uri: cattery.picture }}
+                    resizeMode="cover"
+                    style={{
+                      padding: 8,
+                      borderRadius: 100,
+                      height: 40,
+                      width: 40,
+                      marginRight: 10,
+                    }}
+                  />
+
+                  <View>
+                    <Text style={styles.catteryNameText}>
+                      {cattery.catteryName}
+                    </Text>
+                    <Text style={styles.catteryLabelText}>Cattery</Text>
+                  </View>
+                  <View style={{ width: 200 }} />
+                </View>
               </Pressable>
-              <View>
-                <Text style={styles.catteryNameText}>
-                  {cattery.catteryName}
-                </Text>
-                <Text style={styles.catteryLabelText}>Cattery</Text>
-              </View>
-              <View style={{ width: 200 }}></View>
+
               <View style={styles.buttonView}>
                 <PhoneButton cattery={cattery} />
                 <MessageButton cattery={cattery} />
