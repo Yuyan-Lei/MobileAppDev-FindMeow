@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { doc, getDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+import GestureRecognizer from "react-native-swipe-gestures";
 import { getAllCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
@@ -185,36 +186,48 @@ function MainScreen({ route, navigation }) {
   }, []);
   /* subscribe user likes to display liked catteries and catteries  - end */
 
-  return (
-    <View style={styles.container}>
-      <View style={{ margin: 12 }}>
-        <View>
-          <TitleText>Collections</TitleText>
-        </View>
-      </View>
+  const configGestureRecognizer = {
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80,
+  };
 
-      <FilterButtons
-        selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
-        buttons={["Cats", "Catteries"]}
-      />
-      {selectedIndex === 0 && (
-        <CatsScreen
-          navigation={navigation}
-          cats={likeCats}
-          isScrollToTop={isScrollToTop}
-          onScrollToTop={() => refreshLikedCatData({ forceLoad: true })}
+  return (
+    <GestureRecognizer
+      onSwipeLeft={(state) => setSelectedIndex(1)}
+      onSwipeRight={(state) => setSelectedIndex(0)}
+      config={configGestureRecognizer}
+      style={{ flex: 1 }}
+    >
+      <View style={styles.container}>
+        <View style={{ margin: 12 }}>
+          <View>
+            <TitleText>Collections</TitleText>
+          </View>
+        </View>
+
+        <FilterButtons
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
+          buttons={["Cats", "Catteries"]}
         />
-      )}
-      {selectedIndex === 1 && (
-        <CatteriesScreen
-          navigation={navigation}
-          catteries={likeCatteries}
-          isScrollToTop={isScrollToTop}
-          onScrollToTop={() => refreshLikedCatteryData({ forceLoad: true })}
-        />
-      )}
-    </View>
+        {selectedIndex === 0 && (
+          <CatsScreen
+            navigation={navigation}
+            cats={likeCats}
+            isScrollToTop={isScrollToTop}
+            onScrollToTop={() => refreshLikedCatData({ forceLoad: true })}
+          />
+        )}
+        {selectedIndex === 1 && (
+          <CatteriesScreen
+            navigation={navigation}
+            catteries={likeCatteries}
+            isScrollToTop={isScrollToTop}
+            onScrollToTop={() => refreshLikedCatteryData({ forceLoad: true })}
+          />
+        )}
+      </View>
+    </GestureRecognizer>
   );
 }
 
