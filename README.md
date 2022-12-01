@@ -52,7 +52,8 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 9. Added chips and enabled users to filter cats on discover-cat screen.
 10. Added cattery photo in cat-information cattery contact section.
 11. Implemented simple notification.
-12. Enabled users to make a phone call when press the phone button.
+12. Enabled users to make a phone call when press the phone button on cat-information screen and phone number on cattery profile.
+13. Enabled users to send a message directly through Message when press message button on cat-information screen.
 
 **Yuyan Lei**:
 
@@ -71,24 +72,25 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 13. Fixed some bugs.
 
 **Zhongyi Lu**:
+
 - Feat:
-   1. Changed the behaviors of `Navigation Bar` to always show on screen.
-   2. Linked `CatInformation` with firebase database to show real data.
-   3. Linked `SearchBar` to firebase database with searching.
-   4. Selected and Added a new `DataPicker` to `PostCat` screen.
-   5. Replaced onSnapShot in `DiscoverMain`, `FindBreeder`, and `LikeList` with an on-demand data refreshing strategies.
+  1.  Changed the behaviors of `Navigation Bar` to always show on screen.
+  2.  Linked `CatInformation` with firebase database to show real data.
+  3.  Linked `SearchBar` to firebase database with searching.
+  4.  Selected and Added a new `DataPicker` to `PostCat` screen.
+  5.  Replaced onSnapShot in `DiscoverMain`, `FindBreeder`, and `LikeList` with an on-demand data refreshing strategies.
 - Fix:
-   1. Some buttons do not avoid multiple clicks.
-   2. Going back in `CatInformation` leads to the wrong page.
-   3. Filters take effect before applying.
-   4. Some dates do not work correctly in `DataPicker` in iOS.
-   5. Left slides in `HomePage` leads to `LoginPage`.
+  1.  Some buttons do not avoid multiple clicks.
+  2.  Going back in `CatInformation` leads to the wrong page.
+  3.  Filters take effect before applying.
+  4.  Some dates do not work correctly in `DataPicker` in iOS.
+  5.  Left slides in `HomePage` leads to `LoginPage`.
 - Style:
-   1. Grouped inline styles to StyleSheet
-   2. Fixed unexpected padding in LikeList
+  1.  Grouped inline styles to StyleSheet
+  2.  Fixed unexpected padding in LikeList
 - Test:
-   1. Tested all pages
-   2. Reviewed and tested 10 pull requests from group members.
+  1.  Tested all pages
+  2.  Reviewed and tested 10 pull requests from group members.
 
 ### Features and bugs remaining to resolve in the next iteration
 
