@@ -1,25 +1,39 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { Alert, Pressable, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  Pressable,
+  StyleSheet,
+  View,
+  Linking,
+  Platform,
+} from "react-native";
 import { Colors } from "../styles/Colors";
 import call from "react-native-phone-call";
 
-export function PhoneButton({ onPress }) {
-  // const phoneHandler = () => {
-  //   Alert.alert("Phone number", "123-456-7890", [
-  //     {
-  //       text: "Cancel",
-  //       onPress: () => console.log("Cancel Pressed"),
-  //       style: "cancel",
-  //     },
-  //     { text: "OK", onPress: () => call(args).catch(console.error) },
-  //   ]);
-  // };
-
+export function PhoneButton({ onPress, cattery }) {
   const args = {
     number: "123-456-7890",
     prompt: false,
     skipCanOpen: true,
+  };
+
+  const callNumber = (phone) => {
+    let phoneNumber = phone;
+    if (Platform.OS !== "android") {
+      phoneNumber = `telprompt:${phone}`;
+    } else {
+      phoneNumber = `tel:${phone}`;
+    }
+    Linking.canOpenURL(phoneNumber)
+      .then((supported) => {
+        if (!supported) {
+          Alert.alert("Phone number is not available");
+        } else {
+          return Linking.openURL(phoneNumber);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -29,7 +43,8 @@ export function PhoneButton({ onPress }) {
           name="phone-in-talk"
           size={24}
           color="white"
-          onPress={() => call(args).catch(console.error)}
+          // onPress={() => call(args).catch(console.error)}
+          onPress={() => callNumber(cattery.phoneNumber)}
         />
       </Pressable>
     </View>

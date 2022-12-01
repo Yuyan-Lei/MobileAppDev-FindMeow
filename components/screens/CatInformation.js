@@ -608,7 +608,9 @@ export default function CatInformation({ route, navigation }) {
               color={Colors.darkOrange}
             />
             <Text style={styles.addressText}>{cattery.address}</Text>
-            {distance !== "Distance Loading" && <Text style={styles.addressText}>({distance})</Text>}
+            {distance !== "Distance Loading" && (
+              <Text style={styles.addressText}>({distance})</Text>
+            )}
           </View>
           {/* <Text style={styles.date}>{cat.Birthday}</Text> */}
           <Text style={styles.PostDateText}>Posted in {cat.Birthday}</Text>
@@ -656,8 +658,8 @@ export default function CatInformation({ route, navigation }) {
               </View>
               <View style={{ width: 200 }}></View>
               <View style={styles.buttonView}>
-                <PhoneButton />
-                <MessageButton />
+                <PhoneButton cattery={cattery} />
+                <MessageButton cattery={cattery} />
               </View>
             </View>
           </View>

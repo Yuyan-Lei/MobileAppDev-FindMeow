@@ -30,6 +30,8 @@ import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
 import { Colors } from "../styles/Colors";
 import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
+import call from "react-native-phone-call";
+import { Linking, Platform } from "react-native";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -102,6 +104,33 @@ function MainScreen({ route, navigation }) {
     };
   };
 
+  const args = (cattery) => {
+    return {
+      number: cattery.phoneNumber,
+      prompt: false,
+      skipCanOpen: true,
+    };
+  };
+
+  const callNumber = (phone) => {
+    console.log("callNumber ----> ", phone);
+    let phoneNumber = phone;
+    if (Platform.OS !== "android") {
+      phoneNumber = `telprompt:${phone}`;
+    } else {
+      phoneNumber = `tel:${phone}`;
+    }
+    Linking.canOpenURL(phoneNumber)
+      .then((supported) => {
+        if (!supported) {
+          Alert.alert("Phone number is not available");
+        } else {
+          return Linking.openURL(phoneNumber);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <View style={styles.container}>
       <View>
@@ -145,28 +174,24 @@ function MainScreen({ route, navigation }) {
           {/* cattery info: phone number, website, address */}
           <View style={styles.infoView}>
             <Text style={styles.infoTitle}>About</Text>
-            {/* <View
-              style={{
-                flexDirection: "row",
-                alignSelf: "flex-end",
-                position: "absolute",
-                marginTop: 20,
-              }}
-            >
-              <PhoneButton />
-              <MessageButton />
-            </View> */}
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Phone : </Text>
-              <Text style={{ fontFamily: "PoppinsRegular" }}>
-                {cattery.phoneNumber}
-              </Text>
+              {/* <Pressable
+                onPress={() => Linking.openURL(`tel:${cattery.phoneNumber}`)}
+              > */}
+              <Pressable onPress={() => callNumber(cattery.phoneNumber)}>
+                <Text style={{ fontFamily: "PoppinsRegular" }}>
+                  {cattery.phoneNumber}
+                </Text>
+              </Pressable>
             </View>
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Website : </Text>
-              <Text style={{ fontFamily: "PoppinsRegular" }}>{cattery.website}</Text>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>
+                {cattery.website}
+              </Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
