@@ -4,7 +4,7 @@ import {
   getAllFromDB,
   getMultipleFromDB,
   updateToDB,
-  wrtieToDB,
+  wrtieToDB
 } from "./firestore";
 
 const collectionName = "Cats";

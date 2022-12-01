@@ -9,7 +9,7 @@ import {
   query,
   setDoc,
   updateDoc,
-  where,
+  where
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { auth, db, storage } from "./firebase-setup";

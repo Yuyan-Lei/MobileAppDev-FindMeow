@@ -1,33 +1,47 @@
+import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
+import { Client } from "@googlemaps/google-maps-services-js";
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { REACT_APP_GOOGLE_MAP_APP_KEY } from '@env';
 import {
-  getCattery,
   calculateDistance,
+  getCattery,
   userLikeACat,
   userUnLikeACat,
 } from "../../firebaseUtils/user";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
-import {Client} from "@googlemaps/google-maps-services-js";
-export function CatCard({ cat, navigation, location, hideLocation, showBreed }) {
+export function CatCard({
+  cat,
+  navigation,
+  location,
+  hideLocation,
+  showBreed,
+}) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
-  const [distance, setDistance] = useState('');
+  const [distance, setDistance] = useState("");
 
-  /* Calculate distance to the cat if both user location and cattery location are provided. */ 
+  /* Calculate distance to the cat if both user location and cattery location are provided. */
   useEffect(() => {
     if (cattery && cattery.placeId && location) {
       const googleMapClient = new Client({});
-      googleMapClient.placeDetails({params: {
-        place_id: cattery.placeId,
-        key: REACT_APP_GOOGLE_MAP_APP_KEY
-      }}).then((resp) => {
-        setDistance(' (' + calculateDistance(location, resp.data.result.geometry.location) + ' km)');
-      })
+      googleMapClient
+        .placeDetails({
+          params: {
+            place_id: cattery.placeId,
+            key: REACT_APP_GOOGLE_MAP_APP_KEY,
+          },
+        })
+        .then((resp) => {
+          setDistance(
+            " (" +
+              calculateDistance(location, resp.data.result.geometry.location) +
+              " km)"
+          );
+        });
     }
   }, [cattery, location]);
 
@@ -60,11 +74,9 @@ export function CatCard({ cat, navigation, location, hideLocation, showBreed }) 
   let catMonthText = "";
   if (cat.month <= 1) {
     catMonthText = "< 1 month";
-  }
-  else if (cat.month === 1) {
+  } else if (cat.month === 1) {
     catMonthText = cat.month + " month";
-  }
-  else {
+  } else {
     catMonthText = cat.month + " months";
   }
 
@@ -88,23 +100,22 @@ export function CatCard({ cat, navigation, location, hideLocation, showBreed }) 
           </Text>
 
           {/* cat breed */}
-          {showBreed && 
-            <Text style={styles.catDetailStyle}>
-              {cat.breed}
-            </Text>
-          }
+          {showBreed && <Text style={styles.catDetailStyle}>{cat.breed}</Text>}
 
           {/* cat location */}
-          {!hideLocation && <LocationText
-            textStyle={styles.locationStyle}
-            locationIconColor={styles.locationIconStyle.color}
-          >
-            {cattery && cattery.address
-              ? cattery.address.split(", ")[1] +
-                ", " +
-                cattery.address.split(", ")[2] + distance
-              : "Loading"}
-          </LocationText>}
+          {!hideLocation && (
+            <LocationText
+              textStyle={styles.locationStyle}
+              locationIconColor={styles.locationIconStyle.color}
+            >
+              {cattery && cattery.address
+                ? cattery.address.split(", ")[1] +
+                  ", " +
+                  cattery.address.split(", ")[2] +
+                  distance
+                : "Loading"}
+            </LocationText>
+          )}
         </View>
       </Pressable>
 
@@ -132,7 +143,6 @@ const styles = StyleSheet.create({
   },
   imageView: {
     aspectRatio: 0.834,
-    // backgroundColor: "gray",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 5,

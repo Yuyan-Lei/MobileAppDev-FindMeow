@@ -23,12 +23,9 @@ import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { CatCard } from "../cards/CatCard";
 import { rootStackNavigateBack } from "../RootNavigation";
-import { LocationText } from "../texts/LocationText";
-import CatteryProfileScreen from "./CatteryProfileScreen";
 import { Colors } from "../styles/Colors";
+import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
-import { MessageButton } from "../pressable/MessageButton";
-import { PhoneButton } from "../pressable/PhoneButton";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();

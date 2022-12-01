@@ -1,15 +1,15 @@
+import * as Location from 'expo-location';
 import { arrayRemove, arrayUnion } from "firebase/firestore";
+import haversine from 'haversine-distance';
+import { Alert } from "react-native";
+import { globalVariables } from "../utils/globalVariables";
 import {
   getAllFromDB,
   getCurrentUserEmail,
   getFromDB,
   updateToDB,
-  wrtieToDB,
+  wrtieToDB
 } from "./firestore";
-import * as Location from 'expo-location';
-import { Alert } from "react-native";
-import haversine from 'haversine-distance';
-import { globalVariables } from "../utils/globalVariables";
 
 const collectionName = "Users";
 

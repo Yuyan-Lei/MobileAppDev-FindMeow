@@ -6,7 +6,7 @@ import {
   REACT_APP_FIREBASE_MEASUREMENT_ID,
   REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   REACT_APP_FIREBASE_PROJECT_ID,
-  REACT_APP_FIREBASE_STORAGE_BUCKET,
+  REACT_APP_FIREBASE_STORAGE_BUCKET
 } from "@env";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";

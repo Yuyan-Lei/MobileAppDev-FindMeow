@@ -14,7 +14,6 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { writeImageToDB } from "../../firebaseUtils/firestore";
 import { updateCattery } from "../../firebaseUtils/user";
 import { FillAndroidButtomBar, FillAndroidTopBar } from "../FillAndroidBar";
-import { TitleText } from "../texts/TitleText";
 import CatImagePicker from "../pressable/CatImagePicker";
 
 export default function UpdateCatteryPage({ route, navigation }) {

@@ -1,12 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import {
-  Alert,
-  Pressable,
+  Alert, Linking,
+  Platform, Pressable,
   StyleSheet,
-  View,
-  Linking,
-  Platform,
+  View
 } from "react-native";
 import { Colors } from "../styles/Colors";
 

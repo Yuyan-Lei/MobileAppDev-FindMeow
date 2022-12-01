@@ -1,24 +1,17 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  orderBy,
-  query,
-  QuerySnapshot,
-} from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { getUserLocation } from "../../firebaseUtils/user";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
-import PostNewCatScreen from "./PostNewCatScreen";
 import DiscoverFilter from "./DiscoverFilter";
-import { getUserLocation } from "../../firebaseUtils/user";
+import PostNewCatScreen from "./PostNewCatScreen";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -168,10 +161,6 @@ function MainScreen({ route, navigation }) {
         </View>
       </View>
 
-      {/* <Button
-        title="OPEN BOTTOM SHEET"
-        onPress={() => refRBSheet.current.open()}
-      /> */}
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
@@ -207,7 +196,7 @@ function MainScreen({ route, navigation }) {
         buttons={["Newer Post", "Nearby", "Lower Price"]}
       />
 
-      <View style={{paddingHorizontal: 16}}>
+      <View style={{ paddingHorizontal: 16 }}>
         <FlatList
           data={data}
           renderItem={({ item, index }) => (

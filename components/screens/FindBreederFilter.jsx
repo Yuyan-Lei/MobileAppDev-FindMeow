@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-import {
-  Alert,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
-import { Colors } from "../styles/Colors";
-import { OrangeText } from "../texts/OrangeText";
 import { ALL_BREEDS } from "../listContents/allBreeds";
 import { ALL_STATES } from "../listContents/allStates";
+import { Colors } from "../styles/Colors";
+import { OrangeText } from "../texts/OrangeText";
 
 const FindBreederFilter = ({
   states: {
@@ -52,11 +45,6 @@ const FindBreederFilter = ({
     setSelectedState(stateLocal);
     setSelectedCatNum(catNumLocal);
 
-    // Alert.alert(
-    //   "Feature for this button is coming soon~",
-    //   "See you next time!",
-    //   [{ text: "Sad" }, { text: "Wait for you" }]
-    // );
     refRBSheet.current.close();
   };
 

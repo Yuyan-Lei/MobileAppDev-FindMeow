@@ -1,9 +1,11 @@
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { Button } from "@rneui/themed";
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -11,9 +13,8 @@ import {
   TextInput,
   View,
 } from "react-native";
-import DatePicker from "react-native-datepicker";
 import { SelectList } from "react-native-dropdown-select-list";
-import { createCat, updateCat, deleteCat } from "../../firebaseUtils/cat";
+import { createCat, deleteCat, updateCat } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import {
   getCurrentUserEmail,
@@ -21,28 +22,41 @@ import {
 } from "../../firebaseUtils/firestore";
 import CatBreedSelector from "../pressable/CatBreedSelector";
 import CatImagePicker from "../pressable/CatImagePicker";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
-import { Platform } from "react-native";
 // import { Button } from "react-native";
-import { Keyboard } from "react-native";
 import moment from "moment";
-import { Colors } from "../styles/Colors";
-import { colors } from "react-native-elements";
 import { deleteCatInCattery } from "../../firebaseUtils/user";
+import { Colors } from "../styles/Colors";
 
-export default function PostNewCatScreen({ route: { params }, navigation: { navigate, goBack } }) {
+export default function PostNewCatScreen({
+  route: { params },
+  navigation: { navigate, goBack },
+}) {
   const [catName, setCatName] = useState(params.cat ? params.cat.Name : "");
   const [image, setImage] = useState(params.cat ? params.cat.Picture : null);
   const [breed, setBreed] = useState(params.cat ? params.cat.Breed : "");
   const [gender, setGender] = useState(params.cat ? params.cat.Gender : "");
-  const [birthDate, setBirthDate] = useState(params.cat ? new Date(params.cat.Birthday) : null);
+  const [birthDate, setBirthDate] = useState(
+    params.cat ? new Date(params.cat.Birthday) : null
+  );
   const [price, setPrice] = useState(params.cat ? params.cat.Price + "" : "");
-  const [description, setDescription] = useState(params.cat ? params.cat.Description : "");
-  const [vaccinated, setVaccinated] = useState(params.cat ? params.cat.Tags.includes("Vaccinated") : false);
-  const [vetChecked, setVetChecked] = useState(params.cat ? params.cat.Tags.includes("Vet Checked") : false);
-  const [dewormed, setDewormed] = useState(params.cat ? params.cat.Tags.includes("Dewormed") : false);
-  const [ready, setReady] = useState(params.cat ? params.cat.Tags.includes("Ready to go home") : false);
-  const [neutered, setNeutered] = useState(params.cat ? params.cat.Tags.includes("Neutered") : false);
+  const [description, setDescription] = useState(
+    params.cat ? params.cat.Description : ""
+  );
+  const [vaccinated, setVaccinated] = useState(
+    params.cat ? params.cat.Tags.includes("Vaccinated") : false
+  );
+  const [vetChecked, setVetChecked] = useState(
+    params.cat ? params.cat.Tags.includes("Vet Checked") : false
+  );
+  const [dewormed, setDewormed] = useState(
+    params.cat ? params.cat.Tags.includes("Dewormed") : false
+  );
+  const [ready, setReady] = useState(
+    params.cat ? params.cat.Tags.includes("Ready to go home") : false
+  );
+  const [neutered, setNeutered] = useState(
+    params.cat ? params.cat.Tags.includes("Neutered") : false
+  );
   const [catId, setCatId] = useState(params.cat ? params.cat.id : "");
   const [cat, setCat] = useState(params.cat);
 
@@ -213,7 +227,8 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
     Alert.alert("Are you sure you want to delete this cat?", "", [
       { text: "Cancel" },
       {
-        text: "OK", onPress: async () => {
+        text: "OK",
+        onPress: async () => {
           await deleteCat(catId);
 
           onPostNewCatLocked = true;
@@ -229,11 +244,10 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
           } finally {
             onPostNewCatLocked = false;
           }
-        }
-      }
-    ])
-
-  };
+        },
+      },
+    ]);
+  }
 
   return (
     <KeyboardAvoidingView
@@ -250,8 +264,11 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
             marginBottom: 20,
           }}
         >
-          {catId === "" ? <Text style={styles.title}>Upload Cat</Text>
-            : <Text style={styles.title}>Update Cat</Text>}
+          {catId === "" ? (
+            <Text style={styles.title}>Upload Cat</Text>
+          ) : (
+            <Text style={styles.title}>Update Cat</Text>
+          )}
         </View>
 
         {/* Image picker */}
@@ -366,15 +383,15 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
             titleStyle={
               vaccinated
                 ? {
-                  color: "white",
-                  fontSize: 14,
-                  fontFamily: "PoppinsSemiBold",
-                }
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
                 : {
-                  color: Colors.orangeText,
-                  fontSize: 14,
-                  fontFamily: "Poppins",
-                }
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setVaccinated(!vaccinated)}
           ></Button>
@@ -387,15 +404,15 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
             titleStyle={
               vetChecked
                 ? {
-                  color: "white",
-                  fontSize: 14,
-                  fontFamily: "PoppinsSemiBold",
-                }
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
                 : {
-                  color: Colors.orangeText,
-                  fontSize: 14,
-                  fontFamily: "Poppins",
-                }
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setVetChecked(!vetChecked)}
           ></Button>
@@ -408,15 +425,15 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
             titleStyle={
               dewormed
                 ? {
-                  color: "white",
-                  fontSize: 14,
-                  fontFamily: "PoppinsSemiBold",
-                }
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
                 : {
-                  color: Colors.orangeText,
-                  fontSize: 14,
-                  fontFamily: "Poppins",
-                }
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setDewormed(!dewormed)}
           ></Button>
@@ -429,15 +446,15 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
             titleStyle={
               ready
                 ? {
-                  color: "white",
-                  fontSize: 14,
-                  fontFamily: "PoppinsSemiBold",
-                }
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
                 : {
-                  color: Colors.orangeText,
-                  fontSize: 14,
-                  fontFamily: "Poppins",
-                }
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setReady(!ready)}
           ></Button>
@@ -450,29 +467,34 @@ export default function PostNewCatScreen({ route: { params }, navigation: { navi
             titleStyle={
               neutered
                 ? {
-                  color: "white",
-                  fontSize: 14,
-                  fontFamily: "PoppinsSemiBold",
-                }
+                    color: "white",
+                    fontSize: 14,
+                    fontFamily: "PoppinsSemiBold",
+                  }
                 : {
-                  color: Colors.orangeText,
-                  fontSize: 14,
-                  fontFamily: "Poppins",
-                }
+                    color: Colors.orangeText,
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                  }
             }
             onPress={() => setNeutered(!neutered)}
           ></Button>
         </View>
 
         {/* Submit Button */}
-        <Pressable onPress={catId === "" ? onPostNewCat : onUpdateCat} style={styles.submitButton}>
+        <Pressable
+          onPress={catId === "" ? onPostNewCat : onUpdateCat}
+          style={styles.submitButton}
+        >
           <Text style={styles.submitButtonText}>Submit</Text>
         </Pressable>
 
         {/* Delete Button */}
-        {catId !== "" && <Pressable onPress={onDeleteCat} style={styles.deleteButton}>
-          <Text style={styles.submitButtonText}>Delete</Text>
-        </Pressable>}
+        {catId !== "" && (
+          <Pressable onPress={onDeleteCat} style={styles.deleteButton}>
+            <Text style={styles.submitButtonText}>Delete</Text>
+          </Pressable>
+        )}
 
         {/* Empty Footer */}
         <View style={{ height: 20 }} />
@@ -510,7 +532,7 @@ const styles = StyleSheet.create({
     marginTop: "10%",
   },
   deleteButton: {
-    backgroundColor: '#e84f15',
+    backgroundColor: "#e84f15",
     borderRadius: 18,
     height: 60,
     alignItems: "center",

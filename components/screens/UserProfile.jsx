@@ -1,19 +1,23 @@
 import { Avatar } from "@react-native-material/core";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Alert,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { rootStackNavigate } from "../RootNavigation";
-import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
-import * as Device from "expo-device";
-import * as Notifications from "expo-notifications";
-import { useState, useEffect, useRef } from "react";
-import { Button, Platform } from "react-native";
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
