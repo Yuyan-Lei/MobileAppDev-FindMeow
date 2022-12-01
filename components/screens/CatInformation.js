@@ -659,7 +659,7 @@ export default function CatInformation({ route, navigation }) {
               <View style={{ width: 200 }}></View>
               <View style={styles.buttonView}>
                 <PhoneButton cattery={cattery} />
-                <MessageButton />
+                <MessageButton cattery={cattery} />
               </View>
             </View>
           </View>
