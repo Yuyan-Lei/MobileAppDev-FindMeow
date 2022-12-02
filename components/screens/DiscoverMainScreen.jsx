@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
-import { getUserLocation } from "../../firebaseUtils/user";
+import { calculateDistance, getAllCatteries, getUserLocation } from "../../firebaseUtils/user";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -16,7 +16,6 @@ import PostNewCatScreen from "./PostNewCatScreen";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [location, setLocation] = useState(null);
 
   /* values used for DiscoverFilter start */
   const [visible, setVisible] = useState(false);
@@ -26,6 +25,7 @@ function MainScreen({ route, navigation }) {
   const [selectedAge, setSelectedAge] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
   const [selectedGender, setSelectedGender] = useState("All");
+  const [selectedPrice, setSelectedPrice] = useState([0, 10000]);
 
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
@@ -37,6 +37,7 @@ function MainScreen({ route, navigation }) {
     setSelectedAge("");
     setSelectedState("");
     setSelectedGender("");
+    setSelectedPrice([0, 10000]);
   }
 
   function isScrollToTop(event) {
@@ -47,40 +48,23 @@ function MainScreen({ route, navigation }) {
     refreshCatData();
   }
 
-  /* Set user location. */
-  useEffect(() => {
-    (async () => {
-      let location = await getUserLocation();
-      setLocation(location);
-    })();
-  }, []);
-
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
-  async function refreshCatData() {
+  async function refreshCatData(selectedIndex) {
     if (refreshCatDataLock) return;
     setRefreshCatDataLock(true);
+    setSelectedIndex(selectedIndex);
+    let location = await getUserLocation();
+    const allCatteries = await getAllCatteries();
     try {
-      let q;
-      // 1. Newer Post
-      if (selectedIndex == 0) {
-        q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
-      }
-      // 2. Nearby Post
-      else if (selectedIndex == 1) {
-        q = query(collection(db, "Cats"), orderBy("UploadTime", "desc"));
-        // TODO ...
-      }
-      // 3. Lower Price
-      else if (selectedIndex == 2) {
-        q = query(collection(db, "Cats"), orderBy("Price", "desc"));
-      }
+      const catSnapShot = await getDocs(collection(db, "Cats"));
 
-      const catSnapShot = await getDocs(q);
-
-      setData(
+      let dataBeforeSorting =
         catSnapShot.docs.map((catDoc) => {
           const birthday = new Date(catDoc.data().Birthday);
           const now = new Date();
+          const cattery = allCatteries.find(ca => ca.email === catDoc.data().Cattery);
+          // if cattery doesn't have location, use 9999 to make cat in the bottom.
+          const distance = cattery.geoLocation && location ? calculateDistance(location, cattery.geoLocation) : 9999;
           let age =
             now.getMonth() -
             birthday.getMonth() +
@@ -98,10 +82,24 @@ function MainScreen({ route, navigation }) {
             month: age,
             photo: catDoc.data().Picture,
             cattery: catDoc.data().Cattery,
+            distance,
             uploadTime: catDoc.data().UploadTime,
           };
-        })
-      );
+        });
+      
+        // console.log(selectedIndex);
+        // 1. newer post
+      if (selectedIndex === 0) {
+        setData(dataBeforeSorting.sort((d1, d2) => d2.uploadTime - d1.uploadTime));
+      }
+      // 2. nearby Post
+      else if (selectedIndex === 1) {
+        setData(dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance));
+      }
+      // 3. Lower Price
+      else if (selectedIndex === 2) {
+        setData(dataBeforeSorting.sort((d1, d2) => d1.price - d2.price));
+      }
     } finally {
       setRefreshCatDataLock(false);
     }
@@ -110,42 +108,26 @@ function MainScreen({ route, navigation }) {
   /* data collector used for top filter tags - start */
   const [data, setData] = useState([]);
   useEffect(() => {
-    refreshCatData();
+    refreshCatData(selectedIndex);
   }, []);
   /* data collector used for top filter tags - end */
 
   /* events for top filter tags - start */
   const onFilterChange = (value) => {
-    let dataCopy = data;
-    // 1. newer post
-    if (value === 0) {
-      setData(dataCopy.sort((d1, d2) => d2.uploadTime - d1.uploadTime));
-    }
-    // 2. nearby Post
-    else if (value === 1) {
-      Alert.alert(
-        "Feature for this button is coming soon~",
-        "See you next time!",
-        [{ text: "Sad" }, { text: "Wait for you" }]
-      );
-    }
-    // 3. Lower Price
-    else if (value === 2) {
-      setData(dataCopy.sort((d1, d2) => d1.price - d2.price));
-    }
     setSelectedIndex(value);
+    refreshCatData(value);
   };
   /* events for top filter tags - end */
 
   useEffect(() => {
     const interval = setInterval(() => {
-      refreshCatData();
+      refreshCatData(selectedIndex);
     }, 10000);
 
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [selectedIndex]);
 
   return (
     <View style={styles.container}>
@@ -184,6 +166,8 @@ function MainScreen({ route, navigation }) {
             setSelectedAge,
             selectedGender,
             setSelectedGender,
+            selectedPrice,
+            setSelectedPrice,
 
             resetAllFilters,
             refRBSheet,
@@ -201,10 +185,9 @@ function MainScreen({ route, navigation }) {
         <FlatList
           data={data}
           renderItem={({ item, index }) => (
-            <CatCard cat={item} navigation={navigation} location={location} />
+            <CatCard cat={item} navigation={navigation} />
           )}
           numColumns={2}
-          extraData={location}
           ListFooterComponent={<View style={{ height: 80 }} />}
           onScrollEndDrag={(event) => {
             if (isScrollToTop(event)) {

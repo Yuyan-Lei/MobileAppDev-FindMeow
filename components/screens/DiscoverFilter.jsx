@@ -1,5 +1,6 @@
 import { Button, Icon, Slider } from "@rneui/themed";
 import React, { useState } from "react";
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {
   Alert,
   Pressable,
@@ -16,9 +17,6 @@ import { OrangeText } from "../texts/OrangeText";
 
 const DiscoverFilter = ({
   states: {
-    value,
-    setValue,
-
     selectedBreed,
     setSelectedBreed,
     selectedAge,
@@ -27,6 +25,8 @@ const DiscoverFilter = ({
     setSelectedState,
     selectedGender,
     setSelectedGender,
+    selectedPrice,
+    setSelectedPrice,
 
     resetAllFilters,
     refRBSheet,
@@ -36,6 +36,7 @@ const DiscoverFilter = ({
   const [ageLocal, setAgeLocal] = useState(selectedAge);
   const [stateLocal, setStateLocal] = useState(selectedState);
   const [genderLocal, setGenderLocal] = useState(selectedGender);
+  const [priceLocal, setPriceLocal] = useState(selectedPrice);
 
   const breed = [{ key: "All", value: "All" }, ...ALL_BREEDS];
 
@@ -63,6 +64,7 @@ const DiscoverFilter = ({
   const [neutered, setNeutered] = useState(false);
 
   const resetHandler = () => {
+    setPriceLocal(selectedPrice);
     setBreedLocal(selectedBreed);
     setAgeLocal(selectedAge);
     setStateLocal(selectedState);
@@ -75,6 +77,7 @@ const DiscoverFilter = ({
     setAgeLocal(ageLocal);
     setStateLocal(stateLocal);
     setGenderLocal(genderLocal);
+    setPriceLocal(priceLocal);
 
     Alert.alert(
       "Feature for this button is coming soon~",
@@ -84,6 +87,8 @@ const DiscoverFilter = ({
     refRBSheet.current.close();
   };
 
+  const onPriceChange = values => setPriceLocal(values);
+
   return (
     <ScrollView style={styles.filterContainer}>
       <Text style={styles.filterText}>Filter</Text>
@@ -91,33 +96,43 @@ const DiscoverFilter = ({
       <Text style={styles.reminderText}>
         Arrange Based On The Following Choices
       </Text>
-      <OrangeText>From $0 to ${value}</OrangeText>
 
-      <Slider
-        value={value}
-        onValueChange={setValue}
-        maximumValue={10000}
-        minimumValue={0}
+      {/* Price slider */}
+      <OrangeText>From ${priceLocal[0]} to ${priceLocal[1]}</OrangeText>
+
+      <MultiSlider
+        values={[priceLocal[0], priceLocal[1]]}
+        onValuesChange={onPriceChange}
+        min={0}
+        max={10000}
         step={100}
-        minimumTrackTintColor={Colors.orangeText}
-        allowTouchTrack
-        style={styles.sliderStyle}
-        trackStyle={styles.sliderTrackStyle}
-        thumbStyle={styles.sliderThumbStyle}
-        thumbProps={{
-          children: (
-            <Icon
-              name="dollar"
-              type="font-awesome"
-              size={10}
-              color={Colors.orangeText}
-              reverse
-              containerStyle={styles.sliderThumbContainerStyle}
-            />
-          ),
+
+        sliderLength={330}
+        containerStyle={{
+          marginLeft: 15,
+          marginRight: 15,
+        }}
+        selectedStyle={{
+          backgroundColor: Colors.orangeText,
+        }}
+        trackStyle={{ height: 3 }}
+
+        snapped
+
+        customMarker={() => {
+          return <Icon
+            name="dollar"
+            type="font-awesome"
+            size={10}
+            color={Colors.orangeText}
+            reverse
+            // containerStyle={styles.sliderThumbContainerStyle}
+          />
         }}
       />
 
+
+      {/* Breed */}
       <OrangeText>Breed</OrangeText>
       <SelectList
         setSelected={(val) => setBreedLocal(val)}
@@ -126,6 +141,8 @@ const DiscoverFilter = ({
         defaultOption={{ key: selectedBreed, value: selectedBreed }}
       />
 
+
+      {/* Age */}
       <OrangeText>Age</OrangeText>
       <SelectList
         setSelected={(val) => setAgeLocal(val)}
@@ -135,6 +152,8 @@ const DiscoverFilter = ({
         search={false}
       />
 
+
+      {/* Gender */}
       <OrangeText>Gender</OrangeText>
       <SelectList
         setSelected={(val) => setGenderLocal(val)}
@@ -144,6 +163,8 @@ const DiscoverFilter = ({
         search={false}
       />
 
+
+      {/* Location */}
       <OrangeText>Location</OrangeText>
       <SelectList
         setSelected={(val) => setStateLocal(val)}
@@ -152,6 +173,8 @@ const DiscoverFilter = ({
         defaultOption={{ key: selectedState, value: selectedState }}
       />
 
+
+      {/* Chips */}
       <View>
         <View style={styles.ButtonContainer}>
           <Button
@@ -262,6 +285,8 @@ const DiscoverFilter = ({
         </View>
       </View>
 
+
+      {/* Submit buttons */}
       <View style={styles.submitButtonContainer}>
         <Pressable onPress={resetHandler} style={styles.submitButton}>
           <Text style={styles.submitText}>Reset</Text>
@@ -276,22 +301,6 @@ const DiscoverFilter = ({
 };
 
 const styles = StyleSheet.create({
-  sliderThumbContainerStyle: {
-    bottom: 20,
-    right: 20,
-  },
-  sliderThumbStyle: {
-    height: 1,
-    width: 1,
-  },
-  sliderTrackStyle: {
-    height: 5,
-    color: Colors.orange,
-  },
-  sliderStyle: {
-    marginLeft: 15,
-    marginRight: 15,
-  },
   filterContainer: {
     marginHorizontal: 15,
   },

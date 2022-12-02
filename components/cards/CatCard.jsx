@@ -1,12 +1,9 @@
-import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
-import { Client } from "@googlemaps/google-maps-services-js";
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import {
-  calculateDistance,
   getCattery,
   userLikeACat,
   userUnLikeACat,
@@ -15,38 +12,14 @@ import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 import CachedImage from "react-native-expo-cached-image";
 import { useSwipePressable } from "../../utils/useSwipe";
-
 export function CatCard({
   cat,
   navigation,
-  location,
   hideLocation,
   showBreed,
 }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
-  const [distance, setDistance] = useState("");
-
-  /* Calculate distance to the cat if both user location and cattery location are provided. */
-  useEffect(() => {
-    if (cattery && cattery.placeId && location) {
-      const googleMapClient = new Client({});
-      googleMapClient
-        .placeDetails({
-          params: {
-            place_id: cattery.placeId,
-            key: REACT_APP_GOOGLE_MAP_APP_KEY,
-          },
-        })
-        .then((resp) => {
-          setDistance(
-            " (" +
-              calculateDistance(location, resp.data.result.geometry.location) +
-              " km)"
-          );
-        });
-    }
-  }, [cattery, location]);
 
   useEffect(() => {
     if (cat.cattery) {
@@ -113,11 +86,9 @@ export function CatCard({
               textStyle={styles.locationStyle}
               locationIconColor={styles.locationIconStyle.color}
             >
-              {cattery && cattery.address
-                ? cattery.address.split(", ")[1] +
-                  ", " +
-                  cattery.address.split(", ")[2] +
-                  distance
+              {cattery && cattery.shortAddress
+                ? cattery.shortAddress +
+                  " (" + cat.distance + " km)"
                 : "Loading"}
             </LocationText>
           )}
