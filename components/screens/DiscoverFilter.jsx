@@ -104,37 +104,28 @@ const DiscoverFilter = ({
         step={100}
 
         sliderLength={330}
-        containerStyle={styles.sliderStyle}
-        trackStyle={styles.trackStyle}
-        makerStyle={styles.sliderThumbStyle}
-
-        allowOverlap
-        snapped
-      />
-      {/* <Slider
-        value={value}
-        onValueChange={setValue}
-        maximumValue={10000}
-        minimumValue={0}
-        step={100}
-        minimumTrackTintColor={Colors.orangeText}
-        allowTouchTrack
-        style={styles.sliderStyle}
-        trackStyle={styles.sliderTrackStyle}
-        thumbStyle={styles.sliderThumbStyle}
-        thumbProps={{
-          children: (
-            <Icon
-              name="dollar"
-              type="font-awesome"
-              size={10}
-              color={Colors.orangeText}
-              reverse
-              containerStyle={styles.sliderThumbContainerStyle}
-            />
-          ),
+        containerStyle={{
+          marginLeft: 15,
+          marginRight: 15,
         }}
-      /> */}
+        selectedStyle={{
+          backgroundColor: Colors.orangeText,
+        }}
+        trackStyle={{ height: 3 }}
+
+        snapped
+
+        customMarker={() => {
+          return <Icon
+            name="dollar"
+            type="font-awesome"
+            size={10}
+            color={Colors.orangeText}
+            reverse
+            // containerStyle={styles.sliderThumbContainerStyle}
+          />
+        }}
+      />
 
       <OrangeText>Breed</OrangeText>
       <SelectList
@@ -294,22 +285,6 @@ const DiscoverFilter = ({
 };
 
 const styles = StyleSheet.create({
-  sliderThumbContainerStyle: {
-    bottom: 20,
-    right: 20,
-  },
-  sliderThumbStyle: {
-    height: 1,
-    width: 1,
-  },
-  sliderTrackStyle: {
-    height: 5,
-    color: Colors.orangeText,
-  },
-  sliderStyle: {
-    marginLeft: 15,
-    marginRight: 15,
-  },
   filterContainer: {
     marginHorizontal: 15,
   },
