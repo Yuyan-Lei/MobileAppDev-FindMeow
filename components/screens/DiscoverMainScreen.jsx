@@ -29,6 +29,7 @@ function MainScreen({ route, navigation }) {
   const [selectedAge, setSelectedAge] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
   const [selectedGender, setSelectedGender] = useState("All");
+  const [selectedPrice, setSelectedPrice] = useState([0, 10000]);
 
   const [filterTrigger, setFilterTrigger] = useState(false);
 
@@ -42,6 +43,7 @@ function MainScreen({ route, navigation }) {
     setSelectedAge("");
     setSelectedState("");
     setSelectedGender("");
+    setSelectedPrice([0, 10000]);
   }
 
   function flipFilterTrigger() {
@@ -53,7 +55,7 @@ function MainScreen({ route, navigation }) {
   }
 
   function onScrollToTop() {
-    refreshCatData();
+    refreshCatData(selectedIndex);
   }
 
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
@@ -208,6 +210,8 @@ function MainScreen({ route, navigation }) {
             setSelectedAge,
             selectedGender,
             setSelectedGender,
+            selectedPrice,
+            setSelectedPrice,
 
             resetAllFilters,
             refRBSheet,

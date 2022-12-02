@@ -25,6 +25,8 @@ const DiscoverFilter = ({
     setSelectedState,
     selectedGender,
     setSelectedGender,
+    selectedPrice,
+    setSelectedPrice,
 
     resetAllFilters,
     refRBSheet,
@@ -35,6 +37,7 @@ const DiscoverFilter = ({
   const [ageLocal, setAgeLocal] = useState(selectedAge);
   const [stateLocal, setStateLocal] = useState(selectedState);
   const [genderLocal, setGenderLocal] = useState(selectedGender);
+  const [priceLocal, setPriceLocal] = useState(selectedPrice);
 
   const breed = [{ key: "All", value: "All" }, ...ALL_BREEDS];
 
@@ -63,6 +66,7 @@ const DiscoverFilter = ({
 
   const resetHandler = () => {
     resetAllFilters();
+    setPriceLocal(selectedPrice);
     setBreedLocal(selectedBreed);
     setAgeLocal(selectedAge);
     setStateLocal(selectedState);
@@ -80,6 +84,7 @@ const DiscoverFilter = ({
     setSelectedBreed(breedLocal);
     setSelectedGender(genderLocal);
     setSelectedState(stateLocal);
+    setSelectedPrice(priceLocal);
 
     flipFilterTrigger();
     refRBSheet.current.close();
@@ -87,6 +92,7 @@ const DiscoverFilter = ({
 
   const [multiSliderValue, setMultiSliderValue] = React.useState([1, 10000]);
   const multiSliderValuesChange = (values) => setMultiSliderValue(values);
+  const onPriceChange = (values) => setPriceLocal(values);
 
   return (
     <ScrollView style={styles.filterContainer}>
@@ -98,12 +104,12 @@ const DiscoverFilter = ({
 
       {/* Price slider */}
       <OrangeText>
-        From ${multiSliderValue[0]} to ${multiSliderValue[1]}
+        From ${priceLocal[0]} to ${priceLocal[1]}
       </OrangeText>
 
       <MultiSlider
-        values={[multiSliderValue[0], multiSliderValue[1]]}
-        onValuesChange={multiSliderValuesChange}
+        values={[priceLocal[0], priceLocal[1]]}
+        onValuesChange={onPriceChange}
         min={0}
         max={10000}
         step={100}
@@ -131,6 +137,7 @@ const DiscoverFilter = ({
         }}
       />
 
+      {/* Breed */}
       <OrangeText>Breed</OrangeText>
       <SelectList
         setSelected={(val) => setBreedLocal(val)}
@@ -139,6 +146,7 @@ const DiscoverFilter = ({
         defaultOption={{ key: selectedBreed, value: selectedBreed }}
       />
 
+      {/* Age */}
       <OrangeText>Age</OrangeText>
       <SelectList
         setSelected={(val) => setAgeLocal(val)}
@@ -148,6 +156,7 @@ const DiscoverFilter = ({
         search={false}
       />
 
+      {/* Gender */}
       <OrangeText>Gender</OrangeText>
       <SelectList
         setSelected={(val) => setGenderLocal(val)}
@@ -157,6 +166,7 @@ const DiscoverFilter = ({
         search={false}
       />
 
+      {/* Location */}
       <OrangeText>Location</OrangeText>
       <SelectList
         setSelected={(val) => setStateLocal(val)}
@@ -165,6 +175,7 @@ const DiscoverFilter = ({
         defaultOption={{ key: selectedState, value: selectedState }}
       />
 
+      {/* Chips */}
       <View>
         <View style={styles.ButtonContainer}>
           <Button
@@ -275,6 +286,7 @@ const DiscoverFilter = ({
         </View>
       </View>
 
+      {/* Submit buttons */}
       <View style={styles.submitButtonContainer}>
         <Pressable onPress={resetHandler} style={styles.submitButton}>
           <Text style={styles.submitText}>Reset</Text>
