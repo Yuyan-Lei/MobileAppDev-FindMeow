@@ -12,6 +12,7 @@ import CachedImage from "react-native-expo-cached-image";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
+import { useSwipePressable } from "../../utils/useSwipe";
 import { HeartButton2 } from "../pressable/HeartButton2";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
@@ -38,15 +39,20 @@ export function BreederCard({ cattery, navigation }) {
     }
   };
 
+  const { onTouchStart, onTouchEnd } = useSwipePressable(() =>
+    navigation.navigate("CatteryProfile", { cattery })
+  );
+
   return (
     <View style={styles.breederView}>
-      <Pressable
-        onPress={() => navigation.navigate("CatteryProfile", { cattery })}
-      >
+      <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}>
         <View style={[styles.cardView, styles.shadowView]}>
           {/* Cattery photo */}
           <View style={styles.imageView}>
-            <CachedImage source={{ uri: cattery.picture }} style={styles.image} />
+            <CachedImage
+              source={{ uri: cattery.picture }}
+              style={styles.image}
+            />
           </View>
 
           <View style={styles.detailView}>

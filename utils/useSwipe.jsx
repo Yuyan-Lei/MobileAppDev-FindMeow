@@ -5,24 +5,43 @@ const windowWidth = Dimensions.get("window").width;
 export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 2) {
   let firstTouch = 0;
 
-  // set user touch start position
   function onTouchStart(e) {
     firstTouch = e.nativeEvent.pageX;
   }
 
-  // when touch ends check for swipe directions
   function onTouchEnd(e) {
-    // get touch position and screen size
     const positionX = e.nativeEvent.pageX;
     const range = windowWidth / rangeOffset;
 
-    // check if position is growing positively and has reached specified range
     if (positionX - firstTouch > range) {
       onSwipeRight && onSwipeRight();
-    }
-    // check if position is growing negatively and has reached specified range
-    else if (firstTouch - positionX > range) {
+    } else if (firstTouch - positionX > range) {
       onSwipeLeft && onSwipeLeft();
+    }
+  }
+
+  return { onTouchStart, onTouchEnd };
+}
+
+export function useSwipePressable(onPress, rangeOffset = 8) {
+  let firstTouchX = 0;
+  let firstTouchY = 0;
+
+  function onTouchStart(e) {
+    firstTouchX = e.nativeEvent.pageX;
+    firstTouchY = e.nativeEvent.pageY;
+  }
+
+  function onTouchEnd(e) {
+    const positionX = e.nativeEvent.pageX;
+    const positionY = e.nativeEvent.pageY;
+    const range = windowWidth / rangeOffset;
+
+    if (
+      Math.abs(positionX - firstTouchX) < range &&
+      Math.abs(positionY - firstTouchY) < range
+    ) {
+      onPress && onPress();
     }
   }
 
