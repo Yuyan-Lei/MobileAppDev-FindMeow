@@ -1,6 +1,7 @@
 // reference: https://stackoverflow.com/questions/45854450/detect-swipe-left-in-react-native
 import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 3) {
   let firstTouchX = 0;
@@ -17,7 +18,7 @@ export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 3) {
     const range = windowWidth / rangeOffset;
 
     // ignore moving by Y axis
-    if (Math.abs(positionY - firstTouchY) > windowWidth / 8) return;
+    if (Math.abs(positionY - firstTouchY) > windowHeight / 8) return;
 
     if (positionX - firstTouchX > range) {
       onSwipeRight && onSwipeRight();
