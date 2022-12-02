@@ -1,7 +1,14 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Pressable,
+  Text,
+  useWindowDimensions,
+} from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
 import {
@@ -17,6 +24,8 @@ import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import DiscoverFilter from "./DiscoverFilter";
 import PostNewCatScreen from "./PostNewCatScreen";
+import { Colors } from "../styles/Colors";
+import MapPage from "./MapPage";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -149,6 +158,8 @@ function MainScreen({ route, navigation }) {
     }
   }
 
+  const { height, width } = useWindowDimensions();
+
   /* data collector used for top filter tags - start */
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -241,6 +252,42 @@ function MainScreen({ route, navigation }) {
           }}
         />
       </View>
+
+      {/* floating map button */}
+      {selectedIndex === 1 ? (
+        <View
+          style={{
+            position: "absolute",
+            top: height - 135,
+            width: width,
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              width: 143,
+              backgroundColor: Colors.orange,
+              alignItems: "center",
+              height: 39,
+              borderRadius: 10,
+            }}
+          >
+            <Pressable onPress={() => navigation.navigate("MapPage")}>
+              <Text
+                style={{
+                  padding: 8,
+                  color: "white",
+                  fontFamily: "PoppinsMedium",
+                }}
+              >
+                Show in Map
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : (
+        <View />
+      )}
     </View>
   );
 }
@@ -253,6 +300,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
       <Stack.Screen name="CatInformation" component={CatInformation} />
       <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
       <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
+      <Stack.Screen name="MapPage" component={MapPage} />
     </Stack.Navigator>
   );
 }
