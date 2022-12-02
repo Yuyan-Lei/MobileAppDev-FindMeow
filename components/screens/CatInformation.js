@@ -4,13 +4,22 @@ import { Client } from "@googlemaps/google-maps-services-js";
 import { Chip } from "@rneui/themed";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import CachedImage from "react-native-expo-cached-image";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import {
-  calculateDistance, getUserLocation, userLikeACat,
-  userUnLikeACat
+  calculateDistance,
+  getUserLocation,
+  userLikeACat,
+  userUnLikeACat,
 } from "../../firebaseUtils/user";
 import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
 import { MessageButton } from "../pressable/MessageButton";
@@ -55,7 +64,7 @@ export default function CatInformation({ route, navigation }) {
         .then((resp) => {
           setDistance(
             calculateDistance(location, resp.data.result.geometry.location) +
-            "km"
+              "km"
           );
         });
     }
@@ -220,45 +229,47 @@ export default function CatInformation({ route, navigation }) {
 
           {/* contact info label */}
           <View style={styles.contactLabelContainer}>
-            <Text style={styles.contactText}>Contact Info</Text>
-            <View style={{ flexDirection: "row" }}>
-              <Pressable
-                onPress={() =>
-                  navigation.navigate("CatteryProfile", { cattery })
-                }
-              >
-                <CachedImage
-                  source={{ uri: cattery.picture }}
-                  resizeMode="cover"
-                  style={{
-                    padding: 8,
-                    borderRadius: 100,
-                    height: 40,
-                    width: 40,
-                    marginRight: 10,
-                  }}
-                ></CachedImage>
-              </Pressable>
-              <View>
-                <Text style={styles.catteryNameText}>
-                  {cattery.catteryName}
-                </Text>
-                <Text style={styles.catteryLabelText}>Cattery</Text>
-              </View>
-              <View style={{ width: 200 }}></View>
-              <View style={styles.buttonView}>
-                <PhoneButton cattery={cattery} />
-                <MessageButton cattery={cattery} />
+            <View style={{ marginLeft: 15 }}>
+              <Text style={styles.contactText}>Contact Info</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("CatteryProfile", { cattery })
+                  }
+                >
+                  <CachedImage
+                    source={{ uri: cattery.picture }}
+                    resizeMode="cover"
+                    style={{
+                      padding: 8,
+                      borderRadius: 100,
+                      height: 40,
+                      width: 40,
+                      marginRight: 10,
+                    }}
+                  ></CachedImage>
+                </Pressable>
+                <View>
+                  <Text style={styles.catteryNameText}>
+                    {cattery.catteryName}
+                  </Text>
+                  <Text style={styles.catteryLabelText}>Cattery</Text>
+                </View>
+                <View style={{ width: 200 }}></View>
+                <View style={styles.buttonView}>
+                  <PhoneButton cattery={cattery} />
+                  <MessageButton cattery={cattery} />
+                </View>
               </View>
             </View>
           </View>
-          {/* contact info label end */}
-          <View style={styles.detailLabel}>
-            <Text style={styles.detailTitleText}>Details</Text>
+        </View>
+        {/* contact info label end */}
+        <View style={styles.detailLabel}>
+          <Text style={styles.detailTitleText}>Details</Text>
 
-            <View>
-              <Text style={styles.descriptionText}>{cat.Description}</Text>
-            </View>
+          <View>
+            <Text style={styles.descriptionText}>{cat.Description}</Text>
           </View>
         </View>
       </View>
@@ -291,6 +302,7 @@ const styles = StyleSheet.create({
   buttonView: {
     flexDirection: "row",
     marginLeft: "auto",
+    top: -4,
   },
   roundButton: {
     width: 30,
