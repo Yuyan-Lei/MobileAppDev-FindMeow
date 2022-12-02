@@ -58,7 +58,7 @@ function MainScreen({ route, navigation }) {
   }
 
   function onScrollToTop() {
-    refreshCatData();
+    refreshCatData(selectedIndex);
   }
 
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);

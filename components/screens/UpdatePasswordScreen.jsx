@@ -96,12 +96,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 65,
     flex: 1,
+    backgroundColor: "rgb(250, 250, 250)"
   },
   inputsContainer: {
     backgroundColor: "white",
     borderRadius: 20,
     marginTop: 30,
-    marginBottom: 10,
+    marginBottom: 15,
   },
   textInput: {
     fontFamily: "Poppins",
@@ -113,9 +114,9 @@ const styles = StyleSheet.create({
   },
   reminderText: {
     fontFamily: "Poppins",
-    paddingLeft: 14,
     fontSize: 14,
-    color: Colors.grayText,
+    paddingLeft: 14,
+    color: "rgb(154, 153, 153)",
   },
   SubmitButton: {
     backgroundColor: "#FFB801",
