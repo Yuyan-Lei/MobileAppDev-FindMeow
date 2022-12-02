@@ -2,20 +2,26 @@
 import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 
-export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 2) {
-  let firstTouch = 0;
+export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 3) {
+  let firstTouchX = 0;
+  let firstTouchY = 0;
 
   function onTouchStart(e) {
-    firstTouch = e.nativeEvent.pageX;
+    firstTouchX = e.nativeEvent.pageX;
+    firstTouchY = e.nativeEvent.pageY;
   }
 
   function onTouchEnd(e) {
     const positionX = e.nativeEvent.pageX;
+    const positionY = e.nativeEvent.pageY;
     const range = windowWidth / rangeOffset;
 
-    if (positionX - firstTouch > range) {
+    // ignore moving by Y axis
+    if (Math.abs(positionY - firstTouchY) > windowWidth / 8) return;
+
+    if (positionX - firstTouchX > range) {
       onSwipeRight && onSwipeRight();
-    } else if (firstTouch - positionX > range) {
+    } else if (firstTouchX - positionX > range) {
       onSwipeLeft && onSwipeLeft();
     }
   }
