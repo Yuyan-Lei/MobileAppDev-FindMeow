@@ -30,6 +30,7 @@ import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
+import PostNewCatScreen from "./PostNewCatScreen";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -248,6 +249,8 @@ export default function CatteryProfileScreen({ route, navigation }) {
         initialParams={{ cattery: route.params.cattery }}
       />
       <Stack.Screen name="CatInformation" component={CatInformation} />
+      <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
+      <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
     </Stack.Navigator>
   );
 }

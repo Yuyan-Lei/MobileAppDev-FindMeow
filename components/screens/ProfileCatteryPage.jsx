@@ -27,6 +27,7 @@ import { rootStackNavigateBack } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
+import PostNewCatScreen from "./PostNewCatScreen";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -213,6 +214,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="CatInformation" component={CatInformation} />
+      <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
     </Stack.Navigator>
   );
 }

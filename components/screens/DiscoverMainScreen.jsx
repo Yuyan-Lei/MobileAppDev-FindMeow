@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
@@ -40,6 +40,8 @@ function MainScreen({ route, navigation }) {
   const [selectedGender, setSelectedGender] = useState("All");
   const [selectedPrice, setSelectedPrice] = useState([0, 10000]);
 
+  const [filterTrigger, setFilterTrigger] = useState(false);
+
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
@@ -51,6 +53,10 @@ function MainScreen({ route, navigation }) {
     setSelectedState("");
     setSelectedGender("");
     setSelectedPrice([0, 10000]);
+  }
+
+  function flipFilterTrigger() {
+    setFilterTrigger(!filterTrigger);
   }
 
   function isScrollToTop(event) {
@@ -65,11 +71,39 @@ function MainScreen({ route, navigation }) {
   async function refreshCatData(selectedIndex) {
     if (refreshCatDataLock) return;
     setRefreshCatDataLock(true);
+
     setSelectedIndex(selectedIndex);
     let location = await getUserLocation();
     const allCatteries = await getAllCatteries();
     try {
-      const catSnapShot = await getDocs(collection(db, "Cats"));
+      let clauseBreed, clauseAge, clauseState, clauseGender;
+
+      if (selectedBreed !== "" && selectedBreed !== "All") {
+        clauseBreed = where("Breed", "==", selectedBreed);
+      }
+
+      if (selectedGender !== "" && selectedGender !== "All") {
+        clauseGender = where("Gender", "==", selectedGender);
+      }
+
+      if (selectedState !== "" && selectedState !== "All") {
+        clauseState = where("State", "==", selectedState);
+      }
+
+      if (clauseAge !== "" && clauseAge !== "All") {
+        // TODO
+      }
+
+      const constraints = [
+        clauseBreed,
+        clauseAge,
+        clauseState,
+        clauseGender,
+      ].filter((item) => item !== undefined);
+
+      const q = query(collection(db, "Cats"), ...constraints);
+
+      const catSnapShot = await getDocs(q);
 
       let dataBeforeSorting = catSnapShot.docs.map((catDoc) => {
         const birthday = new Date(catDoc.data().Birthday);
@@ -130,7 +164,7 @@ function MainScreen({ route, navigation }) {
   const [data, setData] = useState([]);
   useEffect(() => {
     refreshCatData(selectedIndex);
-  }, []);
+  }, [filterTrigger]);
   /* data collector used for top filter tags - end */
 
   /* events for top filter tags - start */
@@ -192,6 +226,7 @@ function MainScreen({ route, navigation }) {
 
             resetAllFilters,
             refRBSheet,
+            flipFilterTrigger,
           }}
         />
       </RBSheet>

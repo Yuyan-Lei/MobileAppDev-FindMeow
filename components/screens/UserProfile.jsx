@@ -16,6 +16,9 @@ import { auth } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { rootStackNavigate } from "../RootNavigation";
 import { TitleText } from "../texts/TitleText";
+import CatInformation from "./CatInformation";
+import CatteryProfileScreen from "./CatteryProfileScreen";
+import PostNewCatScreen from "./PostNewCatScreen";
 import NotificationSettingsScreen from "./NotificationSettingsScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
@@ -65,7 +68,8 @@ function MainScreen({ route, navigation }) {
   const onViewCatteryPage = () =>
     navigation.navigate("ProfileCatteryPage", { user });
   const onUpdatePassword = () => navigation.navigate("UpdatePasswordPage");
-  const onNotificationSettings = () => navigation.navigate("NotificationSettingsScreen")
+  const onNotificationSettings = () =>
+    navigation.navigate("NotificationSettingsScreen");
 
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -81,9 +85,11 @@ function MainScreen({ route, navigation }) {
   const responseListener = useRef();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
+    registerForPushNotificationsAsync().then((token) => {
+      if (token !== null) {
+        setExpoPushToken(token);
+      }
+    });
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -138,8 +144,12 @@ function MainScreen({ route, navigation }) {
         alert("Failed to get push token for push notification!");
         return;
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
+
+      try {
+        token = (await Notifications.getExpoPushTokenAsync()).data;
+      } catch {
+        token = null;
+      }
     } else {
       alert("Must use physical device for Push Notifications");
     }
@@ -220,6 +230,9 @@ export default function UserProfile({ route, navigation }) {
         name="UpdatePasswordPage"
         component={UpdatePasswordScreen}
       />
+      <Stack.Screen name="CatInformation" component={CatInformation} />
+      <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
+      <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
       <Stack.Screen
         name="NotificationSettingsScreen"
         component={NotificationSettingsScreen}

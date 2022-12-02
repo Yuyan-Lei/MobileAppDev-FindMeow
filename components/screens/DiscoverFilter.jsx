@@ -1,13 +1,13 @@
 import { Button, Icon, Slider } from "@rneui/themed";
 import React, { useState } from "react";
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import {
   Alert,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { ALL_BREEDS } from "../listContents/allBreeds";
@@ -30,6 +30,7 @@ const DiscoverFilter = ({
 
     resetAllFilters,
     refRBSheet,
+    flipFilterTrigger,
   },
 }) => {
   const [breedLocal, setBreedLocal] = useState(selectedBreed);
@@ -64,30 +65,34 @@ const DiscoverFilter = ({
   const [neutered, setNeutered] = useState(false);
 
   const resetHandler = () => {
+    resetAllFilters();
     setPriceLocal(selectedPrice);
     setBreedLocal(selectedBreed);
     setAgeLocal(selectedAge);
     setStateLocal(selectedState);
     setGenderLocal(selectedGender);
-    resetAllFilters();
+    setVaccinated(false);
+    setVetChecked(false);
+    setDewormed(false);
+    setReady(false);
+    setNeutered(false);
+    flipFilterTrigger();
   };
 
   const applyHandler = () => {
-    setBreedLocal(breedLocal);
-    setAgeLocal(ageLocal);
-    setStateLocal(stateLocal);
-    setGenderLocal(genderLocal);
-    setPriceLocal(priceLocal);
+    setSelectedAge(ageLocal);
+    setSelectedBreed(breedLocal);
+    setSelectedGender(genderLocal);
+    setSelectedState(stateLocal);
+    setSelectedPrice(priceLocal);
 
-    Alert.alert(
-      "Feature for this button is coming soon~",
-      "See you next time!",
-      [{ text: "Sad" }, { text: "Wait for you" }]
-    );
+    flipFilterTrigger();
     refRBSheet.current.close();
   };
 
-  const onPriceChange = values => setPriceLocal(values);
+  const [multiSliderValue, setMultiSliderValue] = React.useState([1, 10000]);
+  const multiSliderValuesChange = (values) => setMultiSliderValue(values);
+  const onPriceChange = (values) => setPriceLocal(values);
 
   return (
     <ScrollView style={styles.filterContainer}>
@@ -98,7 +103,9 @@ const DiscoverFilter = ({
       </Text>
 
       {/* Price slider */}
-      <OrangeText>From ${priceLocal[0]} to ${priceLocal[1]}</OrangeText>
+      <OrangeText>
+        From ${priceLocal[0]} to ${priceLocal[1]}
+      </OrangeText>
 
       <MultiSlider
         values={[priceLocal[0], priceLocal[1]]}
@@ -106,7 +113,6 @@ const DiscoverFilter = ({
         min={0}
         max={10000}
         step={100}
-
         sliderLength={330}
         containerStyle={{
           marginLeft: 15,
@@ -116,21 +122,20 @@ const DiscoverFilter = ({
           backgroundColor: Colors.orangeText,
         }}
         trackStyle={{ height: 3 }}
-
         snapped
-
         customMarker={() => {
-          return <Icon
-            name="dollar"
-            type="font-awesome"
-            size={10}
-            color={Colors.orangeText}
-            reverse
-            // containerStyle={styles.sliderThumbContainerStyle}
-          />
+          return (
+            <Icon
+              name="dollar"
+              type="font-awesome"
+              size={10}
+              color={Colors.orangeText}
+              reverse
+              // containerStyle={styles.sliderThumbContainerStyle}
+            />
+          );
         }}
       />
-
 
       {/* Breed */}
       <OrangeText>Breed</OrangeText>
@@ -140,7 +145,6 @@ const DiscoverFilter = ({
         save="value"
         defaultOption={{ key: selectedBreed, value: selectedBreed }}
       />
-
 
       {/* Age */}
       <OrangeText>Age</OrangeText>
@@ -152,7 +156,6 @@ const DiscoverFilter = ({
         search={false}
       />
 
-
       {/* Gender */}
       <OrangeText>Gender</OrangeText>
       <SelectList
@@ -163,7 +166,6 @@ const DiscoverFilter = ({
         search={false}
       />
 
-
       {/* Location */}
       <OrangeText>Location</OrangeText>
       <SelectList
@@ -172,7 +174,6 @@ const DiscoverFilter = ({
         save="value"
         defaultOption={{ key: selectedState, value: selectedState }}
       />
-
 
       {/* Chips */}
       <View>
@@ -284,7 +285,6 @@ const DiscoverFilter = ({
           ></Button>
         </View>
       </View>
-
 
       {/* Submit buttons */}
       <View style={styles.submitButtonContainer}>
