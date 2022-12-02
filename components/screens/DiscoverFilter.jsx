@@ -1,5 +1,6 @@
 import { Button, Icon, Slider } from "@rneui/themed";
 import React, { useState } from "react";
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {
   Alert,
   Pressable,
@@ -16,9 +17,6 @@ import { OrangeText } from "../texts/OrangeText";
 
 const DiscoverFilter = ({
   states: {
-    value,
-    setValue,
-
     selectedBreed,
     setSelectedBreed,
     selectedAge,
@@ -84,6 +82,9 @@ const DiscoverFilter = ({
     refRBSheet.current.close();
   };
 
+  const [multiSliderValue, setMultiSliderValue] = React.useState([1, 10000]);
+  const multiSliderValuesChange = values => setMultiSliderValue(values);
+
   return (
     <ScrollView style={styles.filterContainer}>
       <Text style={styles.filterText}>Filter</Text>
@@ -91,9 +92,26 @@ const DiscoverFilter = ({
       <Text style={styles.reminderText}>
         Arrange Based On The Following Choices
       </Text>
-      <OrangeText>From $0 to ${value}</OrangeText>
 
-      <Slider
+      {/* Price slider */}
+      <OrangeText>From ${multiSliderValue[0]} to ${multiSliderValue[1]}</OrangeText>
+
+      <MultiSlider
+        values={[multiSliderValue[0], multiSliderValue[1]]}
+        onValuesChange={multiSliderValuesChange}
+        min={0}
+        max={10000}
+        step={100}
+
+        sliderLength={330}
+        containerStyle={styles.sliderStyle}
+        trackStyle={styles.trackStyle}
+        makerStyle={styles.sliderThumbStyle}
+
+        allowOverlap
+        snapped
+      />
+      {/* <Slider
         value={value}
         onValueChange={setValue}
         maximumValue={10000}
@@ -116,7 +134,7 @@ const DiscoverFilter = ({
             />
           ),
         }}
-      />
+      /> */}
 
       <OrangeText>Breed</OrangeText>
       <SelectList
@@ -286,7 +304,7 @@ const styles = StyleSheet.create({
   },
   sliderTrackStyle: {
     height: 5,
-    color: Colors.orange,
+    color: Colors.orangeText,
   },
   sliderStyle: {
     marginLeft: 15,
