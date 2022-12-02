@@ -82,9 +82,11 @@ function MainScreen({ route, navigation }) {
   const responseListener = useRef();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
+    registerForPushNotificationsAsync().then((token) => {
+      if (token !== null) {
+        setExpoPushToken(token);
+      }
+    });
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -139,8 +141,12 @@ function MainScreen({ route, navigation }) {
         alert("Failed to get push token for push notification!");
         return;
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
+
+      try {
+        token = (await Notifications.getExpoPushTokenAsync()).data;
+      } catch {
+        token = null;
+      }
     } else {
       alert("Must use physical device for Push Notifications");
     }
