@@ -1,10 +1,21 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Pressable,
+  Text,
+  useWindowDimensions,
+} from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
-import { calculateDistance, getAllCatteries, getUserLocation } from "../../firebaseUtils/user";
+import {
+  calculateDistance,
+  getAllCatteries,
+  getUserLocation,
+} from "../../firebaseUtils/user";
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -13,6 +24,8 @@ import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import DiscoverFilter from "./DiscoverFilter";
 import PostNewCatScreen from "./PostNewCatScreen";
+import { Colors } from "../styles/Colors";
+import MapPage from "./MapPage";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -58,39 +71,45 @@ function MainScreen({ route, navigation }) {
     try {
       const catSnapShot = await getDocs(collection(db, "Cats"));
 
-      let dataBeforeSorting =
-        catSnapShot.docs.map((catDoc) => {
-          const birthday = new Date(catDoc.data().Birthday);
-          const now = new Date();
-          const cattery = allCatteries.find(ca => ca.email === catDoc.data().Cattery);
-          // if cattery doesn't have location, use 9999 to make cat in the bottom.
-          const distance = cattery.geoLocation && location ? calculateDistance(location, cattery.geoLocation) : 9999;
-          let age =
-            now.getMonth() -
-            birthday.getMonth() +
-            12 * (now.getFullYear() - birthday.getFullYear());
-          // age cannot be negative
-          if (age === undefined || isNaN(age) || age < 0) {
-            age = 0;
-          }
+      let dataBeforeSorting = catSnapShot.docs.map((catDoc) => {
+        const birthday = new Date(catDoc.data().Birthday);
+        const now = new Date();
+        const cattery = allCatteries.find(
+          (ca) => ca.email === catDoc.data().Cattery
+        );
+        // if cattery doesn't have location, use 9999 to make cat in the bottom.
+        const distance =
+          cattery.geoLocation && location
+            ? calculateDistance(location, cattery.geoLocation)
+            : 9999;
+        let age =
+          now.getMonth() -
+          birthday.getMonth() +
+          12 * (now.getFullYear() - birthday.getFullYear());
+        // age cannot be negative
+        if (age === undefined || isNaN(age) || age < 0) {
+          age = 0;
+        }
 
-          return {
-            id: catDoc.id,
-            name: catDoc.data().Breed,
-            sex: catDoc.data().Gender,
-            price: catDoc.data().Price,
-            month: age,
-            photo: catDoc.data().Picture,
-            cattery: catDoc.data().Cattery,
-            distance,
-            uploadTime: catDoc.data().UploadTime,
-          };
-        });
-      
-        // console.log(selectedIndex);
-        // 1. newer post
+        return {
+          id: catDoc.id,
+          name: catDoc.data().Breed,
+          sex: catDoc.data().Gender,
+          price: catDoc.data().Price,
+          month: age,
+          photo: catDoc.data().Picture,
+          cattery: catDoc.data().Cattery,
+          distance,
+          uploadTime: catDoc.data().UploadTime,
+        };
+      });
+
+      // console.log(selectedIndex);
+      // 1. newer post
       if (selectedIndex === 0) {
-        setData(dataBeforeSorting.sort((d1, d2) => d2.uploadTime - d1.uploadTime));
+        setData(
+          dataBeforeSorting.sort((d1, d2) => d2.uploadTime - d1.uploadTime)
+        );
       }
       // 2. nearby Post
       else if (selectedIndex === 1) {
@@ -104,6 +123,8 @@ function MainScreen({ route, navigation }) {
       setRefreshCatDataLock(false);
     }
   }
+
+  const { height, width } = useWindowDimensions();
 
   /* data collector used for top filter tags - start */
   const [data, setData] = useState([]);
@@ -196,6 +217,42 @@ function MainScreen({ route, navigation }) {
           }}
         />
       </View>
+
+      {/* floating map button */}
+      {selectedIndex === 1 ? (
+        <View
+          style={{
+            position: "absolute",
+            top: height - 135,
+            width: width,
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              width: 143,
+              backgroundColor: Colors.orange,
+              alignItems: "center",
+              height: 39,
+              borderRadius: 10,
+            }}
+          >
+            <Pressable onPress={() => navigation.navigate("MapPage")}>
+              <Text
+                style={{
+                  padding: 8,
+                  color: "white",
+                  fontFamily: "PoppinsMedium",
+                }}
+              >
+                Show in Map
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : (
+        <View />
+      )}
     </View>
   );
 }
@@ -208,6 +265,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
       <Stack.Screen name="CatInformation" component={CatInformation} />
       <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
       <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
+      <Stack.Screen name="MapPage" component={MapPage} />
     </Stack.Navigator>
   );
 }
