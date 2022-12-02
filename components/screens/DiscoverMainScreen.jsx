@@ -25,6 +25,7 @@ function MainScreen({ route, navigation }) {
   const [selectedAge, setSelectedAge] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
   const [selectedGender, setSelectedGender] = useState("All");
+  const [selectedPrice, setSelectedPrice] = useState([0, 10000]);
 
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
@@ -36,6 +37,7 @@ function MainScreen({ route, navigation }) {
     setSelectedAge("");
     setSelectedState("");
     setSelectedGender("");
+    setSelectedPrice([0, 10000]);
   }
 
   function isScrollToTop(event) {
@@ -164,6 +166,8 @@ function MainScreen({ route, navigation }) {
             setSelectedAge,
             selectedGender,
             setSelectedGender,
+            selectedPrice,
+            setSelectedPrice,
 
             resetAllFilters,
             refRBSheet,
