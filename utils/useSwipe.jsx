@@ -20,6 +20,8 @@ export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 3) {
     // ignore moving by Y axis
     if (Math.abs(positionY - firstTouchY) > windowHeight / 8) return;
 
+    // Identify as a valid swipe, only if the swipe distance is 
+    // larger than 1/3 width.
     if (positionX - firstTouchX > range) {
       onSwipeRight && onSwipeRight();
     } else if (firstTouchX - positionX > range) {
@@ -30,6 +32,8 @@ export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 3) {
   return { onTouchStart, onTouchEnd };
 }
 
+// If the user is swiping, then make pressables on the catcard 
+// and breeder card not pressed.
 export function useSwipePressable(onPress, rangeOffset = 8) {
   let firstTouchX = 0;
   let firstTouchY = 0;
