@@ -16,6 +16,9 @@ import { auth } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { rootStackNavigate } from "../RootNavigation";
 import { TitleText } from "../texts/TitleText";
+import CatInformation from "./CatInformation";
+import CatteryProfileScreen from "./CatteryProfileScreen";
+import PostNewCatScreen from "./PostNewCatScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
 
@@ -218,6 +221,9 @@ export default function UserProfile({ route, navigation }) {
         name="UpdatePasswordPage"
         component={UpdatePasswordScreen}
       />
+      <Stack.Screen name="CatInformation" component={CatInformation} />
+      <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
+      <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
     </Stack.Navigator>
   );
 }
