@@ -9,8 +9,10 @@ import { FilterButton } from "../pressable/FilterButton";
 import { SearchBar } from "../pressable/SearchBar";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
+import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import FindBreederFilter from "./FindBreederFilter";
+import PostNewCatScreen from "./PostNewCatScreen";
 
 function MainScreen({ route, navigation }) {
   const [searchName, setSearchName] = useState("");
@@ -180,7 +182,9 @@ export default function FindBreederMainScreen() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="CatInformation" component={CatInformation} />
       <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
+      <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
     </Stack.Navigator>
   );
 }

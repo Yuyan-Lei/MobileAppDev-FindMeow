@@ -15,6 +15,7 @@ import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
+import PostNewCatScreen from "./PostNewCatScreen";
 
 function CatsScreen({
   navigation,
@@ -265,6 +266,7 @@ export default function StarListScreen({ route, navigation }) {
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="CatInformation" component={CatInformation} />
       <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
+      <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
     </Stack.Navigator>
   );
 }
