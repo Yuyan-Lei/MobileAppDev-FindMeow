@@ -2,7 +2,7 @@
 import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 
-export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 6) {
+export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 2) {
   let firstTouch = 0;
 
   // set user touch start position

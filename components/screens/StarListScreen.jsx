@@ -41,7 +41,7 @@ function CatsScreen({
     setSelectedIndex(0);
   }
 
-  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight, 6);
+  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
 
   return (
     <View
@@ -93,7 +93,7 @@ function CatteriesScreen({
     setSelectedIndex(0);
   }
 
-  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight, 6);
+  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
 
   return (
     <View style={{ width: "100%" }}>
