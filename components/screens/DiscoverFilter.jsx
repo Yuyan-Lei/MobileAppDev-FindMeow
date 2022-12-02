@@ -1,13 +1,13 @@
 import { Button, Icon, Slider } from "@rneui/themed";
 import React, { useState } from "react";
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import {
   Alert,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { ALL_BREEDS } from "../listContents/allBreeds";
@@ -61,29 +61,29 @@ const DiscoverFilter = ({
   const [neutered, setNeutered] = useState(false);
 
   const resetHandler = () => {
+    resetAllFilters();
     setBreedLocal(selectedBreed);
     setAgeLocal(selectedAge);
     setStateLocal(selectedState);
     setGenderLocal(selectedGender);
-    resetAllFilters();
+    setVaccinated(false);
+    setVetChecked(false);
+    setDewormed(false);
+    setReady(false);
+    setNeutered(false);
   };
 
   const applyHandler = () => {
-    setBreedLocal(breedLocal);
-    setAgeLocal(ageLocal);
-    setStateLocal(stateLocal);
-    setGenderLocal(genderLocal);
+    setSelectedAge(ageLocal);
+    setSelectedBreed(breedLocal);
+    setSelectedGender(genderLocal);
+    setSelectedState(stateLocal);
 
-    Alert.alert(
-      "Feature for this button is coming soon~",
-      "See you next time!",
-      [{ text: "Sad" }, { text: "Wait for you" }]
-    );
     refRBSheet.current.close();
   };
 
   const [multiSliderValue, setMultiSliderValue] = React.useState([1, 10000]);
-  const multiSliderValuesChange = values => setMultiSliderValue(values);
+  const multiSliderValuesChange = (values) => setMultiSliderValue(values);
 
   return (
     <ScrollView style={styles.filterContainer}>
@@ -94,7 +94,9 @@ const DiscoverFilter = ({
       </Text>
 
       {/* Price slider */}
-      <OrangeText>From ${multiSliderValue[0]} to ${multiSliderValue[1]}</OrangeText>
+      <OrangeText>
+        From ${multiSliderValue[0]} to ${multiSliderValue[1]}
+      </OrangeText>
 
       <MultiSlider
         values={[multiSliderValue[0], multiSliderValue[1]]}
@@ -102,7 +104,6 @@ const DiscoverFilter = ({
         min={0}
         max={10000}
         step={100}
-
         sliderLength={330}
         containerStyle={{
           marginLeft: 15,
@@ -112,18 +113,18 @@ const DiscoverFilter = ({
           backgroundColor: Colors.orangeText,
         }}
         trackStyle={{ height: 3 }}
-
         snapped
-
         customMarker={() => {
-          return <Icon
-            name="dollar"
-            type="font-awesome"
-            size={10}
-            color={Colors.orangeText}
-            reverse
-            // containerStyle={styles.sliderThumbContainerStyle}
-          />
+          return (
+            <Icon
+              name="dollar"
+              type="font-awesome"
+              size={10}
+              color={Colors.orangeText}
+              reverse
+              // containerStyle={styles.sliderThumbContainerStyle}
+            />
+          );
         }}
       />
 
