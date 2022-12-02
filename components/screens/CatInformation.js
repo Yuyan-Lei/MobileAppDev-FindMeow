@@ -263,13 +263,13 @@ export default function CatInformation({ route, navigation }) {
               </View>
             </View>
           </View>
-          {/* contact info label end */}
-          <View style={styles.detailLabel}>
-            <Text style={styles.detailTitleText}>Details</Text>
+        </View>
+        {/* contact info label end */}
+        <View style={styles.detailLabel}>
+          <Text style={styles.detailTitleText}>Details</Text>
 
-            <View>
-              <Text style={styles.descriptionText}>{cat.Description}</Text>
-            </View>
+          <View>
+            <Text style={styles.descriptionText}>{cat.Description}</Text>
           </View>
         </View>
       </View>
@@ -302,6 +302,7 @@ const styles = StyleSheet.create({
   buttonView: {
     flexDirection: "row",
     marginLeft: "auto",
+    top: -4,
   },
   roundButton: {
     width: 30,
