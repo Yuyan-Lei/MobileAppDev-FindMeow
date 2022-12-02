@@ -8,6 +8,7 @@ import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { getAllCatteries, getUserLocation } from "../../firebaseUtils/user";
 import { globalVariables } from "../../utils/globalVariables";
+import { useSwipe } from "../../utils/useSwipe";
 import { BreederCard } from "../cards/BreederCard";
 import { CatCard } from "../cards/CatCard";
 import { FilterButtons } from "../pressable/FilterButtons";
@@ -15,7 +16,13 @@ import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 
-function CatsScreen({ navigation, cats, isScrollToTop, onScrollToTop }) {
+function CatsScreen({
+  navigation,
+  cats,
+  isScrollToTop,
+  onScrollToTop,
+  setSelectedIndex,
+}) {
   const [location, setLocation] = useState(null);
 
   /* Set user location. */
@@ -25,6 +32,16 @@ function CatsScreen({ navigation, cats, isScrollToTop, onScrollToTop }) {
       setLocation(location);
     })();
   }, []);
+
+  function onSwipeLeft() {
+    setSelectedIndex(1);
+  }
+
+  function onSwipeRight() {
+    setSelectedIndex(0);
+  }
+
+  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
 
   return (
     <View
@@ -54,6 +71,8 @@ function CatsScreen({ navigation, cats, isScrollToTop, onScrollToTop }) {
             onScrollToTop();
           }
         }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       />
     </View>
   );
@@ -64,7 +83,18 @@ function CatteriesScreen({
   catteries,
   isScrollToTop,
   onScrollToTop,
+  setSelectedIndex,
 }) {
+  function onSwipeLeft() {
+    setSelectedIndex(1);
+  }
+
+  function onSwipeRight() {
+    setSelectedIndex(0);
+  }
+
+  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
+
   return (
     <View style={{ width: "100%" }}>
       <FlatList
@@ -85,6 +115,8 @@ function CatteriesScreen({
             onScrollToTop();
           }
         }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       />
     </View>
   );
@@ -96,7 +128,7 @@ function MainScreen({ route, navigation }) {
   const [likeCatteries, setLikeCatteries] = useState([]);
 
   function isScrollToTop(event) {
-    return event.nativeEvent.contentOffset.y < 100;
+    return event.nativeEvent.contentOffset.y < -100;
   }
 
   const [lastTimeRefreshLikedCatData, setLastTimeRefreshLikedCatData] =
@@ -192,42 +224,37 @@ function MainScreen({ route, navigation }) {
   };
 
   return (
-    <GestureRecognizer
-      onSwipeLeft={(state) => setSelectedIndex(1)}
-      onSwipeRight={(state) => setSelectedIndex(0)}
-      config={configGestureRecognizer}
-      style={{ flex: 1 }}
-    >
-      <View style={styles.container}>
-        <View style={{ margin: 12 }}>
-          <View>
-            <TitleText>Collections</TitleText>
-          </View>
+    <View style={styles.container}>
+      <View style={{ margin: 12 }}>
+        <View>
+          <TitleText>Collections</TitleText>
         </View>
-
-        <FilterButtons
-          selectedIndex={selectedIndex}
-          setSelectedIndex={setSelectedIndex}
-          buttons={["Cats", "Catteries"]}
-        />
-        {selectedIndex === 0 && (
-          <CatsScreen
-            navigation={navigation}
-            cats={likeCats}
-            isScrollToTop={isScrollToTop}
-            onScrollToTop={() => refreshLikedCatData({ forceLoad: true })}
-          />
-        )}
-        {selectedIndex === 1 && (
-          <CatteriesScreen
-            navigation={navigation}
-            catteries={likeCatteries}
-            isScrollToTop={isScrollToTop}
-            onScrollToTop={() => refreshLikedCatteryData({ forceLoad: true })}
-          />
-        )}
       </View>
-    </GestureRecognizer>
+
+      <FilterButtons
+        selectedIndex={selectedIndex}
+        setSelectedIndex={setSelectedIndex}
+        buttons={["Cats", "Catteries"]}
+      />
+      {selectedIndex === 0 && (
+        <CatsScreen
+          navigation={navigation}
+          cats={likeCats}
+          isScrollToTop={isScrollToTop}
+          onScrollToTop={() => refreshLikedCatData({ forceLoad: true })}
+          setSelectedIndex={setSelectedIndex}
+        />
+      )}
+      {selectedIndex === 1 && (
+        <CatteriesScreen
+          navigation={navigation}
+          catteries={likeCatteries}
+          isScrollToTop={isScrollToTop}
+          onScrollToTop={() => refreshLikedCatteryData({ forceLoad: true })}
+          setSelectedIndex={setSelectedIndex}
+        />
+      )}
+    </View>
   );
 }
 

@@ -10,6 +10,7 @@ import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
+import CatteryProfileScreen from "./CatteryProfileScreen";
 import DiscoverFilter from "./DiscoverFilter";
 import PostNewCatScreen from "./PostNewCatScreen";
 
@@ -223,6 +224,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="CatInformation" component={CatInformation} />
       <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
+      <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
     </Stack.Navigator>
   );
 }

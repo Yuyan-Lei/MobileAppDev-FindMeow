@@ -14,6 +14,7 @@ import {
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 import CachedImage from "react-native-expo-cached-image";
+import { useSwipePressable } from "../../utils/useSwipe";
 
 export function CatCard({
   cat,
@@ -82,11 +83,13 @@ export function CatCard({
     catMonthText = cat.month + " months";
   }
 
+  const { onTouchStart, onTouchEnd } = useSwipePressable(() =>
+    navigation.navigate("CatInformation", { catId: cat.id })
+  );
+
   return (
     <View style={styles.container}>
-      <Pressable
-        onPress={() => navigation.navigate("CatInformation", { catId: cat.id })}
-      >
+      <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}>
         <View style={styles.imageView}>
           {/* cat photo */}
           <CachedImage source={{ uri: cat.photo }} style={styles.image} />
