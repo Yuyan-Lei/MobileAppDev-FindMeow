@@ -128,7 +128,7 @@ function MainScreen({ route, navigation }) {
   const [likeCatteries, setLikeCatteries] = useState([]);
 
   function isScrollToTop(event) {
-    return event.nativeEvent.contentOffset.y < 100;
+    return event.nativeEvent.contentOffset.y < -100;
   }
 
   const [lastTimeRefreshLikedCatData, setLastTimeRefreshLikedCatData] =
