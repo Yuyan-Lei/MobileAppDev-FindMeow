@@ -1,6 +1,7 @@
 import { ButtonGroup } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { Colors } from "../styles/Colors";
 
 // reference: https://reactnativeelements.com/docs/components/buttongroup
 export function FilterButtons({ selectedIndex, setSelectedIndex, buttons }) {
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 3,
   },
   selectedButtonStyle: {
-    backgroundColor: "#FFB801",
+    backgroundColor: Colors.orange,
     borderRadius: 10,
     marginHorizontal: 5,
   },

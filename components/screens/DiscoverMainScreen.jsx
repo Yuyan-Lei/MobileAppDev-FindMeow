@@ -10,7 +10,6 @@ import {
   useWindowDimensions,
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { db } from "../../firebaseUtils/firebase-setup";
 import {
   calculateDistance,
@@ -25,6 +24,8 @@ import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import DiscoverFilter from "./DiscoverFilter";
 import PostNewCatScreen from "./PostNewCatScreen";
+import { Colors } from "../styles/Colors";
+import MapPage from "./MapPage";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -230,13 +231,13 @@ function MainScreen({ route, navigation }) {
           <View
             style={{
               width: 143,
-              backgroundColor: "orange",
+              backgroundColor: Colors.orange,
               alignItems: "center",
               height: 39,
               borderRadius: 10,
             }}
           >
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate("MapPage")}>
               <Text
                 style={{
                   padding: 8,
@@ -264,6 +265,7 @@ export default function DiscoverMainScreen({ route, navigation }) {
       <Stack.Screen name="CatInformation" component={CatInformation} />
       <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
       <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
+      <Stack.Screen name="MapPage" component={MapPage} />
     </Stack.Navigator>
   );
 }
