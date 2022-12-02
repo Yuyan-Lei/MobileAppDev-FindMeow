@@ -30,6 +30,8 @@ function MainScreen({ route, navigation }) {
   const [selectedState, setSelectedState] = useState("All");
   const [selectedGender, setSelectedGender] = useState("All");
 
+  const [filterTrigger, setFilterTrigger] = useState(false);
+
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
@@ -40,6 +42,10 @@ function MainScreen({ route, navigation }) {
     setSelectedAge("");
     setSelectedState("");
     setSelectedGender("");
+  }
+
+  function flipFilterTrigger() {
+    setFilterTrigger(!filterTrigger);
   }
 
   function isScrollToTop(event) {
@@ -54,7 +60,7 @@ function MainScreen({ route, navigation }) {
   async function refreshCatData(selectedIndex) {
     if (refreshCatDataLock) return;
     setRefreshCatDataLock(true);
-    
+
     setSelectedIndex(selectedIndex);
     let location = await getUserLocation();
     const allCatteries = await getAllCatteries();
@@ -145,7 +151,7 @@ function MainScreen({ route, navigation }) {
   const [data, setData] = useState([]);
   useEffect(() => {
     refreshCatData(selectedIndex);
-  }, []);
+  }, [filterTrigger]);
   /* data collector used for top filter tags - end */
 
   /* events for top filter tags - start */
@@ -205,6 +211,7 @@ function MainScreen({ route, navigation }) {
 
             resetAllFilters,
             refRBSheet,
+            flipFilterTrigger,
           }}
         />
       </RBSheet>

@@ -28,6 +28,7 @@ const DiscoverFilter = ({
 
     resetAllFilters,
     refRBSheet,
+    flipFilterTrigger,
   },
 }) => {
   const [breedLocal, setBreedLocal] = useState(selectedBreed);
@@ -71,6 +72,7 @@ const DiscoverFilter = ({
     setDewormed(false);
     setReady(false);
     setNeutered(false);
+    flipFilterTrigger();
   };
 
   const applyHandler = () => {
@@ -79,6 +81,7 @@ const DiscoverFilter = ({
     setSelectedGender(genderLocal);
     setSelectedState(stateLocal);
 
+    flipFilterTrigger();
     refRBSheet.current.close();
   };
 
