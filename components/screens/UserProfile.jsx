@@ -16,6 +16,7 @@ import { auth } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { rootStackNavigate } from "../RootNavigation";
 import { TitleText } from "../texts/TitleText";
+import NotificationSettingsScreen from "./NotificationSettingsScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
 
@@ -64,6 +65,7 @@ function MainScreen({ route, navigation }) {
   const onViewCatteryPage = () =>
     navigation.navigate("ProfileCatteryPage", { user });
   const onUpdatePassword = () => navigation.navigate("UpdatePasswordPage");
+  const onNotificationSettings = () => navigation.navigate("NotificationSettingsScreen")
 
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -190,8 +192,8 @@ function MainScreen({ route, navigation }) {
           </Pressable>
           <Divider style={styles.divider} />
 
-          <Pressable onPress={notificationHandler} style={styles.button}>
-            <Text style={styles.buttonText}>Enable Notifications</Text>
+          <Pressable onPress={onNotificationSettings} style={styles.button}>
+            <Text style={styles.buttonText}>Notification Settings</Text>
           </Pressable>
         </View>
 
@@ -218,6 +220,10 @@ export default function UserProfile({ route, navigation }) {
         name="UpdatePasswordPage"
         component={UpdatePasswordScreen}
       />
+      <Stack.Screen
+        name="NotificationSettingsScreen"
+        component={NotificationSettingsScreen}
+      />
     </Stack.Navigator>
   );
 }
@@ -227,6 +233,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 55,
     paddingBottom: 200,
+    backgroundColor: "rgb(250, 250, 250)",
   },
   catteryNameText: {
     fontFamily: "PoppinsBold",
