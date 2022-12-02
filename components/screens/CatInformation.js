@@ -198,7 +198,7 @@ export default function CatInformation({ route, navigation }) {
             <Text style={styles.priceText}>${cat.Price}</Text>
           </View>
           {/* TODO: CATTERY LOCATION */}
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", marginLeft: -5 }}>
             <Ionicons
               name="location-sharp"
               size={24}
@@ -233,9 +233,7 @@ export default function CatInformation({ route, navigation }) {
               <Text style={styles.contactText}>Contact Info</Text>
               <View style={{ flexDirection: "row" }}>
                 <Pressable
-                  onPress={() =>
-                    navigation.push("CatteryProfile", { cattery })
-                  }
+                  onPress={() => navigation.push("CatteryProfile", { cattery })}
                 >
                   <CachedImage
                     source={{ uri: cattery.picture }}
@@ -263,13 +261,14 @@ export default function CatInformation({ route, navigation }) {
               </View>
             </View>
           </View>
-        </View>
-        {/* contact info label end */}
-        <View style={styles.detailLabel}>
-          <Text style={styles.detailTitleText}>Details</Text>
 
-          <View>
-            <Text style={styles.descriptionText}>{cat.Description}</Text>
+          {/* contact info label end */}
+          <View style={styles.detailLabel}>
+            <Text style={styles.detailTitleText}>Details</Text>
+
+            <View>
+              <Text style={styles.descriptionText}>{cat.Description}</Text>
+            </View>
           </View>
         </View>
       </View>
