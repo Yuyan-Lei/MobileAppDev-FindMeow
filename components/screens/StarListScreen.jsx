@@ -6,7 +6,11 @@ import GestureRecognizer from "react-native-swipe-gestures";
 import { getAllCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { getAllCatteries, getUserLocation } from "../../firebaseUtils/user";
+import {
+  calculateDistance,
+  getAllCatteries,
+  getUserLocation,
+} from "../../firebaseUtils/user";
 import { globalVariables } from "../../utils/globalVariables";
 import { useSwipe } from "../../utils/useSwipe";
 import { BreederCard } from "../cards/BreederCard";
@@ -145,6 +149,8 @@ function MainScreen({ route, navigation }) {
 
     const likeCats = likedCatSnapShot.data().likeCats;
     const catsSnapshots = await getAllCats();
+    const allCatteries = await getAllCatteries();
+    const location = await getUserLocation();
 
     const newLikedCats = catsSnapshots.docs
       .map((catEntry) => {
@@ -154,6 +160,14 @@ function MainScreen({ route, navigation }) {
           now.getMonth() -
           birthday.getMonth() +
           12 * (now.getFullYear() - birthday.getFullYear());
+
+        const cattery = allCatteries.find(
+          (ca) => ca.email === catEntry.data().Cattery
+        );
+        const distance =
+          cattery.geoLocation && location
+            ? calculateDistance(location, cattery.geoLocation)
+            : 9999;
         return {
           id: catEntry.id,
           name: catEntry.data().Breed,
@@ -162,6 +176,7 @@ function MainScreen({ route, navigation }) {
           month: age,
           photo: catEntry.data().Picture,
           cattery: catEntry.data().Cattery,
+          distance,
           uploadTime: catEntry.data().UploadTime,
         };
       })
