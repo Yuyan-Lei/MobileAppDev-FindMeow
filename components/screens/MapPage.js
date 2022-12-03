@@ -42,48 +42,50 @@ export default function MapPage({ navigation }) {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
+      ></MapView>
+      <View
+        style={{
+          flexDirection: "row",
+          width: width,
+          height: 90,
+          backgroundColor: "white",
+          position: "absolute",
+          top: 0,
+        }}
       >
-        <View
-          style={{
-            flexDirection: "row",
-            width: width,
-            height: 90,
-            backgroundColor: "white",
-            position: "absolute",
-          }}
-        >
-          <View style={{ top: 70, position: "absolute" }}>
-            <Pressable
-              // onPress={navigation.goBack}
-              style={{ marginLeft: 15 }}
+        <View style={{ top: 40, position: "absolute" }}>
+          <Pressable
+            // onPress={navigation.goBack}
+            style={{ marginLeft: 15 }}
+          >
+            <Ionicons name="chevron-back" size={24} color="black" />
+          </Pressable>
+          <View
+            style={{
+              alignItems: "center",
+              width: width,
+            }}
+          >
+            <Text
+              style={{ fontFamily: "PoppinsSemiBold", fontSize: 20, top: -15 }}
             >
-              <Ionicons name="chevron-back" size={24} color="black" />
-            </Pressable>
-            <View
-              style={{
-                alignItems: "center",
-                width: width,
-              }}
-            >
-              <Text style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}>
-                Location
-              </Text>
-            </View>
+              Location
+            </Text>
           </View>
         </View>
-        <Marker coordinate={{ latitude: 37.3387, longitude: -121.8853 }}>
-          <View>
-            {/* <Pressable> */}
-            <Foundation name="marker" size={50} color={Colors.orangeText} />
-            {/* </Pressable> */}
+      </View>
+      <Marker coordinate={{ latitude: 37.3387, longitude: -121.8853 }}>
+        <View>
+          {/* <Pressable> */}
+          <Foundation name="marker" size={50} color={Colors.orangeText} />
+          {/* </Pressable> */}
+        </View>
+        <Callout>
+          <View style={{ width: 100, height: 100, backgroundColor: "white" }}>
+            <Text>Hi Hi hi</Text>
           </View>
-          <Callout>
-            <View style={{ width: 100, height: 100, backgroundColor: "white" }}>
-              <Text>Hi Hi hi</Text>
-            </View>
-          </Callout>
-        </Marker>
-      </MapView>
+        </Callout>
+      </Marker>
     </View>
   );
 }
