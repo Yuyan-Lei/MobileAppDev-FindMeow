@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   Pressable,
   Alert,
+  ScrollView,
 } from "react-native";
 import MapView, {
   PROVIDER_GOOGLE,
@@ -17,6 +18,7 @@ import MapView, {
 import { Foundation } from "@expo/vector-icons";
 import { Colors } from "../styles/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import { CatCard_map } from "../cards/CatCard_map";
 
 export default function MapPage({ navigation }) {
   const { height, width } = useWindowDimensions();
@@ -42,7 +44,22 @@ export default function MapPage({ navigation }) {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-      ></MapView>
+      >
+        <Marker coordinate={{ latitude: 37.3387, longitude: -121.8853 }}>
+          <View>
+            {/* <Pressable> */}
+            <Foundation name="marker" size={50} color={Colors.orangeText} />
+            {/* </Pressable> */}
+          </View>
+          <Callout>
+            <View style={{ width: 100, height: 100, backgroundColor: "white" }}>
+              <Text>Hi Hi hi</Text>
+            </View>
+          </Callout>
+        </Marker>
+      </MapView>
+
+      {/* Header */}
       <View
         style={{
           flexDirection: "row",
@@ -79,18 +96,27 @@ export default function MapPage({ navigation }) {
           </View>
         </View>
       </View>
-      <Marker coordinate={{ latitude: 37.3387, longitude: -121.8853 }}>
-        <View>
-          {/* <Pressable> */}
-          <Foundation name="marker" size={50} color={Colors.orangeText} />
-          {/* </Pressable> */}
-        </View>
-        <Callout>
-          <View style={{ width: 100, height: 100, backgroundColor: "white" }}>
-            <Text>Hi Hi hi</Text>
-          </View>
-        </Callout>
-      </Marker>
+
+      {/* Scrollable card */}
+      <ScrollView
+        horizontal={true}
+        style={{
+          flexDirection: "row",
+          width: width,
+          height: 100,
+          backgroundColor: "transparent",
+          position: "absolute",
+          top: height - 200,
+          // left: 20,
+        }}
+      >
+        {/* Add space to the beginning */}
+        <View style={{ width: 20 }}></View>
+
+        {/* Cat card list here */}
+        <CatCard_map></CatCard_map>
+        <CatCard_map></CatCard_map>
+      </ScrollView>
     </View>
   );
 }
