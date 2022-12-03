@@ -95,7 +95,7 @@ export async function deleteCatInCattery(catId) {
 
 export async function createCattery(
   userEmail,
-  { catteryName, phoneNumber, website, address, shortAddress, placeId }
+  { catteryName, breed, phoneNumber, website, address, shortAddress, placeId }
 ) {
   const googleMapClient = new Client({});
   const catteryPlaceDetails = await googleMapClient
@@ -108,6 +108,7 @@ export async function createCattery(
   const newCattery = {
     isCattery: true,
     catteryName,
+    breed,
     phoneNumber,
     website,
     address,
@@ -128,6 +129,7 @@ export async function updateCattery({
   shortAddress,
   placeId,
   picture,
+  breed,
 }) {
   const email = getCurrentUserEmail();
   const googleMapClient = new Client({});
@@ -145,6 +147,7 @@ export async function updateCattery({
     address,
     placeId,
     picture,
+    breed,
     shortAddress,
     geoLocation: catteryPlaceDetails.data.result.geometry.location
   };
@@ -179,18 +182,26 @@ export async function getUserLocation() {
 
   try {
     let location = await Location.getLastKnownPositionAsync({});
-    return {
-      lat: location.coords.latitude,
-      lng: location.coords.longitude
-    };
-  } catch (error) {
-    console.error("Can't get user's location.");
-    return;
+    if (location !== null) {
+      Location.getCurrentPositionAsync({});
+      return {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude
+      };
+    } else {
+      location = await Location.getCurrentPositionAsync({});
+      return {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude
+      };
+    }
+  } catch {
+    Alert.alert('Could not get your location, please try again later.');
   }
 }
 
 // Function to calculate distance between 2 points.
 export function calculateDistance(mk1, mk2) {
   const distanceInMeter = haversine(mk1, mk2);
-  return (distanceInMeter / 1000).toFixed(1);
+  return (distanceInMeter / 1600).toFixed(1);
 }

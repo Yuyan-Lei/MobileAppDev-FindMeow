@@ -14,6 +14,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { writeImageToDB } from "../../firebaseUtils/firestore";
 import { updateCattery } from "../../firebaseUtils/user";
 import { FillAndroidButtomBar, FillAndroidTopBar } from "../FillAndroidBar";
+import CatBreedSelector from "../pressable/CatBreedSelector";
 import CatImagePicker from "../pressable/CatImagePicker";
 
 export default function UpdateCatteryPage({ route, navigation }) {
@@ -25,6 +26,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
   const [placeId, setPlaceId] = useState(user.placeId);
   const [address, setAddress] = useState(user.address);
   const [shortAddress, setShortAddress] = useState(user.shortAddress);
+  const [breed, setBreed] = useState(user.breed);
   const ref = useRef();
 
   // Verify all the inputs in this page and return the error message if any errors.
@@ -47,6 +49,9 @@ export default function UpdateCatteryPage({ route, navigation }) {
     }
     if (address === "") {
       return "You didn't specify the address of the cattery, please fill that.";
+    }
+    if (breed === "") {
+      return "You didn't specify the breed of the cattery, please fill that.";
     }
     if (image === null || image === undefined) {
       return "You didn't specify the image of the cattery, please fill that.";
@@ -77,6 +82,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
           placeId,
           address,
           shortAddress,
+          breed,
         });
         navigation.goBack();
       } else {
@@ -89,6 +95,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
           placeId,
           address,
           shortAddress,
+          breed,
         });
         navigation.goBack();
       }
@@ -106,7 +113,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
     >
       <FillAndroidTopBar />
       <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
-        <View style={{ margin: 12 }}>
+        <View style={{ margin: 12, paddingBottom: 60 }}>
           {/* Screen Title */}
           <View
             style={{
@@ -147,6 +154,14 @@ export default function UpdateCatteryPage({ route, navigation }) {
             value={catteryName}
             onChangeText={setCatteryName}
           ></TextInput>
+
+          {/* Breed */}
+          <Text style={styles.subTitle}>Breed</Text>
+          <CatBreedSelector
+            hideAllOption
+            selectedBreed={breed}
+            setSelectedBreed={setBreed}
+          />
 
           {/* Phone Number */}
           <Text style={styles.subTitle}>Phone Number</Text>

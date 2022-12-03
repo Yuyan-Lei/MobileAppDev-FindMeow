@@ -52,7 +52,7 @@ function MainScreen({ route, navigation }) {
       let clauseBreed, clauseState, clauseCatNum;
 
       if (selectedBreed !== "All") {
-        // TODO
+        clauseBreed = where("breed", "==", selectedBreed);
       }
 
       if (selectedState !== "All") {
