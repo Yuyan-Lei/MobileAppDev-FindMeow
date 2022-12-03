@@ -50,6 +50,8 @@ function MainScreen({ route, navigation }) {
   const [neutered, setNeutered] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
 
+  const [data, setData] = useState([]);
+
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
@@ -133,7 +135,7 @@ function MainScreen({ route, navigation }) {
 
       const catSnapShot = await getDocs(q);
 
-      let dataBeforeSorting = catSnapShot.docs
+      const dataBeforeSorting = catSnapShot.docs
         .map((catDoc) => {
           const birthday = new Date(catDoc.data().Birthday);
           const now = new Date();
@@ -180,19 +182,22 @@ function MainScreen({ route, navigation }) {
             case "< 1 month":
               return cat.month < 1;
             case "1 - 3 months":
-              return cat.month >= 1 && cat.month < 3;
+              return cat.month >= 1 && cat.month <= 3;
             case "3 - 6 months":
-              return cat.month >= 3 && cat.month < 6;
+              return cat.month >= 3 && cat.month <= 6;
             case "6 - 12 months":
-              return cat.month >= 6 && cat.month < 12;
+              return cat.month >= 6 && cat.month <= 12;
             case "> 1 year":
-              return cat.month >= 12;
+              return cat.month > 12;
             default:
               return true;
           }
-        });
+        })
+        .filter(
+          (cat) =>
+            cat.price >= selectedPrice[0] && cat.price <= selectedPrice[1]
+        );
 
-      // console.log(selectedIndex);
       // 1. newer post
       if (selectedIndex === 0) {
         setData(
@@ -215,7 +220,6 @@ function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
 
   /* data collector used for top filter tags - start */
-  const [data, setData] = useState([]);
   useEffect(() => {
     refreshCatData({ selectedIndex, forceLoad: true });
   }, [filterTrigger]);
