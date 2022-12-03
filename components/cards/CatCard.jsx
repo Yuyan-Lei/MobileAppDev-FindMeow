@@ -85,6 +85,7 @@ export function CatCard({
             <LocationText
               textStyle={styles.locationStyle}
               locationIconColor={styles.locationIconStyle.color}
+              viewPosition={{ top: -1, left: -2.3}}
             >
               {cattery && cattery.shortAddress
                 ? cattery.shortAddress +
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   catDetailStyle: {
-    marginTop: 5,
+    marginTop: 4,
     color: "rgba(46, 37, 37, 0.67)",
     fontSize: 12,
   },
