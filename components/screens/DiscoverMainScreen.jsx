@@ -75,7 +75,7 @@ function MainScreen({ route, navigation }) {
   }
 
   function isScrollToTop(event) {
-    return event.nativeEvent.contentOffset.y < 100;
+    return event.nativeEvent.contentOffset.y < -100;
   }
 
   function onScrollToTop() {
