@@ -126,6 +126,14 @@ export default function CatInformation({ route, navigation }) {
     navigation.push("PostNewCatScreen", { cat });
   };
 
+  {/* Calculate the post time */}
+  const getDateFormatted = (timestamp) => {
+    var date = new Date(timestamp);
+    var dateFormat = date.toDateString();
+    return dateFormat;
+  }
+
+
   return (
     <ScrollView>
       <View>
@@ -210,7 +218,7 @@ export default function CatInformation({ route, navigation }) {
             )}
           </View>
           {/* <Text style={styles.date}>{cat.Birthday}</Text> */}
-          <Text style={styles.PostDateText}>Posted in {cat.Birthday}</Text>
+          <Text style={styles.PostDateText}>Posted in {getDateFormatted(cat.UploadTime)}</Text>
           <View style={styles.chipBox}>
             {cat.Tags ? (
               cat.Tags.map((tag, index) => (
