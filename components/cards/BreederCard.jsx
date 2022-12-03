@@ -60,7 +60,12 @@ export function BreederCard({ cattery, navigation }) {
             <Text style={styles.breederNameText}>{cattery.catteryName}</Text>
 
             {/* Cattery Breed */}
-            <Text style={styles.breedText}>{cattery.breed}</Text>
+            <Text style={styles.breedText}>
+              {cattery.breed === undefined
+                ? 'N/A breed'
+                : cattery.breed
+              }
+            </Text>
 
             {/* Available Kitten Display */}
             <Text style={styles.availableKittenText}>
@@ -72,7 +77,10 @@ export function BreederCard({ cattery, navigation }) {
             </Text>
 
             {/* Cattery Location */}
-            <LocationText>
+            <LocationText 
+              textStyle={styles.locationTextStyle}
+              locationIconColor={"#C5C4C4"}
+              viewPosition={{ top: -1, left: -2}}>
               {cattery.shortAddress}
             </LocationText>
           </View>
@@ -98,17 +106,28 @@ const styles = StyleSheet.create({
     top: 20,
     right: 24,
   },
-  availableKittenText: {
-    color: "orange",
-    fontWeight: "500",
+  breederNameText: {
+    fontFamily: "PoppinsSemiBold",
+    fontSize: 15,
+    color: Colors.black,
   },
   breedText: {
-    color: Colors.black,
+    fontFamily: "PoppinsRegular",
+    fontSize: 12,
+    color: Colors.grayText,
+    marginTop: 3,
   },
-  breederNameText: {
-    fontWeight: "bold",
-    color: Colors.black,
+  availableKittenText: {
+    fontFamily: "PoppinsSemiBold",
+    fontSize: 12,
+    color: Colors.orangeText,
+    marginTop: 3,
   },
+  locationTextStyle: {
+    fontSize: 11    ,
+    color: "#C5C4C4",
+  },
+
   detailView: {
     width: 360,
   },
