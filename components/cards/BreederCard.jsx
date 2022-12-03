@@ -73,9 +73,7 @@ export function BreederCard({ cattery, navigation }) {
 
             {/* Cattery Location */}
             <LocationText>
-              {cattery.address.split(", ")[1] +
-                ", " +
-                cattery.address.split(", ")[2]}
+              {cattery.shortAddress}
             </LocationText>
           </View>
         </View>
