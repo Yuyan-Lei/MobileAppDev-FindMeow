@@ -42,6 +42,16 @@ function MainScreen({ route, navigation }) {
 
   const [filterTrigger, setFilterTrigger] = useState(false);
 
+  /* Tags for filter */
+  const [vaccinated, setVaccinated] = useState(false);
+  const [vetChecked, setVetChecked] = useState(false);
+  const [dewormed, setDewormed] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [neutered, setNeutered] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  const [data, setData] = useState([]);
+
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
@@ -53,6 +63,13 @@ function MainScreen({ route, navigation }) {
     setSelectedState("");
     setSelectedGender("");
     setSelectedPrice([0, 10000]);
+
+    setVaccinated(false);
+    setVetChecked(false);
+    setDewormed(false);
+    setReady(false);
+    setNeutered(false);
+    setSelectedTags([]);
   }
 
   function flipFilterTrigger() {
@@ -60,23 +77,35 @@ function MainScreen({ route, navigation }) {
   }
 
   function isScrollToTop(event) {
-    return event.nativeEvent.contentOffset.y < 100;
+    return event.nativeEvent.contentOffset.y < -100;
   }
 
   function onScrollToTop() {
-    refreshCatData(selectedIndex);
+    refreshCatData({ selectedIndex, forceLoad: true });
   }
 
+  const [lastTimeRefreshCatData, setLastTimeRefreshCatData] = useState(0);
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
-  async function refreshCatData(selectedIndex) {
-    if (refreshCatDataLock) return;
+  // const [recordTime, setRecordTime] = useState(0);
+  async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
+    if (!forceLoad && refreshCatDataLock) return;
     setRefreshCatDataLock(true);
+
+    // prevent running it too much in a short time
+    const currentTimeInMill = new Date().getTime();
+    if (!forceLoad && currentTimeInMill - lastTimeRefreshCatData < 5000) {
+      return;
+    }
+    setLastTimeRefreshCatData(currentTimeInMill);
+
+    // setRecordTime(recordTime + 1);
+    // console.log(`run refreshCatData() ${recordTime} times`);
 
     setSelectedIndex(selectedIndex);
     let location = await getUserLocation();
     const allCatteries = await getAllCatteries();
     try {
-      let clauseBreed, clauseAge, clauseState, clauseGender;
+      let clauseBreed, clauseAge, clauseState, clauseGender, clauseTags;
 
       if (selectedBreed !== "" && selectedBreed !== "All") {
         clauseBreed = where("Breed", "==", selectedBreed);
@@ -90,7 +119,7 @@ function MainScreen({ route, navigation }) {
         clauseState = where("State", "==", selectedState);
       }
 
-      if (clauseAge !== "" && clauseAge !== "All") {
+      if (selectedAge !== "" && selectedAge !== "All") {
         // TODO
       }
 
@@ -99,46 +128,76 @@ function MainScreen({ route, navigation }) {
         clauseAge,
         clauseState,
         clauseGender,
+        clauseTags,
       ].filter((item) => item !== undefined);
 
       const q = query(collection(db, "Cats"), ...constraints);
 
       const catSnapShot = await getDocs(q);
 
-      let dataBeforeSorting = catSnapShot.docs.map((catDoc) => {
-        const birthday = new Date(catDoc.data().Birthday);
-        const now = new Date();
-        const cattery = allCatteries.find(
-          (ca) => ca.email === catDoc.data().Cattery
+      const dataBeforeSorting = catSnapShot.docs
+        .map((catDoc) => {
+          const birthday = new Date(catDoc.data().Birthday);
+          const now = new Date();
+          const cattery = allCatteries.find(
+            (ca) => ca.email === catDoc.data().Cattery
+          );
+          // if cattery doesn't have location, use 9999 to make cat in the bottom.
+          const distance =
+            cattery.geoLocation && location
+              ? calculateDistance(location, cattery.geoLocation)
+              : 9999;
+          let age =
+            now.getMonth() -
+            birthday.getMonth() +
+            12 * (now.getFullYear() - birthday.getFullYear());
+          // age cannot be negative
+          if (age === undefined || isNaN(age) || age < 0) {
+            age = 0;
+          }
+
+          return {
+            id: catDoc.id,
+            name: catDoc.data().Breed,
+            sex: catDoc.data().Gender,
+            price: catDoc.data().Price,
+            month: age,
+            photo: catDoc.data().Picture,
+            cattery: catDoc.data().Cattery,
+            distance,
+            uploadTime: catDoc.data().UploadTime,
+            tags: catDoc.data().Tags,
+          };
+        })
+        .filter((cat) => {
+          return (
+            selectedTags.length === 0 ||
+            selectedTags.every((tag) => {
+              return cat.tags.indexOf(tag) !== -1;
+            })
+          );
+        })
+        .filter((cat) => {
+          switch (selectedAge) {
+            case "< 1 month":
+              return cat.month < 1;
+            case "1 - 3 months":
+              return cat.month >= 1 && cat.month <= 3;
+            case "3 - 6 months":
+              return cat.month >= 3 && cat.month <= 6;
+            case "6 - 12 months":
+              return cat.month >= 6 && cat.month <= 12;
+            case "> 1 year":
+              return cat.month > 12;
+            default:
+              return true;
+          }
+        })
+        .filter(
+          (cat) =>
+            cat.price >= selectedPrice[0] && cat.price <= selectedPrice[1]
         );
-        // if cattery doesn't have location, use 9999 to make cat in the bottom.
-        const distance =
-          cattery.geoLocation && location
-            ? calculateDistance(location, cattery.geoLocation)
-            : 9999;
-        let age =
-          now.getMonth() -
-          birthday.getMonth() +
-          12 * (now.getFullYear() - birthday.getFullYear());
-        // age cannot be negative
-        if (age === undefined || isNaN(age) || age < 0) {
-          age = 0;
-        }
 
-        return {
-          id: catDoc.id,
-          name: catDoc.data().Breed,
-          sex: catDoc.data().Gender,
-          price: catDoc.data().Price,
-          month: age,
-          photo: catDoc.data().Picture,
-          cattery: catDoc.data().Cattery,
-          distance,
-          uploadTime: catDoc.data().UploadTime,
-        };
-      });
-
-      // console.log(selectedIndex);
       // 1. newer post
       if (selectedIndex === 0) {
         setData(
@@ -161,28 +220,27 @@ function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
 
   /* data collector used for top filter tags - start */
-  const [data, setData] = useState([]);
   useEffect(() => {
-    refreshCatData(selectedIndex);
+    refreshCatData({ selectedIndex, forceLoad: true });
   }, [filterTrigger]);
   /* data collector used for top filter tags - end */
 
   /* events for top filter tags - start */
   const onFilterChange = (value) => {
     setSelectedIndex(value);
-    refreshCatData(value);
+    refreshCatData({ selectedIndex: value, forceLoad: true });
   };
   /* events for top filter tags - end */
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refreshCatData(selectedIndex);
-    }, 10000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     refreshCatData({ selectedIndex });
+  //   }, 10000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [selectedIndex]);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -223,6 +281,23 @@ function MainScreen({ route, navigation }) {
             setSelectedGender,
             selectedPrice,
             setSelectedPrice,
+
+            tags: {
+              selectedTags,
+              setSelectedTags,
+              vaccinated,
+              setVaccinated,
+              vetChecked,
+              setVetChecked,
+              dewormed,
+              setDewormed,
+              ready,
+              setReady,
+              neutered,
+              setNeutered,
+              selectedTags,
+              setSelectedTags,
+            },
 
             resetAllFilters,
             refRBSheet,
