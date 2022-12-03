@@ -58,7 +58,12 @@ export default function MapPage({ navigation }) {
             // onPress={navigation.goBack}
             style={{ marginLeft: 15 }}
           >
-            <Ionicons name="chevron-back" size={24} color="black" />
+            <Ionicons
+              name="chevron-back"
+              size={24}
+              color="black"
+              style={{ top: 12 }}
+            />
           </Pressable>
           <View
             style={{
