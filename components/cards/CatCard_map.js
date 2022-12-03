@@ -53,11 +53,11 @@ export function CatCard_map() {
   //   );
 
   return (
-    <View style={{ width: width }}>
+    <View style={{ width: width - 40 }}>
       <View
         style={{
           justifyContent: "center",
-          width: "88%",
+          width: "94%",
           backgroundColor: "white",
           borderRadius: 8,
           height: 80,
@@ -76,17 +76,16 @@ export function CatCard_map() {
                 {/* cat name */}
                 {/* <Text style={styles.catNameStyle}>{cat.name}</Text> */}
                 <Text style={styles.catNameStyle}>Ragdoll</Text>
+                {/* cat breed */}
+                {/* {showBreed && (
+              <Text style={styles.catDetailStyle}>{cat.breed}</Text>
+            )} */}
 
                 {/* cat details */}
                 <Text style={styles.catDetailStyle}>
                   {/* {cat.sex}, {catMonthText} */}
                   Male, 4 months
                 </Text>
-
-                {/* cat breed */}
-                {/* {showBreed && (
-              <Text style={styles.catDetailStyle}>{cat.breed}</Text>
-            )} */}
 
                 {/* cat location */}
                 {/* {!hideLocation && (
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
   heartButtonView: {
     position: "absolute",
     marginLeft: "auto",
-    left: 265,
+    left: 245,
     marginRight: 90,
     top: -70,
   },

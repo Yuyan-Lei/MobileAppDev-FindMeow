@@ -102,11 +102,11 @@ export default function MapPage({ navigation }) {
         horizontal={true}
         style={{
           flexDirection: "row",
-          width: width,
+          // width: width,
           height: 100,
           backgroundColor: "transparent",
           position: "absolute",
-          top: height - 200,
+          top: height - 170,
           // left: 20,
         }}
       >
@@ -115,6 +115,7 @@ export default function MapPage({ navigation }) {
 
         {/* Cat card list here */}
         <CatCard_map></CatCard_map>
+
         <CatCard_map></CatCard_map>
       </ScrollView>
     </View>
