@@ -232,15 +232,15 @@ function MainScreen({ route, navigation }) {
   };
   /* events for top filter tags - end */
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refreshCatData({ selectedIndex });
-    }, 10000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     refreshCatData({ selectedIndex });
+  //   }, 10000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, []);
 
   return (
     <View style={styles.container}>
