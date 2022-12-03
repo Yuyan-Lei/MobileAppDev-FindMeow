@@ -84,7 +84,7 @@ function MainScreen({ route, navigation }) {
 
   const [lastTimeRefreshCatData, setLastTimeRefreshCatData] = useState(0);
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
-  const [recordTime, setRecordTime] = useState(0);
+  // const [recordTime, setRecordTime] = useState(0);
   async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
     if (!forceLoad && refreshCatDataLock) return;
     setRefreshCatDataLock(true);
@@ -96,8 +96,8 @@ function MainScreen({ route, navigation }) {
     }
     setLastTimeRefreshCatData(currentTimeInMill);
 
-    setRecordTime(recordTime + 1);
-    console.log(`run refreshCatData() ${recordTime} times`);
+    // setRecordTime(recordTime + 1);
+    // console.log(`run refreshCatData() ${recordTime} times`);
 
     setSelectedIndex(selectedIndex);
     let location = await getUserLocation();
@@ -174,6 +174,22 @@ function MainScreen({ route, navigation }) {
               return cat.tags.indexOf(tag) !== -1;
             })
           );
+        })
+        .filter((cat) => {
+          switch (selectedAge) {
+            case "< 1 month":
+              return cat.month < 1;
+            case "1 - 3 months":
+              return cat.month >= 1 && cat.month < 3;
+            case "3 - 6 months":
+              return cat.month >= 3 && cat.month < 6;
+            case "6 - 12 months":
+              return cat.month >= 6 && cat.month < 12;
+            case "> 1 year":
+              return cat.month >= 12;
+            default:
+              return true;
+          }
         });
 
       // console.log(selectedIndex);
