@@ -49,19 +49,10 @@ function MainScreen({ route, navigation }) {
 
     try {
       /* Grouping constraints starts */
-      let clauseSearchName1,
-        clauseSearchName2,
-        clauseBreed,
-        clauseState,
-        clauseCatNum;
-
-      if (searchName !== "") {
-        clauseSearchName1 = where("catteryName", ">=", searchName);
-        clauseSearchName2 = where("catteryName", "<", searchName + "z");
-      }
+      let clauseBreed, clauseState, clauseCatNum;
 
       if (selectedBreed !== "All") {
-        // TODO: how?
+        // TODO
       }
 
       if (selectedState !== "All") {
@@ -74,13 +65,7 @@ function MainScreen({ route, navigation }) {
         clauseCatNum = where("cats", "==", []);
       }
 
-      const candidates = [
-        clauseSearchName1,
-        clauseSearchName2,
-        clauseBreed,
-        clauseState,
-        clauseCatNum,
-      ];
+      const candidates = [clauseBreed, clauseState, clauseCatNum];
 
       const constraints = candidates.filter((item) => item !== undefined);
       /* Grouping constraints ends */
@@ -93,12 +78,22 @@ function MainScreen({ route, navigation }) {
       const catterySnap = await getDocs(q);
 
       setCatteries(
-        catterySnap.docs.map((catteryDoc) => {
-          return {
-            email: catteryDoc.id,
-            ...catteryDoc.data(),
-          };
-        })
+        catterySnap.docs
+          .map((catteryDoc) => {
+            return {
+              email: catteryDoc.id,
+              ...catteryDoc.data(),
+            };
+          })
+          .filter((cattery) => {
+            return (
+              searchName === "" ||
+              (cattery.catteryName &&
+                cattery.catteryName
+                  .toLowerCase()
+                  .includes(searchName.toLowerCase()))
+            );
+          })
       );
     } finally {
       setRefreshCatteryData(false);
