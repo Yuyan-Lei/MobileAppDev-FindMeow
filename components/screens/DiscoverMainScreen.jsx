@@ -79,13 +79,25 @@ function MainScreen({ route, navigation }) {
   }
 
   function onScrollToTop() {
-    refreshCatData({ selectedIndex });
+    refreshCatData({ selectedIndex, forceLoad: true });
   }
 
+  const [lastTimeRefreshCatData, setLastTimeRefreshCatData] = useState(0);
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
-  async function refreshCatData({ selectedIndex }) {
-    if (refreshCatDataLock) return;
+  const [recordTime, setRecordTime] = useState(0);
+  async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
+    if (!forceLoad && refreshCatDataLock) return;
     setRefreshCatDataLock(true);
+
+    // prevent running it too much in a short time
+    const currentTimeInMill = new Date().getTime();
+    if (!forceLoad && currentTimeInMill - lastTimeRefreshCatData < 5000) {
+      return;
+    }
+    setLastTimeRefreshCatData(currentTimeInMill);
+
+    setRecordTime(recordTime + 1);
+    console.log(`run refreshCatData() ${recordTime} times`);
 
     setSelectedIndex(selectedIndex);
     let location = await getUserLocation();
@@ -189,14 +201,14 @@ function MainScreen({ route, navigation }) {
   /* data collector used for top filter tags - start */
   const [data, setData] = useState([]);
   useEffect(() => {
-    refreshCatData({ selectedIndex });
+    refreshCatData({ selectedIndex, forceLoad: true });
   }, [filterTrigger]);
   /* data collector used for top filter tags - end */
 
   /* events for top filter tags - start */
   const onFilterChange = (value) => {
     setSelectedIndex(value);
-    refreshCatData({ selectedIndex: value });
+    refreshCatData({ selectedIndex: value, forceLoad: true });
   };
   /* events for top filter tags - end */
 
@@ -208,7 +220,7 @@ function MainScreen({ route, navigation }) {
     return () => {
       clearInterval(interval);
     };
-  }, [selectedIndex]);
+  }, []);
 
   return (
     <View style={styles.container}>
