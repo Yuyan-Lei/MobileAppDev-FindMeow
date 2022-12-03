@@ -42,6 +42,8 @@ function MainScreen({ route, navigation }) {
 
   const [filterTrigger, setFilterTrigger] = useState(false);
 
+  const [selectedTags, setSelectedTags] = useState([]);
+
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
@@ -76,7 +78,7 @@ function MainScreen({ route, navigation }) {
     let location = await getUserLocation();
     const allCatteries = await getAllCatteries();
     try {
-      let clauseBreed, clauseAge, clauseState, clauseGender;
+      let clauseBreed, clauseAge, clauseState, clauseGender, clauseTags;
 
       if (selectedBreed !== "" && selectedBreed !== "All") {
         clauseBreed = where("Breed", "==", selectedBreed);
@@ -90,7 +92,7 @@ function MainScreen({ route, navigation }) {
         clauseState = where("State", "==", selectedState);
       }
 
-      if (clauseAge !== "" && clauseAge !== "All") {
+      if (selectedAge !== "" && selectedAge !== "All") {
         // TODO
       }
 
@@ -99,6 +101,7 @@ function MainScreen({ route, navigation }) {
         clauseAge,
         clauseState,
         clauseGender,
+        clauseTags,
       ].filter((item) => item !== undefined);
 
       const q = query(collection(db, "Cats"), ...constraints);
@@ -135,6 +138,7 @@ function MainScreen({ route, navigation }) {
           cattery: catDoc.data().Cattery,
           distance,
           uploadTime: catDoc.data().UploadTime,
+          tags: catDoc.data().Tags,
         };
       });
 
@@ -223,6 +227,8 @@ function MainScreen({ route, navigation }) {
             setSelectedGender,
             selectedPrice,
             setSelectedPrice,
+            selectedTags,
+            setSelectedTags,
 
             resetAllFilters,
             refRBSheet,

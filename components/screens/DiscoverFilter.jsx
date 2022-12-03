@@ -27,6 +27,8 @@ const DiscoverFilter = ({
     setSelectedGender,
     selectedPrice,
     setSelectedPrice,
+    selectedTags,
+    setSelectedTags,
 
     resetAllFilters,
     refRBSheet,
@@ -85,6 +87,25 @@ const DiscoverFilter = ({
     setSelectedGender(genderLocal);
     setSelectedState(stateLocal);
     setSelectedPrice(priceLocal);
+
+    const tags = [];
+    if (vaccinated) {
+      tags.push("Vaccinated");
+    }
+    if (vetChecked) {
+      tags.push("Vet Checked");
+    }
+    if (dewormed) {
+      tags.push("Dewormed");
+    }
+    if (ready) {
+      tags.push("Ready to go home");
+    }
+    if (neutered) {
+      tags.push("Neutered");
+    }
+
+    setSelectedTags(tags);
 
     flipFilterTrigger();
     refRBSheet.current.close();
