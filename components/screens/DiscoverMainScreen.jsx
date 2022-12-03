@@ -42,6 +42,12 @@ function MainScreen({ route, navigation }) {
 
   const [filterTrigger, setFilterTrigger] = useState(false);
 
+  /* Tags for filter */
+  const [vaccinated, setVaccinated] = useState(false);
+  const [vetChecked, setVetChecked] = useState(false);
+  const [dewormed, setDewormed] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [neutered, setNeutered] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
 
   const refRBSheet = useRef();
@@ -55,6 +61,13 @@ function MainScreen({ route, navigation }) {
     setSelectedState("");
     setSelectedGender("");
     setSelectedPrice([0, 10000]);
+
+    setVaccinated(false);
+    setVetChecked(false);
+    setDewormed(false);
+    setReady(false);
+    setNeutered(false);
+    setSelectedTags([]);
   }
 
   function flipFilterTrigger() {
@@ -108,39 +121,48 @@ function MainScreen({ route, navigation }) {
 
       const catSnapShot = await getDocs(q);
 
-      let dataBeforeSorting = catSnapShot.docs.map((catDoc) => {
-        const birthday = new Date(catDoc.data().Birthday);
-        const now = new Date();
-        const cattery = allCatteries.find(
-          (ca) => ca.email === catDoc.data().Cattery
-        );
-        // if cattery doesn't have location, use 9999 to make cat in the bottom.
-        const distance =
-          cattery.geoLocation && location
-            ? calculateDistance(location, cattery.geoLocation)
-            : 9999;
-        let age =
-          now.getMonth() -
-          birthday.getMonth() +
-          12 * (now.getFullYear() - birthday.getFullYear());
-        // age cannot be negative
-        if (age === undefined || isNaN(age) || age < 0) {
-          age = 0;
-        }
+      let dataBeforeSorting = catSnapShot.docs
+        .map((catDoc) => {
+          const birthday = new Date(catDoc.data().Birthday);
+          const now = new Date();
+          const cattery = allCatteries.find(
+            (ca) => ca.email === catDoc.data().Cattery
+          );
+          // if cattery doesn't have location, use 9999 to make cat in the bottom.
+          const distance =
+            cattery.geoLocation && location
+              ? calculateDistance(location, cattery.geoLocation)
+              : 9999;
+          let age =
+            now.getMonth() -
+            birthday.getMonth() +
+            12 * (now.getFullYear() - birthday.getFullYear());
+          // age cannot be negative
+          if (age === undefined || isNaN(age) || age < 0) {
+            age = 0;
+          }
 
-        return {
-          id: catDoc.id,
-          name: catDoc.data().Breed,
-          sex: catDoc.data().Gender,
-          price: catDoc.data().Price,
-          month: age,
-          photo: catDoc.data().Picture,
-          cattery: catDoc.data().Cattery,
-          distance,
-          uploadTime: catDoc.data().UploadTime,
-          tags: catDoc.data().Tags,
-        };
-      });
+          return {
+            id: catDoc.id,
+            name: catDoc.data().Breed,
+            sex: catDoc.data().Gender,
+            price: catDoc.data().Price,
+            month: age,
+            photo: catDoc.data().Picture,
+            cattery: catDoc.data().Cattery,
+            distance,
+            uploadTime: catDoc.data().UploadTime,
+            tags: catDoc.data().Tags,
+          };
+        })
+        .filter((cat) => {
+          return (
+            selectedTags.length === 0 ||
+            selectedTags.every((tag) => {
+              return cat.tags.indexOf(tag) !== -1;
+            })
+          );
+        });
 
       // console.log(selectedIndex);
       // 1. newer post
@@ -227,8 +249,23 @@ function MainScreen({ route, navigation }) {
             setSelectedGender,
             selectedPrice,
             setSelectedPrice,
-            selectedTags,
-            setSelectedTags,
+
+            tags: {
+              selectedTags,
+              setSelectedTags,
+              vaccinated,
+              setVaccinated,
+              vetChecked,
+              setVetChecked,
+              dewormed,
+              setDewormed,
+              ready,
+              setReady,
+              neutered,
+              setNeutered,
+              selectedTags,
+              setSelectedTags,
+            },
 
             resetAllFilters,
             refRBSheet,

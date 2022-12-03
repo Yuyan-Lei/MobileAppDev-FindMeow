@@ -27,8 +27,21 @@ const DiscoverFilter = ({
     setSelectedGender,
     selectedPrice,
     setSelectedPrice,
-    selectedTags,
-    setSelectedTags,
+
+    tags: {
+      selectedTags,
+      setSelectedTags,
+      vaccinated,
+      setVaccinated,
+      vetChecked,
+      setVetChecked,
+      dewormed,
+      setDewormed,
+      ready,
+      setReady,
+      neutered,
+      setNeutered,
+    },
 
     resetAllFilters,
     refRBSheet,
@@ -60,11 +73,11 @@ const DiscoverFilter = ({
     { key: "Male", value: "Male" },
   ];
 
-  const [vaccinated, setVaccinated] = useState(false);
-  const [vetChecked, setVetChecked] = useState(false);
-  const [dewormed, setDewormed] = useState(false);
-  const [ready, setReady] = useState(false);
-  const [neutered, setNeutered] = useState(false);
+  const [vaccinatedLocal, setVaccinatedLocal] = useState(vaccinated);
+  const [vetCheckedLocal, setVetCheckedLocal] = useState(vetChecked);
+  const [dewormedLocal, setDewormedLocal] = useState(dewormed);
+  const [readyLocal, setReadyLocal] = useState(ready);
+  const [neuteredLocal, setNeuteredLocal] = useState(neutered);
 
   const resetHandler = () => {
     resetAllFilters();
@@ -73,11 +86,11 @@ const DiscoverFilter = ({
     setAgeLocal(selectedAge);
     setStateLocal(selectedState);
     setGenderLocal(selectedGender);
-    setVaccinated(false);
-    setVetChecked(false);
-    setDewormed(false);
-    setReady(false);
-    setNeutered(false);
+    setVaccinatedLocal(false);
+    setVetCheckedLocal(false);
+    setDewormedLocal(false);
+    setReadyLocal(false);
+    setNeuteredLocal(false);
     flipFilterTrigger();
   };
 
@@ -88,20 +101,26 @@ const DiscoverFilter = ({
     setSelectedState(stateLocal);
     setSelectedPrice(priceLocal);
 
+    setVaccinated(vaccinatedLocal);
+    setVetChecked(vetCheckedLocal);
+    setDewormed(dewormedLocal);
+    setReady(readyLocal);
+    setNeutered(neuteredLocal);
+
     const tags = [];
-    if (vaccinated) {
+    if (vaccinatedLocal) {
       tags.push("Vaccinated");
     }
-    if (vetChecked) {
+    if (vetCheckedLocal) {
       tags.push("Vet Checked");
     }
-    if (dewormed) {
+    if (dewormedLocal) {
       tags.push("Dewormed");
     }
-    if (ready) {
+    if (readyLocal) {
       tags.push("Ready to go home");
     }
-    if (neutered) {
+    if (neuteredLocal) {
       tags.push("Neutered");
     }
 
@@ -201,12 +220,12 @@ const DiscoverFilter = ({
         <View style={styles.ButtonContainer}>
           <Button
             title="Vaccinated"
-            type={vaccinated ? "solid" : "outline"}
+            type={vaccinatedLocal ? "solid" : "outline"}
             containerStyle={styles.Button}
             color={Colors.orangeText}
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
-              vaccinated
+              vaccinatedLocal
                 ? {
                     color: "white",
                     fontSize: 14,
@@ -218,16 +237,16 @@ const DiscoverFilter = ({
                     fontFamily: "Poppins",
                   }
             }
-            onPress={() => setVaccinated(!vaccinated)}
+            onPress={() => setVaccinatedLocal(!vaccinatedLocal)}
           ></Button>
           <Button
             title="Vet Checked"
-            type={vetChecked ? "solid" : "outline"}
+            type={vetCheckedLocal ? "solid" : "outline"}
             containerStyle={styles.Button}
             color={Colors.orangeText}
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
-              vetChecked
+              vetCheckedLocal
                 ? {
                     color: "white",
                     fontSize: 14,
@@ -239,16 +258,16 @@ const DiscoverFilter = ({
                     fontFamily: "Poppins",
                   }
             }
-            onPress={() => setVetChecked(!vetChecked)}
+            onPress={() => setVetCheckedLocal(!vetCheckedLocal)}
           ></Button>
           <Button
             title="Dewormed"
-            type={dewormed ? "solid" : "outline"}
+            type={dewormedLocal ? "solid" : "outline"}
             containerStyle={styles.Button}
             color={Colors.orangeText}
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
-              dewormed
+              dewormedLocal
                 ? {
                     color: "white",
                     fontSize: 14,
@@ -260,16 +279,16 @@ const DiscoverFilter = ({
                     fontFamily: "Poppins",
                   }
             }
-            onPress={() => setDewormed(!dewormed)}
+            onPress={() => setDewormedLocal(!dewormedLocal)}
           ></Button>
           <Button
             title="Ready to go home"
-            type={ready ? "solid" : "outline"}
+            type={readyLocal ? "solid" : "outline"}
             containerStyle={styles.Button}
             color={Colors.orangeText}
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
-              ready
+              readyLocal
                 ? {
                     color: "white",
                     fontSize: 14,
@@ -281,16 +300,16 @@ const DiscoverFilter = ({
                     fontFamily: "Poppins",
                   }
             }
-            onPress={() => setReady(!ready)}
+            onPress={() => setReadyLocal(!readyLocal)}
           ></Button>
           <Button
             title="Neutered / Spayed"
-            type={neutered ? "solid" : "outline"}
+            type={neuteredLocal ? "solid" : "outline"}
             containerStyle={styles.Button}
             color={Colors.orangeText}
             buttonStyle={{ borderColor: Colors.orangeText, borderRadius: 30 }}
             titleStyle={
-              neutered
+              neuteredLocal
                 ? {
                     color: "white",
                     fontSize: 14,
@@ -302,7 +321,7 @@ const DiscoverFilter = ({
                     fontFamily: "Poppins",
                   }
             }
-            onPress={() => setNeutered(!neutered)}
+            onPress={() => setNeuteredLocal(!neuteredLocal)}
           ></Button>
         </View>
       </View>
