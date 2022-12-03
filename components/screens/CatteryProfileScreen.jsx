@@ -250,7 +250,6 @@ export default function CatteryProfileScreen({ route, navigation }) {
       />
       <Stack.Screen name="CatInformation" component={CatInformation} />
       <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
-      <Stack.Screen name="CatteryProfile" component={CatteryProfileScreen} />
     </Stack.Navigator>
   );
 }
