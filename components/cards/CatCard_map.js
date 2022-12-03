@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { HeartButton2 } from "../pressable/HeartButton2";
+import { LocationText } from "../texts/LocationText";
 // export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
 export function CatCard_map() {
   const { height, width } = useWindowDimensions();
@@ -98,7 +99,10 @@ export function CatCard_map() {
                   : "Loading"}
               </LocationText>
             )} */}
-                <Text style={styles.locationStyle}>San Jose (0.8 km)</Text>
+                <LocationText style={styles.locationStyle}>
+                  San Jose (0.8km)
+                </LocationText>
+                {/* <Text>San Jose (0.8 km)</Text> */}
               </View>
             </View>
           </View>
@@ -150,9 +154,10 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   catDetailStyle: {
-    marginTop: 5,
+    marginTop: 2,
     color: "rgba(46, 37, 37, 0.67)",
     fontSize: 12,
+    fontFamily: "Poppins",
   },
   locationStyle: {
     fontSize: 10,
