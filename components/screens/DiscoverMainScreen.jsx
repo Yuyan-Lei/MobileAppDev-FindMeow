@@ -79,11 +79,11 @@ function MainScreen({ route, navigation }) {
   }
 
   function onScrollToTop() {
-    refreshCatData(selectedIndex);
+    refreshCatData({ selectedIndex });
   }
 
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
-  async function refreshCatData(selectedIndex) {
+  async function refreshCatData({ selectedIndex }) {
     if (refreshCatDataLock) return;
     setRefreshCatDataLock(true);
 
@@ -189,20 +189,20 @@ function MainScreen({ route, navigation }) {
   /* data collector used for top filter tags - start */
   const [data, setData] = useState([]);
   useEffect(() => {
-    refreshCatData(selectedIndex);
+    refreshCatData({ selectedIndex });
   }, [filterTrigger]);
   /* data collector used for top filter tags - end */
 
   /* events for top filter tags - start */
   const onFilterChange = (value) => {
     setSelectedIndex(value);
-    refreshCatData(value);
+    refreshCatData({ selectedIndex: value });
   };
   /* events for top filter tags - end */
 
   useEffect(() => {
     const interval = setInterval(() => {
-      refreshCatData(selectedIndex);
+      refreshCatData({ selectedIndex });
     }, 10000);
 
     return () => {
