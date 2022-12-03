@@ -89,7 +89,7 @@ export function CatCard({
             >
               {cattery && cattery.shortAddress
                 ? cattery.shortAddress +
-                  " (" + cat.distance + " km)"
+                  " (" + cat.distance + " mi)"
                 : "Loading"}
             </LocationText>
           )}

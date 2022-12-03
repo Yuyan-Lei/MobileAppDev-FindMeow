@@ -190,5 +190,5 @@ export async function getUserLocation() {
 // Function to calculate distance between 2 points.
 export function calculateDistance(mk1, mk2) {
   const distanceInMeter = haversine(mk1, mk2);
-  return (distanceInMeter / 1000).toFixed(1);
+  return (distanceInMeter / 1600).toFixed(1);
 }

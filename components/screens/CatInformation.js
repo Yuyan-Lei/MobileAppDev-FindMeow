@@ -64,7 +64,7 @@ export default function CatInformation({ route, navigation }) {
         .then((resp) => {
           setDistance(
             calculateDistance(location, resp.data.result.geometry.location) +
-              "km"
+              "mi"
           );
         });
     }
