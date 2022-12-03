@@ -32,6 +32,13 @@ import {
 import { SelectList } from "react-native-dropdown-select-list";
 import { ALL_BREEDS } from "../listContents/allBreeds";
 
+import {
+  BUYER_USERNAME,
+  BUYER_PASSWORD,
+  CATTERY_USERNAME,
+  CATTERY_PASSWORD,
+} from "@env";
+
 export default function LoginOrSignUpPage({ route, navigation }) {
   const [pageState, setPageState] = useState(0);
   const [isCattery, setIsCattery] = useState(false);
@@ -398,7 +405,9 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     onPress={(data, details = null) => {
                       setAddress(data.description);
                       setPlaceId(data.place_id);
-                      setShortAddress(data.terms.at(-3).value + ", "+ data.terms.at(-2).value);
+                      setShortAddress(
+                        data.terms.at(-3).value + ", " + data.terms.at(-2).value
+                      );
                     }}
                     textInputProps={{
                       InputComp: TextInput,
@@ -443,6 +452,28 @@ export default function LoginOrSignUpPage({ route, navigation }) {
           )}
         </ScrollView>
       </KeyboardAvoidingView>
+
+      {/* remove when publishing */}
+      <View style={{ position: "absolute", flexDirection: "row" }}>
+        <Pressable
+          onPress={() => {
+            setUserName(BUYER_USERNAME);
+            setPassword(BUYER_PASSWORD);
+          }}
+          style={styles.submitButton}
+        >
+          <Text style={styles.submitButtonText}>Login as buyer</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            setUserName(CATTERY_USERNAME);
+            setPassword(CATTERY_PASSWORD);
+          }}
+          style={styles.submitButton}
+        >
+          <Text style={styles.submitButtonText}>Login as cattery</Text>
+        </Pressable>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -502,5 +533,21 @@ const styles = StyleSheet.create({
   textInput: {
     fontFamily: "Poppins",
     color: "#F59156",
+  },
+  submitButton: {
+    backgroundColor: "#FFB801",
+    borderRadius: 18,
+    height: 60,
+    alignItems: "center",
+    padding: 16,
+    marginTop: "10%",
+  },
+  submitButtonText: {
+    fontFamily: "PoppinsSemiBold",
+    textAlign: "center",
+    fontSize: 16,
+    color: "#FFFFFF",
+    fontWeight: "600",
+    paddingTop: 3,
   },
 });
