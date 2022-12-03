@@ -254,7 +254,7 @@ export default function PostNewCatScreen({
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Screen Title */}
         <View
           style={{

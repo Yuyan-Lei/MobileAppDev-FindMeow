@@ -78,6 +78,7 @@ function CatsScreen({
         }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
