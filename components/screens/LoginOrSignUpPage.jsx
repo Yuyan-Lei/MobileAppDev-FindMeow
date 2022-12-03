@@ -4,6 +4,7 @@ import {
   Feather,
   MaterialCommunityIcons,
   MaterialIcons,
+  FontAwesome5
 } from "@expo/vector-icons";
 import { Pressable, TextInput } from "@react-native-material/core";
 import { CommonActions } from "@react-navigation/native";
@@ -28,6 +29,8 @@ import {
   createUser,
   getUserData,
 } from "../../firebaseUtils/user";
+import { SelectList } from "react-native-dropdown-select-list";
+import { ALL_BREEDS } from "../listContents/allBreeds";
 
 export default function LoginOrSignUpPage({ route, navigation }) {
   const [pageState, setPageState] = useState(0);
@@ -40,6 +43,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
   const [website, setWebsite] = useState("");
   const [placeId, setPlaceId] = useState("");
   const [address, setAddress] = useState("");
+  const [breed, setBreed] = useState("");
   const [shortAddress, setShortAddress] = useState("");
 
   const ref = useRef();
@@ -62,6 +66,9 @@ export default function LoginOrSignUpPage({ route, navigation }) {
       phoneNumber.length !== 10
     ) {
       return "You didn't specify the phone number or set an invalid phone number, please fill or fix that.";
+    }
+    if (breed === "") {
+      return "You didn't specify the breed, please fill that.'"
     }
     if (website === "") {
       return "You didn't specify the website of the cattery, please fill that.";
@@ -134,6 +141,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
         } else {
           return createCattery(email, {
             catteryName: name,
+            breed,
             phoneNumber,
             website,
             placeId,
@@ -350,6 +358,35 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     )}
                     onChangeText={setWebsite}
                   />
+                  <View style={{ 
+                    flexDirection: "row",
+                    alignItems: "center",
+                    flex: 1,
+                    borderBottomWidth: 1,
+                    paddingLeft: 12}}>
+                  <FontAwesome5
+                          name="cat"
+                          size={24}
+                          color="rgb(97,97,97)"
+                        />
+                    <SelectList
+                      setSelected={setBreed}
+                      data={ALL_BREEDS}
+                      save="value"
+                      placeholder="Select Breed"
+                      boxStyles={{
+                        borderWidth: 0,
+                        width: "80%"
+                      }}
+                      dropdownItemStyles={{
+                        width: "100%",
+                      }}
+                      inputStyles={{
+                        fontSize: 16,
+                      }}
+                      defaultOption={{ key: breed, value: breed }}
+                    />
+                  </View>
                   {/* <Text style={styles.subTitle}>Address</Text> */}
                   <GooglePlacesAutocomplete
                     placeholder="Cattery Address"

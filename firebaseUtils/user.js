@@ -95,7 +95,7 @@ export async function deleteCatInCattery(catId) {
 
 export async function createCattery(
   userEmail,
-  { catteryName, phoneNumber, website, address, shortAddress, placeId }
+  { catteryName, breed, phoneNumber, website, address, shortAddress, placeId }
 ) {
   const googleMapClient = new Client({});
   const catteryPlaceDetails = await googleMapClient
@@ -108,6 +108,7 @@ export async function createCattery(
   const newCattery = {
     isCattery: true,
     catteryName,
+    breed,
     phoneNumber,
     website,
     address,
@@ -128,6 +129,7 @@ export async function updateCattery({
   shortAddress,
   placeId,
   picture,
+  breed,
 }) {
   const email = getCurrentUserEmail();
   const googleMapClient = new Client({});
@@ -145,6 +147,7 @@ export async function updateCattery({
     address,
     placeId,
     picture,
+    breed,
     shortAddress,
     geoLocation: catteryPlaceDetails.data.result.geometry.location
   };
