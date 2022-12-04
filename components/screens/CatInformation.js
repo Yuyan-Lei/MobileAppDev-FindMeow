@@ -185,12 +185,17 @@ export default function CatInformation({ route, navigation }) {
             backgroundColor: 'rgb(250, 250, 250)',
           }}
         >
+
+          {/* Swipe button */}
           <Divider style={styles.divider} />
+
+           {/* Three Labels */}
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-evenly",
-              marginVertical: 20,
+              marginBottom: 20,
+              marginTop: 15,
             }}
           >
             <View style={styles.label}>
@@ -211,12 +216,14 @@ export default function CatInformation({ route, navigation }) {
             </View>
           </View>
 
+          {/* Cat Name & Price */}
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.catNameText}>{cat.Name}</Text>
             <Text style={styles.priceText}>${cat.Price}</Text>
           </View>
-          {/* TODO: CATTERY LOCATION */}
-          <View style={{ flexDirection: "row", marginLeft: -5 }}>
+
+          {/* CATTERY LOCATION */}
+          <View style={{ flexDirection: "row"}}>
             <Ionicons
               name="location-sharp"
               size={24}
@@ -227,8 +234,11 @@ export default function CatInformation({ route, navigation }) {
               <Text style={styles.addressText}>({distance})</Text>
             )}
           </View>
-          {/* <Text style={styles.date}>{cat.Birthday}</Text> */}
+
+          {/* Post Date */}
           <Text style={styles.PostDateText}>Posted in {getDateFormatted(cat.UploadTime)}</Text>
+
+          {/* Chips */}
           <View style={styles.chipBox}>
             {cat.Tags ? (
               cat.Tags.map((tag, index) => (
@@ -237,7 +247,7 @@ export default function CatInformation({ route, navigation }) {
                   key={index}
                   containerStyle={styles.chip}
                   color={Colors.orangeText}
-                  titleStyle={{ fontFamily: "Poppins" }}
+                  titleStyle={{ fontFamily: "Poppins", marginTop: -1}}
                 />
               ))
             ) : (
@@ -387,6 +397,7 @@ const styles = StyleSheet.create({
     color: Colors.text,
     fontFamily: "PoppinsBold",
     marginBottom: 20,
+    marginLeft: 5
   },
   priceText: {
     fontSize: 23,
@@ -408,6 +419,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsLight",
     marginTop: 8,
     marginBottom: 15,
+    marginLeft: 5,
   },
   detailLabel: {
     textAlign: "left",
