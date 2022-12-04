@@ -100,6 +100,18 @@ function MainScreen({ route, navigation }) {
     });
   });
 
+  // When tap notification, if only one new cat is added, navigate to the cat information page. 
+  // Otherwise stay in discover main page.
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+      const newCats = response.notification.request.content.data.newCats;
+      if (newCats.length === 1) {
+        navigation.navigate("CatInformation", { catId: newCats[0].id })
+      }
+    });
+    return () => subscription.remove();
+  }, []);
+  
   // const [recordTime, setRecordTime] = useState(0);
   async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
     if (!forceLoad && refreshCatDataLock) return;
