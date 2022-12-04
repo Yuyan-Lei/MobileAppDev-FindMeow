@@ -66,6 +66,9 @@ export default function CatInformation({ route, navigation }) {
             calculateDistance(location, resp.data.result.geometry.location) +
             "mi"
           );
+        })
+        .catch((err) => {
+          console.error(err)
         });
     }
   }, [cattery, location]);
