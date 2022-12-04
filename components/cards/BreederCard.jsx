@@ -46,7 +46,7 @@ export function BreederCard({ cattery, navigation }) {
   return (
     <View style={styles.breederView}>
       <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}>
-        <View style={[styles.cardView, styles.shadowView]}>
+        <View style={[styles.cardView, Platform.OS === "ios" ? styles.iosShadowView : styles.androidShadowView]}>
           {/* Cattery photo */}
           <View style={styles.imageView}>
             <CachedImage
@@ -151,15 +151,17 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 20,
   },
-  shadowView: {
-    shadowColor:
-      Platform.OS === "ios" ? Colors.purple : Colors.shadowWhiteAndroid,
+  iosShadowView: {
+    shadowColor: Colors.black,
+    shadowRadius: 16,
+    shadowOpacity: 0.08,
     shadowOffset: {
-      width: 40,
-      height: 80,
-    },
-    shadowOpacity: 0.0468,
-    shadowRadius: 20,
+      width: 0,
+      height: 6
+    }
+  },
+  androidShadowView: {
+    shadowColor: Colors.shadowWhiteAndroid,
     elevation: 17,
   },
 });
