@@ -99,12 +99,12 @@ export async function createCattery(
 ) {
   const googleMapClient = new Client({});
   const catteryPlaceDetails = await googleMapClient
-  .placeDetails({
-    params: {
-      place_id: placeId,
-      key: REACT_APP_GOOGLE_MAP_APP_KEY,
-    },
-  })
+    .placeDetails({
+      params: {
+        place_id: placeId,
+        key: REACT_APP_GOOGLE_MAP_APP_KEY,
+      },
+    })
   const newCattery = {
     isCattery: true,
     catteryName,
@@ -134,12 +134,12 @@ export async function updateCattery({
   const email = getCurrentUserEmail();
   const googleMapClient = new Client({});
   const catteryPlaceDetails = await googleMapClient
-  .placeDetails({
-    params: {
-      place_id: placeId,
-      key: REACT_APP_GOOGLE_MAP_APP_KEY,
-    },
-  })
+    .placeDetails({
+      params: {
+        place_id: placeId,
+        key: REACT_APP_GOOGLE_MAP_APP_KEY,
+      },
+    })
   const updatedCattery = {
     catteryName,
     phoneNumber,
@@ -161,7 +161,7 @@ export async function getCattery(email) {
 }
 
 export async function getAllCatteries() {
-  return await getAllFromDB(collectionName).then((userSnap) => 
+  return await getAllFromDB(collectionName).then((userSnap) =>
     userSnap.docs
       .filter((snap) => snap.data().isCattery)
       .map((snap) => {
