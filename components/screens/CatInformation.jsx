@@ -223,7 +223,7 @@ export default function CatInformation({ route, navigation }) {
           </View>
 
           {/* CATTERY LOCATION */}
-          <View style={{ flexDirection: "row"}}>
+          <View style={{ flexDirection: "row", width: "70%"}}>
             <Ionicons
               name="location-sharp"
               size={24}

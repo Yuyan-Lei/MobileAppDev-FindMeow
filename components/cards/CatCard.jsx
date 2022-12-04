@@ -1,6 +1,7 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import CachedImage from "react-native-expo-cached-image";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import {
@@ -8,10 +9,10 @@ import {
   userLikeACat,
   userUnLikeACat,
 } from "../../firebaseUtils/user";
+import { useSwipePressable } from "../../utils/useSwipe";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
-import CachedImage from "react-native-expo-cached-image";
-import { useSwipePressable } from "../../utils/useSwipe";
+
 export function CatCard({ cat, navigation, hideLocation, showBreed }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
@@ -67,7 +68,15 @@ export function CatCard({ cat, navigation, hideLocation, showBreed }) {
 
         <View style={styles.descriptionView}>
           {/* cat name */}
-          <Text style={styles.catNameStyle}>{cat.name}</Text>
+          <View style={{ width: 120 }}>
+            <Text
+              style={styles.catNameStyle}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {cat.name}
+            </Text>
+          </View>
 
           {/* cat details */}
           <Text style={styles.catDetailStyle}>
