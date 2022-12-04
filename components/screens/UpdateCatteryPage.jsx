@@ -1,5 +1,6 @@
 import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
 import { Pressable } from "@react-native-material/core";
+import "core-js/features/array/at";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
@@ -139,7 +140,9 @@ export default function UpdateCatteryPage({ route, navigation }) {
               language: "en", // language of the results
             }}
             onPress={(data, details = null) => {
-              setShortAddress(data.terms.at(-3).value + ", "+ data.terms.at(-2).value);
+              setShortAddress(
+                data.terms.at(-3).value + ", " + data.terms.at(-2).value
+              );
               setAddress(data.description);
               setPlaceId(data.place_id);
             }}
