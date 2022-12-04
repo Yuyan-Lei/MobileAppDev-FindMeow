@@ -13,6 +13,7 @@ import {
   Alert,
   FlatList,
   Image,
+  ScrollView,
   Linking,
   Platform,
   Pressable,
@@ -36,6 +37,7 @@ function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
   const [likeCatteries, setLikeCatteries] = useState([]);
   const [cats, setCats] = useState([]);
+  const [catsListComponent, setCatsListComponent] = useState([]);
   const cattery = route.params.cattery;
   const catteryShortAddress =
     cattery.address.split(", ")[1] + ", " + cattery.address.split(", ")[2];
@@ -75,6 +77,32 @@ function MainScreen({ route, navigation }) {
 
     return () => unSubscribe();
   }, []);
+
+
+  useEffect(() => {
+    let catsList = [];
+    for (let i = 0; i < cats.length; i+=2) {
+      catsList.push(
+        <View style={{ flexDirection: "row" }} key={i}>
+          <CatCard
+            cat={buildCatItem(cats[i])}
+            navigation={navigation}
+            hideLocation
+            showBreed
+          />
+          {
+            i < cats.length - 1 && <CatCard
+            cat={buildCatItem(cats[i + 1])}
+            navigation={navigation}
+            hideLocation
+            showBreed
+          />
+          }
+        </View>
+      );
+    }
+    setCatsListComponent(catsList);
+  }, [cats])
 
   const onClickLikeButton = () => {
     if (!likeCatteries.includes(cattery.email)) {
@@ -131,7 +159,7 @@ function MainScreen({ route, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View>
         <View>
           <View
@@ -205,22 +233,10 @@ function MainScreen({ route, navigation }) {
 
           {/* available kittens */}
           <View style={styles.kittensView}>
-            <View style={{ margin: 8 }}>
+            <View style={{ marginTop: 8, marginHorizontal: 8 }}>
               <Text style={styles.infoTitle}>Available Kittens</Text>
             </View>
-            <FlatList
-              data={cats}
-              renderItem={({ item, index }) => (
-                <CatCard
-                  cat={buildCatItem(item)}
-                  navigation={navigation}
-                  hideLocation
-                  showBreed
-                />
-              )}
-              numColumns={2}
-              ListFooterComponent={<View style={{ height: 2250 }} />}
-            />
+            {catsListComponent}
           </View>
         </View>
       </View>
@@ -232,7 +248,8 @@ function MainScreen({ route, navigation }) {
           onPress={onClickLikeButton}
         />
       </View>
-    </View>
+      <View style={{ height: 30 }} />
+    </ScrollView>
   );
 }
 
@@ -256,7 +273,9 @@ export default function CatteryProfileScreen({ route, navigation }) {
 
 const styles = StyleSheet.create({
   kittensView: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 25,
     backgroundColor: "white",
     borderRadius: 12,
   },
