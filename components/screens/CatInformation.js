@@ -1,6 +1,7 @@
 import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Client } from "@googlemaps/google-maps-services-js";
+import { Divider } from "@react-native-material/core";
 import { Chip } from "@rneui/themed";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -177,10 +178,14 @@ export default function CatInformation({ route, navigation }) {
         {/* Main Contents */}
         <View
           style={{
-            marginHorizontal: 15,
-            borderRadius: 40,
+            paddingHorizontal: 15,
+            marginTop: -35,
+            borderTopLeftRadius: 40,
+            borderTopRightRadius: 40,
+            backgroundColor: 'rgb(250, 250, 250)',
           }}
         >
+          <Divider style={styles.divider} />
           <View
             style={{
               flexDirection: "row",
@@ -298,6 +303,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: "center",
     flexDirection: "row",
+  },
+  divider: {
+    borderBottomWidth: 3,
+    marginHorizontal: 140,
+    marginTop: 8,
   },
   tags: {
     backgroundColor: "white",
