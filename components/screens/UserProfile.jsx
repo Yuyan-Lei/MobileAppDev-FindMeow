@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Linking
 } from "react-native";
 import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
@@ -19,6 +20,7 @@ import PostNewCatScreen from "./PostNewCatScreen";
 import NotificationSettingsScreen from "./NotificationSettingsScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
+import { DEVELOPER_EMAIL } from "@env";
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
@@ -49,6 +51,8 @@ function MainScreen({ route, navigation }) {
   const onUpdatePassword = () => navigation.navigate("UpdatePasswordPage");
   const onNotificationSettings = () =>
     navigation.navigate("NotificationSettingsScreen");
+  const onSendFeedback = () => Linking.openURL('mailto:' + DEVELOPER_EMAIL 
+  + '?subject=FindMeow user feedback from ' + getCurrentUserEmail());
 
   return (
     <View style={styles.container}>
@@ -85,10 +89,6 @@ function MainScreen({ route, navigation }) {
               <Divider style={styles.divider} />
             </View>
           )}
-          <Pressable onPress={buttonHandler} style={styles.button}>
-            <Text style={styles.buttonText}>Change Profile Photo</Text>
-          </Pressable>
-          <Divider style={styles.divider} />
 
           <Pressable onPress={onUpdatePassword} style={styles.button}>
             <Text style={styles.buttonText}>Change Password</Text>
@@ -97,6 +97,11 @@ function MainScreen({ route, navigation }) {
 
           <Pressable onPress={onNotificationSettings} style={styles.button}>
             <Text style={styles.buttonText}>Notification Settings</Text>
+          </Pressable>
+          <Divider style={styles.divider} />
+
+          <Pressable onPress={onSendFeedback} style={styles.button}>
+            <Text style={styles.buttonText}>Send Feedback</Text>
           </Pressable>
         </View>
 
