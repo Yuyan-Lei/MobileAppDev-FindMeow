@@ -347,7 +347,11 @@ function MainScreen({ route, navigation }) {
               borderRadius: 10,
             }}
           >
-            <Pressable onPress={() => navigation.navigate("MapPage")}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate("MapPage", { route, navigation })
+              }
+            >
               <Text
                 style={{
                   padding: 8,

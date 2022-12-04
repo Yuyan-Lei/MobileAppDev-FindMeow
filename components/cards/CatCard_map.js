@@ -9,7 +9,7 @@ import {
 import { HeartButton2 } from "../pressable/HeartButton2";
 import { LocationText } from "../texts/LocationText";
 // export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
-export function CatCard_map() {
+export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
   const { height, width } = useWindowDimensions();
   //   const [likeCats, setLikeCats] = useState([]);
   //   const [cattery, setCattery] = useState(null);
