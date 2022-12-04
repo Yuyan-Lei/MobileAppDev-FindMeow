@@ -166,6 +166,7 @@ function MainScreen({ route, navigation }) {
               onScrollToTop();
             }
           }}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </View>

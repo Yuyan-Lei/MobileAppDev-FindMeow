@@ -105,6 +105,7 @@ function CatsScreen({
         }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
+        showsVerticalScrollIndicator={false}
       />
     </View> : <EmptyStarPage origin="cats" />
   );
