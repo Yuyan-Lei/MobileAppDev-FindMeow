@@ -85,7 +85,8 @@ export function CatCard({ cat, navigation, hideLocation, showBreed }) {
               viewPosition={{ top: -1, left: -2.3 }}
             >
               {cattery && cattery.shortAddress
-                ? cattery.shortAddress + " (" + cat.distance + " mi)"
+                ? cattery.shortAddress +
+                  (cat.distance !== null ? ` (${cat.distance} mi)` : "")
                 : "Loading"}
             </LocationText>
           )}
