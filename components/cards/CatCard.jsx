@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   catDetailStyle: {
-    marginTop: 4,
+    marginTop: 3,
     color: "rgba(46, 37, 37, 0.67)",
     fontSize: 12,
   },

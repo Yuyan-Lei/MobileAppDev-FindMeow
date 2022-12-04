@@ -9,6 +9,7 @@ import {
 import { Pressable, TextInput } from "@react-native-material/core";
 import { CommonActions } from "@react-navigation/native";
 import { CheckBox } from "@rneui/themed";
+import 'core-js/features/array/at';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,

@@ -2,6 +2,7 @@ import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
 import { Pressable } from "@react-native-material/core";
 import "core-js/features/array/at";
 import React, { useEffect, useRef, useState } from "react";
+import 'core-js/features/array/at';
 import {
   Alert,
   KeyboardAvoidingView,

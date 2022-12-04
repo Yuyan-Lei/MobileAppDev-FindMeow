@@ -10,12 +10,11 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
-  FlatList,
-  Image,
   Pressable,
   StyleSheet,
   Text,
   useWindowDimensions,
+  ScrollView,
   View,
 } from "react-native";
 import CachedImage from "react-native-expo-cached-image";
@@ -35,6 +34,7 @@ function MainScreen({ route, navigation }) {
   const [cattery, setCattery] = useState(null);
   const [catteryShortAddress, setCatteryShortAddress] = useState("");
   const [catteryFullAddress, setCatteryFullAddress] = useState("");
+  const [catsListComponent, setCatsListComponent] = useState([]);
   useEffect(() => {
     const docRef = doc(db, "Users", getCurrentUserEmail());
     const unSubscribe = onSnapshot(docRef, (snapshot) => {
@@ -76,6 +76,31 @@ function MainScreen({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
+  useEffect(() => {
+    let catsList = [];
+    for (let i = 0; i < cats.length; i+=2) {
+      catsList.push(
+        <View style={{ flexDirection: "row" }} key={i}>
+          <CatCard
+            cat={buildCatItem(cats[i])}
+            navigation={navigation}
+            hideLocation
+            showBreed
+          />
+          {
+            i < cats.length - 1 && <CatCard
+            cat={buildCatItem(cats[i + 1])}
+            navigation={navigation}
+            hideLocation
+            showBreed
+          />
+          }
+        </View>
+      );
+    }
+    setCatsListComponent(catsList);
+  }, [cats])
+
   const buildCatItem = (cat) => {
     const birthday = new Date(cat.Birthday);
     const now = new Date();
@@ -100,7 +125,7 @@ function MainScreen({ route, navigation }) {
   };
 
   return cattery ? (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View>
         <View>
           <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
@@ -183,26 +208,15 @@ function MainScreen({ route, navigation }) {
 
           {/* available kittens */}
           <View style={styles.kittensView}>
-            <View style={{ margin: 8 }}>
+            <View style={{ marginTop: 8, marginHorizontal: 8 }}>
               <Text style={styles.infoTitle}>Available Kittens</Text>
             </View>
-            <FlatList
-              data={cats}
-              renderItem={({ item, index }) => (
-                <CatCard
-                  cat={buildCatItem(item)}
-                  navigation={navigation}
-                  hideLocation
-                  showBreed
-                />
-              )}
-              numColumns={2}
-              ListFooterComponent={<View style={{ height: 2250 }} />}
-            />
+            {catsListComponent}
           </View>
         </View>
       </View>
-    </View>
+      <View style={{ height: 30 }} />
+    </ScrollView>
   ) : (
     <Text>Loading</Text>
   );
@@ -221,7 +235,9 @@ export default function ProfileCatteryPage({ route, navigation }) {
 
 const styles = StyleSheet.create({
   kittensView: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 25,
     backgroundColor: "white",
     borderRadius: 12,
   },
