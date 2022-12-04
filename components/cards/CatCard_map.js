@@ -1,3 +1,4 @@
+import { doc, onSnapshot } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import {
   Pressable,
@@ -6,12 +7,15 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
+import CachedImage from "react-native-expo-cached-image";
+import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { getCattery, userLikeACat, userUnLikeACat } from "../../firebaseUtils/user";
 import { HeartButton2 } from "../pressable/HeartButton2";
 import { LocationText } from "../texts/LocationText";
 
-export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
+export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed }) {
   const { height, width } = useWindowDimensions();
-  const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
 
   useEffect(() => {
@@ -20,24 +24,15 @@ export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
     }
   }, [cat]);
 
-  useEffect(() => {
-    const unSubscribe = onSnapshot(
-      doc(db, "Users", getCurrentUserEmail()),
-      (snapshot) => {
-        const likeCats = snapshot.data().likeCats;
-        setLikeCats(likeCats);
-      }
-    );
 
-    return () => unSubscribe();
-  }, []);
 
   const onClickLikeButton = () => {
-    if (!likeCats.includes(cat.id)) {
+    if (!isliked) {
       userLikeACat(cat.id);
     } else {
       userUnLikeACat(cat.id);
     }
+    isliked = !isliked;
   };
 
   // let catMonthText = "";
@@ -71,22 +66,21 @@ export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
           <View style={{ flexDirection: "row", marginRight: 20 }}>
             <View style={styles.imageView}>
               {/* cat photo */}
-              {/* <CachedImage source={{ uri: cat.photo }} style={styles.image} /> */}
+              <CachedImage source={{ uri: cat.photo }} style={styles.image} />
             </View>
 
             <View style={{ marginLeft: 20, marginTop: 10 }}>
               <View>
                 {/* cat name */}
-                {/* <Text style={styles.catNameStyle}>{cat.name}</Text> */}
-                <Text style={styles.catNameStyle}>Ragdoll</Text>
+                <Text style={styles.catNameStyle}>{cat.name}</Text>
                 {/* cat breed */}
-                {/* {showBreed && (
-              <Text style={styles.catDetailStyle}>{cat.breed}</Text>
-            )} */}
+                {showBreed && (
+                  <Text style={styles.catDetailStyle}>{cat.petName}</Text>
+                )}
 
                 {/* cat details */}
                 <Text style={styles.catDetailStyle}>
-                  {/* {cat.sex}, {catMonthText} */}
+                  {cat.sex}, {cat.month === 1 ? cat.month + " month" : cat.month + " months"}
                   Male, 4 months
                 </Text>
 
@@ -102,7 +96,11 @@ export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
               </LocationText>
             )} */}
                 <LocationText style={styles.locationStyle}>
-                  San Jose (0.8km)
+                  {/* San Jose (0.8km) */}
+                  {cattery && cattery.shortAddress
+                    ? cattery.shortAddress +
+                    " (" + cat.distance + " mi)"
+                    : "Loading"}
                 </LocationText>
                 {/* <Text>San Jose (0.8 km)</Text> */}
               </View>
@@ -120,8 +118,8 @@ export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
             </View>
 
             <View style={styles.priceView}>
-              {/* <Text style={styles.priceTag}>${cat.price}</Text> */}
-              <Text style={styles.priceTag}>$1500</Text>
+              <Text style={styles.priceTag}>${cat.price}</Text>
+              {/* <Text style={styles.priceTag}>$1500</Text> */}
             </View>
           </View>
         </Pressable>
@@ -141,12 +139,11 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     width: 60,
     height: 60,
-    borderRadius: 8,
+    borderRadius: 16,
     marginVertical: 10,
   },
   image: {
-    width: 20,
-    height: 20,
+    flex: 1,
     borderRadius: 5,
   },
   catNameStyle: {

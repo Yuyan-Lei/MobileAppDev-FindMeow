@@ -1,5 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
@@ -26,6 +33,7 @@ import DiscoverFilter from "./DiscoverFilter";
 import PostNewCatScreen from "./PostNewCatScreen";
 import { Colors } from "../styles/Colors";
 import MapPage from "./MapPage";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -50,10 +58,23 @@ function MainScreen({ route, navigation }) {
   const [neutered, setNeutered] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
 
-  const [data, setData] = useState([]);
+  const [catsData, setCatsData] = useState([]);
+  const [likedCats, setLikedCats] = useState([]);
 
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikedCats(likeCats);
+      }
+    );
+
+    return () => unSubscribe();
+  }, []);
 
   function resetAllFilters() {
     setValue(0);
@@ -158,6 +179,7 @@ function MainScreen({ route, navigation }) {
 
           return {
             id: catDoc.id,
+            petName: catDoc.data().Name,
             name: catDoc.data().Breed,
             sex: catDoc.data().Gender,
             price: catDoc.data().Price,
@@ -200,17 +222,19 @@ function MainScreen({ route, navigation }) {
 
       // 1. newer post
       if (selectedIndex === 0) {
-        setData(
+        setCatsData(
           dataBeforeSorting.sort((d1, d2) => d2.uploadTime - d1.uploadTime)
         );
       }
       // 2. nearby Post
       else if (selectedIndex === 1) {
-        setData(dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance));
+        setCatsData(
+          dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance)
+        );
       }
       // 3. Lower Price
       else if (selectedIndex === 2) {
-        setData(dataBeforeSorting.sort((d1, d2) => d1.price - d2.price));
+        setCatsData(dataBeforeSorting.sort((d1, d2) => d1.price - d2.price));
       }
     } finally {
       setRefreshCatDataLock(false);
@@ -314,7 +338,7 @@ function MainScreen({ route, navigation }) {
 
       <View style={{ paddingHorizontal: 16 }}>
         <FlatList
-          data={data}
+          data={catsData}
           renderItem={({ item, index }) => (
             <CatCard cat={item} navigation={navigation} />
           )}
@@ -349,7 +373,7 @@ function MainScreen({ route, navigation }) {
           >
             <Pressable
               onPress={() =>
-                navigation.navigate("MapPage", { route, navigation })
+                navigation.navigate("MapPage", { catsData, likedCats })
               }
             >
               <Text

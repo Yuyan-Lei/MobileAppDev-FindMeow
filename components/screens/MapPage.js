@@ -1,127 +1,24 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
 import {
-  collection,
-  getDocs,
-  query,
-  where,
-  doc,
-  getDoc,
-  onSnapshot,
-} from "firebase/firestore";
-import React, { useEffect, useRef, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-  Pressable,
-  Alert,
-  ScrollView,
-  FlatList,
+  FlatList, Pressable, StyleSheet,
+  Text, useWindowDimensions, View
 } from "react-native";
 import MapView, {
-  PROVIDER_GOOGLE,
-  Marker,
-  Callout,
-  Overlay,
-  OverlayComponent,
+  PROVIDER_GOOGLE
 } from "react-native-maps";
-import { Foundation } from "@expo/vector-icons";
-import { Colors } from "../styles/Colors";
-import { Ionicons } from "@expo/vector-icons";
 import { CatCard_map } from "../cards/CatCard_map";
-import CatInformation from "./CatInformation";
-import { db } from "../../firebaseUtils/firebase-setup";
-import {
-  calculateDistance,
-  getAllCatteries,
-  getUserLocation,
-} from "../../firebaseUtils/user";
 import { CatteryMarker } from "../pressable/CatteryMarker";
+import { Colors } from "../styles/Colors";
 
-export default function MapPage({ route, navigation }) {
+export default function MapPage({ route: { params: { catsData, likedCats } }, navigation }) {
   const { height, width } = useWindowDimensions();
   const [showCatCard, setShowCatCard] = useState(false);
-  const [data, setData] = useState([]);
+
 
   const showCatCardHandler = () => {
     setShowCatCard(!showCatCard);
   };
-
-  function onSearchArea() {
-    refreshCatData({ forceLoad: true });
-  }
-
-  function isScrollToTop(event) {
-    return event.nativeEvent.contentOffset.y < -100;
-  }
-
-  function onScrollToTop() {
-    refreshCatData({ forceLoad: true });
-  }
-
-  const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
-
-  async function refreshCatData({ forceLoad = false } = {}) {
-    if (!forceLoad && refreshCatDataLock) return;
-    setRefreshCatDataLock(true);
-
-    // prevent running it too much in a short time
-    const currentTimeInMill = new Date().getTime();
-    if (!forceLoad && currentTimeInMill - lastTimeRefreshCatData < 5000) {
-      return;
-    }
-    setLastTimeRefreshCatData(currentTimeInMill);
-
-    let location = await getUserLocation();
-    const allCatteries = await getAllCatteries();
-    try {
-      const q = query(collection(db, "Cats"), ...constraints);
-
-      const catSnapShot = await getDocs(q);
-
-      const dataBeforeSorting = catSnapShot.docs.map((catDoc) => {
-        const birthday = new Date(catDoc.data().Birthday);
-        const now = new Date();
-        const cattery = allCatteries.find(
-          (ca) => ca.email === catDoc.data().Cattery
-        );
-        // if cattery doesn't have location, use 9999 to make cat in the bottom.
-        const distance =
-          cattery.geoLocation && location
-            ? calculateDistance(location, cattery.geoLocation)
-            : 9999;
-        let age =
-          now.getMonth() -
-          birthday.getMonth() +
-          12 * (now.getFullYear() - birthday.getFullYear());
-        // age cannot be negative
-        if (age === undefined || isNaN(age) || age < 0) {
-          age = 0;
-        }
-
-        return {
-          id: catDoc.id,
-          name: catDoc.data().Breed,
-          sex: catDoc.data().Gender,
-          price: catDoc.data().Price,
-          month: age,
-          photo: catDoc.data().Picture,
-          cattery: catDoc.data().Cattery,
-          distance,
-          uploadTime: catDoc.data().UploadTime,
-          tags: catDoc.data().Tags,
-        };
-      });
-      setData(dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance));
-    } finally {
-      setRefreshCatDataLock(false);
-    }
-  }
-
-  useEffect(() => {
-    refreshCatData({ forceLoad: true });
-  });
 
   return (
     <View style={styles.container}>
@@ -221,16 +118,14 @@ export default function MapPage({ route, navigation }) {
       >
         {/* <View style={{ width: 200 }}></View> */}
         <FlatList
-          data={data}
+          data={catsData}
           renderItem={({ item }) => (
-            <CatCard_map cat={item} navigation={navigation} />
+            <CatCard_map
+              cat={item}
+              navigation={navigation}
+              isliked={likedCats.includes(item.id)} />
           )}
           horizontal
-          onScrollEndDrag={(event) => {
-            if (isScrollToTop(event)) {
-              onScrollToTop();
-            }
-          }}
         />
         {/* <CatCard_map></CatCard_map> */}
       </View>
