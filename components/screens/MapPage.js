@@ -42,18 +42,68 @@ import { CatteryMarker } from "../pressable/CatteryMarker";
 export default function MapPage({ route, navigation }) {
   const { height, width } = useWindowDimensions();
   const [showCatCard, setShowCatCard] = useState(false);
-  // const catId = route.params.catId;
-  // const [cat, setCat] = useState({});
-  // const [cattery, setCattery] = useState([]);
-  // const [location, setLocation] = useState(null);
-  // const [distance, setDistance] = useState("Distance Loading");
-  // const [likeCats, setLikeCats] = useState([]);
-  // const [allowEdit, setAllowEdit] = useState(false);
   const [data, setData] = useState([]);
 
   const showCatCardHandler = () => {
     setShowCatCard(!showCatCard);
   };
+
+  async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
+    if (!forceLoad && refreshCatDataLock) return;
+    setRefreshCatDataLock(true);
+
+    // prevent running it too much in a short time
+    const currentTimeInMill = new Date().getTime();
+    if (!forceLoad && currentTimeInMill - lastTimeRefreshCatData < 5000) {
+      return;
+    }
+    setLastTimeRefreshCatData(currentTimeInMill);
+
+    setSelectedIndex(selectedIndex);
+    let location = await getUserLocation();
+    const allCatteries = await getAllCatteries();
+    try {
+      const q = query(collection(db, "Cats"), ...constraints);
+
+      const catSnapShot = await getDocs(q);
+
+      const dataBeforeSorting = catSnapShot.docs.map((catDoc) => {
+        const birthday = new Date(catDoc.data().Birthday);
+        const now = new Date();
+        const cattery = allCatteries.find(
+          (ca) => ca.email === catDoc.data().Cattery
+        );
+        // if cattery doesn't have location, use 9999 to make cat in the bottom.
+        const distance =
+          cattery.geoLocation && location
+            ? calculateDistance(location, cattery.geoLocation)
+            : 9999;
+        let age =
+          now.getMonth() -
+          birthday.getMonth() +
+          12 * (now.getFullYear() - birthday.getFullYear());
+        // age cannot be negative
+        if (age === undefined || isNaN(age) || age < 0) {
+          age = 0;
+        }
+
+        return {
+          id: catDoc.id,
+          name: catDoc.data().Breed,
+          sex: catDoc.data().Gender,
+          price: catDoc.data().Price,
+          month: age,
+          photo: catDoc.data().Picture,
+          cattery: catDoc.data().Cattery,
+          distance,
+          uploadTime: catDoc.data().UploadTime,
+          tags: catDoc.data().Tags,
+        };
+      });
+    } finally {
+      setRefreshCatDataLock(false);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -158,6 +208,32 @@ export default function MapPage({ route, navigation }) {
           horizontal
         />
         <CatCard_map></CatCard_map>
+      </View>
+
+      {/* Trigger button - refresh if location changed */}
+      <View
+        style={{
+          height: 40,
+          backgroundColor: "white",
+          position: "absolute",
+          top: 100,
+          left: (width - 140) / 2,
+          borderRadius: 100,
+          width: 140,
+          alignItems: "center",
+        }}
+      >
+        <Pressable>
+          <Text
+            style={{
+              fontFamily: "Poppins",
+              color: Colors.orangeText,
+              paddingTop: 9,
+            }}
+          >
+            Search this area
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
