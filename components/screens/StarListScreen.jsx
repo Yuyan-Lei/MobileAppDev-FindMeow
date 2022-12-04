@@ -81,6 +81,7 @@ function CatsScreen({
         paddingHorizontal: 16,
         paddingTop: 0,
         paddingBottom: 100,
+        width: "100%",
       }}
     >
       <FlatList
