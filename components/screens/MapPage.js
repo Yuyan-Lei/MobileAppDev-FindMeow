@@ -12,9 +12,9 @@ import { CatteryMarker } from "../pressable/CatteryMarker";
 import { Colors } from "../styles/Colors";
 
 export default function MapPage({ route: { params: { catsData, likedCats } }, navigation }) {
+  catsData = catsData.sort((a, b) => a.distance - b.distance);
   const { height, width } = useWindowDimensions();
   const [showCatCard, setShowCatCard] = useState(false);
-
 
   const showCatCardHandler = () => {
     setShowCatCard(!showCatCard);

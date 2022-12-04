@@ -289,7 +289,7 @@ function MainScreen({ route, navigation }) {
       // 2. nearby Post
       else if (selectedIndex === 1) {
         try {
-          setData(
+          setCatsData(
             dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance)
           );
         } catch (e) {
