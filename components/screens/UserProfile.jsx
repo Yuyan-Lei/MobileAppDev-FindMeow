@@ -1,15 +1,13 @@
 import { Avatar } from "@react-native-material/core";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as Device from "expo-device";
-import * as Notifications from "expo-notifications";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   Alert,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
   View,
+  Linking
 } from "react-native";
 import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
@@ -22,33 +20,16 @@ import PostNewCatScreen from "./PostNewCatScreen";
 import NotificationSettingsScreen from "./NotificationSettingsScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
+import { DEVELOPER_EMAIL } from "@env";
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
-  const [enableNotice, setEnableNotice] = useState(false);
 
   const buttonHandler = () => {
     Alert.alert(
       "Feature for this button is coming soon~",
       "See you next time!",
       [{ text: "Sad" }, { text: "Wait for you" }]
-    );
-  };
-
-  const notificationHandler = () => {
-    Alert.alert(
-      "Enable notification",
-      "Are you sure you want to enable notifications?",
-      [
-        {
-          text: "Yes, enable!",
-          onPress: async () => {
-            await schedulePushNotification();
-            setEnableNotice(true);
-          },
-        },
-        { text: "No, not for now." },
-      ]
     );
   };
 
@@ -70,92 +51,8 @@ function MainScreen({ route, navigation }) {
   const onUpdatePassword = () => navigation.navigate("UpdatePasswordPage");
   const onNotificationSettings = () =>
     navigation.navigate("NotificationSettingsScreen");
-
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-    }),
-  });
-
-  const [expoPushToken, setExpoPushToken] = useState("");
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
-
-  useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => {
-      if (token !== null) {
-        setExpoPushToken(token);
-      }
-    });
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
-
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Notification enabled.",
-        body: "You will receive notifications from now on.",
-        data: { data: "goes here" },
-      },
-      trigger: { seconds: 1 },
-    });
-  }
-
-  async function registerForPushNotificationsAsync() {
-    let token;
-
-    if (Platform.OS === "android") {
-      await Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
-
-    if (Device.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!");
-        return;
-      }
-
-      try {
-        token = (await Notifications.getExpoPushTokenAsync()).data;
-      } catch {
-        token = null;
-      }
-    } else {
-      alert("Must use physical device for Push Notifications");
-    }
-
-    return token;
-  }
+  const onSendFeedback = () => Linking.openURL('mailto:' + DEVELOPER_EMAIL 
+  + '?subject=FindMeow user feedback from ' + getCurrentUserEmail());
 
   return (
     <View style={styles.container}>
@@ -192,10 +89,6 @@ function MainScreen({ route, navigation }) {
               <Divider style={styles.divider} />
             </View>
           )}
-          <Pressable onPress={buttonHandler} style={styles.button}>
-            <Text style={styles.buttonText}>Change Profile Photo</Text>
-          </Pressable>
-          <Divider style={styles.divider} />
 
           <Pressable onPress={onUpdatePassword} style={styles.button}>
             <Text style={styles.buttonText}>Change Password</Text>
@@ -204,6 +97,11 @@ function MainScreen({ route, navigation }) {
 
           <Pressable onPress={onNotificationSettings} style={styles.button}>
             <Text style={styles.buttonText}>Notification Settings</Text>
+          </Pressable>
+          <Divider style={styles.divider} />
+
+          <Pressable onPress={onSendFeedback} style={styles.button}>
+            <Text style={styles.buttonText}>Send Feedback</Text>
           </Pressable>
         </View>
 

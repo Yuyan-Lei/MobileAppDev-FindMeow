@@ -2,19 +2,22 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import {
   LogBox,
   StyleSheet,
   Text,
   TextInput,
   useWindowDimensions,
-  View
+  View,
+  Platform
 } from "react-native";
 import { navigationRef } from "./components/RootNavigation";
 import HomePage from "./components/screens/HomePage";
 import LoginOrSignUpPage from "./components/screens/LoginOrSignUpPage";
 import UpdateCatteryPage from "./components/screens/UpdateCatteryPage";
+import * as Notifications from "expo-notifications";
+import * as Device from 'expo-device';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -25,10 +28,38 @@ Text.defaultProps.allowFontScaling = false;
 TextInput.defaultProps = Text.defaultProps || {};
 TextInput.defaultProps.allowFontScaling = false;
 LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release']);
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
   const { height, weight } = useWindowDimensions();
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   useEffect(() => {
     async function prepare() {
@@ -92,3 +123,35 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
+
+async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  return token;
+}

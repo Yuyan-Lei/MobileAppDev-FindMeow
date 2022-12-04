@@ -21,6 +21,7 @@ import { db } from "../../firebaseUtils/firebase-setup";
 import {
   calculateDistance,
   getAllCatteries,
+  getUserData,
   getUserLocation,
 } from "../../firebaseUtils/user";
 import { CatCard } from "../cards/CatCard";
@@ -34,6 +35,7 @@ import PostNewCatScreen from "./PostNewCatScreen";
 import { Colors } from "../styles/Colors";
 import MapPage from "./MapPage";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import * as Notifications from "expo-notifications";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -60,8 +62,14 @@ function MainScreen({ route, navigation }) {
 
   const [catsData, setCatsData] = useState([]);
   const [likedCats, setLikedCats] = useState([]);
+  const [allCats, setAllCats] = useState([]);
 
   const refRBSheet = useRef();
+  const savedCallback = useRef();
+  useEffect(() => {
+    savedCallback.selectedIndex = selectedIndex;
+  }, [selectedIndex]);
+
   /* values used for DiscoverFilter end */
 
   useEffect(() => {
@@ -107,6 +115,31 @@ function MainScreen({ route, navigation }) {
 
   const [lastTimeRefreshCatData, setLastTimeRefreshCatData] = useState(0);
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
+  const [enableNotification, setEnableNotification] = useState(false);
+  const [maxNotificationRange, setMaxNotificationRange] = useState(0);
+
+  // Get user notification settings first.
+  useEffect(() => {
+    getUserData().then((userData) => {
+      setEnableNotification(userData.enableNotification || false);
+      setMaxNotificationRange(userData.maxNotificationRange || 0);
+    });
+  });
+
+  // When tap notification, if only one new cat is added, navigate to the cat information page.
+  // Otherwise stay in discover main page.
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        const newCats = response.notification.request.content.data.newCats;
+        if (newCats.length === 1) {
+          navigation.navigate("CatInformation", { catId: newCats[0].id });
+        }
+      }
+    );
+    return () => subscription.remove();
+  }, []);
+
   // const [recordTime, setRecordTime] = useState(0);
   async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
     if (!forceLoad && refreshCatDataLock) return;
@@ -156,41 +189,42 @@ function MainScreen({ route, navigation }) {
 
       const catSnapShot = await getDocs(q);
 
-      const dataBeforeSorting = catSnapShot.docs
-        .map((catDoc) => {
-          const birthday = new Date(catDoc.data().Birthday);
-          const now = new Date();
-          const cattery = allCatteries.find(
-            (ca) => ca.email === catDoc.data().Cattery
-          );
-          // if cattery doesn't have location, use 9999 to make cat in the bottom.
-          const distance =
-            cattery.geoLocation && location
-              ? calculateDistance(location, cattery.geoLocation)
-              : 9999;
-          let age =
-            now.getMonth() -
-            birthday.getMonth() +
-            12 * (now.getFullYear() - birthday.getFullYear());
-          // age cannot be negative
-          if (age === undefined || isNaN(age) || age < 0) {
-            age = 0;
-          }
+      const dataBeforeFiltering = catSnapShot.docs.map((catDoc) => {
+        const birthday = new Date(catDoc.data().Birthday);
+        const now = new Date();
+        const cattery = allCatteries.find(
+          (ca) => ca.email === catDoc.data().Cattery
+        );
+        // if cattery doesn't have location, use 9999 to make cat in the bottom.
+        const distance =
+          cattery.geoLocation && location
+            ? calculateDistance(location, cattery.geoLocation)
+            : null;
+        let age =
+          now.getMonth() -
+          birthday.getMonth() +
+          12 * (now.getFullYear() - birthday.getFullYear());
+        // age cannot be negative
+        if (age === undefined || isNaN(age) || age < 0) {
+          age = 0;
+        }
 
-          return {
-            id: catDoc.id,
-            petName: catDoc.data().Name,
-            name: catDoc.data().Breed,
-            sex: catDoc.data().Gender,
-            price: catDoc.data().Price,
-            month: age,
-            photo: catDoc.data().Picture,
-            cattery: catDoc.data().Cattery,
-            distance,
-            uploadTime: catDoc.data().UploadTime,
-            tags: catDoc.data().Tags,
-          };
-        })
+        return {
+          id: catDoc.id,
+          petName: catDoc.data().Name,
+          name: catDoc.data().Breed,
+          sex: catDoc.data().Gender,
+          price: catDoc.data().Price,
+          month: age,
+          photo: catDoc.data().Picture,
+          cattery: catDoc.data().Cattery,
+          distance,
+          uploadTime: catDoc.data().UploadTime,
+          tags: catDoc.data().Tags,
+        };
+      });
+
+      const dataBeforeSorting = dataBeforeFiltering
         .filter((cat) => {
           return (
             selectedTags.length === 0 ||
@@ -220,6 +254,32 @@ function MainScreen({ route, navigation }) {
             cat.price >= selectedPrice[0] && cat.price <= selectedPrice[1]
         );
 
+      // After each refresh, get all new added cat within maxNotificationRange.
+      const addedCatWithinRange = dataBeforeFiltering.filter((cat) => {
+        return (
+          !allCats.some((existingCat) => existingCat.id === cat.id) &&
+          cat.distance <= maxNotificationRange
+        );
+      });
+      setAllCats(dataBeforeFiltering);
+      // If any new cats within maxNotificationRange are added, send out a notification.
+      if (addedCatWithinRange.length > 0 && enableNotification) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "FindMeow",
+            body:
+              (addedCatWithinRange.length === 1
+                ? "A new cat is "
+                : addedCatWithinRange.length + " new cats are ") +
+              "available nearby. Check it now!",
+            data: {
+              newCats: addedCatWithinRange,
+            },
+          },
+          trigger: { seconds: 1 },
+        });
+      }
+
       // 1. newer post
       if (selectedIndex === 0) {
         setCatsData(
@@ -228,9 +288,13 @@ function MainScreen({ route, navigation }) {
       }
       // 2. nearby Post
       else if (selectedIndex === 1) {
-        setCatsData(
-          dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance)
-        );
+        try {
+          setData(
+            dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance)
+          );
+        } catch (e) {
+          console.log("error sorting by distance", e);
+        }
       }
       // 3. Lower Price
       else if (selectedIndex === 2) {
@@ -256,15 +320,15 @@ function MainScreen({ route, navigation }) {
   };
   /* events for top filter tags - end */
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     refreshCatData({ selectedIndex });
-  //   }, 10000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshCatData({ selectedIndex: savedCallback.selectedIndex });
+    }, 10000);
 
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -349,6 +413,7 @@ function MainScreen({ route, navigation }) {
               onScrollToTop();
             }
           }}
+          showsVerticalScrollIndicator={false}
         />
       </View>
 
@@ -418,7 +483,8 @@ const styles = StyleSheet.create({
       },
     },
     container: {
-      borderRadius: 28,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
     },
   },
   filterButtonView: {

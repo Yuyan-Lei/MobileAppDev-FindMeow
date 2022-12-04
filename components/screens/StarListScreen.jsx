@@ -1,11 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { doc, getDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View, Text } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { getAllCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { Ionicons } from '@expo/vector-icons';
 import {
   calculateDistance,
   getAllCatteries,
@@ -16,10 +17,35 @@ import { useSwipe } from "../../utils/useSwipe";
 import { BreederCard } from "../cards/BreederCard";
 import { CatCard } from "../cards/CatCard";
 import { FilterButtons } from "../pressable/FilterButtons";
+import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
+
+function EmptyStarPage({origin}) {
+  return (
+    <View style={{ 
+      alignItems: "center",
+      width: 220,
+      marginTop: "40%", 
+    }}>
+      <Ionicons name="md-heart-circle-outline" size={56} color="black" />
+      <Text style={{
+        fontFamily: "PoppinsBold",
+        color: Colors.black,
+        fontSize: 18,
+        marginTop: 15,
+      }}>Nothing liked yet</Text>
+      <Text style={{
+        marginTop: 15,
+        color: "rgb(154, 153, 153)",
+        fontFamily: "Poppins",
+        textAlign: "center"
+      }}>All the {origin} you've liked will show up here.</Text>
+    </View>
+  );
+}
 
 function CatsScreen({
   navigation,
@@ -49,11 +75,13 @@ function CatsScreen({
   const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
 
   return (
+    cats.length > 0 ?
     <View
       style={{
         paddingHorizontal: 16,
         paddingTop: 0,
         paddingBottom: 100,
+        width: "100%",
       }}
     >
       <FlatList
@@ -78,8 +106,9 @@ function CatsScreen({
         }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
+        showsVerticalScrollIndicator={false}
       />
-    </View>
+    </View> : <EmptyStarPage origin="cats" />
   );
 }
 
@@ -101,7 +130,8 @@ function CatteriesScreen({
   const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
 
   return (
-    <View style={{ width: "100%" }}>
+    <View style={{ flex: 1 }}>
+      {catteries.length > 0 ? 
       <FlatList
         data={catteries}
         renderItem={({ item, index }) => {
@@ -122,7 +152,7 @@ function CatteriesScreen({
         }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-      />
+      /> : <EmptyStarPage origin="catteries" />}
     </View>
   );
 }

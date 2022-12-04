@@ -99,12 +99,12 @@ export async function createCattery(
 ) {
   const googleMapClient = new Client({});
   const catteryPlaceDetails = await googleMapClient
-  .placeDetails({
-    params: {
-      place_id: placeId,
-      key: REACT_APP_GOOGLE_MAP_APP_KEY,
-    },
-  })
+    .placeDetails({
+      params: {
+        place_id: placeId,
+        key: REACT_APP_GOOGLE_MAP_APP_KEY,
+      },
+    })
   const newCattery = {
     isCattery: true,
     catteryName,
@@ -134,12 +134,12 @@ export async function updateCattery({
   const email = getCurrentUserEmail();
   const googleMapClient = new Client({});
   const catteryPlaceDetails = await googleMapClient
-  .placeDetails({
-    params: {
-      place_id: placeId,
-      key: REACT_APP_GOOGLE_MAP_APP_KEY,
-    },
-  })
+    .placeDetails({
+      params: {
+        place_id: placeId,
+        key: REACT_APP_GOOGLE_MAP_APP_KEY,
+      },
+    })
   const updatedCattery = {
     catteryName,
     phoneNumber,
@@ -154,6 +154,15 @@ export async function updateCattery({
   return await updateToDB(email, collectionName, updatedCattery);
 }
 
+export async function updateUserNotificationSettings({enableNotification, maxNotificationRange}) {
+  const email = getCurrentUserEmail();
+  const updateUser = {
+    enableNotification,
+    maxNotificationRange
+  };
+  return await updateToDB(email, collectionName, updateUser);
+}
+
 export async function getCattery(email) {
   return await getFromDB(email, collectionName).then((docSnap) =>
     docSnap.data()
@@ -161,7 +170,7 @@ export async function getCattery(email) {
 }
 
 export async function getAllCatteries() {
-  return await getAllFromDB(collectionName).then((userSnap) => 
+  return await getAllFromDB(collectionName).then((userSnap) =>
     userSnap.docs
       .filter((snap) => snap.data().isCattery)
       .map((snap) => {
@@ -180,11 +189,24 @@ export async function getUserLocation() {
     return;
   }
 
-  let location = await Location.getLastKnownPositionAsync({});
-  return {
-    lat: location.coords.latitude,
-    lng: location.coords.longitude
-  };
+  try {
+    let location = await Location.getLastKnownPositionAsync({});
+    if (location !== null) {
+      Location.getCurrentPositionAsync({});
+      return {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude
+      };
+    } else {
+      location = await Location.getCurrentPositionAsync({});
+      return {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude
+      };
+    }
+  } catch {
+    Alert.alert('Could not get your location, please try again later.');
+  }
 }
 
 // Function to calculate distance between 2 points.

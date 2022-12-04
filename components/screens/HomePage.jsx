@@ -44,7 +44,7 @@ export default function HomePage({ route, navigation }) {
             return (
               <MaterialIcons name="storefront" size={size} color={color} />
             );
-          } else if (route.name === "Like") {
+          } else if (route.name === "Liked") {
             return <Ionicons name="heart-outline" size={size} color={color} />;
           } else {
             return <AntDesign name="user" size={size} color={color} />;
@@ -62,7 +62,7 @@ export default function HomePage({ route, navigation }) {
           screenOptions={{ tabBarLabel: "Add" }}
           initialParams={{ user }}
         />}
-      <Tab.Screen name="Like" component={StarListScreen} />
+      <Tab.Screen name="Liked" component={StarListScreen} />
       <Tab.Screen name="Profile" component={UserProfile} initialParams={{ user }} />
     </Tab.Navigator>
   );

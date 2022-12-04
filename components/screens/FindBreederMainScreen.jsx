@@ -104,15 +104,15 @@ function MainScreen({ route, navigation }) {
     refreshCatteryData();
   }, [searchName, selectedBreed, selectedState, selectedCatNum]);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     refreshCatteryData();
-  //   }, 10000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshCatteryData();
+    }, 10000);
 
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <View style={styles.containter}>
@@ -166,6 +166,7 @@ function MainScreen({ route, navigation }) {
               onScrollToTop();
             }
           }}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </View>
@@ -189,7 +190,8 @@ const styles = StyleSheet.create({
     wrapper: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
       container: {
-        borderRadius: 28,
+        borderTopLeftRadius: 28,
+        borderTopRightRadius: 28,
       },
       draggableIcon: {
         backgroundColor: "#EFEFEF",
@@ -197,7 +199,8 @@ const styles = StyleSheet.create({
       },
     },
     container: {
-      borderRadius: 28,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
     },
   },
   containter: {
