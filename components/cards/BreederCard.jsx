@@ -147,17 +147,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 16,
     paddingLeft: 8,
-    margin: 16,
+    marginHorizontal: 16,
+    marginVertical: 8,
     backgroundColor: "white",
     borderRadius: 20,
   },
   iosShadowView: {
     shadowColor: Colors.black,
-    shadowRadius: 16,
-    shadowOpacity: 0.08,
+    shadowRadius: 11,
+    shadowOpacity: 0.07,
     shadowOffset: {
       width: 0,
-      height: 6
+      height: 7
     }
   },
   androidShadowView: {
