@@ -1,6 +1,7 @@
 import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Client } from "@googlemaps/google-maps-services-js";
+import { Divider } from "@react-native-material/core";
 import { Chip } from "@rneui/themed";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -64,8 +65,11 @@ export default function CatInformation({ route, navigation }) {
         .then((resp) => {
           setDistance(
             calculateDistance(location, resp.data.result.geometry.location) +
-              "mi"
+            "mi"
           );
+        })
+        .catch((err) => {
+          console.error(err)
         });
     }
   }, [cattery, location]);
@@ -73,6 +77,8 @@ export default function CatInformation({ route, navigation }) {
   useEffect(() => {
     const unSubscribe = onSnapshot(doc(db, "Cats", catId), async (catEntry) => {
       const catData = catEntry.data();
+      if (catData === undefined || catData === null) { return; }
+
       const birthday = new Date(catData.Birthday);
       const now = new Date();
 
@@ -126,7 +132,7 @@ export default function CatInformation({ route, navigation }) {
     navigation.push("PostNewCatScreen", { cat });
   };
 
-  {/* Calculate the post time */}
+  {/* Calculate the post time */ }
   const getDateFormatted = (timestamp) => {
     var date = new Date(timestamp);
     var dateFormat = date.toDateString();
@@ -172,15 +178,24 @@ export default function CatInformation({ route, navigation }) {
         {/* Main Contents */}
         <View
           style={{
-            marginHorizontal: 15,
-            borderRadius: 40,
+            paddingHorizontal: 15,
+            marginTop: -35,
+            borderTopLeftRadius: 40,
+            borderTopRightRadius: 40,
+            backgroundColor: 'rgb(250, 250, 250)',
           }}
         >
+
+          {/* Swipe button */}
+          <Divider style={styles.divider} />
+
+           {/* Three Labels */}
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-evenly",
-              marginVertical: 20,
+              marginBottom: 20,
+              marginTop: 15,
             }}
           >
             <View style={styles.label}>
@@ -201,12 +216,14 @@ export default function CatInformation({ route, navigation }) {
             </View>
           </View>
 
+          {/* Cat Name & Price */}
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.catNameText}>{cat.Name}</Text>
             <Text style={styles.priceText}>${cat.Price}</Text>
           </View>
-          {/* TODO: CATTERY LOCATION */}
-          <View style={{ flexDirection: "row", marginLeft: -5 }}>
+
+          {/* CATTERY LOCATION */}
+          <View style={{ flexDirection: "row"}}>
             <Ionicons
               name="location-sharp"
               size={24}
@@ -217,8 +234,11 @@ export default function CatInformation({ route, navigation }) {
               <Text style={styles.addressText}>({distance})</Text>
             )}
           </View>
-          {/* <Text style={styles.date}>{cat.Birthday}</Text> */}
-          <Text style={styles.PostDateText}>Posted in {getDateFormatted(cat.UploadTime)}</Text>
+
+          {/* Post Date */}
+          <Text style={styles.PostDateText}>Posted on {getDateFormatted(cat.UploadTime)}</Text>
+
+          {/* Chips */}
           <View style={styles.chipBox}>
             {cat.Tags ? (
               cat.Tags.map((tag, index) => (
@@ -227,7 +247,7 @@ export default function CatInformation({ route, navigation }) {
                   key={index}
                   containerStyle={styles.chip}
                   color={Colors.orangeText}
-                  titleStyle={{ fontFamily: "Poppins" }}
+                  titleStyle={{ fontFamily: "Poppins", marginTop: -1}}
                 />
               ))
             ) : (
@@ -293,6 +313,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: "center",
     flexDirection: "row",
+  },
+  divider: {
+    borderBottomWidth: 3,
+    marginHorizontal: 140,
+    marginTop: 8,
   },
   tags: {
     backgroundColor: "white",
@@ -372,6 +397,7 @@ const styles = StyleSheet.create({
     color: Colors.text,
     fontFamily: "PoppinsBold",
     marginBottom: 20,
+    marginLeft: 5
   },
   priceText: {
     fontSize: 23,
@@ -393,6 +419,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsLight",
     marginTop: 8,
     marginBottom: 15,
+    marginLeft: 5,
   },
   detailLabel: {
     textAlign: "left",
@@ -435,8 +462,8 @@ const styles = StyleSheet.create({
   catteryLabelText: {
     fontSize: 12,
     color: "rgba(46, 37, 37, 0.63)",
-    fontFamily: "PoppinsMedium",
-    marginTop: 5,
-    marginBottom: 15,
+    fontFamily: "Poppins",
+    marginTop: 4,
+    marginBottom: 16,
   },
 });

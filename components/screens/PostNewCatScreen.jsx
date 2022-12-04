@@ -26,6 +26,7 @@ import CatImagePicker from "../pressable/CatImagePicker";
 import moment from "moment";
 import { deleteCatInCattery } from "../../firebaseUtils/user";
 import { Colors } from "../styles/Colors";
+import { globalVariables } from "../../utils/globalVariables";
 
 export default function PostNewCatScreen({
   route: { params },
@@ -229,12 +230,13 @@ export default function PostNewCatScreen({
       {
         text: "OK",
         onPress: async () => {
-          await deleteCat(catId);
-
-          onPostNewCatLocked = true;
-
           try {
+            await deleteCat(catId);
+
+            onPostNewCatLocked = true;
+
             await deleteCatInCattery(catId);
+            globalVariables.starListNeedReload = true;
 
             Alert.alert("Deleted!");
             reset();
@@ -254,7 +256,7 @@ export default function PostNewCatScreen({
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Screen Title */}
         <View
           style={{

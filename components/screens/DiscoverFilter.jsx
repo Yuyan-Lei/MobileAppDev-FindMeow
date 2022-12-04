@@ -135,7 +135,10 @@ const DiscoverFilter = ({
   const onPriceChange = (values) => setPriceLocal(values);
 
   return (
-    <ScrollView style={styles.filterContainer}>
+    <ScrollView
+      style={styles.filterContainer}
+      showsVerticalScrollIndicator={false}
+    >
       <Text style={styles.filterText}>Filter</Text>
 
       <Text style={styles.reminderText}>

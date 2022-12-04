@@ -9,39 +9,48 @@ export default function CatImagePicker({ image, setImage }) {
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0,
-    });
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0,
+      });
 
-    setIsBottomSheetVisible(false);
+      setIsBottomSheetVisible(false);
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+      }
+    } catch (e) {
+      Alert.alert("Error", "Unable to pick image");
     }
   };
 
   const pickImageFromCamera = async () => {
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    try {
+      const permissionResult =
+        await ImagePicker.requestCameraPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-      Alert.alert("You've refused to allow this app to access your camera!");
-      return;
-    }
+      if (permissionResult.granted === false) {
+        Alert.alert("You've refused to allow this app to access your camera!");
+        return;
+      }
 
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0,
-    });
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0,
+      });
 
-    setIsBottomSheetVisible(false);
+      setIsBottomSheetVisible(false);
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+      }
+    } catch (e) {
+      Alert.alert("Error", "Unable to pick image");
     }
   };
 
