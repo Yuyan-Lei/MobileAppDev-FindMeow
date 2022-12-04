@@ -64,8 +64,11 @@ export default function CatInformation({ route, navigation }) {
         .then((resp) => {
           setDistance(
             calculateDistance(location, resp.data.result.geometry.location) +
-              "mi"
+            "mi"
           );
+        })
+        .catch((err) => {
+          console.error(err)
         });
     }
   }, [cattery, location]);
@@ -73,6 +76,8 @@ export default function CatInformation({ route, navigation }) {
   useEffect(() => {
     const unSubscribe = onSnapshot(doc(db, "Cats", catId), async (catEntry) => {
       const catData = catEntry.data();
+      if (catData === undefined || catData === null) { return; }
+
       const birthday = new Date(catData.Birthday);
       const now = new Date();
 
@@ -126,7 +131,7 @@ export default function CatInformation({ route, navigation }) {
     navigation.push("PostNewCatScreen", { cat });
   };
 
-  {/* Calculate the post time */}
+  {/* Calculate the post time */ }
   const getDateFormatted = (timestamp) => {
     var date = new Date(timestamp);
     var dateFormat = date.toDateString();

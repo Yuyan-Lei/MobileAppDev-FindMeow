@@ -172,7 +172,7 @@ function MainScreen({ route, navigation }) {
           const distance =
             cattery.geoLocation && location
               ? calculateDistance(location, cattery.geoLocation)
-              : 9999;
+              : null;
           let age =
             now.getMonth() -
             birthday.getMonth() +
@@ -254,7 +254,13 @@ function MainScreen({ route, navigation }) {
       }
       // 2. nearby Post
       else if (selectedIndex === 1) {
-        setData(dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance));
+        try {
+          setData(
+            dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance)
+          );
+        } catch (e) {
+          console.log("error sorting by distance", e);
+        }
       }
       // 3. Lower Price
       else if (selectedIndex === 2) {
@@ -280,15 +286,15 @@ function MainScreen({ route, navigation }) {
   };
   /* events for top filter tags - end */
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     refreshCatData({ selectedIndex });
-  //   }, 10000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshCatData({ selectedIndex });
+    }, 10000);
 
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -439,7 +445,8 @@ const styles = StyleSheet.create({
       },
     },
     container: {
-      borderRadius: 28,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
     },
   },
   filterButtonView: {

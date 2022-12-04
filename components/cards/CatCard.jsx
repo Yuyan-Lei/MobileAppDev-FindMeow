@@ -12,18 +12,15 @@ import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 import CachedImage from "react-native-expo-cached-image";
 import { useSwipePressable } from "../../utils/useSwipe";
-export function CatCard({
-  cat,
-  navigation,
-  hideLocation,
-  showBreed,
-}) {
+export function CatCard({ cat, navigation, hideLocation, showBreed }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
 
   useEffect(() => {
     if (cat.cattery) {
-      getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+      getCattery(cat.cattery)
+        .then((cattery) => setCattery(cattery))
+        .catch((e) => console.log(e));
     }
   }, [cat]);
 
@@ -85,11 +82,11 @@ export function CatCard({
             <LocationText
               textStyle={styles.locationStyle}
               locationIconColor={styles.locationIconStyle.color}
-              viewPosition={{ top: -1, left: -2.3}}
+              viewPosition={{ top: -1, left: -2.3 }}
             >
               {cattery && cattery.shortAddress
                 ? cattery.shortAddress +
-                  " (" + cat.distance + " mi)"
+                  (cat.distance !== null ? ` (${cat.distance} mi)` : "")
                 : "Loading"}
             </LocationText>
           )}
