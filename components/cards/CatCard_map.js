@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -8,50 +8,49 @@ import {
 } from "react-native";
 import { HeartButton2 } from "../pressable/HeartButton2";
 import { LocationText } from "../texts/LocationText";
-// export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
+
 export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
   const { height, width } = useWindowDimensions();
-  //   const [likeCats, setLikeCats] = useState([]);
-  //   const [cattery, setCattery] = useState(null);
+  const [likeCats, setLikeCats] = useState([]);
+  const [cattery, setCattery] = useState(null);
 
-  //   useEffect(() => {
-  //     if (cat.cattery) {
-  //       getCattery(cat.cattery).then((cattery) => setCattery(cattery));
-  //     }
-  //   }, [cat]);
+  useEffect(() => {
+    if (cat.cattery) {
+      getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+    }
+  }, [cat]);
 
-  //   useEffect(() => {
-  //     const unSubscribe = onSnapshot(
-  //       doc(db, "Users", getCurrentUserEmail()),
-  //       (snapshot) => {
-  //         const likeCats = snapshot.data().likeCats;
-  //         setLikeCats(likeCats);
-  //       }
-  //     );
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikeCats(likeCats);
+      }
+    );
 
-  //     return () => unSubscribe();
-  //   }, []);
+    return () => unSubscribe();
+  }, []);
 
-  //   const onClickLikeButton = () => {
-  //     if (!likeCats.includes(cat.id)) {
-  //       userLikeACat(cat.id);
-  //     } else {
-  //       userUnLikeACat(cat.id);
-  //     }
-  //   };
+  const onClickLikeButton = () => {
+    if (!likeCats.includes(cat.id)) {
+      userLikeACat(cat.id);
+    } else {
+      userUnLikeACat(cat.id);
+    }
+  };
 
-  //   let catMonthText = "";
-  //   if (cat.month <= 1) {
-  //     catMonthText = "< 1 month";
-  //   } else if (cat.month === 1) {
-  //     catMonthText = cat.month + " month";
-  //   } else {
-  //     catMonthText = cat.month + " months";
-  //   }
+  // let catMonthText = "";
+  // if (cat.month <= 1) {
+  //   catMonthText = "< 1 month";
+  // } else if (cat.month === 1) {
+  //   catMonthText = cat.month + " month";
+  // } else {
+  //   catMonthText = cat.month + " months";
+  // }
 
-  //   const { onTouchStart, onTouchEnd } = useSwipePressable(() =>
-  //     navigation.navigate("CatInformation", { catId: cat.id })
-  //   );
+  const onPressCatCard = () =>
+    navigation.navigate("CatInformation", { catId: cat.id });
 
   return (
     <View style={{ width: width - 40 }}>
@@ -65,7 +64,10 @@ export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
         }}
       >
         {/* <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}> */}
-        <Pressable style={{ marginTop: 20, marginHorizontal: 10 }}>
+        <Pressable
+          style={{ marginTop: 20, marginHorizontal: 10 }}
+          onPress={onPressCatCard}
+        >
           <View style={{ flexDirection: "row", marginRight: 20 }}>
             <View style={styles.imageView}>
               {/* cat photo */}
@@ -111,9 +113,9 @@ export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
           <View style={{ flexDirection: "column" }}>
             <View style={styles.heartButtonView}>
               <HeartButton2
-              // notSelectedColor="white"
-              //   isLiked={likeCats.includes(cat.id)}
-              //   onPress={onClickLikeButton}
+                // notSelectedColor="white"
+                //   isLiked={likeCats.includes(cat.id)}
+                onPress={onClickLikeButton}
               />
             </View>
 

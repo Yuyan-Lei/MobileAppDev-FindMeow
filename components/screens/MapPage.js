@@ -48,7 +48,21 @@ export default function MapPage({ route, navigation }) {
     setShowCatCard(!showCatCard);
   };
 
-  async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
+  function onSearchArea() {
+    refreshCatData({ forceLoad: true });
+  }
+
+  function isScrollToTop(event) {
+    return event.nativeEvent.contentOffset.y < -100;
+  }
+
+  function onScrollToTop() {
+    refreshCatData({ forceLoad: true });
+  }
+
+  const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
+
+  async function refreshCatData({ forceLoad = false } = {}) {
     if (!forceLoad && refreshCatDataLock) return;
     setRefreshCatDataLock(true);
 
@@ -59,7 +73,6 @@ export default function MapPage({ route, navigation }) {
     }
     setLastTimeRefreshCatData(currentTimeInMill);
 
-    setSelectedIndex(selectedIndex);
     let location = await getUserLocation();
     const allCatteries = await getAllCatteries();
     try {
@@ -100,10 +113,15 @@ export default function MapPage({ route, navigation }) {
           tags: catDoc.data().Tags,
         };
       });
+      setData(dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance));
     } finally {
       setRefreshCatDataLock(false);
     }
   }
+
+  useEffect(() => {
+    refreshCatData({ forceLoad: true });
+  });
 
   return (
     <View style={styles.container}>
@@ -203,11 +221,18 @@ export default function MapPage({ route, navigation }) {
       >
         {/* <View style={{ width: 200 }}></View> */}
         <FlatList
-          // data={data}
-          renderItem={({ item }) => <CatCard_map cat={item} />}
+          data={data}
+          renderItem={({ item }) => (
+            <CatCard_map cat={item} navigation={navigation} />
+          )}
           horizontal
+          onScrollEndDrag={(event) => {
+            if (isScrollToTop(event)) {
+              onScrollToTop();
+            }
+          }}
         />
-        <CatCard_map></CatCard_map>
+        {/* <CatCard_map></CatCard_map> */}
       </View>
 
       {/* Trigger button - refresh if location changed */}
@@ -223,7 +248,7 @@ export default function MapPage({ route, navigation }) {
           alignItems: "center",
         }}
       >
-        <Pressable>
+        <Pressable onPress={() => onSearchArea()}>
           <Text
             style={{
               fontFamily: "Poppins",
