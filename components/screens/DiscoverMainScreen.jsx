@@ -390,7 +390,8 @@ const styles = StyleSheet.create({
       },
     },
     container: {
-      borderRadius: 28,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
     },
   },
   filterButtonView: {

@@ -189,7 +189,8 @@ const styles = StyleSheet.create({
     wrapper: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
       container: {
-        borderRadius: 28,
+        borderTopLeftRadius: 28,
+        borderTopRightRadius: 28,
       },
       draggableIcon: {
         backgroundColor: "#EFEFEF",
@@ -197,7 +198,8 @@ const styles = StyleSheet.create({
       },
     },
     container: {
-      borderRadius: 28,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
     },
   },
   containter: {
