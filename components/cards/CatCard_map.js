@@ -54,22 +54,22 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
           justifyContent: "center",
           width: "94%",
           backgroundColor: "white",
-          borderRadius: 8,
+          borderRadius: 10,
           height: 110,
         }}
       >
         {/* <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}> */}
         <Pressable
-          style={{ marginTop: 20, marginHorizontal: 10 }}
+          style={{ marginTop: 20, marginHorizontal: 20 }}
           onPress={onPressCatCard}
         >
-          <View style={{ flexDirection: "row", marginRight: 20 }}>
+          <View style={{ flexDirection: "row", marginRight: 10 }}>
             <View style={styles.imageView}>
               {/* cat photo */}
               <CachedImage source={{ uri: cat.photo }} style={styles.image} />
             </View>
 
-            <View style={{ marginLeft: 20, marginTop: 10 }}>
+            <View style={{ marginLeft: 12, marginTop: 10 }}>
               <View>
                 {/* cat name */}
                 <Text style={styles.catNameStyle}>{cat.name}</Text>
@@ -84,30 +84,18 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
                 </Text>
 
                 {/* cat location */}
-                {/* {!hideLocation && (
-              <LocationText
-                textStyle={styles.locationStyle}
-                locationIconColor={styles.locationIconStyle.color}
-              >
-                {cattery && cattery.shortAddress
-                  ? cattery.shortAddress + " (" + cat.distance + " km)"
-                  : "Loading"}
-              </LocationText>
-            )} */}
-                <LocationText style={styles.locationStyle}>
-                  {/* San Jose (0.8km) */}
+                <LocationText style={styles.locationStyle} viewPosition={{ left: -2.5 }}>
                   {cattery && cattery.shortAddress
                     ? cattery.shortAddress +
                     " (" + cat.distance + " mi)"
                     : "Loading"}
                 </LocationText>
-                {/* <Text>San Jose (0.8 km)</Text> */}
               </View>
             </View>
           </View>
 
-          {/* floating components */}
           <View style={{ flexDirection: "column" }}>
+            {/* Heart Button */}
             <View style={styles.heartButtonView}>
               <HeartButton2
                 // notSelectedColor="white"
@@ -116,9 +104,11 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
               />
             </View>
 
+            {/* Price Tag */}
             <View style={styles.priceView}>
-              <Text style={styles.priceTag}>${cat.price}</Text>
-              {/* <Text style={styles.priceTag}>$1500</Text> */}
+              <Text style={styles.priceTag}>
+                ${cat.price}
+              </Text>
             </View>
           </View>
         </Pressable>
@@ -132,35 +122,36 @@ const styles = StyleSheet.create({
     margin: 10,
     justifyContent: "center",
     backgroundColor: "white",
-    borderRadius: 5,
+    borderRadius: 10,
   },
   imageView: {
     backgroundColor: "red",
-    width: 60,
-    height: 60,
+    width: 75,
+    height: 75,
     borderRadius: 16,
     marginVertical: 10,
   },
   image: {
     flex: 1,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   catNameStyle: {
     color: "#2E2525",
-    fontFamily: "PoppinsMedium",
-    fontSize: 14,
+    fontFamily: "PoppinsSemiBold",
+    fontSize: 15,
+    marginTop: 1,
     marginBottom: 2,
   },
   catDetailStyle: {
-    marginTop: 2,
+    marginTop: 7,
     color: "rgba(46, 37, 37, 0.67)",
-    fontSize: 12,
-    fontFamily: "Poppins",
+    fontSize: 13,
+    fontFamily: "PoppinsRegular",
   },
   locationStyle: {
-    fontSize: 10,
+    fontSize: 13,
     color: "#2E2525",
-    marginTop: 5,
+    marginTop: 6,
   },
   locationIconStyle: {
     color: "#F59156",
@@ -168,19 +159,18 @@ const styles = StyleSheet.create({
   heartButtonView: {
     position: "absolute",
     marginLeft: "auto",
-    left: 245,
+    left: 255,
     marginRight: 90,
-    top: -70,
+    top: -76
   },
   priceView: {
     marginLeft: "auto",
-    top: -70,
-    paddingLeft: -20,
-    marginRight: 20,
+    top: -86,
+    paddingLeft: -25,
   },
   priceTag: {
     color: "#F6AC3D",
-    fontFamily: "PoppinsMedium",
-    fontSize: 14,
+    fontFamily: "PoppinsSemiBold",
+    fontSize: 17,
   },
 });
