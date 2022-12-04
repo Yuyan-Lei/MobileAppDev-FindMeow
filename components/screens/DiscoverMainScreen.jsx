@@ -56,6 +56,11 @@ function MainScreen({ route, navigation }) {
   const [allCats, setAllCats] = useState([]);
 
   const refRBSheet = useRef();
+  const savedCallback = useRef();
+  useEffect(() => {
+    savedCallback.selectedIndex = selectedIndex;
+  }, [selectedIndex]);
+
   /* values used for DiscoverFilter end */
 
   function resetAllFilters() {
@@ -288,7 +293,7 @@ function MainScreen({ route, navigation }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      refreshCatData({ selectedIndex });
+      refreshCatData({ selectedIndex: savedCallback.selectedIndex });
     }, 10000);
 
     return () => {
