@@ -236,7 +236,7 @@ export default function CatInformation({ route, navigation }) {
           </View>
 
           {/* Post Date */}
-          <Text style={styles.PostDateText}>Posted in {getDateFormatted(cat.UploadTime)}</Text>
+          <Text style={styles.PostDateText}>Posted on {getDateFormatted(cat.UploadTime)}</Text>
 
           {/* Chips */}
           <View style={styles.chipBox}>
@@ -462,8 +462,8 @@ const styles = StyleSheet.create({
   catteryLabelText: {
     fontSize: 12,
     color: "rgba(46, 37, 37, 0.63)",
-    fontFamily: "PoppinsMedium",
-    marginTop: 5,
-    marginBottom: 15,
+    fontFamily: "Poppins",
+    marginTop: 4,
+    marginBottom: 16,
   },
 });
