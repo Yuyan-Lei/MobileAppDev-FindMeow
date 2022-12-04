@@ -34,7 +34,7 @@ function EmptyStarPage({origin}) {
       <Text style={{
         fontFamily: "PoppinsBold",
         color: Colors.black,
-        fontSize: "18",
+        fontSize: 18,
         marginTop: 15,
       }}>Nothing liked yet</Text>
       <Text style={{
