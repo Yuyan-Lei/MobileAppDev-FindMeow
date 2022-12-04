@@ -12,8 +12,7 @@ import {
 import { useSwipePressable } from "../../utils/useSwipe";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
-import CachedImage from "react-native-expo-cached-image";
-import { useSwipePressable } from "../../utils/useSwipe";
+
 export function CatCard({ cat, navigation, hideLocation, showBreed }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
