@@ -34,15 +34,15 @@ function EmptyStarPage({origin}) {
       <Text style={{
         fontFamily: "PoppinsBold",
         color: Colors.black,
-        fontSize: "18",
+        fontSize: 18,
         marginTop: 15,
-      }}>Nothing stared yet</Text>
+      }}>Nothing liked yet</Text>
       <Text style={{
         marginTop: 15,
         color: "rgb(154, 153, 153)",
         fontFamily: "Poppins",
         textAlign: "center"
-      }}>All the {origin} you've stared will show up here.</Text>
+      }}>All the {origin} you've liked will show up here.</Text>
     </View>
   );
 }
