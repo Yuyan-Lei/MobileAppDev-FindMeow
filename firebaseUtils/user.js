@@ -154,6 +154,15 @@ export async function updateCattery({
   return await updateToDB(email, collectionName, updatedCattery);
 }
 
+export async function updateUserNotificationSettings({enableNotification, maxNotificationRange}) {
+  const email = getCurrentUserEmail();
+  const updateUser = {
+    enableNotification,
+    maxNotificationRange
+  };
+  return await updateToDB(email, collectionName, updateUser);
+}
+
 export async function getCattery(email) {
   return await getFromDB(email, collectionName).then((docSnap) =>
     docSnap.data()

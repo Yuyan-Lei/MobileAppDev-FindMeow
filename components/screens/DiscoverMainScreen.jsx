@@ -14,6 +14,7 @@ import { db } from "../../firebaseUtils/firebase-setup";
 import {
   calculateDistance,
   getAllCatteries,
+  getUserData,
   getUserLocation,
 } from "../../firebaseUtils/user";
 import { CatCard } from "../cards/CatCard";
@@ -26,6 +27,7 @@ import DiscoverFilter from "./DiscoverFilter";
 import PostNewCatScreen from "./PostNewCatScreen";
 import { Colors } from "../styles/Colors";
 import MapPage from "./MapPage";
+import * as Notifications from "expo-notifications";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -51,6 +53,7 @@ function MainScreen({ route, navigation }) {
   const [selectedTags, setSelectedTags] = useState([]);
 
   const [data, setData] = useState([]);
+  const [allCats, setAllCats] = useState([]);
 
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
@@ -86,6 +89,29 @@ function MainScreen({ route, navigation }) {
 
   const [lastTimeRefreshCatData, setLastTimeRefreshCatData] = useState(0);
   const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
+  const [enableNotification, setEnableNotification] = useState(false);
+  const [maxNotificationRange, setMaxNotificationRange] = useState(0);
+
+  // Get user notification settings first.
+  useEffect(() => {
+    getUserData().then((userData) => {
+      setEnableNotification(userData.enableNotification || false);
+      setMaxNotificationRange(userData.maxNotificationRange || 0);
+    });
+  });
+
+  // When tap notification, if only one new cat is added, navigate to the cat information page. 
+  // Otherwise stay in discover main page.
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+      const newCats = response.notification.request.content.data.newCats;
+      if (newCats.length === 1) {
+        navigation.navigate("CatInformation", { catId: newCats[0].id })
+      }
+    });
+    return () => subscription.remove();
+  }, []);
+  
   // const [recordTime, setRecordTime] = useState(0);
   async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
     if (!forceLoad && refreshCatDataLock) return;
@@ -135,7 +161,7 @@ function MainScreen({ route, navigation }) {
 
       const catSnapShot = await getDocs(q);
 
-      const dataBeforeSorting = catSnapShot.docs
+      const dataBeforeFiltering = catSnapShot.docs
         .map((catDoc) => {
           const birthday = new Date(catDoc.data().Birthday);
           const now = new Date();
@@ -168,8 +194,9 @@ function MainScreen({ route, navigation }) {
             uploadTime: catDoc.data().UploadTime,
             tags: catDoc.data().Tags,
           };
-        })
-        .filter((cat) => {
+        });
+        
+        const dataBeforeSorting = dataBeforeFiltering.filter((cat) => {
           return (
             selectedTags.length === 0 ||
             selectedTags.every((tag) => {
@@ -197,6 +224,27 @@ function MainScreen({ route, navigation }) {
           (cat) =>
             cat.price >= selectedPrice[0] && cat.price <= selectedPrice[1]
         );
+
+        // After each refresh, get all new added cat within maxNotificationRange.
+      const addedCatWithinRange = dataBeforeFiltering.filter(cat => {
+        return !allCats.some(existingCat => existingCat.id === cat.id) && cat.distance <= maxNotificationRange;
+      });
+      setAllCats(dataBeforeFiltering);
+      // If any new cats within maxNotificationRange are added, send out a notification.
+      if (addedCatWithinRange.length > 0 && enableNotification) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "FindMeow",
+            body: (addedCatWithinRange.length === 1 ? 
+              "A new cat is " : addedCatWithinRange.length + " new cats are ") 
+              + "available nearby. Check it now!",
+            data: {
+              newCats: addedCatWithinRange
+            }
+          },
+          trigger: { seconds: 1 },
+        });
+      }
 
       // 1. newer post
       if (selectedIndex === 0) {

@@ -6,15 +6,38 @@ import {
     TextInput,
     View,
   } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import { Switch } from 'react-native-paper';
 import { ButtonGroup } from "@rneui/themed";
+import { updateUserNotificationSettings, getUserData } from "../../firebaseUtils/user";
 
 export default function NotificationSettingsScreen() {
     const [enableNotification, setEnableNotification] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
+
+    function updateNotification(enableNotification, selectedIndex) {
+      let maxNotificationRange = 5;
+      if (selectedIndex == 1) {
+        maxNotificationRange = 10;
+      } else if (selectedIndex == 2) {
+        maxNotificationRange = 20;
+      }
+
+      updateUserNotificationSettings({enableNotification, maxNotificationRange});
+    }
+
+    useEffect(() => {
+      getUserData().then((userData) => {
+        const enableNotification = userData.enableNotification || false;
+        const maxNotificationRange = userData.maxNotificationRange || 0;
+
+        setEnableNotification(enableNotification);
+        setSelectedIndex(Math.floor(maxNotificationRange / 10));
+      });
+    });
+
     return (
         <View style={styles.container}>
           {/* Screen Title */}
@@ -38,11 +61,15 @@ export default function NotificationSettingsScreen() {
                 style={{ transform: [{ scaleX: .8 }, { scaleY: .8 }] }}
                 color={Colors.orange}
                 value={enableNotification}
-                onValueChange={() => setEnableNotification(!enableNotification)}/>
+                onValueChange={(value) => {
+                  setEnableNotification(!enableNotification);
+                  updateNotification(value, selectedIndex);
+                }
+                }/>
           </View>
 
-          <Text style={styles.reminderText}>When enabled, you will receive notifications when a new 
-            cat is posted within the distance that you set.</Text>
+          <Text style={styles.reminderText}>Turn on notifications to get instant updates when a new 
+            cat is posted nearby.</Text>
             
           {enableNotification && <View style={{
             marginTop: 20
@@ -68,8 +95,10 @@ export default function NotificationSettingsScreen() {
                 selectedIndex={selectedIndex}
                 onPress={(value) => {
                     setSelectedIndex(value);
+
+                    updateNotification(enableNotification, value);
                 }}
-                buttons={["5 km", "10 km", "20 km"]}
+                buttons={["5 mi", "10 mi", "20 mi"]}
             ></ButtonGroup>
           </View>}
         </View>
