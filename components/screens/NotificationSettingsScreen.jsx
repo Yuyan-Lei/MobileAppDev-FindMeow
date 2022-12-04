@@ -68,8 +68,8 @@ export default function NotificationSettingsScreen() {
                 }/>
           </View>
 
-          <Text style={styles.reminderText}>When enabled, you will receive notifications when a new 
-            cat is posted within the distance that you set.</Text>
+          <Text style={styles.reminderText}>Turn on notifications to get instant updates when a new 
+            cat is posted nearby.</Text>
             
           {enableNotification && <View style={{
             marginTop: 20
@@ -98,7 +98,7 @@ export default function NotificationSettingsScreen() {
 
                     updateNotification(enableNotification, value);
                 }}
-                buttons={["5 km", "10 km", "20 km"]}
+                buttons={["5 mi", "10 mi", "20 mi"]}
             ></ButtonGroup>
           </View>}
         </View>
