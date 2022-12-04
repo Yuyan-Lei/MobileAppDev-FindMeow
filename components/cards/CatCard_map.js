@@ -55,7 +55,7 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
           width: "94%",
           backgroundColor: "white",
           borderRadius: 8,
-          height: 80,
+          height: 110,
         }}
       >
         {/* <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}> */}

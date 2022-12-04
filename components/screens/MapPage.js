@@ -109,10 +109,8 @@ export default function MapPage({ route: { params: { catsData, likedCats } }, na
       {/* Flatlist card */}
       <View
         style={{
-          height: 80,
           backgroundColor: "transparent",
-          position: "absolute",
-          top: height - 170,
+          marginTop: height * 0.75,
           left: 30,
         }}
       >
