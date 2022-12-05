@@ -90,6 +90,7 @@ export function CatteryMarker({
         <View>
           {/* <Pressable> */}
           <Foundation name="marker" size={40} color={Colors.orangeText} />
+
           {/* </Pressable> */}
         </View>
         {/* <Callout>
@@ -109,7 +110,13 @@ export function CatteryMarker({
               top: height - 211,
             }}
           >
-            <CatCard_map cat={cat} navigation={navigation} />
+            <FlatList
+              data={cat}
+              renderItem={({ item }) => (
+                <CatCard_map cat={cat} navigation={navigation} />
+              )}
+              horizontal
+            />
           </View>
         </View>
       ) : (
