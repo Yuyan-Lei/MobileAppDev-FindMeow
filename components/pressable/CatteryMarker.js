@@ -83,22 +83,29 @@ export function CatteryMarker({
 
   return (
     <View>
-      <Marker
-        coordinate={{ latitude: 37.3387, longitude: -121.8853 }}
-        onPress={showCatCardHandler}
-      >
-        <View>
-          {/* <Pressable> */}
-          <Foundation name="marker" size={40} color={Colors.orangeText} />
+      {cat.map((cat) => {
+        return (
+          <Marker
+            coordinate={{
+              latitude: cat.geoLocation.lat,
+              longitude: cat.geoLocation.lng,
+            }}
+            onPress={showCatCardHandler}
+          >
+            {/* <View> */}
+            {/* <Pressable> */}
+            <Foundation name="marker" size={40} color={Colors.orangeText} />
 
-          {/* </Pressable> */}
-        </View>
-        {/* <Callout>
+            {/* </Pressable> */}
+            {/* </View> */}
+            {/* <Callout>
             <View style={{ width: 100, height: 100, backgroundColor: "white" }}>
               <Text>Hi Hi hi</Text>
             </View>
           </Callout> */}
-      </Marker>
+          </Marker>
+        );
+      })}
 
       {showCatList == false ? (
         <View style={{ width: width + 20, alignItems: "center" }}>

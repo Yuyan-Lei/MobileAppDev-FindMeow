@@ -39,6 +39,19 @@ export default function MapPage({
   const initialLat = catsData.at(0).geoLocation.lat;
   const initialLng = catsData.at(0).geoLocation.lng;
 
+  // markList = () => {
+  //   cat.map((catsData, navigation, showCatList, setShowCatList) => {
+  //     return (
+  //       <CatteryMarker
+  //         cat={catsData}
+  //         navigation={navigation}
+  //         showCatList={showCatList}
+  //         setShowCatList={setShowCatList}
+  //       />
+  //     );
+  //   });
+  // };
+
   return (
     <View style={styles.container}>
       <MapView
