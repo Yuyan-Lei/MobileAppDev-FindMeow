@@ -57,10 +57,25 @@ function MainScreen({ route, navigation }) {
   const [allCats, setAllCats] = useState([]);
 
   const refRBSheet = useRef();
+
+  /* use reference for setInterval functions
+     otherwise functions cannot get newest variables */
   const savedCallback = useRef();
   useEffect(() => {
     savedCallback.selectedIndex = selectedIndex;
-  }, [selectedIndex]);
+    savedCallback.selectedBreed = selectedBreed;
+    savedCallback.selectedAge = selectedAge;
+    savedCallback.selectedState = selectedState;
+    savedCallback.selectedGender = selectedGender;
+    savedCallback.selectedPrice = selectedPrice;
+  }, [
+    selectedIndex,
+    selectedBreed,
+    selectedAge,
+    selectedState,
+    selectedGender,
+    selectedPrice,
+  ]);
 
   /* values used for DiscoverFilter end */
 
@@ -112,7 +127,7 @@ function MainScreen({ route, navigation }) {
     return () => subscription.remove();
   }, []);
 
-  async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
+  async function refreshCatData({ forceLoad = false } = {}) {
     if (!forceLoad && refreshCatDataLock) return;
     setRefreshCatDataLock(true);
 
@@ -128,6 +143,13 @@ function MainScreen({ route, navigation }) {
     const allCatteries = await getAllCatteries();
     try {
       let clauseBreed, clauseAge, clauseState, clauseGender, clauseTags;
+
+      const selectedIndex = savedCallback.selectedIndex;
+      const selectedBreed = savedCallback.selectedBreed;
+      const selectedAge = savedCallback.selectedAge;
+      const selectedState = savedCallback.selectedState;
+      const selectedGender = savedCallback.selectedGender;
+      const selectedPrice = savedCallback.selectedPrice;
 
       if (selectedBreed !== "" && selectedBreed !== "All") {
         clauseBreed = where("Breed", "==", selectedBreed);
@@ -277,13 +299,13 @@ function MainScreen({ route, navigation }) {
   /* data collector used for top filter tags - start */
   useEffect(() => {
     refreshCatData({ selectedIndex, forceLoad: true });
-  }, [filterTrigger]);
+  }, [filterTrigger, selectedIndex]);
   /* data collector used for top filter tags - end */
 
   /* events for top filter tags - start */
   const onFilterChange = (value) => {
     setSelectedIndex(value);
-    refreshCatData({ selectedIndex: value, forceLoad: true });
+    // refreshCatData({ selectedIndex: value, forceLoad: true });
   };
   /* events for top filter tags - end */
 

@@ -29,6 +29,8 @@ function MainScreen({ route, navigation }) {
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
+  /* use reference for setInterval functions
+     otherwise functions cannot get newest variables */
   const savedCallback = useRef();
   useEffect(() => {
     savedCallback.selectedBreed = selectedBreed;
