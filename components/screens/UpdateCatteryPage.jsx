@@ -36,8 +36,8 @@ export default function UpdateCatteryPage({ route, navigation }) {
     if (catteryName === "") {
       return "You didn't specify a cattery name, please fill that.";
     }
-    if (catteryName.length > 20) {
-      return "Cattery name must be no more than 20 characters, please fix that.";
+    if (catteryName.length > 30) {
+      return "Cattery name must be no more than 30 characters, please fix that.";
     }
     const validPhoneNumberPattern = /[0-9]+/g;
     if (
