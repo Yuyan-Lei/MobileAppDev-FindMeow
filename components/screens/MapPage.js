@@ -114,6 +114,7 @@ export default function MapPage({
       {/* </ScrollView> */}
 
       {/* Flatlist card */}
+
       {showCatList == true ? (
         <View
           style={{
@@ -137,18 +138,19 @@ export default function MapPage({
           />
         </View>
       ) : (
-        <View style={{ width: width + 20, alignItems: "center" }}>
-          <View
-            style={{
-              height: 80,
-              backgroundColor: "transparent",
-              position: "absolute",
-              top: height - 170,
-            }}
-          >
-            <CatCard_map cat={catsData} navigation={navigation} />
-          </View>
-        </View>
+        // <View style={{ width: width + 20, alignItems: "center" }}>
+        //   <View
+        //     style={{
+        //       height: 80,
+        //       backgroundColor: "transparent",
+        //       position: "absolute",
+        //       top: height - 170,
+        //     }}
+        //   >
+        //     <CatCard_map cat={catsData} navigation={navigation} />
+        //   </View>
+        // </View>
+        <View />
       )}
 
       {/* Trigger button - refresh if location changed */}
