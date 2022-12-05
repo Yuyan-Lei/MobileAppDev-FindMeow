@@ -342,7 +342,7 @@ function MainScreen({ route, navigation }) {
           selectedState === "" ||
           (cat.catteryDoc.shortAddress &&
             cat.catteryDoc.shortAddress.slice(-2) ===
-              stateFullNameToAbbr[selectedState])
+            stateFullNameToAbbr[selectedState])
         );
       })
       .slice(0);
@@ -463,7 +463,7 @@ function MainScreen({ route, navigation }) {
             <CatCard
               cat={item}
               navigation={navigation}
-              isLiked={likeCats.includes(item.id)}
+              userLikedCats={likeCats}
             />
           )}
           numColumns={2}
