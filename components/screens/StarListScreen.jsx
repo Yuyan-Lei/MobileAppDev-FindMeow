@@ -6,7 +6,7 @@ import GestureRecognizer from "react-native-swipe-gestures";
 import { getAllCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import {
   calculateDistance,
   getAllCatteries,
@@ -22,28 +22,59 @@ import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
+import { Pressable } from "react-native";
 
-function EmptyStarPage({origin}) {
+function EmptyStarPage({ origin, setSelectedIndex }) {
+  function onSwipeLeft() {
+    setSelectedIndex(1);
+  }
+
+  function onSwipeRight() {
+    setSelectedIndex(0);
+  }
+
+  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
+
   return (
-    <View style={{ 
-      alignItems: "center",
-      width: 220,
-      marginTop: "40%", 
-    }}>
-      <Ionicons name="md-heart-circle-outline" size={56} color="black" />
-      <Text style={{
-        fontFamily: "PoppinsBold",
-        color: Colors.black,
-        fontSize: 18,
-        marginTop: 15,
-      }}>Nothing liked yet</Text>
-      <Text style={{
-        marginTop: 15,
-        color: "rgb(154, 153, 153)",
-        fontFamily: "Poppins",
-        textAlign: "center"
-      }}>All the {origin} you've liked will show up here.</Text>
-    </View>
+    <Pressable
+      style={{
+        flex: 1,
+        width: "100%",
+        alignItems: "center",
+      }}
+      onPressIn={onTouchStart}
+      onPressOut={onTouchEnd}
+    >
+      <View
+        style={{
+          alignItems: "center",
+          width: 220,
+          marginTop: "40%",
+        }}
+      >
+        <Ionicons name="md-heart-circle-outline" size={56} color="black" />
+        <Text
+          style={{
+            fontFamily: "PoppinsBold",
+            color: Colors.black,
+            fontSize: 18,
+            marginTop: 15,
+          }}
+        >
+          Nothing liked yet
+        </Text>
+        <Text
+          style={{
+            marginTop: 15,
+            color: "rgb(154, 153, 153)",
+            fontFamily: "Poppins",
+            textAlign: "center",
+          }}
+        >
+          All the {origin} you've liked will show up here.
+        </Text>
+      </View>
+    </Pressable>
   );
 }
 
@@ -75,40 +106,44 @@ function CatsScreen({
   const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
 
   return (
-    cats.length > 0 ?
     <View
       style={{
         paddingHorizontal: 16,
         paddingTop: 0,
         paddingBottom: 100,
         width: "100%",
+        flex: 1,
       }}
     >
-      <FlatList
-        data={cats}
-        renderItem={({ item, index }) => {
-          return (
-            <CatCard
-              key={item.id}
-              cat={item}
-              location={location}
-              navigation={navigation}
-            />
-          );
-        }}
-        numColumns={2}
-        extraData={location}
-        ListFooterComponent={<View style={{ height: 60 }} />}
-        onScrollEndDrag={(event) => {
-          if (isScrollToTop(event)) {
-            onScrollToTop();
-          }
-        }}
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-        showsVerticalScrollIndicator={false}
-      />
-    </View> : <EmptyStarPage origin="cats" />
+      {cats.length > 0 ? (
+        <FlatList
+          data={cats}
+          renderItem={({ item, index }) => {
+            return (
+              <CatCard
+                key={item.id}
+                cat={item}
+                location={location}
+                navigation={navigation}
+              />
+            );
+          }}
+          numColumns={2}
+          extraData={location}
+          ListFooterComponent={<View style={{ height: 60 }} />}
+          onScrollEndDrag={(event) => {
+            if (isScrollToTop(event)) {
+              onScrollToTop();
+            }
+          }}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          showsVerticalScrollIndicator={false}
+        />
+      ) : (
+        <EmptyStarPage origin="cats" />
+      )}
+    </View>
   );
 }
 
@@ -130,29 +165,38 @@ function CatteriesScreen({
   const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
 
   return (
-    <View style={{ flex: 1 }}>
-      {catteries.length > 0 ? 
-      <FlatList
-        data={catteries}
-        renderItem={({ item, index }) => {
-          return (
-            <BreederCard
-              key={item.email}
-              cattery={item}
-              navigation={navigation}
-            />
-          );
-        }}
-        numColumns={1}
-        ListFooterComponent={<View style={{ height: 60 }} />}
-        onScrollEndDrag={(event) => {
-          if (isScrollToTop(event)) {
-            onScrollToTop();
-          }
-        }}
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-      /> : <EmptyStarPage origin="catteries" />}
+    <View
+      style={{
+        flex: 1,
+        width: "100%",
+        padding: 16,
+      }}
+    >
+      {catteries.length > 0 ? (
+        <FlatList
+          data={catteries}
+          renderItem={({ item, index }) => {
+            return (
+              <BreederCard
+                key={item.email}
+                cattery={item}
+                navigation={navigation}
+              />
+            );
+          }}
+          numColumns={1}
+          ListFooterComponent={<View style={{ height: 60 }} />}
+          onScrollEndDrag={(event) => {
+            if (isScrollToTop(event)) {
+              onScrollToTop();
+            }
+          }}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        />
+      ) : (
+        <EmptyStarPage origin="catteries" setSelectedIndex={setSelectedIndex} />
+      )}
     </View>
   );
 }

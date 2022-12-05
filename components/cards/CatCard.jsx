@@ -84,7 +84,15 @@ export function CatCard({ cat, navigation, hideLocation, showBreed }) {
           </Text>
 
           {/* cat breed */}
-          {showBreed && <Text style={styles.catDetailStyle}>{cat.breed}</Text>}
+          {showBreed && (
+            <Text
+              style={styles.catDetailStyle}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {cat.breed}
+            </Text>
+          )}
 
           {/* cat location */}
           {!hideLocation && (

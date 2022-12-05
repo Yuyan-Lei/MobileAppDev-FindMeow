@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   listView: {
-    paddingVertical: 16,
+    padding: 16,
     width: "100%",
   },
 });
