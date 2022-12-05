@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { doc, getDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, View, Text } from "react-native";
+import { FlatList, StyleSheet, View, Text, RefreshControl } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { getAllCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
@@ -81,8 +81,8 @@ function EmptyStarPage({ origin, setSelectedIndex }) {
 function CatsScreen({
   navigation,
   cats,
-  isScrollToTop,
-  onScrollToTop,
+  refreshing,
+  onRefresh,
   setSelectedIndex,
 }) {
   const [location, setLocation] = useState(null);
@@ -131,11 +131,12 @@ function CatsScreen({
           numColumns={2}
           extraData={location}
           ListFooterComponent={<View style={{ height: 60 }} />}
-          onScrollEndDrag={(event) => {
-            if (isScrollToTop(event)) {
-              onScrollToTop();
-            }
-          }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
           showsVerticalScrollIndicator={false}
@@ -150,8 +151,8 @@ function CatsScreen({
 function CatteriesScreen({
   navigation,
   catteries,
-  isScrollToTop,
-  onScrollToTop,
+  refreshing,
+  onRefresh,
   setSelectedIndex,
 }) {
   function onSwipeLeft() {
@@ -186,11 +187,12 @@ function CatteriesScreen({
           }}
           numColumns={1}
           ListFooterComponent={<View style={{ height: 60 }} />}
-          onScrollEndDrag={(event) => {
-            if (isScrollToTop(event)) {
-              onScrollToTop();
-            }
-          }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         />
@@ -205,6 +207,8 @@ function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [likeCats, setLikeCats] = useState([]);
   const [likeCatteries, setLikeCatteries] = useState([]);
+  const [refreshingCat, setRefreshingCat] = useState(false);
+  const [refreshingCattery, setRefreshingCattery] = useState(false);
 
   function isScrollToTop(event) {
     return event.nativeEvent.contentOffset.y < -100;
@@ -217,6 +221,7 @@ function MainScreen({ route, navigation }) {
     const nowTime = new Date().getTime();
     if (!forceLoad && nowTime - lastTimeRefreshLikedCatData < 10000) return;
     setLastTimeRefreshLikedCatData(nowTime);
+    setRefreshingCat(true);
 
     const userDoc = doc(db, "Users", getCurrentUserEmail());
     const likedCatSnapShot = await getDoc(userDoc);
@@ -258,6 +263,7 @@ function MainScreen({ route, navigation }) {
       .sort((d1, d2) => d2.uploadTime - d1.uploadTime);
 
     setLikeCats(newLikedCats);
+    setRefreshingCat(false);
   }
 
   const [lastTimeRefreshLikedCatteryData, setLastTimeRefreshLikedCatteryData] =
@@ -267,6 +273,7 @@ function MainScreen({ route, navigation }) {
     const nowTime = new Date().getTime();
     if (!forceLoad && nowTime - lastTimeRefreshLikedCatteryData < 10000) return;
     setLastTimeRefreshLikedCatteryData(nowTime);
+    setRefreshingCattery(true);
 
     const userDoc = doc(db, "Users", getCurrentUserEmail());
     const userSnap = await getDoc(userDoc);
@@ -277,6 +284,7 @@ function MainScreen({ route, navigation }) {
     setLikeCatteries(
       catterySnap.filter((cattery) => likeCatteries.includes(cattery.email))
     );
+    setRefreshingCattery(false);
   }
 
   /* subscribe user likes to display liked catteries and catteries  - start */
@@ -330,8 +338,8 @@ function MainScreen({ route, navigation }) {
         <CatsScreen
           navigation={navigation}
           cats={likeCats}
-          isScrollToTop={isScrollToTop}
-          onScrollToTop={() => refreshLikedCatData({ forceLoad: true })}
+          refreshing={refreshingCat}
+          onRefresh={() => refreshLikedCatData({ forceLoad: true })}
           setSelectedIndex={setSelectedIndex}
         />
       )}
@@ -339,8 +347,8 @@ function MainScreen({ route, navigation }) {
         <CatteriesScreen
           navigation={navigation}
           catteries={likeCatteries}
-          isScrollToTop={isScrollToTop}
-          onScrollToTop={() => refreshLikedCatteryData({ forceLoad: true })}
+          refreshing={refreshingCattery}
+          onRefresh={() => refreshLikedCatteryData({ forceLoad: true })}
           setSelectedIndex={setSelectedIndex}
         />
       )}
