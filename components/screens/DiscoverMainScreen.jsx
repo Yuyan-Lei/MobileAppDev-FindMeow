@@ -213,35 +213,11 @@ function MainScreen({ route, navigation }) {
         };
       });
 
-      const dataBeforeSorting = dataBeforeFiltering
-        .filter((cat) => {
-          return (
-            selectedTags.length === 0 ||
-            selectedTags.every((tag) => {
-              return cat.tags.indexOf(tag) !== -1;
-            })
-          );
-        })
-        .filter((cat) => {
-          switch (selectedAge) {
-            case "< 1 month":
-              return cat.month < 1;
-            case "1 - 3 months":
-              return cat.month >= 1 && cat.month <= 3;
-            case "3 - 6 months":
-              return cat.month >= 3 && cat.month <= 6;
-            case "6 - 12 months":
-              return cat.month >= 6 && cat.month <= 12;
-            case "> 1 year":
-              return cat.month > 12;
-            default:
-              return true;
-          }
-        })
-        .filter(
-          (cat) =>
-            cat.price >= selectedPrice[0] && cat.price <= selectedPrice[1]
-        );
+      const dataBeforeSorting = filterCatsData(
+        dataBeforeFiltering,
+        selectedAge,
+        selectedPrice
+      );
 
       // After each refresh, get all new added cat within maxNotificationRange.
       const addedCatWithinRange = dataBeforeFiltering.filter((cat) => {
@@ -251,6 +227,7 @@ function MainScreen({ route, navigation }) {
         );
       });
       setAllCats(dataBeforeFiltering);
+
       // If any new cats within maxNotificationRange are added, send out a notification.
       if (addedCatWithinRange.length > 0 && enableNotification) {
         await Notifications.scheduleNotificationAsync({
@@ -269,28 +246,60 @@ function MainScreen({ route, navigation }) {
         });
       }
 
-      // 1. newer post
-      if (selectedIndex === 0) {
-        setData(
-          dataBeforeSorting.sort((d1, d2) => d2.uploadTime - d1.uploadTime)
-        );
-      }
-      // 2. nearby Post
-      else if (selectedIndex === 1) {
-        try {
-          setData(
-            dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance)
-          );
-        } catch (e) {
-          console.log("error sorting by distance", e);
-        }
-      }
-      // 3. Lower Price
-      else if (selectedIndex === 2) {
-        setData(dataBeforeSorting.sort((d1, d2) => d1.price - d2.price));
-      }
+      sortedData = sortCatsData(dataBeforeSorting, selectedIndex);
+      setData(sortedData);
     } finally {
       setRefreshCatDataLock(false);
+    }
+  }
+
+  function filterCatsData(dataBeforeFiltering, selectedAge, selectedPrice) {
+    return dataBeforeFiltering
+      .filter((cat) => {
+        return (
+          selectedTags.length === 0 ||
+          selectedTags.every((tag) => {
+            return cat.tags.indexOf(tag) !== -1;
+          })
+        );
+      })
+      .filter((cat) => {
+        switch (selectedAge) {
+          case "< 1 month":
+            return cat.month < 1;
+          case "1 - 3 months":
+            return cat.month >= 1 && cat.month <= 3;
+          case "3 - 6 months":
+            return cat.month >= 3 && cat.month <= 6;
+          case "6 - 12 months":
+            return cat.month >= 6 && cat.month <= 12;
+          case "> 1 year":
+            return cat.month > 12;
+          default:
+            return true;
+        }
+      })
+      .filter(
+        (cat) => cat.price >= selectedPrice[0] && cat.price <= selectedPrice[1]
+      );
+  }
+
+  function sortCatsData(dataBeforeSorting, index) {
+    // 1. newer post
+    if (index === 0) {
+      return dataBeforeSorting.sort((d1, d2) => d2.uploadTime - d1.uploadTime);
+    }
+    // 2. nearby Post
+    else if (index === 1) {
+      try {
+        return dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance);
+      } catch (e) {
+        console.log("error sorting by distance", e);
+      }
+    }
+    // 3. Lower Price
+    else if (index === 2) {
+      return dataBeforeSorting.sort((d1, d2) => d1.price - d2.price);
     }
   }
 
@@ -298,8 +307,14 @@ function MainScreen({ route, navigation }) {
 
   /* data collector used for top filter tags - start */
   useEffect(() => {
-    refreshCatData({ selectedIndex, forceLoad: true });
-  }, [filterTrigger, selectedIndex]);
+    refreshCatData({ forceLoad: true });
+  }, [filterTrigger]);
+
+  useEffect(() => {
+    const selectedIndex = savedCallback.selectedIndex;
+    sortedData = sortCatsData(data, selectedIndex);
+    setData(sortedData);
+  }, [selectedIndex]);
   /* data collector used for top filter tags - end */
 
   /* events for top filter tags - start */
