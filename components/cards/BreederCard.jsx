@@ -143,18 +143,15 @@ const styles = StyleSheet.create({
   detailView: {
     flexGrow: 1,
     flex: 1,
-    // minWidth: 150,
   },
   imageView: {
-    height: 80,
-    width: 80,
-    backgroundColor: "gray",
     marginRight: 20,
     borderRadius: 16,
+    justifyContent: "center",
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: 80,
+    height: 80,
     borderRadius: 16,
   },
   cardView: {
