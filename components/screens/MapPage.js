@@ -20,7 +20,6 @@ export default function MapPage({
   },
   navigation,
 }) {
-  catsData = catsData.sort((a, b) => a.distance - b.distance);
   const { height, width } = useWindowDimensions();
   const [showCatList, setShowCatList] = useState(true);
   const [location, setLocation] = useState(null);
@@ -30,12 +29,14 @@ export default function MapPage({
   };
 
   /* Set user location. */
-  useEffect(() => {
-    (async () => {
-      let location = await getUserLocation();
-      setLocation(location);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     let location = await getUserLocation();
+  //     setLocation(location);
+  //   })();
+  // }, []);
+
+  const initialLat = catsData.get(0).cattery.geoLocation.lat;
 
   return (
     <View style={styles.container}>
