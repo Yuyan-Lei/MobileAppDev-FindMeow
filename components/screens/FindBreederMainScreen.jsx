@@ -5,6 +5,7 @@ import { FlatList, StyleSheet, View, RefreshControl } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { BreederCard } from "../cards/BreederCard";
+import { stateFullNameToAbbr } from "../listContents/allStates";
 import { FilterButton } from "../pressable/FilterButton";
 import { SearchBar } from "../pressable/SearchBar";
 import { Colors } from "../styles/Colors";
@@ -51,12 +52,8 @@ function MainScreen({ route, navigation }) {
       /* Grouping constraints starts */
       let clauseBreed, clauseState, clauseCatNum;
 
-      if (selectedBreed !== "All") {
+      if (selectedBreed !== "All" && selectedBreed !== "") {
         clauseBreed = where("breed", "==", selectedBreed);
-      }
-
-      if (selectedState !== "All") {
-        // TODO
       }
 
       if (selectedCatNum.toLowerCase() === "yes") {
@@ -92,6 +89,15 @@ function MainScreen({ route, navigation }) {
                 cattery.catteryName
                   .toLowerCase()
                   .includes(searchName.toLowerCase()))
+            );
+          })
+          .filter((cattery) => {
+            return (
+              selectedState === "All" ||
+              selectedState === "" ||
+              (cattery.shortAddress &&
+                cattery.shortAddress.slice(-2) ===
+                  stateFullNameToAbbr[selectedState])
             );
           })
       );
