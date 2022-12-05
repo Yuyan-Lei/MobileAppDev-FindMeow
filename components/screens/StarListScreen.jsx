@@ -168,7 +168,7 @@ function CatteriesScreen({
       style={{
         flex: 1,
         width: "100%",
-        alignItems: "center",
+        padding: 16,
       }}
     >
       {catteries.length > 0 ? (
