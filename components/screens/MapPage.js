@@ -118,10 +118,8 @@ export default function MapPage({
       {showCatList == true ? (
         <View
           style={{
-            height: 80,
             backgroundColor: "transparent",
-            position: "absolute",
-            top: height - 170,
+            marginTop: height * 0.75,
             left: 30,
           }}
         >
