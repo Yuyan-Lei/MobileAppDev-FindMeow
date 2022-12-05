@@ -221,6 +221,7 @@ function MainScreen({ route, navigation }) {
           distance,
           uploadTime: catDoc.data().UploadTime,
           tags: catDoc.data().Tags,
+          geoLocation: cattery.geoLocation,
         };
       });
 
