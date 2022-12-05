@@ -1,4 +1,4 @@
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CachedImage from "react-native-expo-cached-image";
@@ -13,10 +13,9 @@ import { useSwipePressable } from "../../utils/useSwipe";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 
-export function CatCard({ cat, navigation, isLiked, hideLocation, showBreed }) {
-  const [likeCats, setLikeCats] = useState([]);
+export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBreed }) {
+  const [likeCats, setLikeCats] = useState(userLikedCats);
   const [cattery, setCattery] = useState(null);
-  const [isCatLiked, setIsCatLiked] = useState(isLiked);
 
   useEffect(() => {
     if (cat.cattery) {
@@ -27,7 +26,7 @@ export function CatCard({ cat, navigation, isLiked, hideLocation, showBreed }) {
   }, [cat]);
 
   useEffect(() => {
-    if (isLiked === undefined) {
+    if (userLikedCats === undefined) {
       const unSubscribe = onSnapshot(
         doc(db, "Users", getCurrentUserEmail()),
         (snapshot) => {
@@ -41,29 +40,25 @@ export function CatCard({ cat, navigation, isLiked, hideLocation, showBreed }) {
   }, []);
 
   const onClickLikeButton = async () => {
-    if (isLiked === undefined) {
-      /* old method */
-      if (!likeCats.includes(cat.id)) {
+    let tempLikeCats = likeCats;
+    if (tempLikeCats === undefined) {
+      const q = doc(db, "Users", getCurrentUserEmail())
+      const snapshot = await getDoc(q);
+      const likeCats = snapshot.data().likeCats;
+      setLikeCats(likeCats);
+      tempLikeCats = likeCats;
+    }
+    try {
+      if (!tempLikeCats.includes(cat.id)) {
         userLikeACat(cat.id);
       } else {
         userUnLikeACat(cat.id);
       }
-    } else {
-      /* new method saving database connection */
-      const oldLiked = isCatLiked;
-      try {
-        setIsCatLiked(!isCatLiked);
-        if (oldLiked) {
-          await userUnLikeACat(cat.id);
-        } else {
-          await userLikeACat(cat.id);
-        }
-      } catch (e) {
-        setIsCatLiked(oldLiked);
-        console.error("Error while liking a cat", e);
-      }
+    } catch (e) {
+      console.error("Error while liking a cat", e);
     }
-  };
+  }
+
 
   let catMonthText = "";
   if (cat.month <= 1) {
@@ -123,7 +118,7 @@ export function CatCard({ cat, navigation, isLiked, hideLocation, showBreed }) {
             >
               {cattery && cattery.shortAddress
                 ? cattery.shortAddress +
-                  (cat.distance !== null ? ` (${cat.distance} mi)` : "")
+                (cat.distance !== null ? ` (${cat.distance} mi)` : "")
                 : "Loading"}
             </LocationText>
           )}
@@ -134,9 +129,7 @@ export function CatCard({ cat, navigation, isLiked, hideLocation, showBreed }) {
       <View style={styles.heartButtonView}>
         <HeartButton
           // notSelectedColor="white"
-          isLiked={
-            isLiked === undefined ? likeCats.includes(cat.id) : isCatLiked
-          }
+          isLiked={likeCats !== undefined && likeCats.includes(cat.id)}
           onPress={onClickLikeButton}
         />
       </View>
