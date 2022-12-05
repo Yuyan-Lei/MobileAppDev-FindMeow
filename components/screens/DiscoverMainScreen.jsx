@@ -28,6 +28,7 @@ import {
   getUserLocation,
 } from "../../firebaseUtils/user";
 import { CatCard } from "../cards/CatCard";
+import { stateFullNameToAbbr } from "../listContents/allStates";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
 import { Colors } from "../styles/Colors";
@@ -36,8 +37,6 @@ import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import DiscoverFilter from "./DiscoverFilter";
 import MapPage from "./MapPage";
-import * as Notifications from "expo-notifications";
-import { stateFullNameToAbbr } from "../listContents/allStates";
 import PostNewCatScreen from "./PostNewCatScreen";
 
 function MainScreen({ route, navigation }) {
@@ -246,6 +245,7 @@ function MainScreen({ route, navigation }) {
           distance,
           uploadTime: catDoc.data().UploadTime,
           tags: catDoc.data().Tags,
+          catteryDoc: cattery,
         };
       });
 
@@ -332,8 +332,9 @@ function MainScreen({ route, navigation }) {
         return (
           selectedState === "All" ||
           selectedState === "" ||
-          (cat.shortAddress &&
-            cat.shortAddress.slice(-2) === stateFullNameToAbbr[selectedState])
+          (cat.catteryDoc.shortAddress &&
+            cat.catteryDoc.shortAddress.slice(-2) ===
+              stateFullNameToAbbr[selectedState])
         );
       })
       .slice(0);
