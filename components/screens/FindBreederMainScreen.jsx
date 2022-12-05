@@ -29,6 +29,13 @@ function MainScreen({ route, navigation }) {
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
 
+  const savedCallback = useRef();
+  useEffect(() => {
+    savedCallback.selectedBreed = selectedBreed;
+    savedCallback.selectedState = selectedState;
+    savedCallback.selectedCatNum = selectedCatNum;
+  }, [selectedBreed, selectedState, selectedCatNum]);
+
   function resetAllFilters() {
     setSelectedBreed("");
     setSelectedState("");
@@ -51,6 +58,10 @@ function MainScreen({ route, navigation }) {
     try {
       /* Grouping constraints starts */
       let clauseBreed, clauseState, clauseCatNum;
+
+      const selectedBreed = savedCallback.selectedBreed;
+      const selectedState = savedCallback.selectedState;
+      const selectedCatNum = savedCallback.selectedCatNum;
 
       if (selectedBreed !== "All" && selectedBreed !== "") {
         clauseBreed = where("breed", "==", selectedBreed);

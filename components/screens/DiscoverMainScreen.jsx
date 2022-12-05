@@ -60,7 +60,6 @@ function MainScreen({ route, navigation }) {
   const savedCallback = useRef();
   useEffect(() => {
     savedCallback.selectedIndex = selectedIndex;
-    // savedCallback.
   }, [selectedIndex]);
 
   /* values used for DiscoverFilter end */
