@@ -1,5 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
@@ -29,6 +35,7 @@ import PostNewCatScreen from "./PostNewCatScreen";
 import { Colors } from "../styles/Colors";
 import MapPage from "./MapPage";
 import * as Notifications from "expo-notifications";
+import { stateFullNameToAbbr } from "../listContents/allStates";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -127,6 +134,24 @@ function MainScreen({ route, navigation }) {
     return () => subscription.remove();
   }, []);
 
+  const [catteries, setCatteries] = useState(null);
+
+  useEffect(() => {
+    const q = query(collection(db, "Users"), where("isCattery", "==", true));
+    const unSubscribe = onSnapshot(q, (querySnapshot) => {
+      const newCatteries = [];
+      querySnapshot.forEach((doc) => {
+        newCatteries.push({
+          email: doc.id,
+          ...doc.data(),
+        });
+      });
+      setCatteries(newCatteries);
+    });
+
+    return unSubscribe;
+  }, []);
+
   async function refreshCatData({ forceLoad = false } = {}) {
     if (!forceLoad && refreshCatDataLock) return;
     setRefreshCatDataLock(true);
@@ -138,9 +163,8 @@ function MainScreen({ route, navigation }) {
     }
     setLastTimeRefreshCatData(currentTimeInMill);
 
-    setSelectedIndex(selectedIndex);
+    // setSelectedIndex(selectedIndex);
     let location = await getUserLocation();
-    const allCatteries = await getAllCatteries();
     try {
       let clauseBreed, clauseAge, clauseState, clauseGender, clauseTags;
 
@@ -159,14 +183,6 @@ function MainScreen({ route, navigation }) {
         clauseGender = where("Gender", "==", selectedGender);
       }
 
-      if (selectedState !== "" && selectedState !== "All") {
-        // clauseState = where("State", "==", selectedState);
-      }
-
-      if (selectedAge !== "" && selectedAge !== "All") {
-        // TODO
-      }
-
       const constraints = [
         clauseBreed,
         clauseAge,
@@ -179,9 +195,12 @@ function MainScreen({ route, navigation }) {
 
       const catSnapShot = await getDocs(q);
 
+      let allCatteries = catteries || (await getAllCatteries());
+
       const dataBeforeFiltering = catSnapShot.docs.map((catDoc) => {
         const birthday = new Date(catDoc.data().Birthday);
         const now = new Date();
+
         const cattery = allCatteries.find(
           (ca) => ca.email === catDoc.data().Cattery
         );
@@ -213,11 +232,17 @@ function MainScreen({ route, navigation }) {
         };
       });
 
+      /* filter cats data */
       const dataBeforeSorting = filterCatsData(
         dataBeforeFiltering,
         selectedAge,
-        selectedPrice
+        selectedPrice,
+        selectedState
       );
+
+      /* sort cats data */
+      const sortedData = sortCatsData(dataBeforeSorting, selectedIndex);
+      setData(sortedData);
 
       // After each refresh, get all new added cat within maxNotificationRange.
       const addedCatWithinRange = dataBeforeFiltering.filter((cat) => {
@@ -245,15 +270,19 @@ function MainScreen({ route, navigation }) {
           trigger: { seconds: 1 },
         });
       }
-
-      sortedData = sortCatsData(dataBeforeSorting, selectedIndex);
-      setData(sortedData);
+    } catch (error) {
+      console.log(error);
     } finally {
       setRefreshCatDataLock(false);
     }
   }
 
-  function filterCatsData(dataBeforeFiltering, selectedAge, selectedPrice) {
+  function filterCatsData(
+    dataBeforeFiltering,
+    selectedAge,
+    selectedPrice,
+    selectedState
+  ) {
     return dataBeforeFiltering
       .filter((cat) => {
         return (
@@ -281,7 +310,15 @@ function MainScreen({ route, navigation }) {
       })
       .filter(
         (cat) => cat.price >= selectedPrice[0] && cat.price <= selectedPrice[1]
-      );
+      )
+      .filter((cat) => {
+        return (
+          selectedState === "All" ||
+          selectedState === "" ||
+          (cat.shortAddress &&
+            cat.shortAddress.slice(-2) === stateFullNameToAbbr[selectedState])
+        );
+      });
   }
 
   function sortCatsData(dataBeforeSorting, index) {
@@ -314,6 +351,7 @@ function MainScreen({ route, navigation }) {
     const selectedIndex = savedCallback.selectedIndex;
     sortedData = sortCatsData(data, selectedIndex);
     setData(sortedData);
+    console.log("sorted")
   }, [selectedIndex]);
   /* data collector used for top filter tags - end */
 
