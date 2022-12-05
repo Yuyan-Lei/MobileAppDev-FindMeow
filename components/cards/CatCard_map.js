@@ -71,7 +71,7 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
       >
         {/* <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}> */}
         <Pressable
-          style={{ flex: 1, paddingHorizontal: 20, paddingVertical: 10 }}
+          style={{ flex: 1, paddingLeft: 20, paddingVertical: 10 }}
           onPress={onPressCatCard}
         >
           <View style={{ flexDirection: "row", marginRight: 10}}>
@@ -113,11 +113,13 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
             </Text>
 
             {/* Heart Button */}
-            <HeartButton2
-              notSelectedColor={Colors.gray}
-              isLiked={likeCats.includes(cat.id)}
-              onPress={onClickLikeButton}
-            />
+            <View style={{ marginTop:-20, marginRight: -10}}>
+              <HeartButton2
+                notSelectedColor={Colors.gray}
+                isLiked={likeCats.includes(cat.id)}
+                onPress={onClickLikeButton}
+              />
+            </View>
 
           </View>
         </Pressable>
@@ -165,8 +167,9 @@ const styles = StyleSheet.create({
     color: "#F59156",
   },
   heartButtonView: {
-    marginTop: -80,
-    marginLeft: 250,
+    marginTop: -77,
+    marginRight: 20,
+    alignItems: "flex-end",
   },
   priceTag: {
     color: "#F6AC3D",
