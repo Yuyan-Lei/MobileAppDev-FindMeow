@@ -13,10 +13,12 @@ import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { getCattery, userLikeACat, userUnLikeACat } from "../../firebaseUtils/user";
 import { HeartButton2 } from "../pressable/HeartButton2";
 import { LocationText } from "../texts/LocationText";
+import { Colors } from "../styles/Colors";
 
 export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed }) {
   const { height, width } = useWindowDimensions();
   const [cattery, setCattery] = useState(null);
+  const [likeCats, setLikeCats] = useState([]);
 
   useEffect(() => {
     if (cat.cattery) {
@@ -24,15 +26,24 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
     }
   }, [cat]);
 
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikeCats(likeCats);
+      }
+    );
 
+    return () => unSubscribe();
+  }, []);
 
   const onClickLikeButton = () => {
-    if (!isliked) {
+    if (!likeCats.includes(cat.id)) {
       userLikeACat(cat.id);
     } else {
       userUnLikeACat(cat.id);
     }
-    isliked = !isliked;
   };
 
   // let catMonthText = "";
@@ -60,16 +71,16 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
       >
         {/* <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}> */}
         <Pressable
-          style={{ marginTop: 20, marginHorizontal: 20 }}
+          style={{ flex: 1, paddingHorizontal: 20, paddingVertical: 10 }}
           onPress={onPressCatCard}
         >
-          <View style={{ flexDirection: "row", marginRight: 10 }}>
+          <View style={{ flexDirection: "row", marginRight: 10}}>
             <View style={styles.imageView}>
               {/* cat photo */}
               <CachedImage source={{ uri: cat.photo }} style={styles.image} />
             </View>
 
-            <View style={{ marginLeft: 12, marginTop: 10 }}>
+            <View style={{ paddingLeft: 12 }}>
               <View>
                 {/* cat name */}
                 <Text style={styles.catNameStyle}>{cat.name}</Text>
@@ -94,22 +105,20 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
             </View>
           </View>
 
-          <View style={{ flexDirection: "column" }}>
-            {/* Heart Button */}
-            <View style={styles.heartButtonView}>
-              <HeartButton2
-                // notSelectedColor="white"
-                //   isLiked={likeCats.includes(cat.id)}
-                onPress={onClickLikeButton}
-              />
-            </View>
-
+          {/* Right Part */}
+          <View style={styles.heartButtonView}>
             {/* Price Tag */}
-            <View style={styles.priceView}>
-              <Text style={styles.priceTag}>
-                ${cat.price}
-              </Text>
-            </View>
+            <Text style={styles.priceTag}>
+              ${cat.price}
+            </Text>
+
+            {/* Heart Button */}
+            <HeartButton2
+              notSelectedColor={Colors.gray}
+              isLiked={likeCats.includes(cat.id)}
+              onPress={onClickLikeButton}
+            />
+
           </View>
         </Pressable>
       </View>
@@ -129,7 +138,7 @@ const styles = StyleSheet.create({
     width: 75,
     height: 75,
     borderRadius: 16,
-    marginVertical: 10,
+    marginTop: 7,
   },
   image: {
     flex: 1,
@@ -139,11 +148,11 @@ const styles = StyleSheet.create({
     color: "#2E2525",
     fontFamily: "PoppinsSemiBold",
     fontSize: 15,
-    marginTop: 1,
+    marginTop: 6,
     marginBottom: 2,
   },
   catDetailStyle: {
-    marginTop: 7,
+    marginTop: 6,
     color: "rgba(46, 37, 37, 0.67)",
     fontSize: 13,
     fontFamily: "PoppinsRegular",
@@ -151,22 +160,13 @@ const styles = StyleSheet.create({
   locationStyle: {
     fontSize: 13,
     color: "#2E2525",
-    marginTop: 6,
   },
   locationIconStyle: {
     color: "#F59156",
   },
   heartButtonView: {
-    position: "absolute",
-    marginLeft: "auto",
-    left: 255,
-    marginRight: 90,
-    top: -76
-  },
-  priceView: {
-    marginLeft: "auto",
-    top: -86,
-    paddingLeft: -25,
+    marginTop: -80,
+    marginLeft: 250,
   },
   priceTag: {
     color: "#F6AC3D",
