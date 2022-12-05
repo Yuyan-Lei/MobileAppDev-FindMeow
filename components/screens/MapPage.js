@@ -36,7 +36,8 @@ export default function MapPage({
   //   })();
   // }, []);
 
-  const initialLat = catsData.get(0).cattery.geoLocation.lat;
+  const initialLat = catsData.at(0).geoLocation.lat;
+  const initialLng = catsData.at(0).geoLocation.lng;
 
   return (
     <View style={styles.container}>
@@ -44,8 +45,8 @@ export default function MapPage({
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: 37.3387,
-          longitude: -121.8853,
+          latitude: initialLat,
+          longitude: initialLng,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
