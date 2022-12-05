@@ -115,12 +115,13 @@ export function CatteryMarker({
               backgroundColor: "transparent",
               position: "absolute",
               top: height - 211,
+              left: 30,
             }}
           >
             <FlatList
               data={cat}
               renderItem={({ item }) => (
-                <CatCard_map cat={cat} navigation={navigation} />
+                <CatCard_map cat={item} navigation={navigation} />
               )}
               horizontal
             />
