@@ -98,19 +98,20 @@ function MainScreen({ route, navigation }) {
     });
   });
 
-  // When tap notification, if only one new cat is added, navigate to the cat information page. 
+  // When tap notification, if only one new cat is added, navigate to the cat information page.
   // Otherwise stay in discover main page.
   useEffect(() => {
-    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
-      const newCats = response.notification.request.content.data.newCats;
-      if (newCats.length === 1) {
-        navigation.navigate("CatInformation", { catId: newCats[0].id })
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        const newCats = response.notification.request.content.data.newCats;
+        if (newCats.length === 1) {
+          navigation.navigate("CatInformation", { catId: newCats[0].id });
+        }
       }
-    });
+    );
     return () => subscription.remove();
   }, []);
-  
-  // const [recordTime, setRecordTime] = useState(0);
+
   async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
     if (!forceLoad && refreshCatDataLock) return;
     setRefreshCatDataLock(true);
@@ -121,9 +122,6 @@ function MainScreen({ route, navigation }) {
       return;
     }
     setLastTimeRefreshCatData(currentTimeInMill);
-
-    // setRecordTime(recordTime + 1);
-    // console.log(`run refreshCatData() ${recordTime} times`);
 
     setSelectedIndex(selectedIndex);
     let location = await getUserLocation();
@@ -159,42 +157,42 @@ function MainScreen({ route, navigation }) {
 
       const catSnapShot = await getDocs(q);
 
-      const dataBeforeFiltering = catSnapShot.docs
-        .map((catDoc) => {
-          const birthday = new Date(catDoc.data().Birthday);
-          const now = new Date();
-          const cattery = allCatteries.find(
-            (ca) => ca.email === catDoc.data().Cattery
-          );
-          // if cattery doesn't have location, use 9999 to make cat in the bottom.
-          const distance =
-            cattery.geoLocation && location
-              ? calculateDistance(location, cattery.geoLocation)
-              : null;
-          let age =
-            now.getMonth() -
-            birthday.getMonth() +
-            12 * (now.getFullYear() - birthday.getFullYear());
-          // age cannot be negative
-          if (age === undefined || isNaN(age) || age < 0) {
-            age = 0;
-          }
+      const dataBeforeFiltering = catSnapShot.docs.map((catDoc) => {
+        const birthday = new Date(catDoc.data().Birthday);
+        const now = new Date();
+        const cattery = allCatteries.find(
+          (ca) => ca.email === catDoc.data().Cattery
+        );
+        // if cattery doesn't have location, use 9999 to make cat in the bottom.
+        const distance =
+          cattery.geoLocation && location
+            ? calculateDistance(location, cattery.geoLocation)
+            : null;
+        let age =
+          now.getMonth() -
+          birthday.getMonth() +
+          12 * (now.getFullYear() - birthday.getFullYear());
+        // age cannot be negative
+        if (age === undefined || isNaN(age) || age < 0) {
+          age = 0;
+        }
 
-          return {
-            id: catDoc.id,
-            name: catDoc.data().Breed,
-            sex: catDoc.data().Gender,
-            price: catDoc.data().Price,
-            month: age,
-            photo: catDoc.data().Picture,
-            cattery: catDoc.data().Cattery,
-            distance,
-            uploadTime: catDoc.data().UploadTime,
-            tags: catDoc.data().Tags,
-          };
-        });
-        
-        const dataBeforeSorting = dataBeforeFiltering.filter((cat) => {
+        return {
+          id: catDoc.id,
+          name: catDoc.data().Breed,
+          sex: catDoc.data().Gender,
+          price: catDoc.data().Price,
+          month: age,
+          photo: catDoc.data().Picture,
+          cattery: catDoc.data().Cattery,
+          distance,
+          uploadTime: catDoc.data().UploadTime,
+          tags: catDoc.data().Tags,
+        };
+      });
+
+      const dataBeforeSorting = dataBeforeFiltering
+        .filter((cat) => {
           return (
             selectedTags.length === 0 ||
             selectedTags.every((tag) => {
@@ -223,9 +221,12 @@ function MainScreen({ route, navigation }) {
             cat.price >= selectedPrice[0] && cat.price <= selectedPrice[1]
         );
 
-        // After each refresh, get all new added cat within maxNotificationRange.
-      const addedCatWithinRange = dataBeforeFiltering.filter(cat => {
-        return !allCats.some(existingCat => existingCat.id === cat.id) && cat.distance <= maxNotificationRange;
+      // After each refresh, get all new added cat within maxNotificationRange.
+      const addedCatWithinRange = dataBeforeFiltering.filter((cat) => {
+        return (
+          !allCats.some((existingCat) => existingCat.id === cat.id) &&
+          cat.distance <= maxNotificationRange
+        );
       });
       setAllCats(dataBeforeFiltering);
       // If any new cats within maxNotificationRange are added, send out a notification.
@@ -233,12 +234,14 @@ function MainScreen({ route, navigation }) {
         await Notifications.scheduleNotificationAsync({
           content: {
             title: "FindMeow",
-            body: (addedCatWithinRange.length === 1 ? 
-              "A new cat is " : addedCatWithinRange.length + " new cats are ") 
-              + "available nearby. Check it now!",
+            body:
+              (addedCatWithinRange.length === 1
+                ? "A new cat is "
+                : addedCatWithinRange.length + " new cats are ") +
+              "available nearby. Check it now!",
             data: {
-              newCats: addedCatWithinRange
-            }
+              newCats: addedCatWithinRange,
+            },
           },
           trigger: { seconds: 1 },
         });
