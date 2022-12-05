@@ -162,7 +162,7 @@ export default function MapPage({
       )}
 
       {/* Trigger button - refresh if location changed */}
-      <View
+      {/* <View
         style={{
           height: 40,
           backgroundColor: "white",
@@ -185,7 +185,7 @@ export default function MapPage({
             Search this area
           </Text>
         </Pressable>
-      </View>
+      </View> */}
     </View>
   );
 }
