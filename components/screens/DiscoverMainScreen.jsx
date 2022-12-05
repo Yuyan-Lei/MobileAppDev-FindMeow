@@ -1,17 +1,27 @@
+import { async } from "@firebase/util";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import * as Notifications from "expo-notifications";
+import {
+  collection,
+  doc,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
-  StyleSheet,
-  View,
   Pressable,
+  RefreshControl,
+  StyleSheet,
   Text,
   useWindowDimensions,
-  RefreshControl,
+  View,
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import {
   calculateDistance,
   getAllCatteries,
@@ -19,16 +29,16 @@ import {
   getUserLocation,
 } from "../../firebaseUtils/user";
 import { CatCard } from "../cards/CatCard";
+import { stateFullNameToAbbr } from "../listContents/allStates";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
+import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import DiscoverFilter from "./DiscoverFilter";
-import PostNewCatScreen from "./PostNewCatScreen";
-import { Colors } from "../styles/Colors";
 import MapPage from "./MapPage";
-import * as Notifications from "expo-notifications";
+import PostNewCatScreen from "./PostNewCatScreen";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -56,13 +66,45 @@ function MainScreen({ route, navigation }) {
   const [data, setData] = useState([]);
   const [allCats, setAllCats] = useState([]);
 
+  const [enableNotification, setEnableNotification] = useState(false);
+  const [maxNotificationRange, setMaxNotificationRange] = useState(0);
+
   const refRBSheet = useRef();
+
+  /* use reference for setInterval functions
+     otherwise functions cannot get newest variables */
   const savedCallback = useRef();
   useEffect(() => {
     savedCallback.selectedIndex = selectedIndex;
-  }, [selectedIndex]);
+    savedCallback.selectedBreed = selectedBreed;
+    savedCallback.selectedAge = selectedAge;
+    savedCallback.selectedState = selectedState;
+    savedCallback.selectedGender = selectedGender;
+    savedCallback.selectedPrice = selectedPrice;
+  }, [
+    selectedIndex,
+    selectedBreed,
+    selectedAge,
+    selectedState,
+    selectedGender,
+    selectedPrice,
+  ]);
 
   /* values used for DiscoverFilter end */
+
+  const [likeCats, setLikeCats] = useState([]);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikeCats(likeCats);
+      }
+    );
+
+    return () => unSubscribe();
+  }, []);
 
   function resetAllFilters() {
     setValue(0);
@@ -85,11 +127,6 @@ function MainScreen({ route, navigation }) {
     setFilterTrigger(!filterTrigger);
   }
 
-  const [lastTimeRefreshCatData, setLastTimeRefreshCatData] = useState(0);
-  const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
-  const [enableNotification, setEnableNotification] = useState(false);
-  const [maxNotificationRange, setMaxNotificationRange] = useState(0);
-
   // Get user notification settings first.
   useEffect(() => {
     getUserData().then((userData) => {
@@ -98,38 +135,44 @@ function MainScreen({ route, navigation }) {
     });
   });
 
-  // When tap notification, if only one new cat is added, navigate to the cat information page. 
+  // When tap notification, if only one new cat is added, navigate to the cat information page.
   // Otherwise stay in discover main page.
   useEffect(() => {
-    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
-      const newCats = response.notification.request.content.data.newCats;
-      if (newCats.length === 1) {
-        navigation.navigate("CatInformation", { catId: newCats[0].id })
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        const newCats = response.notification.request.content.data.newCats;
+        if (newCats.length === 1) {
+          navigation.navigate("CatInformation", { catId: newCats[0].id });
+        }
       }
-    });
+    );
     return () => subscription.remove();
   }, []);
-  
-  // const [recordTime, setRecordTime] = useState(0);
-  async function refreshCatData({ selectedIndex, forceLoad = false } = {}) {
-    if (!forceLoad && refreshCatDataLock) return;
-    setRefreshCatDataLock(true);
 
-    // prevent running it too much in a short time
-    const currentTimeInMill = new Date().getTime();
-    if (!forceLoad && currentTimeInMill - lastTimeRefreshCatData < 5000) {
-      return;
-    }
-    setLastTimeRefreshCatData(currentTimeInMill);
+  const [catteries, setCatteries] = useState(null);
 
-    // setRecordTime(recordTime + 1);
-    // console.log(`run refreshCatData() ${recordTime} times`);
+  useEffect(() => {
+    const q = query(collection(db, "Users"), where("isCattery", "==", true));
+    const unSubscribe = onSnapshot(q, (querySnapshot) => {
+      const newCatteries = [];
+      querySnapshot.forEach((doc) => {
+        newCatteries.push({
+          email: doc.id,
+          ...doc.data(),
+        });
+      });
+      setCatteries(newCatteries);
+    });
 
-    setSelectedIndex(selectedIndex);
-    let location = await getUserLocation();
-    const allCatteries = await getAllCatteries();
+    return unSubscribe;
+  }, []);
+
+  function makeQuery() {
     try {
-      let clauseBreed, clauseAge, clauseState, clauseGender, clauseTags;
+      let clauseBreed, clauseGender;
+
+      const selectedBreed = savedCallback.selectedBreed;
+      const selectedGender = savedCallback.selectedGender;
 
       if (selectedBreed !== "" && selectedBreed !== "All") {
         clauseBreed = where("Breed", "==", selectedBreed);
@@ -139,30 +182,37 @@ function MainScreen({ route, navigation }) {
         clauseGender = where("Gender", "==", selectedGender);
       }
 
-      if (selectedState !== "" && selectedState !== "All") {
-        clauseState = where("State", "==", selectedState);
-      }
-
-      if (selectedAge !== "" && selectedAge !== "All") {
-        // TODO
-      }
-
-      const constraints = [
-        clauseBreed,
-        clauseAge,
-        clauseState,
-        clauseGender,
-        clauseTags,
-      ].filter((item) => item !== undefined);
+      const constraints = [clauseBreed, clauseGender].filter(
+        (item) => item !== undefined
+      );
 
       const q = query(collection(db, "Cats"), ...constraints);
+      return q;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-      const catSnapShot = await getDocs(q);
+  const [rawCatData, setRawCatData] = useState([]);
+  const [userLocation, setUserLocation] = useState(null);
 
-      const dataBeforeFiltering = catSnapShot.docs
-        .map((catDoc) => {
+  useEffect(() => {
+    getUserLocation().then((location) => setUserLocation(location));
+  }, []);
+
+  useEffect(() => {
+    const q = makeQuery();
+    const unSubscribe = onSnapshot(q, async (catSnapShot) => {
+      try {
+        const allCatteries = catteries || (await getAllCatteries());
+        setCatteries(allCatteries);
+        const location = userLocation || (await getUserLocation());
+        setUserLocation(location);
+
+        const dataBeforeFiltering = catSnapShot.docs.map((catDoc) => {
           const birthday = new Date(catDoc.data().Birthday);
           const now = new Date();
+
           const cattery = allCatteries.find(
             (ca) => ca.email === catDoc.data().Cattery
           );
@@ -191,108 +241,150 @@ function MainScreen({ route, navigation }) {
             distance,
             uploadTime: catDoc.data().UploadTime,
             tags: catDoc.data().Tags,
+            catteryDoc: cattery,
           };
         });
-        
-        const dataBeforeSorting = dataBeforeFiltering.filter((cat) => {
-          return (
-            selectedTags.length === 0 ||
-            selectedTags.every((tag) => {
-              return cat.tags.indexOf(tag) !== -1;
-            })
-          );
-        })
-        .filter((cat) => {
-          switch (selectedAge) {
-            case "< 1 month":
-              return cat.month < 1;
-            case "1 - 3 months":
-              return cat.month >= 1 && cat.month <= 3;
-            case "3 - 6 months":
-              return cat.month >= 3 && cat.month <= 6;
-            case "6 - 12 months":
-              return cat.month >= 6 && cat.month <= 12;
-            case "> 1 year":
-              return cat.month > 12;
-            default:
-              return true;
-          }
-        })
-        .filter(
-          (cat) =>
-            cat.price >= selectedPrice[0] && cat.price <= selectedPrice[1]
-        );
 
-        // After each refresh, get all new added cat within maxNotificationRange.
-      const addedCatWithinRange = dataBeforeFiltering.filter(cat => {
-        return !allCats.some(existingCat => existingCat.id === cat.id) && cat.distance <= maxNotificationRange;
-      });
-      setAllCats(dataBeforeFiltering);
-      // If any new cats within maxNotificationRange are added, send out a notification.
-      if (addedCatWithinRange.length > 0 && enableNotification) {
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: "FindMeow",
-            body: (addedCatWithinRange.length === 1 ? 
-              "A new cat is " : addedCatWithinRange.length + " new cats are ") 
-              + "available nearby. Check it now!",
-            data: {
-              newCats: addedCatWithinRange
-            }
+        setRawCatData(dataBeforeFiltering);
+      } catch (e) {
+        console.error(e);
+      }
+    });
+
+    return unSubscribe;
+  }, [selectedBreed, selectedGender]);
+
+  useEffect(() => {
+    /* filter cats data */
+    const dataBeforeSorting = filterCatsData(
+      rawCatData,
+      selectedAge,
+      selectedPrice,
+      selectedState
+    );
+
+    /* sort cats data */
+    const sortedData = sortCatsData(dataBeforeSorting, selectedIndex);
+    setData(sortedData);
+
+    // After each refresh, get all new added cat within maxNotificationRange.
+    makeNotification(rawCatData, maxNotificationRange, enableNotification);
+  }, [rawCatData, selectedAge, selectedPrice, selectedState, filterTrigger]);
+
+  async function makeNotification(
+    allCats,
+    maxNotificationRange,
+    enableNotification
+  ) {
+    const addedCatWithinRange = dataBeforeFiltering.filter((cat) => {
+      return (
+        !allCats.some((existingCat) => existingCat.id === cat.id) &&
+        cat.distance <= maxNotificationRange
+      );
+    });
+    // setAllCats(dataBeforeFiltering);
+    // If any new cats within maxNotificationRange are added, send out a notification.
+    if (addedCatWithinRange.length > 0 && enableNotification) {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "FindMeow",
+          body:
+            (addedCatWithinRange.length === 1
+              ? "A new cat is "
+              : addedCatWithinRange.length + " new cats are ") +
+            "available nearby. Check it now!",
+          data: {
+            newCats: addedCatWithinRange,
           },
-          trigger: { seconds: 1 },
-        });
-      }
+        },
+        trigger: { seconds: 1 },
+      });
+    }
+  }
 
-      // 1. newer post
-      if (selectedIndex === 0) {
-        setData(
-          dataBeforeSorting.sort((d1, d2) => d2.uploadTime - d1.uploadTime)
+  function filterCatsData(
+    dataBeforeFiltering,
+    selectedAge,
+    selectedPrice,
+    selectedState
+  ) {
+    return dataBeforeFiltering
+      .filter((cat) => {
+        return (
+          selectedTags.length === 0 ||
+          selectedTags.every((tag) => {
+            return cat.tags.indexOf(tag) !== -1;
+          })
         );
-      }
-      // 2. nearby Post
-      else if (selectedIndex === 1) {
-        try {
-          setData(
-            dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance)
-          );
-        } catch (e) {
-          console.log("error sorting by distance", e);
+      })
+      .filter((cat) => {
+        switch (selectedAge) {
+          case "< 1 month":
+            return cat.month < 1;
+          case "1 - 3 months":
+            return cat.month >= 1 && cat.month <= 3;
+          case "3 - 6 months":
+            return cat.month >= 3 && cat.month <= 6;
+          case "6 - 12 months":
+            return cat.month >= 6 && cat.month <= 12;
+          case "> 1 year":
+            return cat.month > 12;
+          default:
+            return true;
         }
+      })
+      .filter(
+        (cat) => cat.price >= selectedPrice[0] && cat.price <= selectedPrice[1]
+      )
+      .filter((cat) => {
+        return (
+          selectedState === "All" ||
+          selectedState === "" ||
+          (cat.catteryDoc.shortAddress &&
+            cat.catteryDoc.shortAddress.slice(-2) ===
+              stateFullNameToAbbr[selectedState])
+        );
+      })
+      .slice(0);
+  }
+
+  function sortCatsData(dataBeforeSorting, index) {
+    // 1. newer post
+    if (index === 0) {
+      return dataBeforeSorting
+        .slice(0)
+        .sort((d1, d2) => d2.uploadTime - d1.uploadTime);
+    }
+    // 2. nearby Post
+    else if (index === 1) {
+      try {
+        return dataBeforeSorting
+          .slice(0)
+          .sort((d1, d2) => d1.distance - d2.distance);
+      } catch (e) {
+        console.log("error sorting by distance", e);
       }
-      // 3. Lower Price
-      else if (selectedIndex === 2) {
-        setData(dataBeforeSorting.sort((d1, d2) => d1.price - d2.price));
-      }
-    } finally {
-      setRefreshCatDataLock(false);
+    }
+    // 3. Lower Price
+    else if (index === 2) {
+      return dataBeforeSorting.slice(0).sort((d1, d2) => d1.price - d2.price);
     }
   }
 
   const { height, width } = useWindowDimensions();
 
-  /* data collector used for top filter tags - start */
   useEffect(() => {
-    refreshCatData({ selectedIndex, forceLoad: true });
-  }, [filterTrigger]);
+    const selectedIndex = savedCallback.selectedIndex;
+    const sortedData = sortCatsData(data, selectedIndex);
+    setData(sortedData);
+  }, [selectedIndex]);
   /* data collector used for top filter tags - end */
 
   /* events for top filter tags - start */
   const onFilterChange = (value) => {
     setSelectedIndex(value);
-    refreshCatData({ selectedIndex: value, forceLoad: true });
   };
   /* events for top filter tags - end */
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refreshCatData({ selectedIndex: savedCallback.selectedIndex });
-    }, 10000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -368,15 +460,19 @@ function MainScreen({ route, navigation }) {
         <FlatList
           data={data}
           renderItem={({ item, index }) => (
-            <CatCard cat={item} navigation={navigation} />
+            <CatCard
+              cat={item}
+              navigation={navigation}
+              isLiked={likeCats.includes(item.id)}
+            />
           )}
           numColumns={2}
           refreshControl={
             <RefreshControl
-              refreshing={refreshCatDataLock}
-              onRefresh={() => {
-                refreshCatData({ selectedIndex, forceLoad: true });
-              }}
+            // refreshing={refreshCatDataLock}
+            // onRefresh={() => {
+            //   refreshCatData({ selectedIndex, forceLoad: true });
+            // }}
             />
           }
           ListFooterComponent={<View style={{ height: 80 }} />}

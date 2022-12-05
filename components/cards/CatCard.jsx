@@ -13,9 +13,10 @@ import { useSwipePressable } from "../../utils/useSwipe";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 
-export function CatCard({ cat, navigation, hideLocation, showBreed }) {
+export function CatCard({ cat, navigation, isLiked, hideLocation, showBreed }) {
   const [likeCats, setLikeCats] = useState([]);
   const [cattery, setCattery] = useState(null);
+  const [isCatLiked, setIsCatLiked] = useState(isLiked);
 
   useEffect(() => {
     if (cat.cattery) {
@@ -26,22 +27,41 @@ export function CatCard({ cat, navigation, hideLocation, showBreed }) {
   }, [cat]);
 
   useEffect(() => {
-    const unSubscribe = onSnapshot(
-      doc(db, "Users", getCurrentUserEmail()),
-      (snapshot) => {
-        const likeCats = snapshot.data().likeCats;
-        setLikeCats(likeCats);
-      }
-    );
+    if (isLiked === undefined) {
+      const unSubscribe = onSnapshot(
+        doc(db, "Users", getCurrentUserEmail()),
+        (snapshot) => {
+          const likeCats = snapshot.data().likeCats;
+          setLikeCats(likeCats);
+        }
+      );
 
-    return () => unSubscribe();
+      return () => unSubscribe();
+    }
   }, []);
 
-  const onClickLikeButton = () => {
-    if (!likeCats.includes(cat.id)) {
-      userLikeACat(cat.id);
+  const onClickLikeButton = async () => {
+    if (isLiked === undefined) {
+      /* old method */
+      if (!likeCats.includes(cat.id)) {
+        userLikeACat(cat.id);
+      } else {
+        userUnLikeACat(cat.id);
+      }
     } else {
-      userUnLikeACat(cat.id);
+      /* new method saving database connection */
+      const oldLiked = isCatLiked;
+      try {
+        setIsCatLiked(!isCatLiked);
+        if (oldLiked) {
+          await userUnLikeACat(cat.id);
+        } else {
+          await userLikeACat(cat.id);
+        }
+      } catch (e) {
+        setIsCatLiked(oldLiked);
+        console.error("Error while liking a cat", e);
+      }
     }
   };
 
@@ -114,7 +134,9 @@ export function CatCard({ cat, navigation, hideLocation, showBreed }) {
       <View style={styles.heartButtonView}>
         <HeartButton
           // notSelectedColor="white"
-          isLiked={likeCats.includes(cat.id)}
+          isLiked={
+            isLiked === undefined ? likeCats.includes(cat.id) : isCatLiked
+          }
           onPress={onClickLikeButton}
         />
       </View>

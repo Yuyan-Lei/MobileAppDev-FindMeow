@@ -5,6 +5,7 @@ import { FlatList, StyleSheet, View, RefreshControl } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { BreederCard } from "../cards/BreederCard";
+import { stateFullNameToAbbr } from "../listContents/allStates";
 import { FilterButton } from "../pressable/FilterButton";
 import { SearchBar } from "../pressable/SearchBar";
 import { Colors } from "../styles/Colors";
@@ -27,6 +28,15 @@ function MainScreen({ route, navigation }) {
 
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
+
+  /* use reference for setInterval functions
+     otherwise functions cannot get newest variables */
+  const savedCallback = useRef();
+  useEffect(() => {
+    savedCallback.selectedBreed = selectedBreed;
+    savedCallback.selectedState = selectedState;
+    savedCallback.selectedCatNum = selectedCatNum;
+  }, [selectedBreed, selectedState, selectedCatNum]);
 
   function resetAllFilters() {
     setSelectedBreed("");
@@ -51,12 +61,12 @@ function MainScreen({ route, navigation }) {
       /* Grouping constraints starts */
       let clauseBreed, clauseState, clauseCatNum;
 
-      if (selectedBreed !== "All") {
-        clauseBreed = where("breed", "==", selectedBreed);
-      }
+      const selectedBreed = savedCallback.selectedBreed;
+      const selectedState = savedCallback.selectedState;
+      const selectedCatNum = savedCallback.selectedCatNum;
 
-      if (selectedState !== "All") {
-        // TODO
+      if (selectedBreed !== "All" && selectedBreed !== "") {
+        clauseBreed = where("breed", "==", selectedBreed);
       }
 
       if (selectedCatNum.toLowerCase() === "yes") {
@@ -94,6 +104,15 @@ function MainScreen({ route, navigation }) {
                   .includes(searchName.toLowerCase()))
             );
           })
+          .filter((cattery) => {
+            return (
+              selectedState === "All" ||
+              selectedState === "" ||
+              (cattery.shortAddress &&
+                cattery.shortAddress.slice(-2) ===
+                  stateFullNameToAbbr[selectedState])
+            );
+          })
       );
     } finally {
       setRefreshCatteryData(false);
@@ -107,7 +126,7 @@ function MainScreen({ route, navigation }) {
   useEffect(() => {
     const interval = setInterval(() => {
       refreshCatteryData();
-    }, 10000);
+    }, 100000);
 
     return () => {
       clearInterval(interval);
