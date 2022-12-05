@@ -1,6 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as Notifications from "expo-notifications";
 import {
   collection,
+  doc,
   getDocs,
   onSnapshot,
   query,
@@ -9,15 +11,16 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
-  StyleSheet,
-  View,
   Pressable,
+  RefreshControl,
+  StyleSheet,
   Text,
   useWindowDimensions,
-  RefreshControl,
+  View,
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import {
   calculateDistance,
   getAllCatteries,
@@ -27,15 +30,15 @@ import {
 import { CatCard } from "../cards/CatCard";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
+import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import DiscoverFilter from "./DiscoverFilter";
-import PostNewCatScreen from "./PostNewCatScreen";
-import { Colors } from "../styles/Colors";
 import MapPage from "./MapPage";
 import * as Notifications from "expo-notifications";
 import { stateFullNameToAbbr } from "../listContents/allStates";
+import PostNewCatScreen from "./PostNewCatScreen";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -85,6 +88,20 @@ function MainScreen({ route, navigation }) {
   ]);
 
   /* values used for DiscoverFilter end */
+
+  const [likeCats, setLikeCats] = useState([]);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikeCats(likeCats);
+      }
+    );
+
+    return () => unSubscribe();
+  }, []);
 
   function resetAllFilters() {
     setValue(0);
@@ -450,7 +467,11 @@ function MainScreen({ route, navigation }) {
         <FlatList
           data={data}
           renderItem={({ item, index }) => (
-            <CatCard cat={item} navigation={navigation} />
+            <CatCard
+              cat={item}
+              navigation={navigation}
+              isLiked={likeCats.includes(item.id)}
+            />
           )}
           numColumns={2}
           refreshControl={
