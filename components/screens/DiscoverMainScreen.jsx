@@ -318,25 +318,30 @@ function MainScreen({ route, navigation }) {
           (cat.shortAddress &&
             cat.shortAddress.slice(-2) === stateFullNameToAbbr[selectedState])
         );
-      });
+      })
+      .slice(0);
   }
 
   function sortCatsData(dataBeforeSorting, index) {
     // 1. newer post
     if (index === 0) {
-      return dataBeforeSorting.sort((d1, d2) => d2.uploadTime - d1.uploadTime);
+      return dataBeforeSorting
+        .slice(0)
+        .sort((d1, d2) => d2.uploadTime - d1.uploadTime);
     }
     // 2. nearby Post
     else if (index === 1) {
       try {
-        return dataBeforeSorting.sort((d1, d2) => d1.distance - d2.distance);
+        return dataBeforeSorting
+          .slice(0)
+          .sort((d1, d2) => d1.distance - d2.distance);
       } catch (e) {
         console.log("error sorting by distance", e);
       }
     }
     // 3. Lower Price
     else if (index === 2) {
-      return dataBeforeSorting.sort((d1, d2) => d1.price - d2.price);
+      return dataBeforeSorting.slice(0).sort((d1, d2) => d1.price - d2.price);
     }
   }
 
@@ -351,7 +356,6 @@ function MainScreen({ route, navigation }) {
     const selectedIndex = savedCallback.selectedIndex;
     sortedData = sortCatsData(data, selectedIndex);
     setData(sortedData);
-    console.log("sorted")
   }, [selectedIndex]);
   /* data collector used for top filter tags - end */
 
