@@ -60,6 +60,7 @@ function MainScreen({ route, navigation }) {
   const savedCallback = useRef();
   useEffect(() => {
     savedCallback.selectedIndex = selectedIndex;
+    // savedCallback.
   }, [selectedIndex]);
 
   /* values used for DiscoverFilter end */
@@ -140,7 +141,7 @@ function MainScreen({ route, navigation }) {
       }
 
       if (selectedState !== "" && selectedState !== "All") {
-        clauseState = where("State", "==", selectedState);
+        // clauseState = where("State", "==", selectedState);
       }
 
       if (selectedAge !== "" && selectedAge !== "All") {
