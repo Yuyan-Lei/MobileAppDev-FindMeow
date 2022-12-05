@@ -8,6 +8,7 @@ import {
   Pressable,
   Text,
   useWindowDimensions,
+  RefreshControl,
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
@@ -82,14 +83,6 @@ function MainScreen({ route, navigation }) {
 
   function flipFilterTrigger() {
     setFilterTrigger(!filterTrigger);
-  }
-
-  function isScrollToTop(event) {
-    return event.nativeEvent.contentOffset.y < -100;
-  }
-
-  function onScrollToTop() {
-    refreshCatData({ selectedIndex, forceLoad: true });
   }
 
   const [lastTimeRefreshCatData, setLastTimeRefreshCatData] = useState(0);
@@ -378,12 +371,15 @@ function MainScreen({ route, navigation }) {
             <CatCard cat={item} navigation={navigation} />
           )}
           numColumns={2}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshCatDataLock}
+              onRefresh={() => {
+                refreshCatData({ selectedIndex, forceLoad: true });
+              }}
+            />
+          }
           ListFooterComponent={<View style={{ height: 80 }} />}
-          onScrollEndDrag={(event) => {
-            if (isScrollToTop(event)) {
-              onScrollToTop();
-            }
-          }}
           showsVerticalScrollIndicator={false}
         />
       </View>
