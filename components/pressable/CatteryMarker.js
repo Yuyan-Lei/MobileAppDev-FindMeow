@@ -36,16 +36,46 @@ import {
   calculateDistance,
   getAllCatteries,
   getUserLocation,
+  getCattery,
+  userLikeACat,
+  userUnLikeACat,
 } from "../../firebaseUtils/user";
 
 export function CatteryMarker({
-  catsData,
+  cat,
   navigation,
   showCatList,
   setShowCatList,
 }) {
   const { height, width } = useWindowDimensions();
-  //   const [showCatCard, setShowCatCard] = useState(false);
+  const [cattery, setCattery] = useState(null);
+  const [likeCats, setLikeCats] = useState([]);
+
+  useEffect(() => {
+    if (cat.cattery) {
+      getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+    }
+  }, [cat]);
+
+  //   useEffect(() => {
+  //     const unSubscribe = onSnapshot(
+  //       doc(db, "Users", getCurrentUserEmail()),
+  //       (snapshot) => {
+  //         const likeCats = snapshot.data().likeCats;
+  //         setLikeCats(likeCats);
+  //       }
+  //     );
+
+  //     return () => unSubscribe();
+  //   }, []);
+
+  const onClickLikeButton = () => {
+    if (!likeCats.includes(cat.id)) {
+      userLikeACat(cat.id);
+    } else {
+      userUnLikeACat(cat.id);
+    }
+  };
 
   const showCatCardHandler = () => {
     setShowCatList(!showCatList);
@@ -73,14 +103,13 @@ export function CatteryMarker({
         <View style={{ width: width + 20, alignItems: "center" }}>
           <View
             style={{
-              height: 180,
-              backgroundColor: "yellow",
+              height: 110,
+              backgroundColor: "transparent",
               position: "absolute",
-              top: height - 170,
+              top: height - 211,
             }}
           >
-            <CatCard_map cat={catsData} navigation={navigation} />
-            <Text>asdegfasrthsdgtjnsdfgn</Text>
+            <CatCard_map cat={cat} navigation={navigation} />
           </View>
         </View>
       ) : (

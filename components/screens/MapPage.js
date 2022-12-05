@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FlatList,
   Pressable,
@@ -12,6 +12,7 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
 import { Colors } from "../styles/Colors";
+import { getUserLocation } from "../../firebaseUtils/user";
 
 export default function MapPage({
   route: {
@@ -22,10 +23,19 @@ export default function MapPage({
   catsData = catsData.sort((a, b) => a.distance - b.distance);
   const { height, width } = useWindowDimensions();
   const [showCatList, setShowCatList] = useState(true);
+  const [location, setLocation] = useState(null);
 
   const showCatListHandler = () => {
     setShowCatList(!showCatList);
   };
+
+  /* Set user location. */
+  useEffect(() => {
+    (async () => {
+      let location = await getUserLocation();
+      setLocation(location);
+    })();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -56,7 +66,7 @@ export default function MapPage({
         {/* </Marker> */}
 
         <CatteryMarker
-          catsData={catsData}
+          cat={catsData}
           navigation={navigation}
           showCatList={showCatList}
           setShowCatList={setShowCatList}
