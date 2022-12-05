@@ -370,30 +370,26 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     flexDirection: "row",
                     alignItems: "center",
                     flex: 1,
+                    width: "100%",
                     borderBottomWidth: 1,
                     paddingLeft: 12}}>
-                  <FontAwesome5
+                    <FontAwesome5
                           name="cat"
                           size={24}
                           color="rgb(97,97,97)"
                         />
-                    <SelectList
-                      setSelected={setBreed}
-                      data={ALL_BREEDS}
-                      save="value"
-                      placeholder="Select Breed"
-                      boxStyles={{
-                        borderWidth: 0,
-                        width: "80%"
-                      }}
-                      dropdownItemStyles={{
-                        width: "100%",
-                      }}
-                      inputStyles={{
-                        fontSize: 16,
-                      }}
-                      defaultOption={{ key: breed, value: breed }}
-                    />
+                    <View style={{ flex: 1}}>
+                      <SelectList
+                        setSelected={setBreed}
+                        data={ALL_BREEDS}
+                        save="value"
+                        placeholder="Select Breed"
+                        boxStyles={{
+                          borderWidth: 0,
+                        }}
+                        defaultOption={{ key: breed, value: breed }}
+                      />
+                    </View>
                   </View>
                   {/* <Text style={styles.subTitle}>Address</Text> */}
                   <GooglePlacesAutocomplete
