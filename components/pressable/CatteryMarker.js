@@ -38,11 +38,17 @@ import {
   getUserLocation,
 } from "../../firebaseUtils/user";
 
-export function CatteryMarker() {
+export function CatteryMarker({
+  catsData,
+  navigation,
+  showCatList,
+  setShowCatList,
+}) {
   const { height, width } = useWindowDimensions();
-  const [showCatCard, setShowCatCard] = useState(false);
+  //   const [showCatCard, setShowCatCard] = useState(false);
+
   const showCatCardHandler = () => {
-    setShowCatCard(!showCatCard);
+    setShowCatList(!showCatList);
   };
 
   return (
@@ -63,17 +69,18 @@ export function CatteryMarker() {
           </Callout> */}
       </Marker>
 
-      {showCatCard == true ? (
+      {showCatList == false ? (
         <View style={{ width: width + 20, alignItems: "center" }}>
           <View
             style={{
-              height: 80,
-              backgroundColor: "transparent",
+              height: 180,
+              backgroundColor: "yellow",
               position: "absolute",
               top: height - 170,
             }}
           >
-            <CatCard_map></CatCard_map>
+            <CatCard_map cat={catsData} navigation={navigation} />
+            <Text>asdegfasrthsdgtjnsdfgn</Text>
           </View>
         </View>
       ) : (

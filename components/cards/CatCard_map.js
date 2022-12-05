@@ -10,11 +10,21 @@ import {
 import CachedImage from "react-native-expo-cached-image";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { getCattery, userLikeACat, userUnLikeACat } from "../../firebaseUtils/user";
+import {
+  getCattery,
+  userLikeACat,
+  userUnLikeACat,
+} from "../../firebaseUtils/user";
 import { HeartButton2 } from "../pressable/HeartButton2";
 import { LocationText } from "../texts/LocationText";
 
-export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed }) {
+export function CatCard_map({
+  cat,
+  navigation,
+  isliked,
+  hideLocation,
+  showBreed,
+}) {
   const { height, width } = useWindowDimensions();
   const [cattery, setCattery] = useState(null);
 
@@ -24,8 +34,6 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
     }
   }, [cat]);
 
-
-
   const onClickLikeButton = () => {
     if (!isliked) {
       userLikeACat(cat.id);
@@ -34,15 +42,6 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
     }
     isliked = !isliked;
   };
-
-  // let catMonthText = "";
-  // if (cat.month <= 1) {
-  //   catMonthText = "< 1 month";
-  // } else if (cat.month === 1) {
-  //   catMonthText = cat.month + " month";
-  // } else {
-  //   catMonthText = cat.month + " months";
-  // }
 
   const onPressCatCard = () =>
     navigation.navigate("CatInformation", { catId: cat.id });
@@ -80,7 +79,10 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
 
                 {/* cat details */}
                 <Text style={styles.catDetailStyle}>
-                  {cat.sex}, {cat.month === 1 ? cat.month + " month" : cat.month + " months"}
+                  {cat.sex},{" "}
+                  {cat.month === 1
+                    ? cat.month + " month"
+                    : cat.month + " months"}
                 </Text>
 
                 {/* cat location */}
@@ -97,8 +99,7 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
                 <LocationText style={styles.locationStyle}>
                   {/* San Jose (0.8km) */}
                   {cattery && cattery.shortAddress
-                    ? cattery.shortAddress +
-                    " (" + cat.distance + " mi)"
+                    ? cattery.shortAddress + " (" + cat.distance + " mi)"
                     : "Loading"}
                 </LocationText>
                 {/* <Text>San Jose (0.8 km)</Text> */}
@@ -111,7 +112,7 @@ export function CatCard_map({ cat, navigation, isliked, hideLocation, showBreed 
             <View style={styles.heartButtonView}>
               <HeartButton2
                 // notSelectedColor="white"
-                //   isLiked={likeCats.includes(cat.id)}
+                // isLiked={likeCats.includes(cat.id)}
                 onPress={onClickLikeButton}
               />
             </View>

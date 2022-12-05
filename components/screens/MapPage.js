@@ -1,23 +1,30 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
-  FlatList, Pressable, StyleSheet,
-  Text, useWindowDimensions, View
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
 } from "react-native";
-import MapView, {
-  PROVIDER_GOOGLE
-} from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
 import { Colors } from "../styles/Colors";
 
-export default function MapPage({ route: { params: { catsData, likedCats } }, navigation }) {
+export default function MapPage({
+  route: {
+    params: { catsData, likedCats },
+  },
+  navigation,
+}) {
   catsData = catsData.sort((a, b) => a.distance - b.distance);
   const { height, width } = useWindowDimensions();
-  const [showCatCard, setShowCatCard] = useState(false);
+  const [showCatList, setShowCatList] = useState(true);
 
-  const showCatCardHandler = () => {
-    setShowCatCard(!showCatCard);
+  const showCatListHandler = () => {
+    setShowCatList(!showCatList);
   };
 
   return (
@@ -48,10 +55,15 @@ export default function MapPage({ route: { params: { catsData, likedCats } }, na
           </Callout> */}
         {/* </Marker> */}
 
-        <CatteryMarker />
+        <CatteryMarker
+          catsData={catsData}
+          navigation={navigation}
+          showCatList={showCatList}
+          setShowCatList={setShowCatList}
+        />
       </MapView>
 
-      {/* Header */}
+      {/* Header and goBack button */}
       <View
         style={{
           flexDirection: "row",
@@ -99,36 +111,45 @@ export default function MapPage({ route: { params: { catsData, likedCats } }, na
       > */}
       {/* Add space to the beginning */}
       {/* <View style={{ width: 20 }}></View> */}
-
-      {/* Cat card list here */}
-      {/* <CatCard_map></CatCard_map> */}
-
-      {/* <CatCard_map></CatCard_map>
-      </ScrollView> */}
+      {/* </ScrollView> */}
 
       {/* Flatlist card */}
-      <View
-        style={{
-          height: 80,
-          backgroundColor: "transparent",
-          position: "absolute",
-          top: height - 170,
-          left: 30,
-        }}
-      >
-        {/* <View style={{ width: 200 }}></View> */}
-        <FlatList
-          data={catsData}
-          renderItem={({ item }) => (
-            <CatCard_map
-              cat={item}
-              navigation={navigation}
-              isliked={likedCats.includes(item.id)} />
-          )}
-          horizontal
-        />
-        {/* <CatCard_map></CatCard_map> */}
-      </View>
+      {showCatList == true ? (
+        <View
+          style={{
+            height: 80,
+            backgroundColor: "transparent",
+            position: "absolute",
+            top: height - 170,
+            left: 30,
+          }}
+        >
+          <FlatList
+            data={catsData}
+            renderItem={({ item }) => (
+              <CatCard_map
+                cat={item}
+                navigation={navigation}
+                isliked={likedCats.includes(item.id)}
+              />
+            )}
+            horizontal
+          />
+        </View>
+      ) : (
+        <View style={{ width: width + 20, alignItems: "center" }}>
+          <View
+            style={{
+              height: 80,
+              backgroundColor: "transparent",
+              position: "absolute",
+              top: height - 170,
+            }}
+          >
+            <CatCard_map cat={catsData} navigation={navigation} />
+          </View>
+        </View>
+      )}
 
       {/* Trigger button - refresh if location changed */}
       <View
@@ -143,7 +164,7 @@ export default function MapPage({ route: { params: { catsData, likedCats } }, na
           alignItems: "center",
         }}
       >
-        <Pressable onPress={() => onSearchArea()}>
+        <Pressable>
           <Text
             style={{
               fontFamily: "Poppins",
