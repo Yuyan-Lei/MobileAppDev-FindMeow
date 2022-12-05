@@ -369,7 +369,7 @@ function MainScreen({ route, navigation }) {
   useEffect(() => {
     const interval = setInterval(() => {
       refreshCatData({ selectedIndex: savedCallback.selectedIndex });
-    }, 10000);
+    }, 100000);
 
     return () => {
       clearInterval(interval);

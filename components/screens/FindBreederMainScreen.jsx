@@ -126,7 +126,7 @@ function MainScreen({ route, navigation }) {
   useEffect(() => {
     const interval = setInterval(() => {
       refreshCatteryData();
-    }, 10000);
+    }, 100000);
 
     return () => {
       clearInterval(interval);
