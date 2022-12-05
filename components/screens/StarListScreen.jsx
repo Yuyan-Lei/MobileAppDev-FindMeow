@@ -112,6 +112,7 @@ function CatsScreen({
         paddingTop: 0,
         paddingBottom: 100,
         width: "100%",
+        flex: 1,
       }}
     >
       {cats.length > 0 ? (
