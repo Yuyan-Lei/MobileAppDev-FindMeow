@@ -101,23 +101,22 @@ export function CatteryMarker({
       </Marker>
 
       {showCatList == false ? (
-        <View style={{ width: width + 20, alignItems: "center" }}>
-          <View
-            style={{
-              height: 110,
-              backgroundColor: "transparent",
-              position: "absolute",
-              top: height - 211,
-            }}
-          >
-            <FlatList
-              data={cat}
-              renderItem={({ item }) => (
-                <CatCard_map cat={cat} navigation={navigation} />
-              )}
-              horizontal
-            />
-          </View>
+        <View
+          style={{
+            height: 110,
+            backgroundColor: "transparent",
+            position: "absolute",
+            top: height - 211,
+            left: 30,
+          }}
+        >
+          <FlatList
+            data={cat}
+            renderItem={({ item }) => (
+              <CatCard_map cat={cat} navigation={navigation} />
+            )}
+            horizontal
+          />
         </View>
       ) : (
         <View />
