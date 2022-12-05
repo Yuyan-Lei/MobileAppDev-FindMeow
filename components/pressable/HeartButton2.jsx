@@ -23,9 +23,9 @@ export function HeartButton2({
           padding: 5,
 
           borderRadius: 20,
-          marginTop: 33,
-          marginLeft: 10,
-          marginRight: 10,
+          // marginTop: 33,
+          // marginLeft: 10,
+          // marginRight: 10,
         }}
       >
         <Ionicons

@@ -44,48 +44,60 @@ export function BreederCard({ cattery, navigation }) {
   );
 
   return (
-    <View style={styles.breederView}>
-      <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}>
-        <View style={[styles.cardView, Platform.OS === "ios" ? styles.iosShadowView : styles.androidShadowView]}>
-          {/* Cattery photo */}
-          <View style={styles.imageView}>
-            <CachedImage
-              source={{ uri: cattery.picture }}
-              style={styles.image}
-            />
-          </View>
+    // <View style={styles.breederView}>
+    <View
+      style={[
+        styles.cardView,
+        Platform.OS === "ios" ? styles.iosShadowView : styles.androidShadowView,
+      ]}
+    >
+      <Pressable
+        onPressIn={onTouchStart}
+        onPressOut={onTouchEnd}
+        style={{ flexDirection: "row", flex: 1, flexGrow: 1 }}
+      >
+        {/* Cattery photo */}
+        <View style={styles.imageView}>
+          <CachedImage source={{ uri: cattery.picture }} style={styles.image} />
+        </View>
 
-          <View style={styles.detailView}>
-            {/* Cattery Avatar */}
-            <Text style={styles.breederNameText}>{cattery.catteryName}</Text>
+        <View style={styles.detailView}>
+          {/* Cattery Avatar */}
+          <Text
+            style={styles.breederNameText}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {cattery.catteryName}
+          </Text>
 
-            {/* Cattery Breed */}
-            <Text style={styles.breedText}>
-              {cattery.breed === undefined
-                ? 'N/A breed'
-                : cattery.breed
-              }
-            </Text>
+          {/* Cattery Breed */}
+          <Text style={styles.breedText} numberOfLines={1} ellipsizeMode="tail">
+            {cattery.breed === undefined
+              ? "N/A breed"
+              : cattery.breed}
+          </Text>
 
-            {/* Available Kitten Display */}
-            <Text style={styles.availableKittenText}>
-              {cattery.cats.length > 0
-                ? cattery.cats.length === 1
-                  ? `${cattery.cats.length} Available Kitten`
-                  : `${cattery.cats.length} Available Kittens`
-                : ""}
-            </Text>
+          {/* Available Kitten Display */}
+          <Text style={styles.availableKittenText}>
+            {cattery.cats.length > 0
+              ? cattery.cats.length === 1
+                ? `${cattery.cats.length} Available Kitten`
+                : `${cattery.cats.length} Available Kittens`
+              : ""}
+          </Text>
 
-            {/* Cattery Location */}
-            <LocationText 
-              textStyle={styles.locationTextStyle}
-              locationIconColor={"#C5C4C4"}
-              viewPosition={{ top: -1, left: -2}}>
-              {cattery.shortAddress}
-            </LocationText>
-          </View>
+          {/* Cattery Location */}
+          <LocationText
+            textStyle={styles.locationTextStyle}
+            locationIconColor={"#C5C4C4"}
+            viewPosition={{ top: -1, left: -2 }}
+          >
+            {cattery.shortAddress}
+          </LocationText>
         </View>
       </Pressable>
+      {/* </View> */}
 
       <View style={styles.heartButtonView}>
         <HeartButton2
@@ -102,9 +114,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   heartButtonView: {
-    position: "absolute",
-    top: 20,
-    right: 24,
+    // top: 20,
+    // marginRight: 24,
+    // width:48,
+    justifyContent: "center",
   },
   breederNameText: {
     fontFamily: "PoppinsSemiBold",
@@ -124,18 +137,19 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
   locationTextStyle: {
-    fontSize: 11    ,
+    fontSize: 11,
     color: "#C5C4C4",
   },
-
   detailView: {
-    width: 360,
+    flexGrow: 1,
+    flex: 1,
+    // minWidth: 150,
   },
   imageView: {
     height: 80,
     width: 80,
     backgroundColor: "gray",
-    marginHorizontal: 20,
+    marginRight: 20,
     borderRadius: 16,
   },
   image: {
@@ -146,11 +160,12 @@ const styles = StyleSheet.create({
   cardView: {
     flexDirection: "row",
     padding: 16,
-    paddingLeft: 8,
+    // paddingLeft: 8,
     marginHorizontal: 16,
     marginVertical: 8,
     backgroundColor: "white",
     borderRadius: 20,
+    // width: "90%",
   },
   iosShadowView: {
     shadowColor: Colors.black,
@@ -158,8 +173,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.07,
     shadowOffset: {
       width: 0,
-      height: 7
-    }
+      height: 7,
+    },
   },
   androidShadowView: {
     shadowColor: Colors.shadowWhiteAndroid,
