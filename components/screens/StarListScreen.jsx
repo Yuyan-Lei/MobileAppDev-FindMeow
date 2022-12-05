@@ -110,13 +110,13 @@ function CatsScreen({
       style={{
         paddingHorizontal: 16,
         paddingTop: 0,
-        paddingBottom: 100,
         width: "100%",
         flex: 1,
       }}
     >
       {cats.length > 0 ? (
         <FlatList
+          style={{ flex: 1 }}
           data={cats}
           renderItem={({ item, index }) => {
             return (
@@ -132,10 +132,7 @@ function CatsScreen({
           extraData={location}
           ListFooterComponent={<View style={{ height: 60 }} />}
           refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
@@ -188,10 +185,7 @@ function CatteriesScreen({
           numColumns={1}
           ListFooterComponent={<View style={{ height: 60 }} />}
           refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
