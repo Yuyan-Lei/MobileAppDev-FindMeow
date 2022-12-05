@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View, RefreshControl } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { BreederCard } from "../cards/BreederCard";
@@ -161,11 +161,14 @@ function MainScreen({ route, navigation }) {
             <BreederCard cattery={item} navigation={navigation} />
           )}
           ListFooterComponent={<View style={{ height: 120 }} />}
-          onScrollEndDrag={(event) => {
-            if (isScrollToTop(event)) {
-              onScrollToTop();
-            }
-          }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshCatteryDataLock}
+              onRefresh={() => {
+                refreshCatteryData();
+              }}
+            />
+          }
           showsVerticalScrollIndicator={false}
         />
       </View>
