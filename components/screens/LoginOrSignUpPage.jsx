@@ -39,6 +39,7 @@ import {
   CATTERY_USERNAME,
   CATTERY_PASSWORD,
 } from "@env";
+import { Colors } from "../styles/Colors";
 
 export default function LoginOrSignUpPage({ route, navigation }) {
   const [pageState, setPageState] = useState(0);
@@ -372,13 +373,17 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     flex: 1,
                     width: "100%",
                     borderBottomWidth: 1,
+                    borderBottomColor: "rgb(149, 148, 148)",
+                    paddingTop: 6,
+                    paddingBottom: 4,
+                    backgroundColor: "rgb(246,245,245)",
                     paddingLeft: 12}}>
                     <FontAwesome5
                           name="cat"
                           size={24}
                           color="rgb(97,97,97)"
                         />
-                    <View style={{ flex: 1}}>
+                    <View style={{ flex: 1 }}>
                       <SelectList
                         setSelected={setBreed}
                         data={ALL_BREEDS}
@@ -386,6 +391,11 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         placeholder="Select Breed"
                         boxStyles={{
                           borderWidth: 0,
+                          paddingLeft: 13,
+                        }}
+                        inputStyles={{
+                          fontSize: 16,
+                          color: "rgb(34, 34, 34)"
                         }}
                         defaultOption={{ key: breed, value: breed }}
                       />
@@ -393,7 +403,6 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                   </View>
                   {/* <Text style={styles.subTitle}>Address</Text> */}
                   <GooglePlacesAutocomplete
-                    placeholder="Cattery Address"
                     ref={ref}
                     query={{
                       key: REACT_APP_GOOGLE_MAP_APP_KEY,
@@ -419,15 +428,13 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                       ),
                     }}
                     styles={{
-                      container: {
-                        padding: -20,
-                      },
                       textInput: {
                         height: 52,
                         width: "100%",
                         color: "#2E2525",
                         backgroundColor: "rgb(246,245,245)",
                         fontSize: 16,
+                        paddingHorizontal: 0,
                       },
                       container: {
                         color: "#2E2525",
@@ -448,6 +455,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             </View>
           )}
         </ScrollView>
+        <View style={{ height: 30}}></View>
       </KeyboardAvoidingView>
 
       {/* remove when publishing */}
