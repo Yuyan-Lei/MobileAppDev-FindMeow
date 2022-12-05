@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Notifications from "expo-notifications";
 import {
@@ -65,6 +66,9 @@ function MainScreen({ route, navigation }) {
   const [data, setData] = useState([]);
   const [allCats, setAllCats] = useState([]);
 
+  const [enableNotification, setEnableNotification] = useState(false);
+  const [maxNotificationRange, setMaxNotificationRange] = useState(0);
+
   const refRBSheet = useRef();
 
   /* use reference for setInterval functions
@@ -123,11 +127,6 @@ function MainScreen({ route, navigation }) {
     setFilterTrigger(!filterTrigger);
   }
 
-  const [lastTimeRefreshCatData, setLastTimeRefreshCatData] = useState(0);
-  const [refreshCatDataLock, setRefreshCatDataLock] = useState(false);
-  const [enableNotification, setEnableNotification] = useState(false);
-  const [maxNotificationRange, setMaxNotificationRange] = useState(0);
-
   // Get user notification settings first.
   useEffect(() => {
     getUserData().then((userData) => {
@@ -168,28 +167,12 @@ function MainScreen({ route, navigation }) {
     return unSubscribe;
   }, []);
 
-  async function refreshCatData({ forceLoad = false } = {}) {
-    if (!forceLoad && refreshCatDataLock) return;
-    setRefreshCatDataLock(true);
-
-    // prevent running it too much in a short time
-    const currentTimeInMill = new Date().getTime();
-    if (!forceLoad && currentTimeInMill - lastTimeRefreshCatData < 5000) {
-      return;
-    }
-    setLastTimeRefreshCatData(currentTimeInMill);
-
-    // setSelectedIndex(selectedIndex);
-    let location = await getUserLocation();
+  function makeQuery() {
     try {
-      let clauseBreed, clauseAge, clauseState, clauseGender, clauseTags;
+      let clauseBreed, clauseGender;
 
-      const selectedIndex = savedCallback.selectedIndex;
       const selectedBreed = savedCallback.selectedBreed;
-      const selectedAge = savedCallback.selectedAge;
-      const selectedState = savedCallback.selectedState;
       const selectedGender = savedCallback.selectedGender;
-      const selectedPrice = savedCallback.selectedPrice;
 
       if (selectedBreed !== "" && selectedBreed !== "All") {
         clauseBreed = where("Breed", "==", selectedBreed);
@@ -199,98 +182,123 @@ function MainScreen({ route, navigation }) {
         clauseGender = where("Gender", "==", selectedGender);
       }
 
-      const constraints = [
-        clauseBreed,
-        clauseAge,
-        clauseState,
-        clauseGender,
-        clauseTags,
-      ].filter((item) => item !== undefined);
-
-      const q = query(collection(db, "Cats"), ...constraints);
-
-      const catSnapShot = await getDocs(q);
-
-      let allCatteries = catteries || (await getAllCatteries());
-
-      const dataBeforeFiltering = catSnapShot.docs.map((catDoc) => {
-        const birthday = new Date(catDoc.data().Birthday);
-        const now = new Date();
-
-        const cattery = allCatteries.find(
-          (ca) => ca.email === catDoc.data().Cattery
-        );
-        // if cattery doesn't have location, use 9999 to make cat in the bottom.
-        const distance =
-          cattery.geoLocation && location
-            ? calculateDistance(location, cattery.geoLocation)
-            : null;
-        let age =
-          now.getMonth() -
-          birthday.getMonth() +
-          12 * (now.getFullYear() - birthday.getFullYear());
-        // age cannot be negative
-        if (age === undefined || isNaN(age) || age < 0) {
-          age = 0;
-        }
-
-        return {
-          id: catDoc.id,
-          name: catDoc.data().Breed,
-          sex: catDoc.data().Gender,
-          price: catDoc.data().Price,
-          month: age,
-          photo: catDoc.data().Picture,
-          cattery: catDoc.data().Cattery,
-          distance,
-          uploadTime: catDoc.data().UploadTime,
-          tags: catDoc.data().Tags,
-          catteryDoc: cattery,
-        };
-      });
-
-      /* filter cats data */
-      const dataBeforeSorting = filterCatsData(
-        dataBeforeFiltering,
-        selectedAge,
-        selectedPrice,
-        selectedState
+      const constraints = [clauseBreed, clauseGender].filter(
+        (item) => item !== undefined
       );
 
-      /* sort cats data */
-      const sortedData = sortCatsData(dataBeforeSorting, selectedIndex);
-      setData(sortedData);
+      const q = query(collection(db, "Cats"), ...constraints);
+      return q;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-      // After each refresh, get all new added cat within maxNotificationRange.
-      const addedCatWithinRange = dataBeforeFiltering.filter((cat) => {
-        return (
-          !allCats.some((existingCat) => existingCat.id === cat.id) &&
-          cat.distance <= maxNotificationRange
-        );
-      });
-      setAllCats(dataBeforeFiltering);
+  const [rawCatData, setRawCatData] = useState([]);
+  const [userLocation, setUserLocation] = useState(null);
 
-      // If any new cats within maxNotificationRange are added, send out a notification.
-      if (addedCatWithinRange.length > 0 && enableNotification) {
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: "FindMeow",
-            body:
-              (addedCatWithinRange.length === 1
-                ? "A new cat is "
-                : addedCatWithinRange.length + " new cats are ") +
-              "available nearby. Check it now!",
-            data: {
-              newCats: addedCatWithinRange,
-            },
-          },
-          trigger: { seconds: 1 },
+  useEffect(() => {
+    getUserLocation().then((location) => setUserLocation(location));
+  }, []);
+
+  useEffect(() => {
+    const q = makeQuery();
+    const unSubscribe = onSnapshot(q, async (catSnapShot) => {
+      try {
+        const allCatteries = catteries || (await getAllCatteries());
+        setCatteries(allCatteries);
+        const location = userLocation || (await getUserLocation());
+        setUserLocation(location);
+
+        const dataBeforeFiltering = catSnapShot.docs.map((catDoc) => {
+          const birthday = new Date(catDoc.data().Birthday);
+          const now = new Date();
+
+          const cattery = allCatteries.find(
+            (ca) => ca.email === catDoc.data().Cattery
+          );
+          // if cattery doesn't have location, use 9999 to make cat in the bottom.
+          const distance =
+            cattery.geoLocation && location
+              ? calculateDistance(location, cattery.geoLocation)
+              : null;
+          let age =
+            now.getMonth() -
+            birthday.getMonth() +
+            12 * (now.getFullYear() - birthday.getFullYear());
+          // age cannot be negative
+          if (age === undefined || isNaN(age) || age < 0) {
+            age = 0;
+          }
+
+          return {
+            id: catDoc.id,
+            name: catDoc.data().Breed,
+            sex: catDoc.data().Gender,
+            price: catDoc.data().Price,
+            month: age,
+            photo: catDoc.data().Picture,
+            cattery: catDoc.data().Cattery,
+            distance,
+            uploadTime: catDoc.data().UploadTime,
+            tags: catDoc.data().Tags,
+            catteryDoc: cattery,
+          };
         });
+
+        setRawCatData(dataBeforeFiltering);
+      } catch (e) {
+        console.error(e);
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setRefreshCatDataLock(false);
+    });
+
+    return unSubscribe;
+  }, [selectedBreed, selectedGender]);
+
+  useEffect(() => {
+    /* filter cats data */
+    const dataBeforeSorting = filterCatsData(
+      rawCatData,
+      selectedAge,
+      selectedPrice,
+      selectedState
+    );
+
+    /* sort cats data */
+    const sortedData = sortCatsData(dataBeforeSorting, selectedIndex);
+    setData(sortedData);
+
+    // After each refresh, get all new added cat within maxNotificationRange.
+    makeNotification(rawCatData, maxNotificationRange, enableNotification);
+  }, [rawCatData, selectedAge, selectedPrice, selectedState, filterTrigger]);
+
+  async function makeNotification(
+    allCats,
+    maxNotificationRange,
+    enableNotification
+  ) {
+    const addedCatWithinRange = dataBeforeFiltering.filter((cat) => {
+      return (
+        !allCats.some((existingCat) => existingCat.id === cat.id) &&
+        cat.distance <= maxNotificationRange
+      );
+    });
+    // setAllCats(dataBeforeFiltering);
+    // If any new cats within maxNotificationRange are added, send out a notification.
+    if (addedCatWithinRange.length > 0 && enableNotification) {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "FindMeow",
+          body:
+            (addedCatWithinRange.length === 1
+              ? "A new cat is "
+              : addedCatWithinRange.length + " new cats are ") +
+            "available nearby. Check it now!",
+          data: {
+            newCats: addedCatWithinRange,
+          },
+        },
+        trigger: { seconds: 1 },
+      });
     }
   }
 
@@ -365,14 +373,9 @@ function MainScreen({ route, navigation }) {
 
   const { height, width } = useWindowDimensions();
 
-  /* data collector used for top filter tags - start */
-  useEffect(() => {
-    refreshCatData({ forceLoad: true });
-  }, [filterTrigger]);
-
   useEffect(() => {
     const selectedIndex = savedCallback.selectedIndex;
-    sortedData = sortCatsData(data, selectedIndex);
+    const sortedData = sortCatsData(data, selectedIndex);
     setData(sortedData);
   }, [selectedIndex]);
   /* data collector used for top filter tags - end */
@@ -380,19 +383,8 @@ function MainScreen({ route, navigation }) {
   /* events for top filter tags - start */
   const onFilterChange = (value) => {
     setSelectedIndex(value);
-    // refreshCatData({ selectedIndex: value, forceLoad: true });
   };
   /* events for top filter tags - end */
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refreshCatData({ selectedIndex: savedCallback.selectedIndex });
-    }, 100000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -477,10 +469,10 @@ function MainScreen({ route, navigation }) {
           numColumns={2}
           refreshControl={
             <RefreshControl
-              refreshing={refreshCatDataLock}
-              onRefresh={() => {
-                refreshCatData({ selectedIndex, forceLoad: true });
-              }}
+            // refreshing={refreshCatDataLock}
+            // onRefresh={() => {
+            //   refreshCatData({ selectedIndex, forceLoad: true });
+            // }}
             />
           }
           ListFooterComponent={<View style={{ height: 80 }} />}
