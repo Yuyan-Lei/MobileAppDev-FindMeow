@@ -150,6 +150,7 @@ function CatteriesScreen({
   refreshing,
   onRefresh,
   setSelectedIndex,
+  userLikedCatteryEmails,
 }) {
   function onSwipeLeft() {
     setSelectedIndex(1);
@@ -178,6 +179,7 @@ function CatteriesScreen({
                 key={item.email}
                 cattery={item}
                 navigation={navigation}
+                userLikedCatteryEmails={userLikedCatteryEmails}
               />
             );
           }}
@@ -341,6 +343,7 @@ function MainScreen({ route, navigation }) {
         <CatteriesScreen
           navigation={navigation}
           catteries={likedCatteries}
+          userLikedCatteryEmails={userLikedCatteryEmails}
           // refreshing={refreshingCattery}
           // onRefresh={() => refreshLikedCatteryData({ forceLoad: true })}
           setSelectedIndex={setSelectedIndex}

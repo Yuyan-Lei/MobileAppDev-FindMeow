@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   collection,
+  doc,
   getDocs,
   onSnapshot,
   query,
@@ -10,6 +11,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, View, RefreshControl } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { BreederCard } from "../cards/BreederCard";
 import { stateFullNameToAbbr } from "../listContents/allStates";
 import { FilterButton } from "../pressable/FilterButton";
@@ -32,6 +34,21 @@ function MainScreen({ route, navigation }) {
   const [selectedBreed, setSelectedBreed] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCatNum, setSelectedCatNum] = useState("All");
+
+  const [userLikedCatteryEmails, setUserLikedCatteryEmails] = useState([]);
+
+  /* renew userLikedCatteryEmails */
+  useEffect(() => {
+    const userDoc = query(doc(db, "Users", getCurrentUserEmail()));
+    const unsubscribeUser = onSnapshot(userDoc, (userSnapShot) => {
+      const userLikedCatteries = userSnapShot.data().likeCatteries;
+      setUserLikedCatteryEmails(userLikedCatteries);
+    });
+
+    return () => {
+      unsubscribeUser();
+    };
+  }, []);
 
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
@@ -166,7 +183,11 @@ function MainScreen({ route, navigation }) {
         <FlatList
           data={catteries}
           renderItem={({ item }) => (
-            <BreederCard cattery={item} navigation={navigation} />
+            <BreederCard
+              cattery={item}
+              navigation={navigation}
+              userLikedCatteryEmails={userLikedCatteryEmails}
+            />
           )}
           ListFooterComponent={<View style={{ height: 120 }} />}
           refreshControl={
