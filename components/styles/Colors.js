@@ -21,4 +21,5 @@ export const Colors = {
   arrowBackground: "rgba(99,99,99, 0.5)",
   priceColor: "#F6AC3D",
   text: "#2E2525",
+  white: "#FFFFFF",
 };

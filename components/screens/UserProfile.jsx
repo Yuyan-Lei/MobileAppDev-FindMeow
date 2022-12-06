@@ -93,7 +93,7 @@ function MainScreen({ route, navigation }) {
                 onPress={onViewCatteryPage}
                 style={({ pressed }) => [
                   {
-                    backgroundColor: pressed ? Colors.orange : "white",
+                    backgroundColor: pressed ? Colors.orange : Colors.white,
                   },
                   styles.button,
                 ]}
@@ -108,7 +108,7 @@ function MainScreen({ route, navigation }) {
             onPress={onUpdatePassword}
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? Colors.orange : "white",
+                backgroundColor: pressed ? Colors.orange : Colors.white,
               },
               styles.button,
             ]}
@@ -121,7 +121,7 @@ function MainScreen({ route, navigation }) {
             onPress={onNotificationSettings}
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? Colors.orange : "white",
+                backgroundColor: pressed ? Colors.orange : Colors.white,
               },
               styles.button,
             ]}
@@ -134,7 +134,7 @@ function MainScreen({ route, navigation }) {
             onPress={onSendFeedback}
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? Colors.orange : "white",
+                backgroundColor: pressed ? Colors.orange : Colors.white,
               },
               styles.button,
             ]}
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonContainer: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 20,
     marginTop: 30,
     marginBottom: 40,
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   logOutButtonText: {
     textAlign: "center",
     fontSize: 16,
-    color: "white",
+    color: Colors.white,
     fontWeight: "600",
     marginTop: 3,
     fontFamily: "PoppinsSemiBold",

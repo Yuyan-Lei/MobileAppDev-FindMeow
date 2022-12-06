@@ -2,7 +2,7 @@ import { REACT_APP_GOOGLE_MAP_APP_KEY } from "@env";
 import { Pressable } from "@react-native-material/core";
 import "core-js/features/array/at";
 import React, { useEffect, useRef, useState } from "react";
-import 'core-js/features/array/at';
+import "core-js/features/array/at";
 import {
   Alert,
   KeyboardAvoidingView,
@@ -18,6 +18,8 @@ import { updateCattery } from "../../firebaseUtils/user";
 import { FillAndroidButtomBar, FillAndroidTopBar } from "../FillAndroidBar";
 import CatBreedSelector from "../pressable/CatBreedSelector";
 import CatImagePicker from "../pressable/CatImagePicker";
+import { SubmitButton } from "../pressable/SubmitButton";
+import { Colors } from "../styles/Colors";
 
 export default function UpdateCatteryPage({ route, navigation }) {
   const user = route.params.cattery;
@@ -187,9 +189,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
           ></TextInput>
 
           {/* Submit Button */}
-          <Pressable onPress={onUpdateCattery} style={styles.SubmitButton}>
-            <Text style={styles.SubmitButtonText}>Submit</Text>
-          </Pressable>
+          <SubmitButton onPress={onUpdateCattery} />
         </View>
         <FillAndroidButtomBar />
       </ScrollView>
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "PoppinsSemiBold",
-    color: "#F59156",
+    color: Colors.orangeText,
     fontStyle: "normal",
     fontWeight: "600",
     fontSize: 24,
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     fontFamily: "PoppinsSemiBold",
-    color: "#F59156",
+    color: Colors.orangeText,
     marginTop: 10,
     marginBottom: 10,
     fontSize: 14,
@@ -227,21 +227,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     fontSize: 14,
     padding: 10,
-  },
-  SubmitButton: {
-    backgroundColor: "#FFB801",
-    borderRadius: 18,
-    height: 60,
-    alignItems: "center",
-    padding: 16,
-    marginTop: "10%",
-  },
-  SubmitButtonText: {
-    textAlign: "center",
-    fontSize: 16,
-    color: "#FFFFFF",
-    fontWeight: "600",
-    marginTop: 5,
-    fontFamily: "PoppinsSemiBold",
   },
 });
