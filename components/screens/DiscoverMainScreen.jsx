@@ -259,7 +259,7 @@ function MainScreen({ route, navigation }) {
 
     /* sort cats data */
     const sortedData = sortCatsData(dataBeforeSorting, selectedIndex);
-    setData(sortedData);
+    setCatsData(sortedData);
 
     // After each refresh, get all new added cat within maxNotificationRange.
     makeNotification(rawCatData, maxNotificationRange, enableNotification);
@@ -369,8 +369,8 @@ function MainScreen({ route, navigation }) {
 
   useEffect(() => {
     const selectedIndex = savedCallback.selectedIndex;
-    const sortedData = sortCatsData(data, selectedIndex);
-    setData(sortedData);
+    const sortedData = sortCatsData(catsData, selectedIndex);
+    setCatsData(sortedData);
   }, [selectedIndex]);
   /* data collector used for top filter tags - end */
 
