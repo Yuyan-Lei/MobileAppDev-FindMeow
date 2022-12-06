@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   buttonContainerStyle: {
     height: 40,
-    color: "white",
+    color: Colors.white,
     borderColor: "transparent",
   },
 
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   selectedTextStyle: {
-    color: "white",
+    color: Colors.white,
     fontFamily: "PoppinsSemiBold",
     fontSize: 15,
   },

@@ -5,7 +5,15 @@ import { Colors } from "../styles/Colors";
 
 export function FilterButton({ onPress, length, size }) {
   return (
-    <Pressable onPress={onPress}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        {
+          backgroundColor: pressed ? Colors.orangeText : Colors.orange,
+        },
+        styles.buttonView,
+      ]}
+    >
       <View
         style={[
           {
@@ -24,7 +32,6 @@ export function FilterButton({ onPress, length, size }) {
 const styles = StyleSheet.create({
   buttonView: {
     justifyContent: "center",
-    backgroundColor: Colors.orange,
     borderRadius: 10,
     alignItems: "center",
   },
