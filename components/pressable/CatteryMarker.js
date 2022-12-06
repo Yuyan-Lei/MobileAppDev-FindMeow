@@ -42,7 +42,7 @@ import {
 } from "../../firebaseUtils/user";
 
 export function CatteryMarker({
-  cat,
+  catsData,
   navigation,
   showCatList,
   setShowCatList,
@@ -52,10 +52,10 @@ export function CatteryMarker({
   const [likeCats, setLikeCats] = useState([]);
 
   useEffect(() => {
-    if (cat.cattery) {
-      getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+    if (catsData.cattery) {
+      getCattery(catsData.cattery).then((cattery) => setCattery(cattery));
     }
-  }, [cat]);
+  }, [catsData]);
 
   //   useEffect(() => {
   //     const unSubscribe = onSnapshot(
@@ -70,10 +70,10 @@ export function CatteryMarker({
   //   }, []);
 
   const onClickLikeButton = () => {
-    if (!likeCats.includes(cat.id)) {
-      userLikeACat(cat.id);
+    if (!likeCats.includes(catsData.id)) {
+      userLikeACat(catsData.id);
     } else {
-      userUnLikeACat(cat.id);
+      userUnLikeACat(catsData.id);
     }
   };
 
@@ -83,7 +83,7 @@ export function CatteryMarker({
 
   return (
     <View>
-      {cat.map((cat) => {
+      {catsData.map((cat, index) => {
         return (
           <Marker
             coordinate={{
@@ -91,6 +91,7 @@ export function CatteryMarker({
               longitude: cat.geoLocation.lng,
             }}
             onPress={showCatCardHandler}
+            indentifier={index + ""}
           >
             {/* <View> */}
             {/* <Pressable> */}
@@ -119,7 +120,7 @@ export function CatteryMarker({
             }}
           >
             <FlatList
-              data={cat}
+              data={catsData}
               renderItem={({ item }) => (
                 <CatCard_map cat={item} navigation={navigation} />
               )}

@@ -81,7 +81,7 @@ export default function MapPage({
         {/* </Marker> */}
 
         <CatteryMarker
-          cat={catsData}
+          catsData={catsData}
           navigation={navigation}
           showCatList={showCatList}
           setShowCatList={setShowCatList}
