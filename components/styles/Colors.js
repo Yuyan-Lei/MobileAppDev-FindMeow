@@ -22,4 +22,6 @@ export const Colors = {
   priceColor: "#F6AC3D",
   text: "#2E2525",
   white: "#FFFFFF",
+  filterWrapper: "rgba(0, 0, 0, 0.5)",
+  dragglableIcon: "#EFEFEF",
 };

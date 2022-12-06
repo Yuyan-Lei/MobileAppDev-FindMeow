@@ -531,9 +531,9 @@ export default function DiscoverMainScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   RBSheetCustomStyles: {
     wrapper: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backgroundColor: Colors.filterWrapper,
       draggableIcon: {
-        backgroundColor: "#EFEFEF",
+        backgroundColor: Colors.dragglableIcon,
         width: 100,
       },
     },

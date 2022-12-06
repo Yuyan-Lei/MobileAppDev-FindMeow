@@ -220,13 +220,13 @@ export default function FindBreederMainScreen() {
 const styles = StyleSheet.create({
   RBSheetCustomStyles: {
     wrapper: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backgroundColor: Colors.filterWrapper,
       container: {
         borderTopLeftRadius: 28,
         borderTopRightRadius: 28,
       },
       draggableIcon: {
-        backgroundColor: "#EFEFEF",
+        backgroundColor: Colors.dragglableIcon,
         width: 100,
       },
     },
