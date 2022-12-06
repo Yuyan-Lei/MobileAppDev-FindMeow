@@ -38,7 +38,6 @@ export function CatteryMarker({
   const markerOnPress = async (event) => {
     const idString = event._targetInst._debugOwner.memoizedProps.indentifier;
     const id = parseInt(idString, 10);
-    console.log(id);
     if (!isNaN(id)) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       try {

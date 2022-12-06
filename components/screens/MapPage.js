@@ -114,7 +114,7 @@ export default function MapPage({
               />
             )}
             horizontal
-            onViewableItemsChanged={ ({ viewableItems }) => {
+            onViewableItemsChanged={({ viewableItems }) => {
               const index = viewableItems[0].index;
               // console.log("Visible items are", viewableItems[0].index);
               selectLocation({
@@ -123,7 +123,7 @@ export default function MapPage({
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               });
-            } }
+            }}
           />
         </View>
       ) : (
