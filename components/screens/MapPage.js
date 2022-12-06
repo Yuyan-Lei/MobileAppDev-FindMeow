@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   FlatList,
   Pressable,
@@ -11,8 +11,6 @@ import {
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
-import { Colors } from "../styles/Colors";
-import { getUserLocation } from "../../firebaseUtils/user";
 import { useRef } from "react";
 
 export default function MapPage({
@@ -135,32 +133,6 @@ export default function MapPage({
       ) : (
         <View />
       )}
-
-      {/* Trigger button - refresh if location changed */}
-      {/* <View
-        style={{
-          height: 40,
-          backgroundColor: "white",
-          position: "absolute",
-          top: 100,
-          left: (width - 140) / 2,
-          borderRadius: 100,
-          width: 140,
-          alignItems: "center",
-        }}
-      >
-        <Pressable>
-          <Text
-            style={{
-              fontFamily: "Poppins",
-              color: Colors.orangeText,
-              paddingTop: 9,
-            }}
-          >
-            Search this area
-          </Text>
-        </Pressable>
-      </View> */}
     </View>
   );
 }
@@ -168,7 +140,6 @@ export default function MapPage({
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    // flex: 1,
     justifyContent: "flex-end",
     alignItems: "flex-end",
   },
