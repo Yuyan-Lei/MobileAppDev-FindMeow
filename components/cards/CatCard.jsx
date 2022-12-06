@@ -13,7 +13,13 @@ import { useSwipePressable } from "../../utils/useSwipe";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 
-export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBreed }) {
+export function CatCard({
+  cat,
+  navigation,
+  userLikedCats,
+  hideLocation,
+  showBreed,
+}) {
   const [likeCats, setLikeCats] = useState([]);
 
   useEffect(() => {
@@ -28,7 +34,7 @@ export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBree
 
       return () => unSubscribe();
     } else {
-      setLikeCats(userLikedCats)
+      setLikeCats(userLikedCats);
     }
   }, [userLikedCats]);
 
@@ -42,8 +48,7 @@ export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBree
     } catch (e) {
       console.error("Error while liking a cat", e);
     }
-  }
-
+  };
 
   let catMonthText = "";
   if (cat.month <= 1) {
@@ -113,7 +118,9 @@ export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBree
             >
               {cattery && cattery.shortAddress
                 ? cattery.shortAddress +
-                (cat.distance !== null ? ` (${cat.distance} mi)` : "")
+                  (cat.distance !== undefined && cat.distance !== null
+                    ? ` (${cat.distance} mi)`
+                    : "")
                 : "Loading"}
             </LocationText>
           )}

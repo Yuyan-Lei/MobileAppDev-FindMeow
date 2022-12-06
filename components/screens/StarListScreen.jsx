@@ -271,7 +271,7 @@ function MainScreen({ route, navigation }) {
         const distance =
           cattery && cattery.geoLocation && location
             ? calculateDistance(location, cattery.geoLocation)
-            : 9999;
+            : null;
         return {
           id: cat.id,
           name: cat.Breed,
