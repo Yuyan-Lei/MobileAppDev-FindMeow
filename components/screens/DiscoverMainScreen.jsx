@@ -456,14 +456,14 @@ function MainScreen({ route, navigation }) {
         buttons={["Newer Post", "Nearby", "Lower Price"]}
       />
 
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={{ paddingHorizontal: 16, paddingBottom: 50 }}>
         <FlatList
           data={data}
           renderItem={({ item, index }) => (
             <CatCard
               cat={item}
               navigation={navigation}
-              isLiked={likeCats.includes(item.id)}
+              userLikedCats={likeCats}
             />
           )}
           numColumns={2}
@@ -556,8 +556,9 @@ const styles = StyleSheet.create({
   },
   container: {
     // paddingHorizontal: 12,
+    flex: 1,
     paddingTop: 55,
-    paddingBottom: 200,
+    // paddingBottom: 200,
     backgroundColor: "white",
   },
 });
