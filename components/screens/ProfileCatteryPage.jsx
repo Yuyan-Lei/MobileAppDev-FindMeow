@@ -57,25 +57,6 @@ function MainScreen({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
-  useEffect(() => {
-    if (!cattery || cattery.cats.length === 0) {
-      return;
-    }
-    const q = query(
-      collection(db, "Cats"),
-      where(documentId(), "in", cattery.cats)
-    );
-    const unSubscribe = onSnapshot(q, (snapshot) => {
-      setCats(
-        snapshot.docs.map((entry) => {
-          return { id: entry.id, ...entry.data() };
-        })
-      );
-    });
-
-    return () => unSubscribe();
-  }, []);
-
   const [likeCats, setLikeCats] = useState([]);
 
   useEffect(() => {

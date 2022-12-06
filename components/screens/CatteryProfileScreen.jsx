@@ -23,6 +23,7 @@ import {
   View,
 } from "react-native";
 import CachedImage from "react-native-expo-cached-image";
+import { getCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
@@ -63,20 +64,11 @@ function MainScreen({ route, navigation }) {
   }, []);
 
   useEffect(() => {
-    if (cattery.cats.length === 0) {
-      return;
-    }
-    const q = query(
-      collection(db, "Cats"),
-      where(documentId(), "in", cattery.cats)
-    );
-    const unSubscribe = onSnapshot(q, (snapshot) => {
-      setCats(
-        snapshot.docs.map((entry) => {
-          return { id: entry.id, ...entry.data() };
-        })
-      );
+    const docRef = doc(db, "Users", getCurrentUserEmail());
+    const unSubscribe = onSnapshot(docRef, (snapshot) => {
+      getCats(snapshot.data().cats).then((cats) => setCats(cats));
     });
+
     return () => unSubscribe();
   }, []);
 
