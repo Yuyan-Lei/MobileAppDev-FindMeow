@@ -76,6 +76,20 @@ function MainScreen({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
+  const [likeCats, setLikeCats] = useState([]);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikeCats(likeCats);
+      }
+    );
+
+    return () => unSubscribe();
+  }, []);
+
   useEffect(() => {
     let catsList = [];
     for (let i = 0; i < cats.length; i += 2) {
@@ -86,6 +100,7 @@ function MainScreen({ route, navigation }) {
             navigation={navigation}
             hideLocation
             showBreed
+            userLikedCats={likeCats}
           />
           {i < cats.length - 1 && (
             <CatCard
@@ -93,6 +108,7 @@ function MainScreen({ route, navigation }) {
               navigation={navigation}
               hideLocation
               showBreed
+              userLikedCats={likeCats}
             />
           )}
         </View>

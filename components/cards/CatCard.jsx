@@ -13,17 +13,14 @@ import { useSwipePressable } from "../../utils/useSwipe";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 
-export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBreed }) {
-  const [likeCats, setLikeCats] = useState(userLikedCats);
-  const [cattery, setCattery] = useState(null);
-
-  useEffect(() => {
-    if (cat.cattery) {
-      getCattery(cat.cattery)
-        .then((cattery) => setCattery(cattery))
-        .catch((e) => console.log(e));
-    }
-  }, [cat]);
+export function CatCard({
+  cat,
+  navigation,
+  userLikedCats,
+  hideLocation,
+  showBreed,
+}) {
+  const [likeCats, setLikeCats] = useState([]);
 
   useEffect(() => {
     if (userLikedCats === undefined) {
@@ -36,20 +33,14 @@ export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBree
       );
 
       return () => unSubscribe();
+    } else {
+      setLikeCats(userLikedCats);
     }
-  }, []);
+  }, [userLikedCats]);
 
   const onClickLikeButton = async () => {
-    let tempLikeCats = likeCats;
-    if (tempLikeCats === undefined) {
-      const q = doc(db, "Users", getCurrentUserEmail())
-      const snapshot = await getDoc(q);
-      const likeCats = snapshot.data().likeCats;
-      setLikeCats(likeCats);
-      tempLikeCats = likeCats;
-    }
     try {
-      if (!tempLikeCats.includes(cat.id)) {
+      if (!likeCats.includes(cat.id)) {
         userLikeACat(cat.id);
       } else {
         userUnLikeACat(cat.id);
@@ -57,8 +48,7 @@ export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBree
     } catch (e) {
       console.error("Error while liking a cat", e);
     }
-  }
-
+  };
 
   let catMonthText = "";
   if (cat.month <= 1) {
@@ -68,6 +58,16 @@ export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBree
   } else {
     catMonthText = cat.month + " months";
   }
+
+  const [cattery, setCattery] = useState(null);
+
+  useEffect(() => {
+    if (cat.cattery) {
+      getCattery(cat.cattery)
+        .then((cattery) => setCattery(cattery))
+        .catch((e) => console.log(e));
+    }
+  }, [cat]);
 
   const { onTouchStart, onTouchEnd } = useSwipePressable(() =>
     navigation.navigate("CatInformation", { catId: cat.id })
@@ -118,7 +118,9 @@ export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBree
             >
               {cattery && cattery.shortAddress
                 ? cattery.shortAddress +
-                (cat.distance !== null ? ` (${cat.distance} mi)` : "")
+                  (cat.distance !== undefined && cat.distance !== null
+                    ? ` (${cat.distance} mi)`
+                    : "")
                 : "Loading"}
             </LocationText>
           )}
@@ -129,7 +131,7 @@ export function CatCard({ cat, navigation, userLikedCats, hideLocation, showBree
       <View style={styles.heartButtonView}>
         <HeartButton
           // notSelectedColor="white"
-          isLiked={likeCats !== undefined && likeCats.includes(cat.id)}
+          isLiked={likeCats.includes(cat.id)}
           onPress={onClickLikeButton}
         />
       </View>

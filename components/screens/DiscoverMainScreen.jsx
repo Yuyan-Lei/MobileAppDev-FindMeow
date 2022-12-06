@@ -276,13 +276,13 @@ function MainScreen({ route, navigation }) {
     maxNotificationRange,
     enableNotification
   ) {
-    const addedCatWithinRange = dataBeforeFiltering.filter((cat) => {
+    const addedCatWithinRange = allCats.filter((cat) => {
       return (
         !allCats.some((existingCat) => existingCat.id === cat.id) &&
         cat.distance <= maxNotificationRange
       );
     });
-    // setAllCats(dataBeforeFiltering);
+    // setAllCats(allCats);
     // If any new cats within maxNotificationRange are added, send out a notification.
     if (addedCatWithinRange.length > 0 && enableNotification) {
       await Notifications.scheduleNotificationAsync({

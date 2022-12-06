@@ -1,18 +1,18 @@
+import { Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, View, Text, RefreshControl } from "react-native";
-import GestureRecognizer from "react-native-swipe-gestures";
-import { getAllCats } from "../../firebaseUtils/cat";
+import {
+  FlatList,
+  Pressable,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
-import { Ionicons } from "@expo/vector-icons";
-import {
-  calculateDistance,
-  getAllCatteries,
-  getUserLocation,
-} from "../../firebaseUtils/user";
-import { globalVariables } from "../../utils/globalVariables";
+import { calculateDistance, getUserLocation } from "../../firebaseUtils/user";
 import { useSwipe } from "../../utils/useSwipe";
 import { BreederCard } from "../cards/BreederCard";
 import { CatCard } from "../cards/CatCard";
@@ -22,7 +22,6 @@ import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
-import { Pressable } from "react-native";
 
 function EmptyStarPage({ origin, setSelectedIndex }) {
   function onSwipeLeft() {
@@ -151,6 +150,7 @@ function CatteriesScreen({
   refreshing,
   onRefresh,
   setSelectedIndex,
+  userLikedCatteryEmails,
 }) {
   function onSwipeLeft() {
     setSelectedIndex(1);
@@ -179,6 +179,7 @@ function CatteriesScreen({
                 key={item.email}
                 cattery={item}
                 navigation={navigation}
+                userLikedCatteryEmails={userLikedCatteryEmails}
               />
             );
           }}
@@ -199,121 +200,122 @@ function CatteriesScreen({
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [likeCats, setLikeCats] = useState([]);
-  const [likeCatteries, setLikeCatteries] = useState([]);
-  const [refreshingCat, setRefreshingCat] = useState(false);
-  const [refreshingCattery, setRefreshingCattery] = useState(false);
+  const [likedCats, setLikedCats] = useState([]);
+  const [likedCatteries, setLikedCatteries] = useState([]);
 
-  function isScrollToTop(event) {
-    return event.nativeEvent.contentOffset.y < -100;
-  }
+  const [allCats, setAllCats] = useState([]);
+  const [allCatteries, setAllCatteries] = useState([]);
+  const [location, setLocation] = useState(null);
+  const [userLikedCatEmails, setUserLikedCatEmails] = useState([]);
+  const [userLikedCatteryEmails, setUserLikedCatteryEmails] = useState([]);
 
-  const [lastTimeRefreshLikedCatData, setLastTimeRefreshLikedCatData] =
-    useState(0);
+  /* renew allCats, allCatteries, location, userLikedCats, userLikedCatteries */
+  useEffect(() => {
+    const allCatQuery = query(collection(db, "Cats"));
+    const unsubscribeCat = onSnapshot(allCatQuery, (catSnapShot) => {
+      const allCats = catSnapShot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          email: doc.id,
+          ...doc.data(),
+        };
+      });
+      setAllCats(allCats);
+    });
 
-  async function refreshLikedCatData({ forceLoad = false } = {}) {
-    const nowTime = new Date().getTime();
-    if (!forceLoad && nowTime - lastTimeRefreshLikedCatData < 10000) return;
-    setLastTimeRefreshLikedCatData(nowTime);
-    setRefreshingCat(true);
+    const allCatteryQuery = query(
+      collection(db, "Users"),
+      where("isCattery", "==", true)
+    );
+    const unsubscribeCattery = onSnapshot(
+      allCatteryQuery,
+      (catterySnapShot) => {
+        const allCatteries = catterySnapShot.docs.map((doc) => {
+          return {
+            id: doc.id,
+            email: doc.id,
+            ...doc.data(),
+          };
+        });
+        setAllCatteries(allCatteries);
+      }
+    );
 
-    const userDoc = doc(db, "Users", getCurrentUserEmail());
-    const likedCatSnapShot = await getDoc(userDoc);
+    getUserLocation().then((location) => setLocation(location));
 
-    const likeCats = likedCatSnapShot.data().likeCats;
-    const catsSnapshots = await getAllCats();
-    const allCatteries = await getAllCatteries();
-    const location = await getUserLocation();
+    const userDoc = query(doc(db, "Users", getCurrentUserEmail()));
+    const unsubscribeUser = onSnapshot(userDoc, (userSnapShot) => {
+      const userLikedCats = userSnapShot.data().likeCats;
+      const userLikedCatteries = userSnapShot.data().likeCatteries;
+      setUserLikedCatEmails(userLikedCats);
+      setUserLikedCatteryEmails(userLikedCatteries);
+    });
 
-    const newLikedCats = catsSnapshots.docs
-      .map((catEntry) => {
-        const birthday = new Date(catEntry.data().Birthday);
+    return () => {
+      unsubscribeCat();
+      unsubscribeCattery();
+      unsubscribeUser();
+    };
+  }, []);
+
+  /* renew likedCats */
+  useEffect(() => {
+    const newLikedCats = allCats
+      .map((cat) => {
+        const birthday = new Date(cat.Birthday);
         const now = new Date();
         const age =
           now.getMonth() -
           birthday.getMonth() +
           12 * (now.getFullYear() - birthday.getFullYear());
 
-        const cattery = allCatteries.find(
-          (ca) => ca.email === catEntry.data().Cattery
-        );
+        const cattery = allCatteries.find((ca) => ca.email === cat.Cattery);
+        const distance =
+          cattery && cattery.geoLocation && location
+            ? calculateDistance(location, cattery.geoLocation)
+            : null;
+        return {
+          id: cat.id,
+          name: cat.Breed,
+          sex: cat.Gender,
+          price: cat.Price,
+          month: age,
+          photo: cat.Picture,
+          cattery: cat.Cattery,
+          distance,
+          uploadTime: cat.UploadTime,
+          ...cat,
+        };
+      })
+      .filter((entry) => userLikedCatEmails.includes(entry.id))
+      .sort((d1, d2) => d2.uploadTime - d1.uploadTime);
+
+    setLikedCats(newLikedCats);
+  }, [allCats, allCatteries, location, userLikedCatEmails]);
+
+  /* renew likedCatteries */
+  useEffect(() => {
+    const newLikedCatteries = allCatteries
+      .map((cattery) => {
         const distance =
           cattery.geoLocation && location
             ? calculateDistance(location, cattery.geoLocation)
             : 9999;
         return {
-          id: catEntry.id,
-          name: catEntry.data().Breed,
-          sex: catEntry.data().Gender,
-          price: catEntry.data().Price,
-          month: age,
-          photo: catEntry.data().Picture,
-          cattery: catEntry.data().Cattery,
+          id: cattery.id,
+          email: cattery.id,
+          name: cattery.name,
+          photo: cattery.photo,
           distance,
-          uploadTime: catEntry.data().UploadTime,
+          uploadTime: cattery.uploadTime,
+          ...cattery,
         };
       })
-      .filter((entry) => likeCats.includes(entry.id))
+      .filter((entry) => userLikedCatteryEmails.includes(entry.id))
       .sort((d1, d2) => d2.uploadTime - d1.uploadTime);
 
-    setLikeCats(newLikedCats);
-    setRefreshingCat(false);
-  }
-
-  const [lastTimeRefreshLikedCatteryData, setLastTimeRefreshLikedCatteryData] =
-    useState(0);
-
-  async function refreshLikedCatteryData({ forceLoad = false } = {}) {
-    const nowTime = new Date().getTime();
-    if (!forceLoad && nowTime - lastTimeRefreshLikedCatteryData < 10000) return;
-    setLastTimeRefreshLikedCatteryData(nowTime);
-    setRefreshingCattery(true);
-
-    const userDoc = doc(db, "Users", getCurrentUserEmail());
-    const userSnap = await getDoc(userDoc);
-
-    const likeCatteries = userSnap.data().likeCatteries || [];
-    const catterySnap = await getAllCatteries();
-
-    setLikeCatteries(
-      catterySnap.filter((cattery) => likeCatteries.includes(cattery.email))
-    );
-    setRefreshingCattery(false);
-  }
-
-  /* subscribe user likes to display liked catteries and catteries  - start */
-  useEffect(() => {
-    refreshLikedCatData();
-    refreshLikedCatteryData();
-
-    const intervalCat = setInterval(() => {
-      refreshLikedCatData();
-    }, 13000);
-
-    const intervalCattery = setInterval(() => {
-      refreshLikedCatteryData();
-    }, 17000);
-
-    const intervalImmediateRefresh = setInterval(() => {
-      if (globalVariables.starListNeedReload) {
-        globalVariables.starListNeedReload = false;
-        refreshLikedCatData({ forceLoad: true });
-        refreshLikedCatteryData({ forceLoad: true });
-      }
-    }, 200);
-
-    return () => {
-      clearInterval(intervalCat);
-      clearInterval(intervalCattery);
-      clearInterval(intervalImmediateRefresh);
-    };
-  }, []);
-  /* subscribe user likes to display liked catteries and catteries  - end */
-
-  const configGestureRecognizer = {
-    velocityThreshold: 0.3,
-    directionalOffsetThreshold: 80,
-  };
+    setLikedCatteries(newLikedCatteries);
+  }, [allCatteries, userLikedCatteryEmails]);
 
   return (
     <View style={styles.container}>
@@ -331,18 +333,19 @@ function MainScreen({ route, navigation }) {
       {selectedIndex === 0 && (
         <CatsScreen
           navigation={navigation}
-          cats={likeCats}
-          refreshing={refreshingCat}
-          onRefresh={() => refreshLikedCatData({ forceLoad: true })}
+          cats={likedCats}
+          // refreshing={refreshingCat}
+          // onRefresh={() => refreshLikedCatData({ forceLoad: true })}
           setSelectedIndex={setSelectedIndex}
         />
       )}
       {selectedIndex === 1 && (
         <CatteriesScreen
           navigation={navigation}
-          catteries={likeCatteries}
-          refreshing={refreshingCattery}
-          onRefresh={() => refreshLikedCatteryData({ forceLoad: true })}
+          catteries={likedCatteries}
+          userLikedCatteryEmails={userLikedCatteryEmails}
+          // refreshing={refreshingCattery}
+          // onRefresh={() => refreshLikedCatteryData({ forceLoad: true })}
           setSelectedIndex={setSelectedIndex}
         />
       )}
