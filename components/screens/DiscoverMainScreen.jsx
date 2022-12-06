@@ -342,7 +342,7 @@ function MainScreen({ route, navigation }) {
           selectedState === "" ||
           (cat.catteryDoc.shortAddress &&
             cat.catteryDoc.shortAddress.slice(-2) ===
-            stateFullNameToAbbr[selectedState])
+              stateFullNameToAbbr[selectedState])
         );
       })
       .slice(0);
@@ -456,7 +456,7 @@ function MainScreen({ route, navigation }) {
         buttons={["Newer Post", "Nearby", "Lower Price"]}
       />
 
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={{ paddingHorizontal: 16, paddingBottom: 50 }}>
         <FlatList
           data={data}
           renderItem={({ item, index }) => (
@@ -556,8 +556,9 @@ const styles = StyleSheet.create({
   },
   container: {
     // paddingHorizontal: 12,
+    flex: 1,
     paddingTop: 55,
-    paddingBottom: 200,
+    // paddingBottom: 200,
     backgroundColor: "white",
   },
 });
