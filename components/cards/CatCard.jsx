@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
     width: "46%",
   },
   imageView: {
-    aspectRatio: 0.834,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 5,
@@ -161,8 +160,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   descriptionView: {
-    position: "absolute",
-    bottom: 0,
+    top: -8,
     width: "100%",
     padding: 9,
     backgroundColor: "#F9F9F9",
