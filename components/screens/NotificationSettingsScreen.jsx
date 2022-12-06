@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
       color: "rgb(154, 153, 153)",
     },
     subTitle: {
-      color: "rgb(154, 153, 153)",
+      color: Colors.black,
       fontSize: 14,
       paddingHorizontal: 14,
       fontFamily: "Poppins",

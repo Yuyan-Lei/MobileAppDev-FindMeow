@@ -65,6 +65,8 @@ export default function PostNewCatScreen({
 
   const [show, setShow] = useState(false);
 
+  const [submitting, setSubmitting] = useState(false);
+
   // Reset the screen
   const reset = () => {
     setCatName("");
@@ -180,6 +182,7 @@ export default function PostNewCatScreen({
       if (image !== cat.Picture) {
         url = await writeImageToDB(image);
       }
+      setSubmitting(true);
       await updateCat(catId, {
         ...CatItem,
         Picture: url,
@@ -191,6 +194,7 @@ export default function PostNewCatScreen({
       Alert.alert("Update failed.");
     } finally {
       onPostNewCatLocked = false;
+      setSubmitting(false);
     }
   }
 
@@ -203,6 +207,7 @@ export default function PostNewCatScreen({
       return;
     }
     onPostNewCatLocked = true;
+    setSubmitting(true);
 
     const CatItem = buildCatItem();
     try {
@@ -218,6 +223,7 @@ export default function PostNewCatScreen({
       Alert.alert("Posting cats failed.");
     } finally {
       onPostNewCatLocked = false;
+      setSubmitting(false);
     }
   }
 
@@ -486,9 +492,10 @@ export default function PostNewCatScreen({
         {/* Submit Button */}
         <Pressable
           onPress={catId === "" ? onPostNewCat : onUpdateCat}
-          style={styles.submitButton}
+          style={submitting ? styles.submittingButton : styles.submitButton}
+          disabled={submitting}
         >
-          <Text style={styles.submitButtonText}>Submit</Text>
+          <Text style={styles.submitButtonText}>{submitting ? "Submitting" : "Submit"}</Text>
         </Pressable>
 
         {/* Delete Button */}
@@ -527,6 +534,14 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: "#FFB801",
+    borderRadius: 18,
+    height: 60,
+    alignItems: "center",
+    padding: 16,
+    marginTop: "10%",
+  },
+  submittingButton: {
+    backgroundColor: "#b8b8b8",
     borderRadius: 18,
     height: 60,
     alignItems: "center",

@@ -1,4 +1,4 @@
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CachedImage from "react-native-expo-cached-image";
@@ -13,35 +13,40 @@ import { useSwipePressable } from "../../utils/useSwipe";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 
-export function CatCard({ cat, navigation, hideLocation, showBreed }) {
+export function CatCard({
+  cat,
+  navigation,
+  userLikedCats,
+  hideLocation,
+  showBreed,
+}) {
   const [likeCats, setLikeCats] = useState([]);
-  const [cattery, setCattery] = useState(null);
 
   useEffect(() => {
-    if (cat.cattery) {
-      getCattery(cat.cattery)
-        .then((cattery) => setCattery(cattery))
-        .catch((e) => console.log(e));
-    }
-  }, [cat]);
+    if (userLikedCats === undefined) {
+      const unSubscribe = onSnapshot(
+        doc(db, "Users", getCurrentUserEmail()),
+        (snapshot) => {
+          const likeCats = snapshot.data().likeCats;
+          setLikeCats(likeCats);
+        }
+      );
 
-  useEffect(() => {
-    const unSubscribe = onSnapshot(
-      doc(db, "Users", getCurrentUserEmail()),
-      (snapshot) => {
-        const likeCats = snapshot.data().likeCats;
-        setLikeCats(likeCats);
-      }
-    );
-
-    return () => unSubscribe();
-  }, []);
-
-  const onClickLikeButton = () => {
-    if (!likeCats.includes(cat.id)) {
-      userLikeACat(cat.id);
+      return () => unSubscribe();
     } else {
-      userUnLikeACat(cat.id);
+      setLikeCats(userLikedCats);
+    }
+  }, [userLikedCats]);
+
+  const onClickLikeButton = async () => {
+    try {
+      if (!likeCats.includes(cat.id)) {
+        userLikeACat(cat.id);
+      } else {
+        userUnLikeACat(cat.id);
+      }
+    } catch (e) {
+      console.error("Error while liking a cat", e);
     }
   };
 
@@ -53,6 +58,16 @@ export function CatCard({ cat, navigation, hideLocation, showBreed }) {
   } else {
     catMonthText = cat.month + " months";
   }
+
+  const [cattery, setCattery] = useState(null);
+
+  useEffect(() => {
+    if (cat.cattery) {
+      getCattery(cat.cattery)
+        .then((cattery) => setCattery(cattery))
+        .catch((e) => console.log(e));
+    }
+  }, [cat]);
 
   const { onTouchStart, onTouchEnd } = useSwipePressable(() =>
     navigation.navigate("CatInformation", { catId: cat.id })
@@ -84,7 +99,15 @@ export function CatCard({ cat, navigation, hideLocation, showBreed }) {
           </Text>
 
           {/* cat breed */}
-          {showBreed && <Text style={styles.catDetailStyle}>{cat.breed}</Text>}
+          {showBreed && (
+            <Text
+              style={styles.catDetailStyle}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {cat.breed}
+            </Text>
+          )}
 
           {/* cat location */}
           {!hideLocation && (
@@ -95,7 +118,9 @@ export function CatCard({ cat, navigation, hideLocation, showBreed }) {
             >
               {cattery && cattery.shortAddress
                 ? cattery.shortAddress +
-                  (cat.distance !== null ? ` (${cat.distance} mi)` : "")
+                  (cat.distance !== undefined && cat.distance !== null
+                    ? ` (${cat.distance} mi)`
+                    : "")
                 : "Loading"}
             </LocationText>
           )}
@@ -125,7 +150,6 @@ const styles = StyleSheet.create({
     width: "46%",
   },
   imageView: {
-    aspectRatio: 0.834,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 5,
@@ -138,8 +162,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   descriptionView: {
-    position: "absolute",
-    bottom: 0,
+    top: -8,
     width: "100%",
     padding: 9,
     backgroundColor: "#F9F9F9",

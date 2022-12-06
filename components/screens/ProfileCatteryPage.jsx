@@ -76,9 +76,23 @@ function MainScreen({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
+  const [likeCats, setLikeCats] = useState([]);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikeCats(likeCats);
+      }
+    );
+
+    return () => unSubscribe();
+  }, []);
+
   useEffect(() => {
     let catsList = [];
-    for (let i = 0; i < cats.length; i+=2) {
+    for (let i = 0; i < cats.length; i += 2) {
       catsList.push(
         <View style={{ flexDirection: "row" }} key={i}>
           <CatCard
@@ -86,20 +100,22 @@ function MainScreen({ route, navigation }) {
             navigation={navigation}
             hideLocation
             showBreed
+            userLikedCats={likeCats}
           />
-          {
-            i < cats.length - 1 && <CatCard
-            cat={buildCatItem(cats[i + 1])}
-            navigation={navigation}
-            hideLocation
-            showBreed
-          />
-          }
+          {i < cats.length - 1 && (
+            <CatCard
+              cat={buildCatItem(cats[i + 1])}
+              navigation={navigation}
+              hideLocation
+              showBreed
+              userLikedCats={likeCats}
+            />
+          )}
         </View>
       );
     }
     setCatsListComponent(catsList);
-  }, [cats])
+  }, [cats]);
 
   const buildCatItem = (cat) => {
     const birthday = new Date(cat.Birthday);
@@ -193,12 +209,18 @@ function MainScreen({ route, navigation }) {
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Website : </Text>
-              <Text style={{ fontFamily: "Poppins" }}>{cattery.website}</Text>
+              <Text
+                style={{ fontFamily: "Poppins", flex: 1, flexWrap: "wrap" }}
+              >
+                {cattery.website}
+              </Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Address : </Text>
-              <Text style={{ fontFamily: "Poppins" }}>
+              <Text
+                style={{ fontFamily: "Poppins", flex: 1, flexWrap: "wrap" }}
+              >
                 {catteryFullAddress}
               </Text>
             </View>

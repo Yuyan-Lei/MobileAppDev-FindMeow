@@ -1,10 +1,19 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View, RefreshControl } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { BreederCard } from "../cards/BreederCard";
+import { stateFullNameToAbbr } from "../listContents/allStates";
 import { FilterButton } from "../pressable/FilterButton";
 import { SearchBar } from "../pressable/SearchBar";
 import { Colors } from "../styles/Colors";
@@ -20,13 +29,38 @@ function MainScreen({ route, navigation }) {
   /* values used for DiscoverFilter start */
   const [visible, setVisible] = useState(false);
   const [catteries, setCatteries] = useState([]);
+  const [catteriesFromQuery, setCatteriesFromQuery] = useState([]);
 
   const [selectedBreed, setSelectedBreed] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCatNum, setSelectedCatNum] = useState("All");
 
+  const [userLikedCatteryEmails, setUserLikedCatteryEmails] = useState([]);
+
+  /* renew userLikedCatteryEmails */
+  useEffect(() => {
+    const userDoc = query(doc(db, "Users", getCurrentUserEmail()));
+    const unsubscribeUser = onSnapshot(userDoc, (userSnapShot) => {
+      const userLikedCatteries = userSnapShot.data().likeCatteries;
+      setUserLikedCatteryEmails(userLikedCatteries);
+    });
+
+    return () => {
+      unsubscribeUser();
+    };
+  }, []);
+
   const refRBSheet = useRef();
   /* values used for DiscoverFilter end */
+
+  /* use reference for setInterval functions
+     otherwise functions cannot get newest variables */
+  const savedCallback = useRef();
+  useEffect(() => {
+    savedCallback.selectedBreed = selectedBreed;
+    savedCallback.selectedState = selectedState;
+    savedCallback.selectedCatNum = selectedCatNum;
+  }, [selectedBreed, selectedState, selectedCatNum]);
 
   function resetAllFilters() {
     setSelectedBreed("");
@@ -34,29 +68,15 @@ function MainScreen({ route, navigation }) {
     setSelectedCatNum("");
   }
 
-  function isScrollToTop(event) {
-    return event.nativeEvent.contentOffset.y < 100;
-  }
-
-  function onScrollToTop() {
-    refreshCatteryData();
-  }
-
-  const [refreshCatteryDataLock, setRefreshCatteryData] = useState(false);
-  async function refreshCatteryData() {
-    if (refreshCatteryDataLock) return;
-    setRefreshCatteryData(true);
-
+  function makeQuery(q) {
     try {
-      /* Grouping constraints starts */
       let clauseBreed, clauseState, clauseCatNum;
 
-      if (selectedBreed !== "All") {
-        clauseBreed = where("breed", "==", selectedBreed);
-      }
+      const selectedBreed = savedCallback.selectedBreed;
+      const selectedCatNum = savedCallback.selectedCatNum;
 
-      if (selectedState !== "All") {
-        // TODO
+      if (selectedBreed !== "All" && selectedBreed !== "") {
+        clauseBreed = where("breed", "==", selectedBreed);
       }
 
       if (selectedCatNum.toLowerCase() === "yes") {
@@ -68,51 +88,56 @@ function MainScreen({ route, navigation }) {
       const candidates = [clauseBreed, clauseState, clauseCatNum];
 
       const constraints = candidates.filter((item) => item !== undefined);
-      /* Grouping constraints ends */
-      const q = query(
+
+      q = query(
         collection(db, "Users"),
         where("isCattery", "==", true),
         ...constraints
       );
-
-      const catterySnap = await getDocs(q);
-
-      setCatteries(
-        catterySnap.docs
-          .map((catteryDoc) => {
-            return {
-              email: catteryDoc.id,
-              ...catteryDoc.data(),
-            };
-          })
-          .filter((cattery) => {
-            return (
-              searchName === "" ||
-              (cattery.catteryName &&
-                cattery.catteryName
-                  .toLowerCase()
-                  .includes(searchName.toLowerCase()))
-            );
-          })
-      );
-    } finally {
-      setRefreshCatteryData(false);
+    } catch (e) {
+      console.error(e);
     }
+    return q;
   }
 
   useEffect(() => {
-    refreshCatteryData();
-  }, [searchName, selectedBreed, selectedState, selectedCatNum]);
+    const q = makeQuery(q);
+    const unsubscribe = onSnapshot(q, (catterySnap) => {
+      setCatteriesFromQuery(
+        catterySnap.docs.map((catteryDoc) => {
+          return {
+            email: catteryDoc.id,
+            ...catteryDoc.data(),
+          };
+        })
+      );
+    });
+    return unsubscribe;
+  }, [selectedBreed, selectedCatNum]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      refreshCatteryData();
-    }, 10000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+    setCatteries(
+      catteriesFromQuery
+        .filter((cattery) => {
+          return (
+            searchName === "" ||
+            (cattery.catteryName &&
+              cattery.catteryName
+                .toLowerCase()
+                .includes(searchName.toLowerCase()))
+          );
+        })
+        .filter((cattery) => {
+          return (
+            selectedState === "All" ||
+            selectedState === "" ||
+            (cattery.shortAddress &&
+              cattery.shortAddress.slice(-2) ===
+                stateFullNameToAbbr[selectedState])
+          );
+        })
+    );
+  }, [catteriesFromQuery, searchName, selectedState]);
 
   return (
     <View style={styles.containter}>
@@ -158,14 +183,21 @@ function MainScreen({ route, navigation }) {
         <FlatList
           data={catteries}
           renderItem={({ item }) => (
-            <BreederCard cattery={item} navigation={navigation} />
+            <BreederCard
+              cattery={item}
+              navigation={navigation}
+              userLikedCatteryEmails={userLikedCatteryEmails}
+            />
           )}
           ListFooterComponent={<View style={{ height: 120 }} />}
-          onScrollEndDrag={(event) => {
-            if (isScrollToTop(event)) {
-              onScrollToTop();
-            }
-          }}
+          refreshControl={
+            <RefreshControl
+            // refreshing={refreshCatteryDataLock}
+            // onRefresh={() => {
+            //   refreshCatteryData();
+            // }}
+            />
+          }
           showsVerticalScrollIndicator={false}
         />
       </View>
@@ -225,7 +257,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   listView: {
-    paddingVertical: 16,
+    padding: 16,
     width: "100%",
   },
 });

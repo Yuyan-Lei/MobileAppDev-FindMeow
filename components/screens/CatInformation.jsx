@@ -65,11 +65,11 @@ export default function CatInformation({ route, navigation }) {
         .then((resp) => {
           setDistance(
             calculateDistance(location, resp.data.result.geometry.location) +
-            "mi"
+              "mi"
           );
         })
         .catch((err) => {
-          console.error(err)
+          console.error(err);
         });
     }
   }, [cattery, location]);
@@ -77,7 +77,9 @@ export default function CatInformation({ route, navigation }) {
   useEffect(() => {
     const unSubscribe = onSnapshot(doc(db, "Cats", catId), async (catEntry) => {
       const catData = catEntry.data();
-      if (catData === undefined || catData === null) { return; }
+      if (catData === undefined || catData === null) {
+        return;
+      }
 
       const birthday = new Date(catData.Birthday);
       const now = new Date();
@@ -132,13 +134,14 @@ export default function CatInformation({ route, navigation }) {
     navigation.push("PostNewCatScreen", { cat });
   };
 
-  {/* Calculate the post time */ }
+  {
+    /* Calculate the post time */
+  }
   const getDateFormatted = (timestamp) => {
     var date = new Date(timestamp);
     var dateFormat = date.toDateString();
     return dateFormat;
-  }
-
+  };
 
   return (
     <ScrollView>
@@ -182,14 +185,13 @@ export default function CatInformation({ route, navigation }) {
             marginTop: -35,
             borderTopLeftRadius: 40,
             borderTopRightRadius: 40,
-            backgroundColor: 'rgb(250, 250, 250)',
+            backgroundColor: "rgb(250, 250, 250)",
           }}
         >
-
           {/* Swipe button */}
           <Divider style={styles.divider} />
 
-           {/* Three Labels */}
+          {/* Three Labels */}
           <View
             style={{
               flexDirection: "row",
@@ -211,7 +213,13 @@ export default function CatInformation({ route, navigation }) {
               </View>
               <View style={styles.tags}>
                 <Text style={styles.tagTitleText}>Breed</Text>
-                <Text style={styles.tagContentText}>{cat.Breed}</Text>
+                <Text
+                  style={styles.tagContentText}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {cat.Breed}
+                </Text>
               </View>
             </View>
           </View>
@@ -223,7 +231,7 @@ export default function CatInformation({ route, navigation }) {
           </View>
 
           {/* CATTERY LOCATION */}
-          <View style={{ flexDirection: "row", width: "70%"}}>
+          <View style={{ flexDirection: "row", width: "70%" }}>
             <Ionicons
               name="location-sharp"
               size={24}
@@ -236,7 +244,9 @@ export default function CatInformation({ route, navigation }) {
           </View>
 
           {/* Post Date */}
-          <Text style={styles.PostDateText}>Posted on {getDateFormatted(cat.UploadTime)}</Text>
+          <Text style={styles.PostDateText}>
+            Posted on {getDateFormatted(cat.UploadTime)}
+          </Text>
 
           {/* Chips */}
           <View style={styles.chipBox}>
@@ -247,7 +257,7 @@ export default function CatInformation({ route, navigation }) {
                   key={index}
                   containerStyle={styles.chip}
                   color={Colors.orangeText}
-                  titleStyle={{ fontFamily: "Poppins", marginTop: -1}}
+                  titleStyle={{ fontFamily: "Poppins", marginTop: -1 }}
                 />
               ))
             ) : (
@@ -397,7 +407,7 @@ const styles = StyleSheet.create({
     color: Colors.text,
     fontFamily: "PoppinsBold",
     marginBottom: 20,
-    marginLeft: 5
+    marginLeft: 5,
   },
   priceText: {
     fontSize: 23,
