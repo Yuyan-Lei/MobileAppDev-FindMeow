@@ -170,6 +170,8 @@ export default function MapPage({
                 Math.floor(event.nativeEvent.contentOffset.x) /
                 Math.floor(event.nativeEvent.layoutMeasurement.width)
               );
+              if (index === undefined || index < 0 || index >= catsData.length)
+                return;
               selectLocation({
                 latitude: catsData[index].geoLocation.lat,
                 longitude: catsData[index].geoLocation.lng,
