@@ -1,5 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, View, RefreshControl } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -21,6 +27,7 @@ function MainScreen({ route, navigation }) {
   /* values used for DiscoverFilter start */
   const [visible, setVisible] = useState(false);
   const [catteries, setCatteries] = useState([]);
+  const [catteriesFromQuery, setCatteriesFromQuery] = useState([]);
 
   const [selectedBreed, setSelectedBreed] = useState("All");
   const [selectedState, setSelectedState] = useState("All");
@@ -44,25 +51,11 @@ function MainScreen({ route, navigation }) {
     setSelectedCatNum("");
   }
 
-  function isScrollToTop(event) {
-    return event.nativeEvent.contentOffset.y < 100;
-  }
-
-  function onScrollToTop() {
-    refreshCatteryData();
-  }
-
-  const [refreshCatteryDataLock, setRefreshCatteryData] = useState(false);
-  async function refreshCatteryData() {
-    if (refreshCatteryDataLock) return;
-    setRefreshCatteryData(true);
-
+  function makeQuery(q) {
     try {
-      /* Grouping constraints starts */
       let clauseBreed, clauseState, clauseCatNum;
 
       const selectedBreed = savedCallback.selectedBreed;
-      const selectedState = savedCallback.selectedState;
       const selectedCatNum = savedCallback.selectedCatNum;
 
       if (selectedBreed !== "All" && selectedBreed !== "") {
@@ -78,60 +71,56 @@ function MainScreen({ route, navigation }) {
       const candidates = [clauseBreed, clauseState, clauseCatNum];
 
       const constraints = candidates.filter((item) => item !== undefined);
-      /* Grouping constraints ends */
-      const q = query(
+
+      q = query(
         collection(db, "Users"),
         where("isCattery", "==", true),
         ...constraints
       );
-
-      const catterySnap = await getDocs(q);
-
-      setCatteries(
-        catterySnap.docs
-          .map((catteryDoc) => {
-            return {
-              email: catteryDoc.id,
-              ...catteryDoc.data(),
-            };
-          })
-          .filter((cattery) => {
-            return (
-              searchName === "" ||
-              (cattery.catteryName &&
-                cattery.catteryName
-                  .toLowerCase()
-                  .includes(searchName.toLowerCase()))
-            );
-          })
-          .filter((cattery) => {
-            return (
-              selectedState === "All" ||
-              selectedState === "" ||
-              (cattery.shortAddress &&
-                cattery.shortAddress.slice(-2) ===
-                  stateFullNameToAbbr[selectedState])
-            );
-          })
-      );
-    } finally {
-      setRefreshCatteryData(false);
+    } catch (e) {
+      console.error(e);
     }
+    return q;
   }
 
   useEffect(() => {
-    refreshCatteryData();
-  }, [searchName, selectedBreed, selectedState, selectedCatNum]);
+    const q = makeQuery(q);
+    const unsubscribe = onSnapshot(q, (catterySnap) => {
+      setCatteriesFromQuery(
+        catterySnap.docs.map((catteryDoc) => {
+          return {
+            email: catteryDoc.id,
+            ...catteryDoc.data(),
+          };
+        })
+      );
+    });
+    return unsubscribe;
+  }, [selectedBreed, selectedCatNum]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      refreshCatteryData();
-    }, 100000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+    setCatteries(
+      catteriesFromQuery
+        .filter((cattery) => {
+          return (
+            searchName === "" ||
+            (cattery.catteryName &&
+              cattery.catteryName
+                .toLowerCase()
+                .includes(searchName.toLowerCase()))
+          );
+        })
+        .filter((cattery) => {
+          return (
+            selectedState === "All" ||
+            selectedState === "" ||
+            (cattery.shortAddress &&
+              cattery.shortAddress.slice(-2) ===
+                stateFullNameToAbbr[selectedState])
+          );
+        })
+    );
+  }, [catteriesFromQuery, searchName, selectedState]);
 
   return (
     <View style={styles.containter}>
@@ -182,10 +171,10 @@ function MainScreen({ route, navigation }) {
           ListFooterComponent={<View style={{ height: 120 }} />}
           refreshControl={
             <RefreshControl
-              refreshing={refreshCatteryDataLock}
-              onRefresh={() => {
-                refreshCatteryData();
-              }}
+            // refreshing={refreshCatteryDataLock}
+            // onRefresh={() => {
+            //   refreshCatteryData();
+            // }}
             />
           }
           showsVerticalScrollIndicator={false}
