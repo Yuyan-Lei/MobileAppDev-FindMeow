@@ -48,6 +48,20 @@ function MainScreen({ route, navigation }) {
     ", " +
     cattery.address.split(", ")[2];
 
+  const [likeCats, setLikeCats] = useState([]);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikeCats(likeCats);
+      }
+    );
+
+    return () => unSubscribe();
+  }, []);
+
   useEffect(() => {
     if (cattery.cats.length === 0) {
       return;
@@ -88,6 +102,7 @@ function MainScreen({ route, navigation }) {
             navigation={navigation}
             hideLocation
             showBreed
+            userLikedCats={likeCats}
           />
           {i < cats.length - 1 && (
             <CatCard
@@ -95,6 +110,7 @@ function MainScreen({ route, navigation }) {
               navigation={navigation}
               hideLocation
               showBreed
+              userLikedCats={likeCats}
             />
           )}
         </View>
