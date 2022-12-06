@@ -484,19 +484,17 @@ function MainScreen({ route, navigation }) {
             alignItems: "center",
           }}
         >
-          <View
-            style={{
-              width: 143,
-              backgroundColor: Colors.orange,
-              alignItems: "center",
-              height: 39,
-              borderRadius: 10,
-            }}
-          >
+          <View style={styles.showMapButton}>
             <Pressable
               onPress={() =>
                 navigation.navigate("MapPage", { catsData, likedCats })
               }
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed ? Colors.orangeText : Colors.orange,
+                },
+                styles.showMapButton,
+              ]}
             >
               <Text
                 style={{
@@ -558,5 +556,11 @@ const styles = StyleSheet.create({
     paddingTop: 55,
     // paddingBottom: 200,
     backgroundColor: "white",
+  },
+  showMapButton: {
+    width: 143,
+    alignItems: "center",
+    height: 39,
+    borderRadius: 10,
   },
 });
