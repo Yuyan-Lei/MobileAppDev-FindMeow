@@ -1,65 +1,65 @@
-import React from "react";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
 import {
+  FlatList,
+  Pressable,
   StyleSheet,
   Text,
-  View,
   useWindowDimensions,
-  Pressable,
-  Alert,
-  ScrollView,
+  View,
 } from "react-native";
-import MapView, {
-  PROVIDER_GOOGLE,
-  Marker,
-  Callout,
-  Overlay,
-  OverlayComponent,
-} from "react-native-maps";
-import { Foundation } from "@expo/vector-icons";
-import { Colors } from "../styles/Colors";
-import { Ionicons } from "@expo/vector-icons";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { CatCard_map } from "../cards/CatCard_map";
+import { CatteryMarker } from "../pressable/CatteryMarker";
+import { useRef } from "react";
 
-export default function MapPage({ navigation }) {
+export default function MapPage({
+  route: {
+    params: { catsData, likedCats },
+  },
+  navigation,
+}) {
   const { height, width } = useWindowDimensions();
-  const buttonHandler = () => {
-    Alert.alert("Alert Title", "My Alert Msg", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      { text: "OK", onPress: () => console.log("OK Pressed") },
-    ]);
+  const [showCatList, setShowCatList] = useState(true);
+  const [location, setLocation] = useState(null);
+
+  const showCatListHandler = () => {
+    setShowCatList(!showCatList);
   };
+
+  const initialLat = catsData.at(0).geoLocation.lat;
+  const initialLng = catsData.at(0).geoLocation.lng;
+
+  const mapRef = useRef(null);
+  const selectLocation = (region) => {
+    mapRef.current.animateToRegion(region, 1000);
+  };
+
+  const flatListRef = useRef();
 
   return (
     <View style={styles.container}>
       <MapView
+        ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: 37.3387,
-          longitude: -121.8853,
+          latitude: initialLat,
+          longitude: initialLng,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
       >
-        <Marker coordinate={{ latitude: 37.3387, longitude: -121.8853 }}>
-          <View>
-            {/* <Pressable> */}
-            <Foundation name="marker" size={50} color={Colors.orangeText} />
-            {/* </Pressable> */}
-          </View>
-          <Callout>
-            <View style={{ width: 100, height: 100, backgroundColor: "white" }}>
-              <Text>Hi Hi hi</Text>
-            </View>
-          </Callout>
-        </Marker>
+        <CatteryMarker
+          catsData={catsData}
+          navigation={navigation}
+          showCatList={showCatList}
+          setShowCatList={setShowCatList}
+          flatListRef={flatListRef}
+        />
       </MapView>
 
-      {/* Header */}
+      {/* Header and goBack button */}
       <View
         style={{
           flexDirection: "row",
@@ -71,10 +71,7 @@ export default function MapPage({ navigation }) {
         }}
       >
         <View style={{ top: 40, position: "absolute" }}>
-          <Pressable
-            // onPress={navigation.goBack}
-            style={{ marginLeft: 15 }}
-          >
+          <Pressable onPress={navigation.goBack} style={{ marginLeft: 15 }}>
             <Ionicons
               name="chevron-back"
               size={24}
@@ -97,27 +94,41 @@ export default function MapPage({ navigation }) {
         </View>
       </View>
 
-      {/* Scrollable card */}
-      <ScrollView
-        horizontal={true}
-        style={{
-          flexDirection: "row",
-          // width: width,
-          height: 100,
-          backgroundColor: "transparent",
-          position: "absolute",
-          top: height - 170,
-          // left: 20,
-        }}
-      >
-        {/* Add space to the beginning */}
-        <View style={{ width: 20 }}></View>
-
-        {/* Cat card list here */}
-        <CatCard_map></CatCard_map>
-
-        <CatCard_map></CatCard_map>
-      </ScrollView>
+      {/* Flatlist card */}
+      {showCatList === true ? (
+        <View
+          style={{
+            backgroundColor: "transparent",
+            marginTop: height * 0.75,
+            left: 30,
+          }}
+        >
+          <FlatList
+            ref={flatListRef}
+            data={catsData}
+            renderItem={({ item }) => (
+              <CatCard_map
+                cat={item}
+                navigation={navigation}
+                isliked={likedCats.includes(item.id)}
+              />
+            )}
+            horizontal
+            onViewableItemsChanged={({ viewableItems }) => {
+              const index = viewableItems[0].index;
+              // console.log("Visible items are", viewableItems[0].index);
+              selectLocation({
+                latitude: catsData[index].geoLocation.lat,
+                longitude: catsData[index].geoLocation.lng,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              });
+            }}
+          />
+        </View>
+      ) : (
+        <View />
+      )}
     </View>
   );
 }
@@ -125,10 +136,8 @@ export default function MapPage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    // flex: 1,
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    // top: 130,
   },
   map: {
     ...StyleSheet.absoluteFillObject,

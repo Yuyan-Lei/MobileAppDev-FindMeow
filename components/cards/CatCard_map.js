@@ -1,4 +1,5 @@
-import React from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -6,52 +7,51 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
+import CachedImage from "react-native-expo-cached-image";
+import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import {
+  getCattery,
+  userLikeACat,
+  userUnLikeACat,
+} from "../../firebaseUtils/user";
 import { HeartButton2 } from "../pressable/HeartButton2";
 import { LocationText } from "../texts/LocationText";
-// export function CatCard_map({ cat, navigation, hideLocation, showBreed }) {
-export function CatCard_map() {
-  const { height, width } = useWindowDimensions();
-  //   const [likeCats, setLikeCats] = useState([]);
-  //   const [cattery, setCattery] = useState(null);
+import { Colors } from "../styles/Colors";
 
-  //   useEffect(() => {
-  //     if (cat.cattery) {
-  //       getCattery(cat.cattery).then((cattery) => setCattery(cattery));
-  //     }
-  //   }, [cat]);
+export function CatCard_map({ cat, navigation, showBreed }) {
+  const { width } = useWindowDimensions();
+  const [cattery, setCattery] = useState(null);
+  const [likeCats, setLikeCats] = useState([]);
 
-  //   useEffect(() => {
-  //     const unSubscribe = onSnapshot(
-  //       doc(db, "Users", getCurrentUserEmail()),
-  //       (snapshot) => {
-  //         const likeCats = snapshot.data().likeCats;
-  //         setLikeCats(likeCats);
-  //       }
-  //     );
+  useEffect(() => {
+    if (cat.cattery) {
+      getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+    }
+  }, [cat]);
 
-  //     return () => unSubscribe();
-  //   }, []);
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      doc(db, "Users", getCurrentUserEmail()),
+      (snapshot) => {
+        const likeCats = snapshot.data().likeCats;
+        setLikeCats(likeCats);
+      }
+    );
 
-  //   const onClickLikeButton = () => {
-  //     if (!likeCats.includes(cat.id)) {
-  //       userLikeACat(cat.id);
-  //     } else {
-  //       userUnLikeACat(cat.id);
-  //     }
-  //   };
+    return () => unSubscribe();
+  }, []);
 
-  //   let catMonthText = "";
-  //   if (cat.month <= 1) {
-  //     catMonthText = "< 1 month";
-  //   } else if (cat.month === 1) {
-  //     catMonthText = cat.month + " month";
-  //   } else {
-  //     catMonthText = cat.month + " months";
-  //   }
+  const onClickLikeButton = () => {
+    if (!likeCats.includes(cat.id)) {
+      userLikeACat(cat.id);
+    } else {
+      userUnLikeACat(cat.id);
+    }
+  };
 
-  //   const { onTouchStart, onTouchEnd } = useSwipePressable(() =>
-  //     navigation.navigate("CatInformation", { catId: cat.id })
-  //   );
+  const onPressCatCard = () =>
+    navigation.navigate("CatInformation", { catId: cat.id });
 
   return (
     <View style={{ width: width - 40 }}>
@@ -60,66 +60,63 @@ export function CatCard_map() {
           justifyContent: "center",
           width: "94%",
           backgroundColor: "white",
-          borderRadius: 8,
-          height: 80,
+          borderRadius: 10,
+          height: 110,
         }}
       >
         {/* <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}> */}
-        <Pressable style={{ marginTop: 20, marginHorizontal: 10 }}>
-          <View style={{ flexDirection: "row", marginRight: 20 }}>
+        <Pressable
+          style={{ flex: 1, paddingLeft: 20, paddingVertical: 10 }}
+          onPress={onPressCatCard}
+        >
+          <View style={{ flexDirection: "row", marginRight: 10 }}>
             <View style={styles.imageView}>
               {/* cat photo */}
-              {/* <CachedImage source={{ uri: cat.photo }} style={styles.image} /> */}
+              <CachedImage source={{ uri: cat.photo }} style={styles.image} />
             </View>
 
-            <View style={{ marginLeft: 20, marginTop: 10 }}>
+            <View style={{ paddingLeft: 12 }}>
               <View>
                 {/* cat name */}
-                {/* <Text style={styles.catNameStyle}>{cat.name}</Text> */}
-                <Text style={styles.catNameStyle}>Ragdoll</Text>
+                <Text style={styles.catNameStyle}>{cat.name}</Text>
                 {/* cat breed */}
-                {/* {showBreed && (
-              <Text style={styles.catDetailStyle}>{cat.breed}</Text>
-            )} */}
+                {showBreed && (
+                  <Text style={styles.catDetailStyle}>{cat.petName}</Text>
+                )}
 
                 {/* cat details */}
                 <Text style={styles.catDetailStyle}>
-                  {/* {cat.sex}, {catMonthText} */}
-                  Male, 4 months
+                  {cat.sex},{" "}
+                  {cat.month === 1
+                    ? cat.month + " month"
+                    : cat.month + " months"}
                 </Text>
 
                 {/* cat location */}
-                {/* {!hideLocation && (
-              <LocationText
-                textStyle={styles.locationStyle}
-                locationIconColor={styles.locationIconStyle.color}
-              >
-                {cattery && cattery.shortAddress
-                  ? cattery.shortAddress + " (" + cat.distance + " km)"
-                  : "Loading"}
-              </LocationText>
-            )} */}
-                <LocationText style={styles.locationStyle}>
-                  San Jose (0.8km)
+                <LocationText
+                  style={styles.locationStyle}
+                  viewPosition={{ left: -2.5 }}
+                >
+                  {cattery && cattery.shortAddress
+                    ? cattery.shortAddress + " (" + cat.distance + " mi)"
+                    : "Loading"}
                 </LocationText>
-                {/* <Text>San Jose (0.8 km)</Text> */}
               </View>
             </View>
           </View>
 
-          {/* floating components */}
-          <View style={{ flexDirection: "column" }}>
-            <View style={styles.heartButtonView}>
-              <HeartButton2
-              // notSelectedColor="white"
-              //   isLiked={likeCats.includes(cat.id)}
-              //   onPress={onClickLikeButton}
-              />
-            </View>
+          {/* Right Part */}
+          <View style={styles.heartButtonView}>
+            {/* Price Tag */}
+            <Text style={styles.priceTag}>${cat.price}</Text>
 
-            <View style={styles.priceView}>
-              {/* <Text style={styles.priceTag}>${cat.price}</Text> */}
-              <Text style={styles.priceTag}>$1500</Text>
+            {/* Heart Button */}
+            <View style={{ marginTop: -20, marginRight: -10 }}>
+              <HeartButton2
+                notSelectedColor={Colors.gray}
+                isLiked={likeCats.includes(cat.id)}
+                onPress={onClickLikeButton}
+              />
             </View>
           </View>
         </Pressable>
@@ -133,56 +130,47 @@ const styles = StyleSheet.create({
     margin: 10,
     justifyContent: "center",
     backgroundColor: "white",
-    borderRadius: 5,
+    borderRadius: 10,
   },
   imageView: {
     backgroundColor: "red",
-    width: 60,
-    height: 60,
-    borderRadius: 8,
-    marginVertical: 10,
+    width: 75,
+    height: 75,
+    borderRadius: 16,
+    marginTop: 7,
   },
   image: {
-    width: 20,
-    height: 20,
-    borderRadius: 5,
+    flex: 1,
+    borderRadius: 10,
   },
   catNameStyle: {
     color: "#2E2525",
-    fontFamily: "PoppinsMedium",
-    fontSize: 14,
+    fontFamily: "PoppinsSemiBold",
+    fontSize: 15,
+    marginTop: 6,
     marginBottom: 2,
   },
   catDetailStyle: {
-    marginTop: 2,
+    marginTop: 6,
     color: "rgba(46, 37, 37, 0.67)",
-    fontSize: 12,
-    fontFamily: "Poppins",
+    fontSize: 13,
+    fontFamily: "PoppinsRegular",
   },
   locationStyle: {
-    fontSize: 10,
+    fontSize: 13,
     color: "#2E2525",
-    marginTop: 5,
   },
   locationIconStyle: {
     color: "#F59156",
   },
   heartButtonView: {
-    position: "absolute",
-    marginLeft: "auto",
-    left: 245,
-    marginRight: 90,
-    top: -70,
-  },
-  priceView: {
-    marginLeft: "auto",
-    top: -70,
-    paddingLeft: -20,
+    marginTop: -77,
     marginRight: 20,
+    alignItems: "flex-end",
   },
   priceTag: {
     color: "#F6AC3D",
-    fontFamily: "PoppinsMedium",
-    fontSize: 14,
+    fontFamily: "PoppinsSemiBold",
+    fontSize: 17,
   },
 });

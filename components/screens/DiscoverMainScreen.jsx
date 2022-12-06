@@ -1,14 +1,6 @@
-import { async } from "@firebase/util";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Notifications from "expo-notifications";
-import {
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
@@ -63,7 +55,8 @@ function MainScreen({ route, navigation }) {
   const [neutered, setNeutered] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
 
-  const [data, setData] = useState([]);
+  const [catsData, setCatsData] = useState([]);
+  const [likedCats, setLikedCats] = useState([]);
   const [allCats, setAllCats] = useState([]);
 
   const [enableNotification, setEnableNotification] = useState(false);
@@ -242,6 +235,7 @@ function MainScreen({ route, navigation }) {
             uploadTime: catDoc.data().UploadTime,
             tags: catDoc.data().Tags,
             catteryDoc: cattery,
+            geoLocation: cattery.geoLocation,
           };
         });
 
@@ -265,7 +259,7 @@ function MainScreen({ route, navigation }) {
 
     /* sort cats data */
     const sortedData = sortCatsData(dataBeforeSorting, selectedIndex);
-    setData(sortedData);
+    setCatsData(sortedData);
 
     // After each refresh, get all new added cat within maxNotificationRange.
     makeNotification(rawCatData, maxNotificationRange, enableNotification);
@@ -375,8 +369,8 @@ function MainScreen({ route, navigation }) {
 
   useEffect(() => {
     const selectedIndex = savedCallback.selectedIndex;
-    const sortedData = sortCatsData(data, selectedIndex);
-    setData(sortedData);
+    const sortedData = sortCatsData(catsData, selectedIndex);
+    setCatsData(sortedData);
   }, [selectedIndex]);
   /* data collector used for top filter tags - end */
 
@@ -458,7 +452,7 @@ function MainScreen({ route, navigation }) {
 
       <View style={{ paddingHorizontal: 16, paddingBottom: 50 }}>
         <FlatList
-          data={data}
+          data={catsData}
           renderItem={({ item, index }) => (
             <CatCard
               cat={item}
@@ -499,7 +493,11 @@ function MainScreen({ route, navigation }) {
               borderRadius: 10,
             }}
           >
-            <Pressable onPress={() => navigation.navigate("MapPage")}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate("MapPage", { catsData, likedCats })
+              }
+            >
               <Text
                 style={{
                   padding: 8,
