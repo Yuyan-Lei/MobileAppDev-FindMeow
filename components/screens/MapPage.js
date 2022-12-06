@@ -13,6 +13,7 @@ import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
 import { Colors } from "../styles/Colors";
 import { getUserLocation } from "../../firebaseUtils/user";
+import { useRef } from "react";
 
 export default function MapPage({
   route: {
@@ -52,9 +53,15 @@ export default function MapPage({
   //   });
   // };
 
+  const mapRef = useRef(null);
+  const selectLocation = (region) => {
+    mapRef.current.animateToRegion(region, 1000);
+  };
+
   return (
     <View style={styles.container}>
       <MapView
+        ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
@@ -158,6 +165,18 @@ export default function MapPage({
               />
             )}
             horizontal
+            onScrollEndDrag={(event) => {
+              const index = Math.floor(
+                Math.floor(event.nativeEvent.contentOffset.x) /
+                Math.floor(event.nativeEvent.layoutMeasurement.width)
+              );
+              selectLocation({
+                latitude: catsData[index].geoLocation.lat,
+                longitude: catsData[index].geoLocation.lng,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              })
+            }}
           />
         </View>
       ) : (
