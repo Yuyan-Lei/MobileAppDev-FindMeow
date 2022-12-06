@@ -58,6 +58,9 @@ export default function MapPage({
     mapRef.current.animateToRegion(region, 1000);
   };
 
+
+  const flatListRef = useRef();
+
   return (
     <View style={styles.container}>
       <MapView
@@ -92,6 +95,7 @@ export default function MapPage({
           navigation={navigation}
           showCatList={showCatList}
           setShowCatList={setShowCatList}
+          flatListRef={flatListRef}
         />
       </MapView>
 
@@ -156,6 +160,7 @@ export default function MapPage({
           }}
         >
           <FlatList
+            ref={flatListRef}
             data={catsData}
             renderItem={({ item }) => (
               <CatCard_map

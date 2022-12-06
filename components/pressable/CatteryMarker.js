@@ -46,6 +46,7 @@ export function CatteryMarker({
   navigation,
   showCatList,
   setShowCatList,
+  flatListRef,
 }) {
   const { height, width } = useWindowDimensions();
   const [cattery, setCattery] = useState(null);
@@ -77,8 +78,22 @@ export function CatteryMarker({
     }
   };
 
-  const showCatCardHandler = () => {
-    setShowCatList(!showCatList);
+
+  const markerOnPress = async (event) => {
+    const idString = event._targetInst._debugOwner.memoizedProps.indentifier
+    const id = parseInt(idString, 10);
+    console.log(id);
+    if (!isNaN(id)) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      try {
+        if (flatListRef.current)
+          flatListRef.current.scrollToIndex({ index: id, animated: true });
+        else
+          console.log("flatListRef.current is null");
+      } catch (e) {
+        console.error(e);
+      }
+    }
   };
 
   return (
@@ -90,8 +105,9 @@ export function CatteryMarker({
               latitude: cat.geoLocation.lat,
               longitude: cat.geoLocation.lng,
             }}
-            onPress={showCatCardHandler}
-            indentifier={index + ""}
+            onPress={markerOnPress}
+            key={index}
+            indentifier={`${index}`}
           >
             {/* <View> */}
             {/* <Pressable> */}
@@ -108,7 +124,7 @@ export function CatteryMarker({
         );
       })}
 
-      {showCatList == false ? (
+      {showCatList === false ? (
         <View style={{ width: width + 20, alignItems: "center" }}>
           <View
             style={{
@@ -131,6 +147,10 @@ export function CatteryMarker({
       ) : (
         <View />
       )}
+
+      <View style={{}}>
+
+      </View>
     </View>
   );
 }
