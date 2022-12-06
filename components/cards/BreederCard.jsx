@@ -17,19 +17,23 @@ import { HeartButton2 } from "../pressable/HeartButton2";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 
-export function BreederCard({ cattery, navigation }) {
+export function BreederCard({ cattery, userLikedCatteryEmails, navigation }) {
   const [likeCatteries, setLikeCatteries] = useState([]);
 
   useEffect(() => {
-    const unSubscribe = onSnapshot(
-      doc(db, "Users", getCurrentUserEmail()),
-      (snapshot) => {
-        const likeCatteries = snapshot.data().likeCatteries || [];
-        setLikeCatteries(likeCatteries);
-      }
-    );
-    return () => unSubscribe();
-  }, []);
+    if (userLikedCatteryEmails === undefined) {
+      const unSubscribe = onSnapshot(
+        doc(db, "Users", getCurrentUserEmail()),
+        (snapshot) => {
+          const likeCatteries = snapshot.data().likeCatteries || [];
+          setLikeCatteries(likeCatteries);
+        }
+      );
+      return () => unSubscribe();
+    } else {
+      setLikeCatteries(userLikedCatteryEmails);
+    }
+  }, [userLikedCatteryEmails, likeCatteries]);
 
   const onClickLikeButton = () => {
     if (!likeCatteries.includes(cattery.email)) {
@@ -73,9 +77,7 @@ export function BreederCard({ cattery, navigation }) {
 
           {/* Cattery Breed */}
           <Text style={styles.breedText} numberOfLines={1} ellipsizeMode="tail">
-            {cattery.breed === undefined
-              ? "N/A breed"
-              : cattery.breed}
+            {cattery.breed === undefined ? "N/A breed" : cattery.breed}
           </Text>
 
           {/* Available Kitten Display */}
