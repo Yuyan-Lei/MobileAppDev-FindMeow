@@ -56,6 +56,7 @@ export function CatteryMarker({
       {catsData.map((cat, index) => {
         return (
           <Marker
+            key={{index}}
             coordinate={{
               latitude: cat.geoLocation.lat,
               longitude: cat.geoLocation.lng,
