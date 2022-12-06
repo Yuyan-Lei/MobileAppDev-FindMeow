@@ -29,35 +29,13 @@ export default function MapPage({
     setShowCatList(!showCatList);
   };
 
-  /* Set user location. */
-  // useEffect(() => {
-  //   (async () => {
-  //     let location = await getUserLocation();
-  //     setLocation(location);
-  //   })();
-  // }, []);
-
   const initialLat = catsData.at(0).geoLocation.lat;
   const initialLng = catsData.at(0).geoLocation.lng;
-
-  // markList = () => {
-  //   cat.map((catsData, navigation, showCatList, setShowCatList) => {
-  //     return (
-  //       <CatteryMarker
-  //         cat={catsData}
-  //         navigation={navigation}
-  //         showCatList={showCatList}
-  //         setShowCatList={setShowCatList}
-  //       />
-  //     );
-  //   });
-  // };
 
   const mapRef = useRef(null);
   const selectLocation = (region) => {
     mapRef.current.animateToRegion(region, 1000);
   };
-
 
   const flatListRef = useRef();
 
@@ -74,22 +52,6 @@ export default function MapPage({
           longitudeDelta: 0.0421,
         }}
       >
-        {/* <Marker
-          coordinate={{ latitude: 37.3307, longitude: -121.8853 }}
-          onPress={showCatCardHandler}
-        > */}
-        {/* <View> */}
-        {/* <Pressable> */}
-        {/* <Foundation name="marker" size={40} color={Colors.orangeText} /> */}
-        {/* </Pressable> */}
-        {/* </View> */}
-        {/* <Callout>
-            <View style={{ width: 100, height: 100, backgroundColor: "white" }}>
-              <Text>Hi Hi hi</Text>
-            </View>
-          </Callout> */}
-        {/* </Marker> */}
-
         <CatteryMarker
           catsData={catsData}
           navigation={navigation}
@@ -134,24 +96,8 @@ export default function MapPage({
         </View>
       </View>
 
-      {/* Scrollable card */}
-      {/* <ScrollView
-        horizontal={true}
-        style={{
-          flexDirection: "row",
-          height: 100,
-          backgroundColor: "transparent",
-          position: "absolute",
-          top: height - 170,
-        }}
-      > */}
-      {/* Add space to the beginning */}
-      {/* <View style={{ width: 20 }}></View> */}
-      {/* </ScrollView> */}
-
       {/* Flatlist card */}
-
-      {showCatList == true ? (
+      {showCatList === true ? (
         <View
           style={{
             backgroundColor: "transparent",
@@ -173,7 +119,7 @@ export default function MapPage({
             onScrollEndDrag={(event) => {
               const index = Math.floor(
                 Math.floor(event.nativeEvent.contentOffset.x) /
-                Math.floor(event.nativeEvent.layoutMeasurement.width)
+                  Math.floor(event.nativeEvent.layoutMeasurement.width)
               );
               if (index === undefined || index < 0 || index >= catsData.length)
                 return;
@@ -182,23 +128,11 @@ export default function MapPage({
                 longitude: catsData[index].geoLocation.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
-              })
+              });
             }}
           />
         </View>
       ) : (
-        // <View style={{ width: width + 20, alignItems: "center" }}>
-        //   <View
-        //     style={{
-        //       height: 80,
-        //       backgroundColor: "transparent",
-        //       position: "absolute",
-        //       top: height - 170,
-        //     }}
-        //   >
-        //     <CatCard_map cat={catsData} navigation={navigation} />
-        //   </View>
-        // </View>
         <View />
       )}
 

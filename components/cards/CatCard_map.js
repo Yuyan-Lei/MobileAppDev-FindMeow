@@ -19,14 +19,8 @@ import { HeartButton2 } from "../pressable/HeartButton2";
 import { LocationText } from "../texts/LocationText";
 import { Colors } from "../styles/Colors";
 
-export function CatCard_map({
-  cat,
-  navigation,
-  isliked,
-  hideLocation,
-  showBreed,
-}) {
-  const { height, width } = useWindowDimensions();
+export function CatCard_map({ cat, navigation, showBreed }) {
+  const { width } = useWindowDimensions();
   const [cattery, setCattery] = useState(null);
   const [likeCats, setLikeCats] = useState([]);
 
