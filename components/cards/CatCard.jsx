@@ -17,6 +17,7 @@ export function CatCard({
   cat,
   navigation,
   userLikedCats,
+  catteryDoc,
   hideLocation,
   showBreed,
 }) {
@@ -62,12 +63,14 @@ export function CatCard({
   const [cattery, setCattery] = useState(null);
 
   useEffect(() => {
-    if (cat.cattery) {
+    if (catteryDoc !== undefined) {
+      setCattery(catteryDoc);
+    } else if (cat.cattery) {
       getCattery(cat.cattery)
         .then((cattery) => setCattery(cattery))
         .catch((e) => console.log(e));
     }
-  }, [cat]);
+  }, [cat, catteryDoc]);
 
   const { onTouchStart, onTouchEnd } = useSwipePressable(() =>
     navigation.navigate("CatInformation", { catId: cat.id })
