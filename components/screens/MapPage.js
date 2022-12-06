@@ -114,20 +114,16 @@ export default function MapPage({
               />
             )}
             horizontal
-            onScrollEndDrag={(event) => {
-              const index = Math.floor(
-                Math.floor(event.nativeEvent.contentOffset.x) /
-                  Math.floor(event.nativeEvent.layoutMeasurement.width)
-              );
-              if (index === undefined || index < 0 || index >= catsData.length)
-                return;
+            onViewableItemsChanged={ ({ viewableItems }) => {
+              const index = viewableItems[0].index;
+              // console.log("Visible items are", viewableItems[0].index);
               selectLocation({
                 latitude: catsData[index].geoLocation.lat,
                 longitude: catsData[index].geoLocation.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               });
-            }}
+            } }
           />
         </View>
       ) : (
