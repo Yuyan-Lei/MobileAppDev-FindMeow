@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Linking
+  Linking,
 } from "react-native";
 import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
@@ -21,6 +21,7 @@ import NotificationSettingsScreen from "./NotificationSettingsScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
 import { DEVELOPER_EMAIL } from "@env";
+import { Colors } from "../styles/Colors";
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
@@ -51,8 +52,13 @@ function MainScreen({ route, navigation }) {
   const onUpdatePassword = () => navigation.navigate("UpdatePasswordPage");
   const onNotificationSettings = () =>
     navigation.navigate("NotificationSettingsScreen");
-  const onSendFeedback = () => Linking.openURL('mailto:' + DEVELOPER_EMAIL 
-  + '?subject=FindMeow user feedback from ' + getCurrentUserEmail());
+  const onSendFeedback = () =>
+    Linking.openURL(
+      "mailto:" +
+        DEVELOPER_EMAIL +
+        "?subject=FindMeow user feedback from " +
+        getCurrentUserEmail()
+    );
 
   return (
     <View style={styles.container}>
@@ -83,30 +89,70 @@ function MainScreen({ route, navigation }) {
         <View style={styles.buttonContainer}>
           {user && user.isCattery && (
             <View>
-              <Pressable onPress={onViewCatteryPage} style={styles.button}>
+              <Pressable
+                onPress={onViewCatteryPage}
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed ? Colors.orange : "white",
+                  },
+                  styles.button,
+                ]}
+              >
                 <Text style={styles.buttonText}>View Cattery Page</Text>
               </Pressable>
               <Divider style={styles.divider} />
             </View>
           )}
 
-          <Pressable onPress={onUpdatePassword} style={styles.button}>
+          <Pressable
+            onPress={onUpdatePassword}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? Colors.orange : "white",
+              },
+              styles.button,
+            ]}
+          >
             <Text style={styles.buttonText}>Change Password</Text>
           </Pressable>
           <Divider style={styles.divider} />
 
-          <Pressable onPress={onNotificationSettings} style={styles.button}>
+          <Pressable
+            onPress={onNotificationSettings}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? Colors.orange : "white",
+              },
+              styles.button,
+            ]}
+          >
             <Text style={styles.buttonText}>Notification Settings</Text>
           </Pressable>
           <Divider style={styles.divider} />
 
-          <Pressable onPress={onSendFeedback} style={styles.button}>
+          <Pressable
+            onPress={onSendFeedback}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? Colors.orange : "white",
+              },
+              styles.button,
+            ]}
+          >
             <Text style={styles.buttonText}>Send Feedback</Text>
           </Pressable>
         </View>
 
         {/* Log Out button */}
-        <Pressable onPress={onLogout} style={styles.logOutButton}>
+        <Pressable
+          onPress={onLogout}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? Colors.orangeText : Colors.orange,
+            },
+            styles.logOutButton,
+          ]}
+        >
           <Text style={styles.logOutButtonText}>Log Out</Text>
         </Pressable>
       </View>
@@ -148,7 +194,7 @@ const styles = StyleSheet.create({
   },
   catteryNameText: {
     fontFamily: "PoppinsBold",
-    color: "#F59156",
+    color: Colors.orangeText,
     fontWeight: "700",
     fontSize: 21,
     textAlign: "center",
@@ -162,13 +208,10 @@ const styles = StyleSheet.create({
     width: "88%",
   },
   button: {
-    backgroundColor: "white",
     height: 40,
     width: 300,
     marginVertical: 8,
-    backgroundColor: "white",
     padding: 8,
-    borderRadius: 20,
   },
   buttonText: {
     fontFamily: "Poppins",
@@ -182,7 +225,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   logOutButton: {
-    backgroundColor: "#FFB801",
     borderRadius: 18,
     height: 60,
     alignItems: "center",
@@ -192,7 +234,7 @@ const styles = StyleSheet.create({
   logOutButtonText: {
     textAlign: "center",
     fontSize: 16,
-    color: "#FFFFFF",
+    color: "white",
     fontWeight: "600",
     marginTop: 3,
     fontFamily: "PoppinsSemiBold",
