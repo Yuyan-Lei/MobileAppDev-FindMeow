@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsSemiBold",
     alignItems: "center",
     textAlign: "center",
-    color: "white",
+    color: Colors.white,
     fontSize: 18,
   },
 });

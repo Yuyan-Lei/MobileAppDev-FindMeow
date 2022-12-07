@@ -180,7 +180,7 @@ function MainScreen({ route, navigation }) {
           <View
             style={{
               height: width * 0.7,
-              backgroundColor: "gray",
+              backgroundColor: Colors.gray,
             }}
           >
             {cattery.picture && (
@@ -196,7 +196,7 @@ function MainScreen({ route, navigation }) {
         <View style={styles.backButtonView}>
           <View>
             <Pressable onPress={navigation.goBack}>
-              <Ionicons name="chevron-back" size={24} color="white" />
+              <Ionicons name="chevron-back" size={24} color={Colors.white} />
             </Pressable>
           </View>
         </View>
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 25,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 12,
   },
   backButtonView: {
@@ -324,12 +324,12 @@ const styles = StyleSheet.create({
   },
   infoView: {
     padding: 24,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 12,
   },
   nameAndAddressView: {
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     padding: 16,
     borderRadius: 12,
   },
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
     marginBottom: 32 - 80,
   },
   container: {
-    backgroundColor: "rgb(250,250,250)",
+    backgroundColor: Colors.catInfoMainBackground,
   },
   catteryName: {
     color: Colors.orangeText,

@@ -51,7 +51,11 @@ function EmptyStarPage({ origin, setSelectedIndex }) {
           marginTop: "40%",
         }}
       >
-        <Ionicons name="md-heart-circle-outline" size={56} color="black" />
+        <Ionicons
+          name="md-heart-circle-outline"
+          size={56}
+          color={Colors.black}
+        />
         <Text
           style={{
             fontFamily: "PoppinsBold",
@@ -65,7 +69,7 @@ function EmptyStarPage({ origin, setSelectedIndex }) {
         <Text
           style={{
             marginTop: 15,
-            color: "rgb(154, 153, 153)",
+            color: Colors.reminderText,
             fontFamily: "Poppins",
             textAlign: "center",
           }}
@@ -369,7 +373,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     paddingTop: 55,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     flex: 1,
   },
 });

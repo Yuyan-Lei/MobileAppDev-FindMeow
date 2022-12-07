@@ -156,7 +156,7 @@ export default function CatInformation({ route, navigation }) {
         {/* Heart button */}
         <View style={styles.floatingView}>
           <HeartButton_InfoPage
-            notSelectedColor="white"
+            notSelectedColor={Colors.white}
             isLiked={likeCats.includes(cat.id)}
             onPress={onClickLikeButton}
           />
@@ -166,7 +166,7 @@ export default function CatInformation({ route, navigation }) {
         {allowEdit && (
           <View style={styles.editButtonView}>
             <Pressable onPress={onClickEditButton}>
-              <Feather name="edit" size={18} color="white" />
+              <Feather name="edit" size={18} color={Colors.white} />
             </Pressable>
           </View>
         )}
@@ -174,7 +174,7 @@ export default function CatInformation({ route, navigation }) {
         {/* Back Button*/}
         <View style={styles.backButtonContainer}>
           <Pressable onPress={navigation.goBack}>
-            <Ionicons name="chevron-back" size={24} color="white" />
+            <Ionicons name="chevron-back" size={24} color={Colors.white} />
           </Pressable>
         </View>
 
@@ -185,7 +185,7 @@ export default function CatInformation({ route, navigation }) {
             marginTop: -35,
             borderTopLeftRadius: 40,
             borderTopRightRadius: 40,
-            backgroundColor: "rgb(250, 250, 250)",
+            backgroundColor: Colors.catInfoMainBackground,
           }}
         >
           {/* Swipe button */}
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   tags: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     marginHorizontal: 10,
     alignItems: "center",
     padding: 8,
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     borderRadius: 100,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
   },
   chipBox: {
     flexDirection: "row",
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
   },
   tagTitleText: {
     fontSize: 13,
-    color: "rgba(46, 37, 37, 0.5)",
+    color: Colors.tagTitleText,
     fontFamily: "PoppinsRegular",
     marginVertical: 5,
   },
@@ -425,7 +425,7 @@ const styles = StyleSheet.create({
   },
   PostDateText: {
     fontSize: 14,
-    color: "rgba(46, 37, 37, 0.67)",
+    color: Colors.postDateText,
     fontFamily: "PoppinsLight",
     marginTop: 8,
     marginBottom: 15,
@@ -447,11 +447,11 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     fontSize: 15,
-    color: "rgba(46, 37, 37, 0.76)",
+    color: Colors.descriptionText,
     fontFamily: "PoppinsRegular",
   },
   contactLabelContainer: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     alignItems: "center",
     padding: 8,
     borderRadius: 15,
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
   },
   catteryLabelText: {
     fontSize: 12,
-    color: "rgba(46, 37, 37, 0.63)",
+    color: Colors.catteryLabel,
     fontFamily: "Poppins",
     marginTop: 4,
     marginBottom: 16,

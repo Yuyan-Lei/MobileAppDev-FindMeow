@@ -318,7 +318,6 @@ export default function PostNewCatScreen({
               mode="date"
               onChange={onChange}
               accentColor={Colors.orangeText}
-              textColor={Colors.white}
             />
           </View>
         ) : (
@@ -339,7 +338,10 @@ export default function PostNewCatScreen({
                 value={birthDate === null ? new Date() : birthDate}
                 mode="date"
                 onChange={onChange}
-                positiveButton={{ label: "OK", textColor: "green" }}
+                positiveButton={{
+                  label: "OK",
+                  textColor: Colors.positiveButtonAndriodDatePicker,
+                }}
               />
             )}
           </View>
@@ -357,7 +359,7 @@ export default function PostNewCatScreen({
           defaultOption={{ key: gender, value: gender }}
           placeholder="Select Gender"
           boxStyles={{
-            backgroundColor: "white",
+            backgroundColor: Colors.white,
             borderWidth: 0,
             height: 50,
           }}
@@ -401,7 +403,7 @@ export default function PostNewCatScreen({
             titleStyle={
               vaccinated
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -422,7 +424,7 @@ export default function PostNewCatScreen({
             titleStyle={
               vetChecked
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -443,7 +445,7 @@ export default function PostNewCatScreen({
             titleStyle={
               dewormed
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -464,7 +466,7 @@ export default function PostNewCatScreen({
             titleStyle={
               ready
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -485,7 +487,7 @@ export default function PostNewCatScreen({
             titleStyle={
               neutered
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -529,7 +531,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     textAlign: "center",
     fontSize: 16,
-    color: "#FFFFFF",
+    color: Colors.white,
     fontWeight: "600",
   },
   dateButtonView: {
@@ -542,10 +544,10 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 30,
-    backgroundColor: "#FFFCF6",
+    backgroundColor: Colors.postCatContainer,
   },
   submitButton: {
-    backgroundColor: "#FFB801",
+    backgroundColor: Colors.orange,
     borderRadius: 18,
     height: 60,
     alignItems: "center",
@@ -553,7 +555,7 @@ const styles = StyleSheet.create({
     marginTop: "10%",
   },
   submittingButton: {
-    backgroundColor: "#b8b8b8",
+    backgroundColor: Colors.submittingButton,
     borderRadius: 18,
     height: 60,
     alignItems: "center",
@@ -561,7 +563,7 @@ const styles = StyleSheet.create({
     marginTop: "10%",
   },
   deleteButton: {
-    backgroundColor: "#e84f15",
+    backgroundColor: Colors.deleteButton,
     borderRadius: 18,
     height: 60,
     alignItems: "center",
@@ -572,7 +574,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsSemiBold",
     textAlign: "center",
     fontSize: 16,
-    color: "#FFFFFF",
+    color: Colors.white,
     fontWeight: "600",
     paddingTop: 3,
   },
@@ -597,14 +599,14 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
     fontSize: 14,
     padding: 10,
   },
   priceInput: {
     fontFamily: "Poppins",
     flexDirection: "row",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
     height: 50,
     borderRadius: 10,
     alignItems: "center",

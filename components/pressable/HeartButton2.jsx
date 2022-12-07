@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
+import { Colors } from "../styles/Colors";
 
 export function HeartButton2({
   onPress,
@@ -9,11 +10,11 @@ export function HeartButton2({
   notSelectedColor,
 }) {
   if (selectedColor === undefined) {
-    selectedColor = "orange";
+    selectedColor = Colors.orange;
   }
 
   if (notSelectedColor === undefined) {
-    notSelectedColor = "gray";
+    notSelectedColor = Colors.gray;
   }
 
   return (
@@ -21,11 +22,7 @@ export function HeartButton2({
       <View
         style={{
           padding: 5,
-
           borderRadius: 20,
-          // marginTop: 33,
-          // marginLeft: 10,
-          // marginRight: 10,
         }}
       >
         <Ionicons

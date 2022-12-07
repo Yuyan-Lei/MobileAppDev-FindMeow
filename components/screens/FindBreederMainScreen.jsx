@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   containter: {
     alignItems: "center",
     paddingTop: 55,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     flex: 1,
   },
   cardView: {

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
+import { Colors } from "../styles/Colors";
 
 export function TitleText({ children }) {
   return <Text style={styles.titleText}>{children}</Text>;
@@ -10,6 +11,6 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsSemiBold",
     fontSize: 24,
     textAlign: "center",
-    color: "#2E2525",
+    color: Colors.black,
   },
 });

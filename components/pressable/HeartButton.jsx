@@ -10,11 +10,11 @@ export function HeartButton({
   notSelectedColor,
 }) {
   if (selectedColor === undefined) {
-    selectedColor = "orange";
+    selectedColor = Colors.orange;
   }
 
   if (notSelectedColor === undefined) {
-    notSelectedColor = "white";
+    notSelectedColor = Colors.white;
   }
 
   return (

@@ -11,17 +11,6 @@ import {
 import { Colors } from "../styles/Colors";
 
 export function MessageButton({ onPress, cattery }) {
-  // const messageHandler = () => {
-  //   Alert.alert("Phone number", "123-456-7890", [
-  //     {
-  //       text: "Cancel",
-  //       onPress: () => console.log("Cancel Pressed"),
-  //       style: "cancel",
-  //     },
-  //     { text: "OK", onPress: () => console.log("OK button Pressed") },
-  //   ]);
-  // };
-
   const messageNumber = (phone) => {
     let phoneNumber = phone;
     const url =
@@ -45,7 +34,7 @@ export function MessageButton({ onPress, cattery }) {
         <MaterialIcons
           name="textsms"
           size={24}
-          color="white"
+          color={Colors.white}
           // onPress={messageHandler}
           onPress={() => messageNumber(cattery.phoneNumber)}
           style={{}}

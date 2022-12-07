@@ -499,7 +499,7 @@ function MainScreen({ route, navigation }) {
               <Text
                 style={{
                   padding: 8,
-                  color: "white",
+                  color: Colors.white,
                   fontFamily: "PoppinsMedium",
                 }}
               >
@@ -555,7 +555,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 55,
     // paddingBottom: 200,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
   },
   showMapButton: {
     width: 143,

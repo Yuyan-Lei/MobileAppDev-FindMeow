@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     paddingTop: 55,
-    backgroundColor: "#FFFCF6",
+    backgroundColor: Colors.postCatContainer,
   },
   title: {
     fontFamily: "PoppinsSemiBold",
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 20,
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.white,
     fontSize: 14,
     padding: 10,
   },

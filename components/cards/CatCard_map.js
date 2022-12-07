@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   container: {
     margin: 10,
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 10,
   },
   imageView: {
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   catNameStyle: {
-    color: "#2E2525",
+    color: Colors.text,
     fontFamily: "PoppinsSemiBold",
     fontSize: 15,
     marginTop: 6,
@@ -152,16 +152,16 @@ const styles = StyleSheet.create({
   },
   catDetailStyle: {
     marginTop: 6,
-    color: "rgba(46, 37, 37, 0.67)",
+    color: Colors.grayText,
     fontSize: 13,
     fontFamily: "PoppinsRegular",
   },
   locationStyle: {
     fontSize: 13,
-    color: "#2E2525",
+    color: Colors.text,
   },
   locationIconStyle: {
-    color: "#F59156",
+    color: Colors.orangeText,
   },
   heartButtonView: {
     marginTop: -77,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   priceTag: {
-    color: "#F6AC3D",
+    color: Colors.priceColor,
     fontFamily: "PoppinsSemiBold",
     fontSize: 17,
   },

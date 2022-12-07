@@ -23,7 +23,7 @@ export function FilterButton({ onPress, length, size }) {
           styles.buttonView,
         ]}
       >
-        <AntDesign name="filter" size={size} color="white" />
+        <AntDesign name="filter" size={size} color={Colors.white} />
       </View>
     </Pressable>
   );

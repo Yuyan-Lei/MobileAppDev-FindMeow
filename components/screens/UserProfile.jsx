@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 55,
     paddingBottom: 200,
-    backgroundColor: "rgb(250, 250, 250)",
+    backgroundColor: Colors.catInfoMainBackground,
   },
   catteryNameText: {
     fontFamily: "PoppinsBold",
