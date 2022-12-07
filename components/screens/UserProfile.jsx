@@ -1,6 +1,6 @@
 import { Avatar } from "@react-native-material/core";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useEffect, useState, React} from "react";
+import { useEffect, useState, React } from "react";
 import {
   Alert,
   Pressable,
@@ -22,9 +22,8 @@ import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
 import { DEVELOPER_EMAIL } from "@env";
 import { Colors } from "../styles/Colors";
-import { WeatherCard} from "../cards/WeatherCard"
+import { WeatherCard } from "../cards/WeatherCard";
 import { getUserLocation } from "../../firebaseUtils/user";
-
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
@@ -43,22 +42,23 @@ function MainScreen({ route, navigation }) {
     ]);
   };
 
-
   // Get the current location to enable weather service
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      getUserLocation().then( (location) => 
-      fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${location.lat}&lon=${location.lng}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
-        .then(res => res.json())
-        .then(result => {
-          setData(result);
-      }));
-    }
+      getUserLocation().then((location) =>
+        fetch(
+          `${process.env.REACT_APP_API_URL}/weather/?lat=${location.lat}&lon=${location.lng}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
+        )
+          .then((res) => res.json())
+          .then((result) => {
+            setData(result);
+          })
+      );
+    };
     fetchData();
-  }, [])
-
+  }, []);
 
   // Navigators
   const onViewCatteryPage = () =>
@@ -74,7 +74,6 @@ function MainScreen({ route, navigation }) {
         getCurrentUserEmail()
     );
 
-  
   return (
     <View style={styles.container}>
       <View style={{ margin: 12 }}>
@@ -173,9 +172,9 @@ function MainScreen({ route, navigation }) {
 
         {/* Weather */}
         <View style={styles.weatherContainer}>
-          {(typeof data.main != 'undefined') ? (
-           <WeatherCard weatherData={data}/>
-          ): (
+          {typeof data.main != "undefined" ? (
+            <WeatherCard weatherData={data} />
+          ) : (
             <Text> Loading...</Text>
           )}
         </View>
@@ -235,9 +234,9 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 40,
-    width: 300,
     marginVertical: 8,
     padding: 8,
+    borderRadius: 10,
   },
   buttonText: {
     fontFamily: "Poppins",
@@ -267,5 +266,5 @@ const styles = StyleSheet.create({
   },
   weatherContainer: {
     alignItems: "baseline",
-  }
+  },
 });
