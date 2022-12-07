@@ -78,8 +78,8 @@ function MainScreen({ route, navigation }) {
           label={
             user && user.isCattery ? user.catteryName : getCurrentUserEmail()
           }
-          color="#FFB801"
-          tintColor="#FFFFFF"
+          color={Colors.orange}
+          tintColor={Colors.white}
           size={90}
         />
         <Text style={styles.catteryNameText}>
@@ -156,6 +156,8 @@ function MainScreen({ route, navigation }) {
           <Text style={styles.logOutButtonText}>Log Out</Text>
         </Pressable>
       </View>
+      {/* weather  */}
+      <View></View>
     </View>
   );
 }

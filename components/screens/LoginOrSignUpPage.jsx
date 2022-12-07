@@ -4,12 +4,12 @@ import {
   Feather,
   MaterialCommunityIcons,
   MaterialIcons,
-  FontAwesome5
+  FontAwesome5,
 } from "@expo/vector-icons";
 import { Pressable, TextInput } from "@react-native-material/core";
 import { CommonActions } from "@react-navigation/native";
 import { CheckBox } from "@rneui/themed";
-import 'core-js/features/array/at';
+import "core-js/features/array/at";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -77,7 +77,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
       return "You didn't specify the phone number or set an invalid phone number, please fill or fix that.";
     }
     if (breed === "") {
-      return "You didn't specify the breed, please fill that.'"
+      return "You didn't specify the breed, please fill that.'";
     }
     if (website === "") {
       return "You didn't specify the website of the cattery, please fill that.";
@@ -291,7 +291,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             leading={(props) => (
               <MaterialCommunityIcons name="email" {...props} />
             )}
-            color="#F59156"
+            color={Colors.orangeText}
             onChangeText={setUserName}
           />
           <TextInput
@@ -300,7 +300,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             secureTextEntry={true}
             leading={(props) => <Entypo name="lock" {...props} />}
             value={password}
-            color="#F59156"
+            color={Colors.orangeText}
             onChangeText={setPassword}
           />
           {pageState === 0 ? (
@@ -327,7 +327,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 color={
                   confirmPassword !== "" && confirmPassword !== password
                     ? "red"
-                    : "#F59156"
+                    : Colors.orangeText
                 }
                 onChangeText={setConfirmPassword}
               />
@@ -335,8 +335,8 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 title="I'm a cattery owner"
                 checked={isCattery}
                 onPress={() => setIsCattery(!isCattery)}
-                textStyle={{ color: "#F59156", fontSize: 14 }}
-                checkedColor="#F59156"
+                textStyle={{ color: Colors.orangeText, fontSize: 14 }}
+                checkedColor={Colors.orangeText}
                 containerStyle={{ backgroundColor: "transparent" }}
               />
               {isCattery && (
@@ -344,7 +344,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                   <TextInput
                     label="Cattery Name"
                     value={name}
-                    color="#F59156"
+                    color={Colors.orangeText}
                     leading={(props) => (
                       <MaterialIcons name="storefront" {...props} />
                     )}
@@ -353,7 +353,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                   <TextInput
                     label="Cattery Phone"
                     value={phoneNumber}
-                    color="#F59156"
+                    color={Colors.orangeText}
                     keyboardType="phone-pad"
                     leading={(props) => <Feather name="phone" {...props} />}
                     onChangeText={setPhoneNumber}
@@ -361,28 +361,27 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                   <TextInput
                     label="Cattery Website"
                     value={website}
-                    color="#F59156"
+                    color={Colors.orangeText}
                     leading={(props) => (
                       <MaterialCommunityIcons name="web" {...props} />
                     )}
                     onChangeText={setWebsite}
                   />
-                  <View style={{ 
-                    flexDirection: "row",
-                    alignItems: "center",
-                    flex: 1,
-                    width: "100%",
-                    borderBottomWidth: 1,
-                    borderBottomColor: "rgb(149, 148, 148)",
-                    paddingTop: 6,
-                    paddingBottom: 4,
-                    backgroundColor: "rgb(246,245,245)",
-                    paddingLeft: 12}}>
-                    <FontAwesome5
-                          name="cat"
-                          size={24}
-                          color="rgb(97,97,97)"
-                        />
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      flex: 1,
+                      width: "100%",
+                      borderBottomWidth: 1,
+                      borderBottomColor: "rgb(149, 148, 148)",
+                      paddingTop: 6,
+                      paddingBottom: 4,
+                      backgroundColor: "rgb(246,245,245)",
+                      paddingLeft: 12,
+                    }}
+                  >
+                    <FontAwesome5 name="cat" size={24} color="rgb(97,97,97)" />
                     <View style={{ flex: 1 }}>
                       <SelectList
                         setSelected={setBreed}
@@ -395,7 +394,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         }}
                         inputStyles={{
                           fontSize: 16,
-                          color: "rgb(34, 34, 34)"
+                          color: "rgb(34, 34, 34)",
                         }}
                         defaultOption={{ key: breed, value: breed }}
                       />
@@ -418,7 +417,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     textInputProps={{
                       InputComp: TextInput,
                       label: "Cattery Address",
-                      color: "#F59156",
+                      color: Colors.orangeText,
                       leading: (
                         <Feather
                           name="map-pin"
@@ -431,13 +430,13 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                       textInput: {
                         height: 52,
                         width: "100%",
-                        color: "#2E2525",
+                        color: Colors.black,
                         backgroundColor: "rgb(246,245,245)",
                         fontSize: 16,
                         paddingHorizontal: 0,
                       },
                       container: {
-                        color: "#2E2525",
+                        color: Colors.black,
                       },
                     }}
                     onFail={(error) => console.error(error)}
@@ -455,7 +454,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             </View>
           )}
         </ScrollView>
-        <View style={{ height: 30}}></View>
+        <View style={{ height: 30 }}></View>
       </KeyboardAvoidingView>
 
       {/* remove when publishing */}
@@ -485,11 +484,11 @@ export default function LoginOrSignUpPage({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFB801",
+    backgroundColor: Colors.orange,
     flex: 1,
   },
   majorContent: {
-    backgroundColor: "#F9F9F9",
+    backgroundColor: Colors.dimGray,
     flex: 1,
     borderTopLeftRadius: 60,
     borderTopRightRadius: 60,
@@ -521,7 +520,7 @@ const styles = StyleSheet.create({
     color: "rgba(12, 12, 14, 0.5)",
   },
   loginAndSignUpButton: {
-    backgroundColor: "#FFB801",
+    backgroundColor: Colors.orange,
     borderRadius: 18,
     height: 72,
     alignItems: "center",
@@ -532,15 +531,15 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsSemiBold",
     textAlign: "center",
     fontSize: 20,
-    color: "#FFFFFF",
+    color: Colors.white,
     fontWeight: "600",
   },
   textInput: {
     fontFamily: "Poppins",
-    color: "#F59156",
+    color: Colors.orangeText,
   },
   submitButton: {
-    backgroundColor: "#FFB801",
+    backgroundColor: Colors.orange,
     borderRadius: 18,
     height: 60,
     alignItems: "center",
@@ -551,7 +550,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsSemiBold",
     textAlign: "center",
     fontSize: 16,
-    color: "#FFFFFF",
+    color: Colors.white,
     fontWeight: "600",
     paddingTop: 3,
   },

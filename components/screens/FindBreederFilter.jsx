@@ -85,11 +85,27 @@ const FindBreederFilter = ({
       />
 
       <View style={styles.submitButtonContainer}>
-        <Pressable onPress={resetHandler} style={styles.submitButton}>
+        <Pressable
+          onPress={resetHandler}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? Colors.orange : Colors.orangeText,
+            },
+            styles.submitButton,
+          ]}
+        >
           <Text style={styles.submitText}>Reset</Text>
         </Pressable>
 
-        <Pressable onPress={applyHandler} style={styles.submitButton}>
+        <Pressable
+          onPress={applyHandler}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? Colors.orange : Colors.orangeText,
+            },
+            styles.submitButton,
+          ]}
+        >
           <Text style={styles.submitText}>Apply</Text>
         </Pressable>
       </View>
@@ -105,7 +121,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsBold",
     fontSize: 26,
     textAlign: "left",
-    color: "#F59156",
+    color: Colors.orangeText,
     marginTop: 20,
     marginLeft: 5,
     marginBottom: 5,
@@ -147,7 +163,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   submitButton: {
-    backgroundColor: Colors.orangeText,
+    // backgroundColor: Colors.orangeText,
     padding: 8,
     borderRadius: 25,
     height: 40,
