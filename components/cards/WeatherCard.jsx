@@ -8,7 +8,7 @@ export function WeatherCard ({weatherData})
 {
     // Get current weather and temperature data.
     var weather = weatherData.weather[0].main;
-    // var temperature = weather.main.temp;
+    var temperature = weatherData.main.temp;
 
     // Show different sentence based on the weather and temperature.
     let sentence = "";
@@ -27,12 +27,12 @@ export function WeatherCard ({weatherData})
     else if (weather === "Lightning") {
         sentence = WEATHERS.lightning;
     }
-    // else if (temperature <= 10) {
-    //     sentence = WEATHERS.cold;
-    // }
-    // else if (temperature >= 30) {
-    //     sentence = WEATHERS.hot;
-    // }
+    else if (temperature <= 10) {
+        sentence = WEATHERS.cold;
+    }
+    else if (temperature >= 30) {
+        sentence = WEATHERS.hot;
+    }
     else {
         sentence = WEATHERS.default;
     }
