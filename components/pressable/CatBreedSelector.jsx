@@ -15,9 +15,11 @@ export default function CatBreedSelector(props) {
       boxStyles={{
         backgroundColor: "white",
         borderWidth: 0,
+        height: 50,
       }}
       fontFamily="Poppins"
       defaultOption={{ key: props.selectedBreed, value: props.selectedBreed }}
+      inputStyles={{ marginLeft: -10 }}
     />
   );
 }

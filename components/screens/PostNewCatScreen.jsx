@@ -304,13 +304,21 @@ export default function PostNewCatScreen({
 
         {/* Date picker */}
         {Platform.OS === "ios" ? (
-          <View style={{ flexDirection: "row" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              transform: [{ scale: 0.85 }],
+              marginLeft: -30,
+              borderRadius: 10,
+            }}
+          >
             <RNDateTimePicker
               testID="dateTimePicker"
               value={birthDate || new Date()}
               mode="date"
               onChange={onChange}
               accentColor={Colors.orangeText}
+              textColor={Colors.white}
             />
           </View>
         ) : (
@@ -351,9 +359,11 @@ export default function PostNewCatScreen({
           boxStyles={{
             backgroundColor: "white",
             borderWidth: 0,
+            height: 50,
           }}
           fontFamily="Poppins"
           search={false}
+          inputStyles={{ marginLeft: -10 }}
         />
 
         {/* Price */}
@@ -495,7 +505,9 @@ export default function PostNewCatScreen({
           style={submitting ? styles.submittingButton : styles.submitButton}
           disabled={submitting}
         >
-          <Text style={styles.submitButtonText}>{submitting ? "Submitting" : "Submit"}</Text>
+          <Text style={styles.submitButtonText}>
+            {submitting ? "Submitting" : "Submit"}
+          </Text>
         </Pressable>
 
         {/* Delete Button */}
@@ -521,11 +533,11 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   dateButtonView: {
-    backgroundColor: "#FFB801",
-    borderRadius: 20,
-    height: 40,
+    backgroundColor: Colors.orangeText,
+    borderRadius: 10,
+    height: 30,
     alignItems: "center",
-    padding: 6,
+    padding: 4,
     width: 120,
   },
   container: {
@@ -582,8 +594,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontFamily: "Poppins",
-    height: 60,
-    borderRadius: 20,
+    height: 50,
+    borderRadius: 10,
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     fontSize: 14,
@@ -593,8 +605,8 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
-    height: 60,
-    borderRadius: 20,
+    height: 50,
+    borderRadius: 10,
     alignItems: "center",
     padding: 10,
     width: "100%",
