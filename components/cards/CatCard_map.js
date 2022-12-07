@@ -114,7 +114,7 @@ export function CatCard_map({ cat, navigation, showBreed }) {
             <Text style={styles.priceTag}>${cat.price}</Text>
 
             {/* Heart Button */}
-            <View style={{ marginTop: -20, marginRight: -10 }}>
+            <View style={{ marginTop: 15, marginRight: -8 }}>
               <HeartButton2
                 notSelectedColor={Colors.gray}
                 isLiked={likeCats.includes(cat.id)}
