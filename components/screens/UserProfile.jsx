@@ -22,6 +22,7 @@ import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
 import { DEVELOPER_EMAIL } from "@env";
 import { WeatherCard} from "../cards/WeatherCard"
+import { getUserLocation } from "../../firebaseUtils/user";
 
 
 function MainScreen({ route, navigation }) {
@@ -43,23 +44,19 @@ function MainScreen({ route, navigation }) {
 
 
   // Get the current location to enable weather service
-  
-  const [lat, setLat] = useState([]);
-  const [long, setLong] = useState([]);
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLat('37.3387');
-      setLong('-121.8853');
-      fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
+      getUserLocation().then( (location) => 
+      fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${location.lat}&lon=${location.lng}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
         .then(res => res.json())
         .then(result => {
           setData(result);
-      });
+      }));
     }
     fetchData();
-  }, [lat,long])
+  }, [])
 
 
   // Navigators
