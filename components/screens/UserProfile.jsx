@@ -1,6 +1,6 @@
 import { Avatar } from "@react-native-material/core";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import { useEffect, useState, React} from "react";
 import {
   Alert,
   Pressable,
@@ -21,18 +21,13 @@ import NotificationSettingsScreen from "./NotificationSettingsScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
 import { DEVELOPER_EMAIL } from "@env";
+import { WeatherCard} from "../cards/WeatherCard"
+
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
 
-  const buttonHandler = () => {
-    Alert.alert(
-      "Feature for this button is coming soon~",
-      "See you next time!",
-      [{ text: "Sad" }, { text: "Wait for you" }]
-    );
-  };
-
+  // Confirm to log out
   const onLogout = () => {
     Alert.alert("Confirm to Log Out", "Are you sure you want to log out?", [
       {
@@ -46,6 +41,28 @@ function MainScreen({ route, navigation }) {
     ]);
   };
 
+
+  // Get the current location to enable weather service
+  
+  const [lat, setLat] = useState([]);
+  const [long, setLong] = useState([]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLat('37.3387');
+      setLong('-121.8853');
+      fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
+        .then(res => res.json())
+        .then(result => {
+          setData(result);
+      });
+    }
+    fetchData();
+  }, [lat,long])
+
+
+  // Navigators
   const onViewCatteryPage = () =>
     navigation.navigate("ProfileCatteryPage", { user });
   const onUpdatePassword = () => navigation.navigate("UpdatePasswordPage");
@@ -54,6 +71,7 @@ function MainScreen({ route, navigation }) {
   const onSendFeedback = () => Linking.openURL('mailto:' + DEVELOPER_EMAIL 
   + '?subject=FindMeow user feedback from ' + getCurrentUserEmail());
 
+  
   return (
     <View style={styles.container}>
       <View style={{ margin: 12 }}>
@@ -109,6 +127,15 @@ function MainScreen({ route, navigation }) {
         <Pressable onPress={onLogout} style={styles.logOutButton}>
           <Text style={styles.logOutButtonText}>Log Out</Text>
         </Pressable>
+
+        {/* Weather */}
+        <View style={styles.weatherContainer}>
+          {(typeof data.main != 'undefined') ? (
+           <WeatherCard weatherData={data}/>
+          ): (
+            <Text> Loading...</Text>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -197,4 +224,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     fontFamily: "PoppinsSemiBold",
   },
+  weatherContainer: {
+    alignItems: "baseline",
+  }
 });
