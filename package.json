@@ -58,6 +58,7 @@
     "react-native-shadow-2": "^7.0.6",
     "react-native-svg": "^13.6.0",
     "react-native-swipe-gestures": "^1.0.5",
+    "react-native-swiper": "^1.6.0",
     "react-native-web": "~0.18.9",
     "rn-range-slider": "^2.2.2",
     "teaset": "^0.7.5"
