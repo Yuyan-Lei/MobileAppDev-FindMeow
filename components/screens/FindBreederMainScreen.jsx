@@ -150,7 +150,7 @@ function MainScreen({ route, navigation }) {
         </View>
         <FilterButton
           onPress={() => refRBSheet.current.open()}
-          size={24}
+          size={28}
           length={60}
         />
         <RBSheet

@@ -389,8 +389,8 @@ function MainScreen({ route, navigation }) {
         <View style={styles.filterButtonView}>
           <FilterButton
             onPress={() => refRBSheet.current.open()}
-            size={18}
-            length={29}
+            size={22}
+            length={40}
           />
         </View>
       </View>
@@ -545,7 +545,7 @@ const styles = StyleSheet.create({
   filterButtonView: {
     position: "absolute",
     right: 24,
-    top: 18,
+    top: 2,
   },
   headerView: {
     padding: 12,
