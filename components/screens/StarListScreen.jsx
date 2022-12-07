@@ -87,6 +87,7 @@ function CatsScreen({
   refreshing,
   onRefresh,
   setSelectedIndex,
+  allCatteries,
 }) {
   const [location, setLocation] = useState(null);
 
@@ -128,6 +129,10 @@ function CatsScreen({
                 cat={item}
                 location={location}
                 navigation={navigation}
+                catteryDoc={allCatteries.find(
+                  (cattery) =>
+                    cattery.email && cattery.email === item.catteryEmail
+                )}
               />
             );
           }}
@@ -341,6 +346,7 @@ function MainScreen({ route, navigation }) {
           // refreshing={refreshingCat}
           // onRefresh={() => refreshLikedCatData({ forceLoad: true })}
           setSelectedIndex={setSelectedIndex}
+          allCatteries={allCatteries}
         />
       )}
       {selectedIndex === 1 && (

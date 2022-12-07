@@ -1,20 +1,12 @@
+import { ButtonGroup } from "@rneui/themed";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Switch } from "react-native-paper";
 import {
-  Alert,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import { useState, useEffect } from "react";
+  getUserData, updateUserNotificationSettings
+} from "../../firebaseUtils/user";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
-import { Switch } from "react-native-paper";
-import { ButtonGroup } from "@rneui/themed";
-import {
-  updateUserNotificationSettings,
-  getUserData,
-} from "../../firebaseUtils/user";
 
 export default function NotificationSettingsScreen() {
   const [enableNotification, setEnableNotification] = useState(false);

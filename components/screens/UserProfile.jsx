@@ -1,39 +1,32 @@
+import { DEVELOPER_EMAIL } from "@env";
 import { Avatar } from "@react-native-material/core";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import { React, useEffect, useState } from "react";
 import {
-  Alert,
-  Pressable,
+  Alert, Linking, Pressable,
   StyleSheet,
   Text,
-  View,
-  Linking,
+  View
 } from "react-native";
 import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { getUserLocation } from "../../firebaseUtils/user";
+import { WeatherCard } from "../cards/WeatherCard";
 import { rootStackNavigate } from "../RootNavigation";
+import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
-import PostNewCatScreen from "./PostNewCatScreen";
 import NotificationSettingsScreen from "./NotificationSettingsScreen";
+import PostNewCatScreen from "./PostNewCatScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
-import { DEVELOPER_EMAIL } from "@env";
-import { Colors } from "../styles/Colors";
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
 
-  const buttonHandler = () => {
-    Alert.alert(
-      "Feature for this button is coming soon~",
-      "See you next time!",
-      [{ text: "Sad" }, { text: "Wait for you" }]
-    );
-  };
-
+  // Confirm to log out
   const onLogout = () => {
     Alert.alert("Confirm to Log Out", "Are you sure you want to log out?", [
       {
@@ -47,6 +40,25 @@ function MainScreen({ route, navigation }) {
     ]);
   };
 
+  // Get the current location to enable weather service
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      getUserLocation().then((location) =>
+        fetch(
+          `${process.env.REACT_APP_API_URL}/weather/?lat=${location.lat}&lon=${location.lng}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
+        )
+          .then((res) => res.json())
+          .then((result) => {
+            setData(result);
+          })
+      );
+    };
+    fetchData();
+  }, []);
+
+  // Navigators
   const onViewCatteryPage = () =>
     navigation.navigate("ProfileCatteryPage", { user });
   const onUpdatePassword = () => navigation.navigate("UpdatePasswordPage");
@@ -155,6 +167,15 @@ function MainScreen({ route, navigation }) {
         >
           <Text style={styles.logOutButtonText}>Log Out</Text>
         </Pressable>
+
+        {/* Weather */}
+        <View style={styles.weatherContainer}>
+          {typeof data.main != "undefined" ? (
+            <WeatherCard weatherData={data} />
+          ) : (
+            <Text> Loading...</Text>
+          )}
+        </View>
       </View>
       {/* weather  */}
       <View></View>
@@ -240,5 +261,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginTop: 3,
     fontFamily: "PoppinsSemiBold",
+  },
+  weatherContainer: {
+    alignItems: "baseline",
   },
 });

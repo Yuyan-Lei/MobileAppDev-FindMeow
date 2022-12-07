@@ -23,6 +23,7 @@ import {
   View,
 } from "react-native";
 import CachedImage from "react-native-expo-cached-image";
+import { getCats } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { userLikeACattery, userUnLikeACattery } from "../../firebaseUtils/user";
@@ -63,20 +64,11 @@ function MainScreen({ route, navigation }) {
   }, []);
 
   useEffect(() => {
-    if (cattery.cats.length === 0) {
-      return;
-    }
-    const q = query(
-      collection(db, "Cats"),
-      where(documentId(), "in", cattery.cats)
-    );
-    const unSubscribe = onSnapshot(q, (snapshot) => {
-      setCats(
-        snapshot.docs.map((entry) => {
-          return { id: entry.id, ...entry.data() };
-        })
-      );
+    const docRef = doc(db, "Users", getCurrentUserEmail());
+    const unSubscribe = onSnapshot(docRef, (snapshot) => {
+      getCats(snapshot.data().cats).then((cats) => setCats(cats));
     });
+
     return () => unSubscribe();
   }, []);
 
@@ -92,32 +84,70 @@ function MainScreen({ route, navigation }) {
     return () => unSubscribe();
   }, []);
 
+  const [allCatteries, setAllCatteries] = useState([]);
+
+  /* renew allCatteries */
+  useEffect(() => {
+    const allCatteryQuery = query(
+      collection(db, "Users"),
+      where("isCattery", "==", true)
+    );
+    const unsubscribeCattery = onSnapshot(
+      allCatteryQuery,
+      (catterySnapShot) => {
+        const allCatteries = catterySnapShot.docs.map((doc) => {
+          return {
+            id: doc.id,
+            email: doc.id,
+            ...doc.data(),
+          };
+        });
+        setAllCatteries(allCatteries);
+      }
+    );
+
+    return () => {
+      unsubscribeCattery();
+    };
+  }, []);
+
   useEffect(() => {
     let catsList = [];
+    const allCatItems = cats.map((cat) => buildCatItem(cat));
+
     for (let i = 0; i < cats.length; i += 2) {
       catsList.push(
         <View style={{ flexDirection: "row" }} key={i}>
           <CatCard
-            cat={buildCatItem(cats[i])}
+            cat={allCatItems[i]}
             navigation={navigation}
             hideLocation
             showBreed
             userLikedCats={likeCats}
+            catteryDoc={allCatteries.find(
+              (cattery) =>
+                cattery.email && cattery.email === allCatItems[i].catteryEmail
+            )}
           />
           {i < cats.length - 1 && (
             <CatCard
-              cat={buildCatItem(cats[i + 1])}
+              cat={allCatItems[i + 1]}
               navigation={navigation}
               hideLocation
               showBreed
               userLikedCats={likeCats}
+              catteryDoc={allCatteries.find(
+                (cattery) =>
+                  cattery.email &&
+                  cattery.email === allCatItems[i + 1].catteryEmail
+              )}
             />
           )}
         </View>
       );
     }
     setCatsListComponent(catsList);
-  }, [cats]);
+  }, [cats, allCatteries]);
 
   const onClickLikeButton = () => {
     if (!likeCatteries.includes(cattery.email)) {

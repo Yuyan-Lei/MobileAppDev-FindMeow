@@ -1,17 +1,16 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
-  FlatList,
   Pressable,
   StyleSheet,
   Text,
   useWindowDimensions,
-  View,
+  View
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
-import { useRef } from "react";
 
 export default function MapPage({
   route: {
@@ -22,6 +21,7 @@ export default function MapPage({
   const { height, width } = useWindowDimensions();
   const [showCatList, setShowCatList] = useState(true);
   const [location, setLocation] = useState(null);
+  const [currentSwiperIndex, setCurrentSwiperIndex] = useState(0);
 
   const showCatListHandler = () => {
     setShowCatList(!showCatList);
@@ -94,29 +94,18 @@ export default function MapPage({
         </View>
       </View>
 
-      {/* Flatlist card */}
+      {/* Swiper card */}
       {showCatList === true ? (
         <View
           style={{
             backgroundColor: "transparent",
             marginTop: height * 0.75,
-            left: 30,
           }}
         >
-          <FlatList
+          <SwiperFlatList
             ref={flatListRef}
-            data={catsData}
-            renderItem={({ item }) => (
-              <CatCard_map
-                cat={item}
-                navigation={navigation}
-                isliked={likedCats.includes(item.id)}
-              />
-            )}
-            horizontal
-            onViewableItemsChanged={({ viewableItems }) => {
-              const index = viewableItems[0].index;
-              // console.log("Visible items are", viewableItems[0].index);
+            showsPagination={false}
+            onChangeIndex={({ index }) => {
               selectLocation({
                 latitude: catsData[index].geoLocation.lat,
                 longitude: catsData[index].geoLocation.lng,
@@ -124,7 +113,15 @@ export default function MapPage({
                 longitudeDelta: 0.0421,
               });
             }}
-          />
+            data={catsData}
+            renderItem={({ item }) => (
+              <CatCard_map
+                cat={item}
+                navigation={navigation}
+                isliked={likedCats.includes(item.id)}
+              />
+            )}>
+          </SwiperFlatList>
         </View>
       ) : (
         <View />
