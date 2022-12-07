@@ -1,11 +1,9 @@
 import { doc, onSnapshot } from "firebase/firestore";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Pressable,
   StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
+  Text, useWindowDimensions, View
 } from "react-native";
 import CachedImage from "react-native-expo-cached-image";
 import { db } from "../../firebaseUtils/firebase-setup";
@@ -13,11 +11,11 @@ import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import {
   getCattery,
   userLikeACat,
-  userUnLikeACat,
+  userUnLikeACat
 } from "../../firebaseUtils/user";
 import { HeartButton2 } from "../pressable/HeartButton2";
-import { LocationText } from "../texts/LocationText";
 import { Colors } from "../styles/Colors";
+import { LocationText } from "../texts/LocationText";
 
 export function CatCard_map({ cat, navigation, showBreed }) {
   const { width } = useWindowDimensions();
@@ -54,11 +52,15 @@ export function CatCard_map({ cat, navigation, showBreed }) {
     navigation.navigate("CatInformation", { catId: cat.id });
 
   return (
-    <View style={{ width: width - 40 }}>
+    <View style={{
+      width: width,
+      alignSelf: 'center',
+      padding: 10,
+      paddingBottom: 30
+    }}>
       <View
         style={{
           justifyContent: "center",
-          width: "94%",
           backgroundColor: "white",
           borderRadius: 10,
           height: 110,
@@ -111,7 +113,7 @@ export function CatCard_map({ cat, navigation, showBreed }) {
             <Text style={styles.priceTag}>${cat.price}</Text>
 
             {/* Heart Button */}
-            <View style={{ marginTop: -20, marginRight: -10 }}>
+            <View style={{ marginTop: 15, marginRight: -8 }}>
               <HeartButton2
                 notSelectedColor={Colors.gray}
                 isLiked={likeCats.includes(cat.id)}

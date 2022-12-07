@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { View, useWindowDimensions, FlatList } from "react-native";
-import { Marker } from "react-native-maps";
 import { Foundation } from "@expo/vector-icons";
-import { Colors } from "../styles/Colors";
-import { CatCard_map } from "../cards/CatCard_map";
+import React, { useEffect, useState } from "react";
+import { FlatList, Text, useWindowDimensions, View } from "react-native";
+import { Callout, Marker } from "react-native-maps";
 import {
   getCattery,
   userLikeACat,
-  userUnLikeACat,
+  userUnLikeACat
 } from "../../firebaseUtils/user";
+import { CatCard_map } from "../cards/CatCard_map";
+import { Colors } from "../styles/Colors";
 
 export function CatteryMarker({
   catsData,
@@ -32,6 +32,16 @@ export function CatteryMarker({
       userLikeACat(catsData.id);
     } else {
       userUnLikeACat(catsData.id);
+    }
+  };
+
+  const HelperText = (cat) => {
+    const catNumber = cat.catteryDoc.cats.length;
+
+    if (catNumber === 1) {
+      return "1 cat at this position.";
+    } else {
+      return catNumber + " cats at this position."
     }
   };
 
@@ -65,11 +75,11 @@ export function CatteryMarker({
           >
             <Foundation name="marker" size={40} color={Colors.orangeText} />
 
-            {/* <Callout>
-            <View style={{ width: 100, height: 100, backgroundColor: "white" }}>
-              <Text>Hi Hi hi</Text>
-            </View>
-          </Callout> */}
+            <Callout>
+              <View style={{ backgroundColor: "white", width: 90 }}>
+                <Text>{HelperText(cat)}</Text>
+              </View>
+            </Callout>
           </Marker>
         );
       })}
