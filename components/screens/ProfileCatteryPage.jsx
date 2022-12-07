@@ -35,10 +35,15 @@ function MainScreen({ route, navigation }) {
   const [catteryShortAddress, setCatteryShortAddress] = useState("");
   const [catteryFullAddress, setCatteryFullAddress] = useState("");
   const [catsListComponent, setCatsListComponent] = useState([]);
+  const [likeCats, setLikeCats] = useState([]);
+
   useEffect(() => {
     const docRef = doc(db, "Users", getCurrentUserEmail());
     const unSubscribe = onSnapshot(docRef, (snapshot) => {
-      setCattery(snapshot.data());
+      setCattery({
+        id: snapshot.id,
+        ...snapshot.data(),
+      });
       setCatteryShortAddress(
         snapshot.data().address.split(", ")[1] +
           ", " +
@@ -56,8 +61,6 @@ function MainScreen({ route, navigation }) {
 
     return () => unSubscribe();
   }, []);
-
-  const [likeCats, setLikeCats] = useState([]);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -82,6 +85,7 @@ function MainScreen({ route, navigation }) {
             hideLocation
             showBreed
             userLikedCats={likeCats}
+            catteryDoc={cattery}
           />
           {i < cats.length - 1 && (
             <CatCard
@@ -90,6 +94,7 @@ function MainScreen({ route, navigation }) {
               hideLocation
               showBreed
               userLikedCats={likeCats}
+              catteryDoc={cattery}
             />
           )}
         </View>
