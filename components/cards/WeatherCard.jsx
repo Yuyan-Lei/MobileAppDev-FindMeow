@@ -19,10 +19,13 @@ export function WeatherCard ({weatherData})
         sentence = WEATHERS.rain;
     }
     else if (weather === "Clouds") {
-        sentence = WEATHERS.rain;
+        sentence = WEATHERS.clouds;
     }
     else if (weather === "Snow") {
         sentence = WEATHERS.snow;
+    }
+    else if (weather === "Lightning") {
+        sentence = WEATHERS.lightning;
     }
     // else if (temperature <= 10) {
     //     sentence = WEATHERS.cold;
