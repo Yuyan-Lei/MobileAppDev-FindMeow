@@ -189,12 +189,12 @@ function MainScreen({ route, navigation }) {
   const [rawCatData, setRawCatData] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
 
-  // custom hook for getting previous value 
+  // custom hook for getting previous value
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
       ref.current = value;
-    },[value]);
+    }, [value]);
     return ref.current;
   }
   const previousRawCatData = usePrevious(rawCatData);
@@ -261,9 +261,14 @@ function MainScreen({ route, navigation }) {
   useEffect(() => {
     if (previousRawCatData) {
       // After each refresh, get all new added cat within maxNotificationRange.
-      makeNotification(  rawCatData, previousRawCatData, maxNotificationRange, enableNotification);
+      makeNotification(
+        rawCatData,
+        previousRawCatData,
+        maxNotificationRange,
+        enableNotification
+      );
     }
-  }, [rawCatData])
+  }, [rawCatData]);
 
   useEffect(() => {
     /* filter cats data */
