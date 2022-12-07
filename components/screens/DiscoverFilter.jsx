@@ -14,6 +14,8 @@ import { ALL_BREEDS } from "../listContents/allBreeds";
 import { ALL_STATES } from "../listContents/allStates";
 import { Colors } from "../styles/Colors";
 import { OrangeText } from "../texts/OrangeText";
+import { ResetButton } from "../pressable/ResetButton";
+import { ApplyButton } from "../pressable/ApplyButton";
 
 const DiscoverFilter = ({
   states: {
@@ -331,7 +333,7 @@ const DiscoverFilter = ({
 
       {/* Submit buttons */}
       <View style={styles.submitButtonContainer}>
-        <Pressable
+        {/* <Pressable
           onPress={resetHandler}
           style={({ pressed }) => [
             {
@@ -341,19 +343,10 @@ const DiscoverFilter = ({
           ]}
         >
           <Text style={styles.submitText}>Reset</Text>
-        </Pressable>
+        </Pressable> */}
+        <ResetButton onPress={resetHandler} />
 
-        <Pressable
-          onPress={applyHandler}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed ? Colors.orange : Colors.orangeText,
-            },
-            styles.submitButton,
-          ]}
-        >
-          <Text style={styles.submitText}>Apply</Text>
-        </Pressable>
+        <ApplyButton onPress={applyHandler} />
       </View>
     </ScrollView>
   );

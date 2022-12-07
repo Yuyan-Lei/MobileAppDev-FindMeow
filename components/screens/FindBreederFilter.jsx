@@ -5,6 +5,8 @@ import { ALL_BREEDS } from "../listContents/allBreeds";
 import { ALL_STATES } from "../listContents/allStates";
 import { Colors } from "../styles/Colors";
 import { OrangeText } from "../texts/OrangeText";
+import { ResetButton } from "../pressable/ResetButton";
+import { ApplyButton } from "../pressable/ApplyButton";
 
 const FindBreederFilter = ({
   states: {
@@ -85,29 +87,8 @@ const FindBreederFilter = ({
       />
 
       <View style={styles.submitButtonContainer}>
-        <Pressable
-          onPress={resetHandler}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed ? Colors.orange : Colors.orangeText,
-            },
-            styles.submitButton,
-          ]}
-        >
-          <Text style={styles.submitText}>Reset</Text>
-        </Pressable>
-
-        <Pressable
-          onPress={applyHandler}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed ? Colors.orange : Colors.orangeText,
-            },
-            styles.submitButton,
-          ]}
-        >
-          <Text style={styles.submitText}>Apply</Text>
-        </Pressable>
+        <ResetButton onPress={resetHandler} />
+        <ApplyButton onPress={applyHandler} />
       </View>
     </ScrollView>
   );
