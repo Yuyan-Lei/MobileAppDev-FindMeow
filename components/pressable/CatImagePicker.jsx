@@ -3,6 +3,7 @@ import { BottomSheet } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Colors } from "../styles/Colors";
 
 export default function CatImagePicker({ image, setImage }) {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
@@ -84,17 +85,35 @@ export default function CatImagePicker({ image, setImage }) {
         )}
       </Pressable>
       <BottomSheet isVisible={isBottomSheetVisible}>
-        <Pressable style={styles.bottomSheetPressable} onPress={pickImage}>
+        <Pressable
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? Colors.orange : Colors.white,
+            },
+            styles.bottomSheetPressable,
+          ]}
+          onPress={pickImage}
+        >
           <Text>Choose From Camera Roll</Text>
         </Pressable>
         <Pressable
-          style={styles.bottomSheetPressable}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? Colors.orange : Colors.white,
+            },
+            styles.bottomSheetPressable,
+          ]}
           onPress={pickImageFromCamera}
         >
           <Text>Take a Photo</Text>
         </Pressable>
         <Pressable
-          style={styles.bottomSheetPressable}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? Colors.orange : Colors.white,
+            },
+            styles.bottomSheetPressable,
+          ]}
           onPress={() => setIsBottomSheetVisible(false)}
         >
           <Text>Cancel</Text>
@@ -116,7 +135,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   bottomSheetPressable: {
-    backgroundColor: "white",
     alignItems: "center",
     padding: 20,
   },
