@@ -12,7 +12,7 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
 import { useRef } from "react";
-import Swiper from 'react-native-swiper'
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 export default function MapPage({
   route: {
@@ -23,6 +23,7 @@ export default function MapPage({
   const { height, width } = useWindowDimensions();
   const [showCatList, setShowCatList] = useState(true);
   const [location, setLocation] = useState(null);
+  const [currentSwiperIndex, setCurrentSwiperIndex] = useState(0);
 
   const showCatListHandler = () => {
     setShowCatList(!showCatList);
@@ -101,27 +102,28 @@ export default function MapPage({
           style={{
             backgroundColor: "transparent",
             marginTop: height * 0.75,
-            left: 30,
           }}
         >
-          <Swiper 
+          <SwiperFlatList 
+            ref={flatListRef}
             showsPagination={false}
-            onIndexChanged={ (index) => selectLocation({
+            onChangeIndex={ ({index}) => {
+              console.log(index);
+              selectLocation({
                 latitude: catsData[index].geoLocation.lat,
                 longitude: catsData[index].geoLocation.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
-              })}>
-            {
-              catsData.map((item, index) => 
+              });}}
+            data={catsData}
+            renderItem={({ item }) => (
               <CatCard_map
-                key={index}
                 cat={item}
                 navigation={navigation}
                 isliked={likedCats.includes(item.id)}
-              />)
-            }
-          </Swiper>
+              />
+            )}>
+          </SwiperFlatList>
         </View>
       ) : (
         <View />

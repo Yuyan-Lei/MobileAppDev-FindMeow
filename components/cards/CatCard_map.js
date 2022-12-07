@@ -54,11 +54,14 @@ export function CatCard_map({ cat, navigation, showBreed }) {
     navigation.navigate("CatInformation", { catId: cat.id });
 
   return (
-    <View style={{ width: width - 40 }}>
+    <View style={{ 
+      width: width,
+      alignSelf: 'center', 
+      padding: 10,
+      paddingBottom: 30 }}>
       <View
         style={{
           justifyContent: "center",
-          width: "94%",
           backgroundColor: "white",
           borderRadius: 10,
           height: 110,
