@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, useWindowDimensions, FlatList } from "react-native";
-import { Marker } from "react-native-maps";
+import { View, useWindowDimensions, FlatList, Text } from "react-native";
+import { Marker, Callout } from "react-native-maps";
 import { Foundation } from "@expo/vector-icons";
 import { Colors } from "../styles/Colors";
 import { CatCard_map } from "../cards/CatCard_map";
@@ -35,6 +35,16 @@ export function CatteryMarker({
     }
   };
 
+  const HelperText = (cat) => {
+    const catNumber = cat.catteryDoc.cats.length;
+
+    if (catNumber === 1) {
+      return "1 cat at this position.";
+    } else {
+      return catNumber + " cats at this position."
+    }
+  };
+
   const markerOnPress = async (event) => {
     const idString = event._targetInst._debugOwner.memoizedProps.indentifier;
     const id = parseInt(idString, 10);
@@ -65,11 +75,11 @@ export function CatteryMarker({
           >
             <Foundation name="marker" size={40} color={Colors.orangeText} />
 
-            {/* <Callout>
-            <View style={{ width: 100, height: 100, backgroundColor: "white" }}>
-              <Text>Hi Hi hi</Text>
+            <Callout>
+            <View style={{ backgroundColor: "white", width: 90}}>
+              <Text>{HelperText(cat)}</Text>
             </View>
-          </Callout> */}
+          </Callout>
           </Marker>
         );
       })}

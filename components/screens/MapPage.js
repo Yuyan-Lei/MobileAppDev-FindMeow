@@ -108,7 +108,6 @@ export default function MapPage({
             ref={flatListRef}
             showsPagination={false}
             onChangeIndex={ ({index}) => {
-              console.log(index);
               selectLocation({
                 latitude: catsData[index].geoLocation.lat,
                 longitude: catsData[index].geoLocation.lng,
