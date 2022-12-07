@@ -56,7 +56,12 @@ function MainScreen({ route, navigation }) {
   const [selectedTags, setSelectedTags] = useState([]);
 
   const [catsData, setCatsData] = useState([]);
-  const [allCats, setAllCats] = useState([]);
+  const [likeCats, setLikeCats] = useState([]);
+  const [rawCatData, setRawCatData] = useState([]);
+
+  const [userLocation, setUserLocation] = useState(null);
+
+  const [catteries, setCatteries] = useState(null);
 
   const [enableNotification, setEnableNotification] = useState(false);
   const [maxNotificationRange, setMaxNotificationRange] = useState(0);
@@ -83,8 +88,6 @@ function MainScreen({ route, navigation }) {
   ]);
 
   /* values used for DiscoverFilter end */
-
-  const [likeCats, setLikeCats] = useState([]);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -141,8 +144,6 @@ function MainScreen({ route, navigation }) {
     return () => subscription.remove();
   }, []);
 
-  const [catteries, setCatteries] = useState(null);
-
   useEffect(() => {
     const q = query(collection(db, "Users"), where("isCattery", "==", true));
     const unSubscribe = onSnapshot(q, (querySnapshot) => {
@@ -184,9 +185,6 @@ function MainScreen({ route, navigation }) {
       console.log(e);
     }
   }
-
-  const [rawCatData, setRawCatData] = useState([]);
-  const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {
     getUserLocation().then((location) => setUserLocation(location));
