@@ -333,19 +333,7 @@ const DiscoverFilter = ({
 
       {/* Submit buttons */}
       <View style={styles.submitButtonContainer}>
-        {/* <Pressable
-          onPress={resetHandler}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed ? Colors.orange : Colors.orangeText,
-            },
-            styles.submitButton,
-          ]}
-        >
-          <Text style={styles.submitText}>Reset</Text>
-        </Pressable> */}
         <ResetButton onPress={resetHandler} />
-
         <ApplyButton onPress={applyHandler} />
       </View>
     </ScrollView>
