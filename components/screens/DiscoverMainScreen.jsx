@@ -186,6 +186,16 @@ function MainScreen({ route, navigation }) {
     }
   }
 
+  // custom hook for getting previous value
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    }, [value]);
+    return ref.current;
+  }
+  const previousRawCatData = usePrevious(rawCatData);
+
   useEffect(() => {
     getUserLocation().then((location) => setUserLocation(location));
   }, []);
@@ -246,6 +256,18 @@ function MainScreen({ route, navigation }) {
   }, [selectedBreed, selectedGender]);
 
   useEffect(() => {
+    if (previousRawCatData) {
+      // After each refresh, get all new added cat within maxNotificationRange.
+      makeNotification(
+        rawCatData,
+        previousRawCatData,
+        maxNotificationRange,
+        enableNotification
+      );
+    }
+  }, [rawCatData]);
+
+  useEffect(() => {
     /* filter cats data */
     const dataBeforeSorting = filterCatsData(
       rawCatData,
@@ -257,22 +279,21 @@ function MainScreen({ route, navigation }) {
     /* sort cats data */
     const sortedData = sortCatsData(dataBeforeSorting, selectedIndex);
     setCatsData(sortedData);
-
-    // After each refresh, get all new added cat within maxNotificationRange.
-    makeNotification(rawCatData, maxNotificationRange, enableNotification);
   }, [rawCatData, selectedAge, selectedPrice, selectedState, filterTrigger]);
 
   async function makeNotification(
     allCats,
+    catsBeforeRefresh,
     maxNotificationRange,
     enableNotification
   ) {
     const addedCatWithinRange = allCats.filter((cat) => {
       return (
-        !allCats.some((existingCat) => existingCat.id === cat.id) &&
+        !catsBeforeRefresh.some((existingCat) => existingCat.id === cat.id) &&
         cat.distance <= maxNotificationRange
       );
     });
+    // console.log(addedCatWithinRange);
     // setAllCats(allCats);
     // If any new cats within maxNotificationRange are added, send out a notification.
     if (addedCatWithinRange.length > 0 && enableNotification) {
@@ -299,6 +320,9 @@ function MainScreen({ route, navigation }) {
     selectedPrice,
     selectedState
   ) {
+    if (!dataBeforeFiltering) {
+      return [];
+    }
     return dataBeforeFiltering
       .filter((cat) => {
         return (
