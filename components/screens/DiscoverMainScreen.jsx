@@ -56,7 +56,6 @@ function MainScreen({ route, navigation }) {
   const [selectedTags, setSelectedTags] = useState([]);
 
   const [catsData, setCatsData] = useState([]);
-  const [likedCats, setLikedCats] = useState([]);
   const [allCats, setAllCats] = useState([]);
 
   const [enableNotification, setEnableNotification] = useState(false);
@@ -495,7 +494,10 @@ function MainScreen({ route, navigation }) {
           >
             <Pressable
               onPress={() =>
-                navigation.navigate("MapPage", { catsData, likedCats })
+                navigation.navigate("MapPage", {
+                  catsData,
+                  likedCats: likeCats,
+                })
               }
             >
               <Text
