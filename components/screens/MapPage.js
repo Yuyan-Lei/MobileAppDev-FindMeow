@@ -1,18 +1,16 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
-  FlatList,
   Pressable,
   StyleSheet,
   Text,
   useWindowDimensions,
-  View,
+  View
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
-import { useRef } from "react";
-import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 export default function MapPage({
   route: {
@@ -104,16 +102,17 @@ export default function MapPage({
             marginTop: height * 0.75,
           }}
         >
-          <SwiperFlatList 
+          <SwiperFlatList
             ref={flatListRef}
             showsPagination={false}
-            onChangeIndex={ ({index}) => {
+            onChangeIndex={({ index }) => {
               selectLocation({
                 latitude: catsData[index].geoLocation.lat,
                 longitude: catsData[index].geoLocation.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
-              });}}
+              });
+            }}
             data={catsData}
             renderItem={({ item }) => (
               <CatCard_map
