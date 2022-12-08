@@ -85,17 +85,35 @@ export default function CatImagePicker({ image, setImage }) {
         )}
       </Pressable>
       <BottomSheet isVisible={isBottomSheetVisible}>
-        <Pressable style={styles.bottomSheetPressable} onPress={pickImage}>
+        <Pressable
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? Colors.orange : Colors.white,
+            },
+            styles.bottomSheetPressable,
+          ]}
+          onPress={pickImage}
+        >
           <Text>Choose From Camera Roll</Text>
         </Pressable>
         <Pressable
-          style={styles.bottomSheetPressable}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? Colors.orange : Colors.white,
+            },
+            styles.bottomSheetPressable,
+          ]}
           onPress={pickImageFromCamera}
         >
           <Text>Take a Photo</Text>
         </Pressable>
         <Pressable
-          style={styles.bottomSheetPressable}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? Colors.orange : Colors.white,
+            },
+            styles.bottomSheetPressable,
+          ]}
           onPress={() => setIsBottomSheetVisible(false)}
         >
           <Text>Cancel</Text>

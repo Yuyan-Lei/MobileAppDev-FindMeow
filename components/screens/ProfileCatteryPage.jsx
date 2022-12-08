@@ -143,8 +143,25 @@ function MainScreen({ route, navigation }) {
         {/* Top left - back button */}
         <View style={styles.backButtonView}>
           <View>
-            <Pressable onPress={rootStackNavigateBack}>
-              <Ionicons name="chevron-back" size={24} color={Colors.white} />
+            <Pressable
+              onPress={rootStackNavigateBack}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed
+                    ? Colors.orange
+                    : Colors.arrowBackground,
+                  borderRadius: 13,
+                  width: 35,
+                  height: 35,
+                },
+              ]}
+            >
+              <Ionicons
+                name="chevron-back"
+                size={24}
+                color="white"
+                style={{ top: 4, left: 4 }}
+              />
             </Pressable>
           </View>
         </View>
@@ -152,8 +169,25 @@ function MainScreen({ route, navigation }) {
         {/* Top right - update cattery button */}
         <View style={styles.updateButtonView}>
           <View>
-            <Pressable onPress={onUpdateCattery}>
-              <Feather name="edit" size={18} color={Colors.white} />
+            <Pressable
+              onPress={onUpdateCattery}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed
+                    ? Colors.orange
+                    : Colors.arrowBackground,
+                  borderRadius: 13,
+                  width: 35,
+                  height: 35,
+                },
+              ]}
+            >
+              <Feather
+                name="edit"
+                size={18}
+                color="white"
+                style={{ top: 7, left: 9 }}
+              />
             </Pressable>
           </View>
         </View>
@@ -270,7 +304,7 @@ const styles = StyleSheet.create({
     right: 22,
     width: 35,
     height: 35,
-    backgroundColor: Colors.arrowBackground,
+    // backgroundColor: Colors.arrowBackground,
     alignItems: "center",
     borderRadius: 13,
     paddingTop: 8,
@@ -282,7 +316,7 @@ const styles = StyleSheet.create({
     padding: 5,
     height: 35,
     width: 35,
-    backgroundColor: Colors.arrowBackground,
+    // backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
   },
   container: {

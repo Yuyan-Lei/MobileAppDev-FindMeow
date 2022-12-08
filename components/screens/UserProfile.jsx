@@ -3,10 +3,12 @@ import { Avatar } from "@react-native-material/core";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { React, useEffect, useState } from "react";
 import {
-  Alert, Linking, Pressable,
+  Alert,
+  Linking,
+  Pressable,
   StyleSheet,
   Text,
-  View
+  View,
 } from "react-native";
 import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
@@ -232,9 +234,9 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 40,
-    width: 300,
     marginVertical: 8,
     padding: 8,
+    borderRadius: 10,
   },
   buttonText: {
     fontFamily: "Poppins",

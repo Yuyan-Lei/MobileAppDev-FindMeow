@@ -37,7 +37,15 @@ export function PhoneButton({ onPress, cattery }) {
 
   return (
     <View style={{ width: 60, height: 40, top: 4, marginBottom: 10 }}>
-      <Pressable onPress={onPress} style={styles.buttonView}>
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [
+          {
+            backgroundColor: pressed ? Colors.orangeText : Colors.phoneButton,
+          },
+          styles.buttonView,
+        ]}
+      >
         <MaterialIcons
           name="phone-in-talk"
           size={24}
@@ -51,7 +59,6 @@ export function PhoneButton({ onPress, cattery }) {
 
 const styles = StyleSheet.create({
   buttonView: {
-    backgroundColor: Colors.phoneButton,
     padding: 8,
     borderRadius: 100,
     height: 40,
