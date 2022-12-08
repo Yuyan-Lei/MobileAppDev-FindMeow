@@ -236,9 +236,9 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 40,
-    width: 300,
     marginVertical: 8,
     padding: 8,
+    borderRadius: 10,
   },
   buttonText: {
     fontFamily: FontFamily.normal,

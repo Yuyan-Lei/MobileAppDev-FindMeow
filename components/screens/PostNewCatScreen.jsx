@@ -1,4 +1,5 @@
 import RNDateTimePicker from "@react-native-community/datetimepicker";
+import CalendarPicker from 'react-native-calendar-picker';
 import { Button } from "@rneui/themed";
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -115,7 +116,7 @@ export default function PostNewCatScreen({
     return moment(date).format("YYYY-MM-DD");
   };
 
-  const onChange = (event, selectedDate) => {
+  const onDateChange = (selectedDate) => {
     setShow(false);
     setBirthDate(selectedDate);
   };
@@ -266,14 +267,7 @@ export default function PostNewCatScreen({
     >
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Screen Title */}
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: "20%",
-            alignItems: "center",
-            marginBottom: 20,
-          }}
-        >
+        <View style={styles.titleContainer}>
           {catId === "" ? (
             <Text style={styles.title}>Upload Cat</Text>
           ) : (
@@ -305,49 +299,25 @@ export default function PostNewCatScreen({
         <Text style={styles.subTitle}>Birthday</Text>
 
         {/* Date picker */}
-        {Platform.OS === "ios" ? (
-          <View
-            style={{
-              flexDirection: "row",
-              transform: [{ scale: 0.78 }],
-              marginLeft: -40,
-              borderRadius: 10,
-            }}
+        <Pressable
+            onPress={() => setShow(!show)}
+            style={styles.dateButtonView}
           >
-            <RNDateTimePicker
-              testID="dateTimePicker"
-              value={birthDate || new Date()}
-              mode="date"
-              onChange={onChange}
-              accentColor={Colors.orangeText}
-            />
-          </View>
-        ) : (
-          <View>
-            <Pressable
-              onPress={() => setShow(true)}
-              style={styles.dateButtonView}
-            >
-              <Text style={styles.dateButtonText}>
-                {birthDate === null
-                  ? "Pick a date"
-                  : convertDateToStr(birthDate)}
-              </Text>
-            </Pressable>
-            {show && (
-              <RNDateTimePicker
-                testID="dateTimePicker"
-                value={birthDate === null ? new Date() : birthDate}
-                mode="date"
-                onChange={onChange}
-                positiveButton={{
-                  label: "OK",
-                  textColor: Colors.positiveButtonAndriodDatePicker,
-                }}
-              />
-            )}
-          </View>
-        )}
+            <Text style={styles.dateButtonText}>
+              {birthDate === null
+                ? "Select date"
+                : convertDateToStr(birthDate)}
+            </Text>
+        </Pressable>
+        {show && <View style={styles.calendarContainer}>
+        <CalendarPicker
+          maxDate={new Date()}
+          scaleFactor={420}
+          textStyle={styles.calendarTextStyle}
+          todayBackgroundColor={Colors.white}
+          headerWrapperStyle={styles.calendarHeader}
+          onDateChange={onDateChange}
+        /></View>}
 
         {/* Gender */}
         <Text style={styles.subTitle}>Gender</Text>
@@ -519,21 +489,44 @@ const styles = StyleSheet.create({
   dateButtonText: {
     fontFamily: FontFamily.normal,
     textAlign: "center",
-    fontSize: FontSizes.subSubTitle,
-    color: Colors.white,
-    fontWeight: "600",
+    fontSize:FontSizes.subSubTitle,
+    height: 30,
+    paddingTop: 5,
+    color: Colors.black,
   },
   dateButtonView: {
-    backgroundColor: Colors.orangeText,
+    backgroundColor: Colors.white,
     borderRadius: 10,
-    height: 30,
-    alignItems: "center",
-    padding: 4,
-    width: 120,
+    alignItems: "flex-start",
+    padding: 10,
+    width: "100%",
+  },
+  calendarHeader: {
+    paddingHorizontal: 40,
+  },
+  calendarContainer: {
+    backgroundColor: Colors.white,
+    borderRadius: 10,
+    borderWidth: 1,
+    padding: 10,
+    marginVertical: 10,
+  },
+  calendarSelectedDay: {
+    backgroundColor: Colors.orange,
+    color: Colors.white,
+  },
+  calendarTextStyle: {
+    fontFamily: "Poppins",
+    color: Colors.black,
   },
   container: {
     paddingHorizontal: 30,
     backgroundColor: Colors.postCatContainer,
+  },
+  titleContainer: {
+    marginTop: "20%",
+    alignItems: "center",
+    marginBottom: 20,
   },
   submitButton: {
     backgroundColor: Colors.orange,

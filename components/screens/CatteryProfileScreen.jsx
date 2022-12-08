@@ -226,15 +226,26 @@ function MainScreen({ route, navigation }) {
 
         {/* Top left button - back */}
         <View style={styles.backButtonView}>
-          <View>
-            <Pressable onPress={navigation.goBack}>
-              <Ionicons
-                name="chevron-back"
-                size={FontSizes.backIcon}
-                color={Colors.white}
-              />
-            </Pressable>
-          </View>
+          <Pressable
+            onPress={navigation.goBack}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? Colors.orange
+                  : Colors.arrowBackground,
+                borderRadius: 13,
+                width: 35,
+                height: 35,
+              },
+            ]}
+          >
+            <Ionicons
+              name="chevron-back"
+              size={FontSizes.backIcon}
+              color={Colors.white}
+              style={{ top: 4, left: 4 }}
+            />
+          </Pressable>
         </View>
 
         <View style={styles.catteryDetailView}>
@@ -243,7 +254,9 @@ function MainScreen({ route, navigation }) {
             <Text style={styles.catteryName}>{cattery.catteryName}</Text>
 
             <View style={{ padding: 4 }}>
-              <LocationText>{catteryShortAddress}</LocationText>
+              <LocationText
+                textStyle={{top: -1}}
+              >{catteryShortAddress}</LocationText>
             </View>
           </View>
 
@@ -349,7 +362,7 @@ const styles = StyleSheet.create({
     padding: 5,
     height: 35,
     width: 35,
-    backgroundColor: Colors.arrowBackground,
+    // backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
     marginLeft: 10,
   },

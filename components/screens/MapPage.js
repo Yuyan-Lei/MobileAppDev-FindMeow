@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useRef, useState } from "react";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -8,7 +9,9 @@ import {
   View,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import { SwiperFlatList } from "react-native-swiper-flatlist";
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import { db } from "../../firebaseUtils/firebase-setup";
+import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
 import { TitleText } from "../texts/TitleText";
@@ -17,7 +20,7 @@ import { FontFamily } from "../styles/FontFamily";
 
 export default function MapPage({
   route: {
-    params: { catsData, likedCats },
+    params: { catsData },
   },
   navigation,
 }) {
@@ -25,6 +28,45 @@ export default function MapPage({
   const [showCatList, setShowCatList] = useState(true);
   const [location, setLocation] = useState(null);
   const [currentSwiperIndex, setCurrentSwiperIndex] = useState(0);
+
+  const [allCatteries, setAllCatteries] = useState([]);
+  const [likedCatsEmails, setLikedCatsEmails] = useState([]);
+
+  /* renew likedCatsEmails */
+  useEffect(() => {
+    const userDoc = query(doc(db, "Users", getCurrentUserEmail()));
+    const unsubscribeUser = onSnapshot(userDoc, (userSnapShot) => {
+      const userLikedCatsEmails = userSnapShot.data().likeCats;
+      setLikedCatsEmails(userLikedCatsEmails);
+    });
+
+    return () => {
+      unsubscribeUser();
+    };
+  }, []);
+
+  /* renew allCatteries */
+  useEffect(() => {
+    const allCatteryQuery = query(
+      collection(db, "Users"),
+      where("isCattery", "==", true)
+    );
+    const unsubscribeCattery = onSnapshot(
+      allCatteryQuery,
+      (catterySnapShot) => {
+        const allCatteries = catterySnapShot.docs.map((doc) => {
+          return {
+            id: doc.id,
+            email: doc.id,
+            ...doc.data(),
+          };
+        });
+        setAllCatteries(allCatteries);
+      }
+    );
+
+    return () => unsubscribeCattery();
+  }, []);
 
   const showCatListHandler = () => {
     setShowCatList(!showCatList);
@@ -124,15 +166,20 @@ export default function MapPage({
               <CatCard_map
                 cat={item}
                 navigation={navigation}
-                isliked={likedCats.includes(item.id)}
+                likedCatInput={likedCatsEmails}
+                catteryInput={allCatteries.find(
+                  (cattery) => {
+                    cattery.id === item.Cattery
+                  })}
               />
             )}
           ></SwiperFlatList>
         </View>
       ) : (
         <View />
-      )}
-    </View>
+      )
+      }
+    </View >
   );
 }
 

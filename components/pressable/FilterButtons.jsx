@@ -16,12 +16,26 @@ export function FilterButtons({ selectedIndex, setSelectedIndex, buttons }) {
             color: "transparent",
           }}
           buttonStyle={styles.unselectedButtonStyle}
+          // buttonStyle={({ selectedIndex }) => [
+          //   {
+          //     backgroundColor: selectedIndex
+          //       ? Colors.orange
+          //       : Colors.orangeText,
+          //   },
+          //   styles.unselectedButtonStyle,
+          // ]}
           buttons={buttons}
           selectedIndex={selectedIndex}
           onPress={(value) => {
             setSelectedIndex(value);
           }}
           selectedButtonStyle={styles.selectedButtonStyle}
+          // selectedButtonStyle={({ pressed }) => [
+          //   {
+          //     backgroundColor: pressed ? Colors.orange : Colors.orangeText,
+          //   },
+          //   styles.selectedButtonStyle,
+          // ]}
           selectedTextStyle={styles.selectedTextStyle}
           textStyle={styles.buttonTextStyle}
         />

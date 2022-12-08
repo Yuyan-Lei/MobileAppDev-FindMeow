@@ -121,13 +121,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
       <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
         <View style={{ margin: 12, paddingBottom: 60 }}>
           {/* Screen Title */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 20,
-            }}
-          >
+          <View style={styles.titleContainer}>
             <Text style={styles.title}>Update Cattery</Text>
           </View>
 
@@ -137,7 +131,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
           {/* Address */}
           <Text style={styles.subTitle}>Address</Text>
           <GooglePlacesAutocomplete
-            styles={{ textInput: { fontFamily: FontFamily.normal } }}
+            styles={{textInput: styles.addressTextInput, description: styles.addressDescriptionText}}
             placeholder="Search"
             ref={ref}
             query={{
@@ -205,6 +199,10 @@ const styles = StyleSheet.create({
     paddingTop: 55,
     backgroundColor: Colors.postCatContainer,
   },
+  titleContainer: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
   title: {
     fontFamily: FontFamily.bold,
     color: Colors.orangeText,
@@ -223,11 +221,21 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontFamily: FontFamily.normal,
-    height: 60,
-    borderRadius: 20,
+    height: 50,
+    borderRadius: 10,
     alignItems: "center",
     backgroundColor: Colors.white,
     fontSize: FontSizes.text,
     padding: 10,
   },
+  addressTextInput: {
+    borderRadius: 10, 
+    height: 50, 
+    fontFamily: "Poppins", 
+    fontSize: 14
+  },
+  addressDescriptionText: {
+    fontFamily: "Poppins", 
+    fontSize: 14
+  }
 });

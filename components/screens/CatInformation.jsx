@@ -179,11 +179,24 @@ export default function CatInformation({ route, navigation }) {
 
         {/* Back Button*/}
         <View style={styles.backButtonContainer}>
-          <Pressable onPress={navigation.goBack}>
+          <Pressable
+            onPress={navigation.goBack}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? Colors.orange
+                  : Colors.arrowBackground,
+                borderRadius: 13,
+                width: 35,
+                height: 35,
+              },
+            ]}
+          >
             <Ionicons
               name="chevron-back"
               size={FontSizes.backIcon}
               color={Colors.white}
+              style={{ top: 4, left: 4 }}
             />
           </Pressable>
         </View>
@@ -376,7 +389,7 @@ const styles = StyleSheet.create({
   },
   backButtonContainer: {
     padding: 5,
-    backgroundColor: Colors.arrowBackground,
+    // backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
     position: "absolute",
     top: 50,

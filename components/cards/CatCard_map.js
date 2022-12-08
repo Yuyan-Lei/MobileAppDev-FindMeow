@@ -21,28 +21,36 @@ import { FontFamily } from "../styles/FontFamily";
 import { FontSizes } from "../styles/FontSizes";
 import { LocationText } from "../texts/LocationText";
 
-export function CatCard_map({ cat, navigation, showBreed }) {
+export function CatCard_map({ cat, catteryInput, likedCatInput, navigation, showBreed }) {
   const { width } = useWindowDimensions();
   const [cattery, setCattery] = useState(null);
   const [likeCats, setLikeCats] = useState([]);
 
   useEffect(() => {
-    if (cat.cattery) {
-      getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+    if (catteryInput === undefined) {
+      if (cat.cattery) {
+        getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+      }
+    } else {
+      setCattery(catteryInput);
     }
-  }, [cat]);
+  }, [cat, catteryInput]);
 
   useEffect(() => {
-    const unSubscribe = onSnapshot(
-      doc(db, "Users", getCurrentUserEmail()),
-      (snapshot) => {
-        const likeCats = snapshot.data().likeCats;
-        setLikeCats(likeCats);
-      }
-    );
+    if (likedCatInput === undefined) {
+      const unSubscribe = onSnapshot(
+        doc(db, "Users", getCurrentUserEmail()),
+        (snapshot) => {
+          const likeCats = snapshot.data().likeCats;
+          setLikeCats(likeCats);
+        }
+      );
 
-    return () => unSubscribe();
-  }, []);
+      return () => unSubscribe();
+    } else {
+      setLikeCats(likedCatInput);
+    }
+  }, [likedCatInput]);
 
   const onClickLikeButton = () => {
     if (!likeCats.includes(cat.id)) {
