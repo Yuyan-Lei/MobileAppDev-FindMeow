@@ -13,6 +13,8 @@ import { auth } from "../../firebaseUtils/firebase-setup";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import { SubmitButton } from "../pressable/SubmitButton";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function UpdatePasswordScreen({ navigation }) {
   const [newPassword, setNewPassword] = useState("");
@@ -107,16 +109,16 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   textInput: {
-    fontFamily: "Poppins",
-    fontSize: 14,
+    fontFamily: FontFamily.normal,
+    fontSize: FontSizes.text,
     padding: 14,
   },
   divider: {
     marginHorizontal: 10,
   },
   reminderText: {
-    fontFamily: "Poppins",
-    fontSize: 14,
+    fontFamily: FontFamily.normal,
+    fontSize: FontSizes.text,
     paddingLeft: 14,
     color: Colors.reminderText,
   },
@@ -130,10 +132,10 @@ const styles = StyleSheet.create({
   },
   SubmitButtonText: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: FontSizes.subSubTitle,
     color: Colors.white,
     fontWeight: "600",
     marginTop: 3,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
   },
 });

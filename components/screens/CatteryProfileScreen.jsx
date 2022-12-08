@@ -33,6 +33,8 @@ import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
 import PostNewCatScreen from "./PostNewCatScreen";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -239,8 +241,8 @@ function MainScreen({ route, navigation }) {
           >
             <Ionicons
               name="chevron-back"
-              size={24}
-              color="white"
+              size={FontSizes.backIcon}
+              color={Colors.white}
               style={{ top: 4, left: 4 }}
             />
           </Pressable>
@@ -270,7 +272,7 @@ function MainScreen({ route, navigation }) {
                 onPress={() => Linking.openURL(`tel:${cattery.phoneNumber}`)}
               > */}
               <Pressable onPress={() => callNumber(cattery.phoneNumber)}>
-                <Text style={{ fontFamily: "PoppinsRegular" }}>
+                <Text style={{ fontFamily: FontFamily.regular }}>
                   {cattery.phoneNumber}
                 </Text>
               </Pressable>
@@ -280,7 +282,7 @@ function MainScreen({ route, navigation }) {
               <Text style={styles.infoSubTitle}>Website : </Text>
               <Text
                 style={{
-                  fontFamily: "PoppinsRegular",
+                  fontFamily: FontFamily.regular,
                   flex: 1,
                   flexWrap: "wrap",
                 }}
@@ -293,7 +295,7 @@ function MainScreen({ route, navigation }) {
               <Text style={[styles.infoSubTitle]}>Address : </Text>
               <Text
                 style={{
-                  fontFamily: "PoppinsRegular",
+                  fontFamily: FontFamily.regular,
                   flex: 1,
                   flexWrap: "wrap",
                 }}
@@ -391,23 +393,23 @@ const styles = StyleSheet.create({
   catteryName: {
     color: Colors.orangeText,
     fontWeight: "800",
-    fontSize: 24,
-    fontFamily: "PoppinsBold",
+    fontSize: FontSizes.pageTitle,
+    fontFamily: FontFamily.heavy,
   },
   infoTitle: {
     color: Colors.orangeText,
-    fontSize: 18,
+    fontSize: FontSizes.button,
     fontWeight: "600",
     marginBottom: 10,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
   },
   infoSubTitle: {
     fontWeight: "600",
-    fontSize: 14,
+    fontSize: FontSizes.text,
     marginBottom: 8,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
   },
   infoText: {
-    fontSize: 14,
+    fontSize: FontSizes.text,
   },
 });

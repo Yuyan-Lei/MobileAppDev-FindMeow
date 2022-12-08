@@ -13,7 +13,10 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { ALL_BREEDS } from "../listContents/allBreeds";
 import { ALL_STATES } from "../listContents/allStates";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 import { OrangeText } from "../texts/OrangeText";
+import { OrangeTitleText } from "../texts/OrangeTitleText";
 import { ResetButton } from "../pressable/ResetButton";
 import { ApplyButton } from "../pressable/ApplyButton";
 
@@ -141,7 +144,7 @@ const DiscoverFilter = ({
       style={styles.filterContainer}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={styles.filterText}>Filter</Text>
+      <OrangeTitleText>Filter</OrangeTitleText>
 
       <Text style={styles.reminderText}>
         Arrange Based On The Following Choices
@@ -173,7 +176,7 @@ const DiscoverFilter = ({
             <Icon
               name="dollar"
               type="font-awesome"
-              size={10}
+              size={FontSizes.smallIcon}
               color={Colors.orangeText}
               reverse
               // containerStyle={styles.sliderThumbContainerStyle}
@@ -233,13 +236,13 @@ const DiscoverFilter = ({
               vaccinatedLocal
                 ? {
                     color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.bold,
                   }
                 : {
                     color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.regular,
                   }
             }
             onPress={() => setVaccinatedLocal(!vaccinatedLocal)}
@@ -254,13 +257,13 @@ const DiscoverFilter = ({
               vetCheckedLocal
                 ? {
                     color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.bold,
                   }
                 : {
                     color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.regular,
                   }
             }
             onPress={() => setVetCheckedLocal(!vetCheckedLocal)}
@@ -275,13 +278,13 @@ const DiscoverFilter = ({
               dewormedLocal
                 ? {
                     color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.bold,
                   }
                 : {
                     color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.regular,
                   }
             }
             onPress={() => setDewormedLocal(!dewormedLocal)}
@@ -296,13 +299,13 @@ const DiscoverFilter = ({
               readyLocal
                 ? {
                     color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.bold,
                   }
                 : {
                     color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.regular,
                   }
             }
             onPress={() => setReadyLocal(!readyLocal)}
@@ -317,13 +320,13 @@ const DiscoverFilter = ({
               neuteredLocal
                 ? {
                     color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.bold,
                   }
                 : {
                     color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.regular,
                   }
             }
             onPress={() => setNeuteredLocal(!neuteredLocal)}
@@ -344,38 +347,20 @@ const styles = StyleSheet.create({
   filterContainer: {
     marginHorizontal: 15,
   },
-  filterText: {
-    fontFamily: "PoppinsBold",
-    fontSize: 26,
-    textAlign: "left",
-    color: Colors.orangeText,
-    marginTop: 20,
-    marginLeft: 5,
-    marginBottom: 5,
-  },
+
   button: {
     margin: 10,
     marginTop: 100,
     width: 100,
     alignSelf: "flex-end",
   },
-  textPrimary: {
-    marginVertical: 20,
-    textAlign: "left",
-    fontSize: 20,
-  },
-  textSecondary: {
-    marginBottom: 10,
-    textAlign: "center",
-    fontSize: 17,
-  },
   text: {
     marginTop: 20,
     marginBottom: 10,
   },
   reminderText: {
-    fontFamily: "PoppinsLight",
-    fontSize: 14,
+    fontFamily: FontFamily.light,
+    fontSize: FontSizes.text,
     textAlign: "left",
     marginLeft: 5,
     color: Colors.gray,
@@ -393,11 +378,11 @@ const styles = StyleSheet.create({
     width: 150,
   },
   submitText: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     alignItems: "center",
     textAlign: "center",
     color: Colors.white,
-    fontSize: 18,
+    fontSize: FontSizes.button,
   },
   ButtonContainer: {
     marginTop: 25,

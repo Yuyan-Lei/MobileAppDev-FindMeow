@@ -2,6 +2,8 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export function HeartButton2({
   onPress,
@@ -41,6 +43,6 @@ export function HeartButton2({
 
 const styles = StyleSheet.create({
   heartText: {
-    fontSize: 24,
+    fontSize: FontSizes.pageTitle,
   },
 });

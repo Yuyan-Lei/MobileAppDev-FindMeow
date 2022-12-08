@@ -2,6 +2,8 @@ import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export function HeartButton({
   onPress,
@@ -53,7 +55,7 @@ export function HeartButton({
 
 const styles = StyleSheet.create({
   heartText: {
-    fontSize: 18,
+    fontSize: FontSizes.button,
     marginTop: 1,
   },
 });

@@ -16,6 +16,8 @@ import { useSwipePressable } from "../../utils/useSwipe";
 import { HeartButton2 } from "../pressable/HeartButton2";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export function BreederCard({ cattery, userLikedCatteryEmails, navigation }) {
   const [likeCatteries, setLikeCatteries] = useState([]);
@@ -122,24 +124,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   breederNameText: {
-    fontFamily: "PoppinsSemiBold",
-    fontSize: 15,
+    fontFamily: FontFamily.bold,
+    fontSize: FontSizes.tagContent,
     color: Colors.black,
   },
   breedText: {
-    fontFamily: "PoppinsRegular",
-    fontSize: 12,
+    fontFamily: FontFamily.regular,
+    fontSize: FontSizes.smallTag,
     color: Colors.grayText,
     marginTop: 3,
   },
   availableKittenText: {
-    fontFamily: "PoppinsSemiBold",
-    fontSize: 12,
+    fontFamily: FontFamily.bold,
+    fontSize: FontSizes.smallTag,
     color: Colors.orangeText,
     marginTop: 3,
   },
   locationTextStyle: {
-    fontSize: 11,
+    fontSize: FontSizes.smallLocation,
     color: Colors.locationIcon,
   },
   detailView: {

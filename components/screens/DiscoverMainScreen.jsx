@@ -32,6 +32,8 @@ import CatteryProfileScreen from "./CatteryProfileScreen";
 import DiscoverFilter from "./DiscoverFilter";
 import MapPage from "./MapPage";
 import PostNewCatScreen from "./PostNewCatScreen";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 function MainScreen({ route, navigation }) {
@@ -410,7 +412,7 @@ function MainScreen({ route, navigation }) {
         <View style={styles.filterButtonView}>
           <FilterButton
             onPress={() => refRBSheet.current.open()}
-            size={23}
+            size={FontSizes.smallFilter}
             length={40}
           />
         </View>
@@ -421,7 +423,7 @@ function MainScreen({ route, navigation }) {
                 catsData,
               })
             }
-            size={19}
+            size={FontSizes.mapIcon}
             length={40}
           />
         </View>
@@ -620,10 +622,8 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   container: {
-    // paddingHorizontal: 12,
     flex: 1,
     paddingTop: 55,
-    // paddingBottom: 200,
     backgroundColor: Colors.white,
   },
   showMapButton: {

@@ -22,6 +22,8 @@ import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import FindBreederFilter from "./FindBreederFilter";
 import PostNewCatScreen from "./PostNewCatScreen";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 function MainScreen({ route, navigation }) {
   const [searchName, setSearchName] = useState("");
@@ -150,7 +152,7 @@ function MainScreen({ route, navigation }) {
         </View>
         <FilterButton
           onPress={() => refRBSheet.current.open()}
-          size={28}
+          size={FontSizes.bigFilter}
           length={60}
         />
         <RBSheet

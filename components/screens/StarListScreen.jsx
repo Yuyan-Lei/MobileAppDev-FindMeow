@@ -22,6 +22,8 @@ import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 function EmptyStarPage({ origin, setSelectedIndex }) {
   function onSwipeLeft() {
@@ -53,14 +55,14 @@ function EmptyStarPage({ origin, setSelectedIndex }) {
       >
         <Ionicons
           name="md-heart-circle-outline"
-          size={56}
+          size={FontSizes.blackHeart}
           color={Colors.black}
         />
         <Text
           style={{
-            fontFamily: "PoppinsBold",
+            fontFamily: FontFamily.heavy,
             color: Colors.black,
-            fontSize: 18,
+            fontSize: FontSizes.button,
             marginTop: 15,
           }}
         >
@@ -70,7 +72,7 @@ function EmptyStarPage({ origin, setSelectedIndex }) {
           style={{
             marginTop: 15,
             color: Colors.reminderText,
-            fontFamily: "Poppins",
+            fontFamily: FontFamily.normal,
             textAlign: "center",
           }}
         >

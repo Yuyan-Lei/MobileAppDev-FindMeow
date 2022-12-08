@@ -1,16 +1,17 @@
 import { SelectList } from "react-native-dropdown-select-list";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function CatGenderSelector(props) {
+  const ALL_GENDER = [
+    { key: "Female", value: "Female" },
+    { key: "Male", value: "Male" },
+  ];
 
-    const ALL_GENDER = [
-        { key: "Female", value: "Female" },
-        { key: "Male", value: "Male" },
-    ];
-
-    const gender = props.hideAllOption
-        ? ALL_GENDER
-        : [{ key: "All", value: "All" }, ...ALL_GENDER];
+  const gender = props.hideAllOption
+    ? ALL_GENDER
+    : [{ key: "All", value: "All" }, ...ALL_GENDER];
 
   return (
     <SelectList
@@ -23,13 +24,13 @@ export default function CatGenderSelector(props) {
         borderWidth: 0,
         height: 50,
       }}
-      fontFamily="Poppins"
+      fontFamily={FontFamily.normal}
       defaultOption={{ key: props.selectedGender, value: props.selectedGender }}
-      inputStyles={{ 
-        marginLeft: -10, 
+      inputStyles={{
+        marginLeft: -10,
         color: Colors.black,
         marginTop: 4,
-        fontSize: 14,
+        fontSize: FontSizes.text,
       }}
     />
   );

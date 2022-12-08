@@ -1,6 +1,8 @@
 import { SelectList } from "react-native-dropdown-select-list";
 import { ALL_BREEDS } from "../listContents/allBreeds";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function CatBreedSelector(props) {
   const breed = props.hideAllOption
@@ -18,13 +20,13 @@ export default function CatBreedSelector(props) {
         borderWidth: 0,
         height: 50,
       }}
-      fontFamily="Poppins"
+      fontFamily={FontFamily.normal}
       defaultOption={{ key: props.selectedBreed, value: props.selectedBreed }}
-      inputStyles={{ 
-        marginLeft: -10, 
+      inputStyles={{
+        marginLeft: -10,
         color: Colors.black,
         marginTop: 4,
-        fontSize: 14,
+        fontSize: FontSizes.text,
       }}
     />
   );

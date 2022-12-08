@@ -20,6 +20,8 @@ import CatBreedSelector from "../pressable/CatBreedSelector";
 import CatImagePicker from "../pressable/CatImagePicker";
 import { SubmitButton } from "../pressable/SubmitButton";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function UpdateCatteryPage({ route, navigation }) {
   const user = route.params.cattery;
@@ -202,26 +204,28 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     color: Colors.orangeText,
-    fontSize: 24,
+    fontStyle: "normal",
+    fontWeight: "600",
+    fontSize: FontSizes.pageTitle,
     textAlign: "center",
   },
   subTitle: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     color: Colors.orangeText,
     marginTop: 10,
     marginBottom: 10,
-    fontSize: 14,
+    fontSize: FontSizes.text,
     fontWeight: "600",
   },
   textInput: {
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     height: 50,
     borderRadius: 10,
     alignItems: "center",
     backgroundColor: Colors.white,
-    fontSize: 14,
+    fontSize: FontSizes.text,
     padding: 10,
   },
   addressTextInput: {

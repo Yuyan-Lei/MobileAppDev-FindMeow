@@ -3,6 +3,8 @@ import { Input } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export function SearchBar({ text, setText }) {
   return (
@@ -32,8 +34,8 @@ const styles = StyleSheet.create({
     height: 60,
   },
   inputStyle: {
-    fontSize: 16,
-    fontFamily: "Poppins",
+    fontSize: FontSizes.subSubTitle,
+    fontFamily: FontFamily.normal,
     color: Colors.grayText,
     top: 2,
   },

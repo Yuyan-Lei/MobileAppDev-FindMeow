@@ -24,6 +24,8 @@ import NotificationSettingsScreen from "./NotificationSettingsScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
@@ -218,10 +220,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.catInfoMainBackground,
   },
   catteryNameText: {
-    fontFamily: "PoppinsBold",
+    fontFamily: FontFamily.heavy,
     color: Colors.orangeText,
     fontWeight: "700",
-    fontSize: 21,
+    fontSize: FontSizes.catteryNameProfile,
     textAlign: "center",
     marginTop: 20,
   },
@@ -239,10 +241,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonText: {
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     textAlign: "left",
-    color: "black",
-    fontSize: 16,
+    color: Colors.black,
+    fontSize: FontSizes.subSubTitle,
     marginLeft: 10,
   },
   divider: {
@@ -258,11 +260,11 @@ const styles = StyleSheet.create({
   },
   logOutButtonText: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: FontSizes.subSubTitle,
     color: Colors.white,
     fontWeight: "600",
     marginTop: 3,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
   },
   weatherContainer: {
     alignItems: "baseline",

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   useWindowDimensions,
-  View
+  View,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
@@ -14,6 +14,9 @@ import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
+import { TitleText } from "../texts/TitleText";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function MapPage({
   route: {
@@ -106,32 +109,35 @@ export default function MapPage({
         style={{
           flexDirection: "row",
           width: width,
-          height: 90,
+          height: 120,
           backgroundColor: "white",
           position: "absolute",
           top: 0,
         }}
       >
-        <View style={{ top: 40, position: "absolute" }}>
-          <Pressable onPress={navigation.goBack} style={{ marginLeft: 15 }}>
+        <View>
+          <Pressable onPress={navigation.goBack}>
             <Ionicons
               name="chevron-back"
-              size={24}
+              size={FontSizes.backIcon}
               color="black"
-              style={{ top: 12 }}
+              style={{
+                padding: 30,
+                paddingTop: 30,
+                top: 35,
+                position: "absolute",
+              }}
             />
           </Pressable>
+        </View>
+        <View style={{ top: 63, position: "absolute" }}>
           <View
             style={{
               alignItems: "center",
               width: width,
             }}
           >
-            <Text
-              style={{ fontFamily: "PoppinsSemiBold", fontSize: 20, top: -15 }}
-            >
-              Location
-            </Text>
+            <TitleText>Location</TitleText>
           </View>
         </View>
       </View>
@@ -166,8 +172,8 @@ export default function MapPage({
                     cattery.id === item.Cattery
                   })}
               />
-            )}>
-          </SwiperFlatList>
+            )}
+          ></SwiperFlatList>
         </View>
       ) : (
         <View />
