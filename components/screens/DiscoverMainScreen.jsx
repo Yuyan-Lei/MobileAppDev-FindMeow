@@ -411,7 +411,7 @@ function MainScreen({ route, navigation }) {
         <View style={styles.filterButtonView}>
           <FilterButton
             onPress={() => refRBSheet.current.open()}
-            size={22}
+            size={23}
             length={40}
           />
         </View>
@@ -422,7 +422,7 @@ function MainScreen({ route, navigation }) {
                   catsData,
                   likedCats: likeCats,
             })}
-            size={22}
+            size={19}
             length={40}
           />
         </View>
@@ -555,12 +555,12 @@ const styles = StyleSheet.create({
   filterButtonView: {
     position: "absolute",
     right: 24,
-    top: 2,
+    top: 9,
   },
   mapButtonView: {
     position: "absolute",
     left: 24,
-    top: 2,
+    top: 10,
   },
   headerView: {
     padding: 12,

@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons';
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
@@ -23,7 +23,7 @@ export function MapButton({ onPress, length, size }) {
           styles.buttonView,
         ]}
       >
-        <MaterialCommunityIcons name="map-search" size={size} color={Colors.white} />
+        <FontAwesome5 name="map-marked-alt" size={size} color={Colors.white} />
       </View>
     </Pressable>
   );
