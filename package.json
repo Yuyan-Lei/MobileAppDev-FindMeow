@@ -40,6 +40,7 @@
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
     "react-native-bottom-drawer-view": "^1.0.3",
+    "react-native-calendar-picker": "^7.1.3",
     "react-native-date-picker": "^4.2.6",
     "react-native-datepicker": "^1.7.2",
     "react-native-dotenv": "^3.4.2",
@@ -59,9 +60,9 @@
     "react-native-shadow-2": "^7.0.6",
     "react-native-svg": "^13.6.0",
     "react-native-swipe-gestures": "^1.0.5",
-    "react-native-weather-api": "^3.0.3",
     "react-native-swiper": "^1.6.0",
     "react-native-swiper-flatlist": "^3.0.18",
+    "react-native-weather-api": "^3.0.3",
     "react-native-web": "~0.18.9",
     "rn-range-slider": "^2.2.2",
     "teaset": "^0.7.5"

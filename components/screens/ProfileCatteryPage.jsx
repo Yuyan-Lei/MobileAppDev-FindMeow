@@ -198,7 +198,7 @@ function MainScreen({ route, navigation }) {
             <Text style={styles.catteryName}>{cattery.catteryName}</Text>
 
             <View style={{ padding: 4 }}>
-              <LocationText>{catteryShortAddress}</LocationText>
+              <LocationText textStyle={{top: -1}}>{catteryShortAddress}</LocationText>
             </View>
           </View>
 
