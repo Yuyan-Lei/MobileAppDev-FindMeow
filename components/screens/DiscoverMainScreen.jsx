@@ -58,7 +58,7 @@ function MainScreen({ route, navigation }) {
 
   const [catsData, setCatsData] = useState([]);
   const [likeCats, setLikeCats] = useState([]);
-  const [rawCatData, setRawCatData] = useState([]);
+  const [rawCatData, setRawCatData] = useState(null);
 
   const [userLocation, setUserLocation] = useState(null);
 
