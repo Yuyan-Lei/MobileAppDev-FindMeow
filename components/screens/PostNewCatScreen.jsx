@@ -307,8 +307,8 @@ export default function PostNewCatScreen({
           <View
             style={{
               flexDirection: "row",
-              transform: [{ scale: 0.85 }],
-              marginLeft: -30,
+              transform: [{ scale: 0.78 }],
+              marginLeft: -40,
               borderRadius: 10,
             }}
           >
