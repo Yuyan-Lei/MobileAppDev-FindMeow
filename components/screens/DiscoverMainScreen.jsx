@@ -59,7 +59,7 @@ function MainScreen({ route, navigation }) {
 
   const [catsData, setCatsData] = useState([]);
   const [likeCats, setLikeCats] = useState([]);
-  const [rawCatData, setRawCatData] = useState([]);
+  const [rawCatData, setRawCatData] = useState(null);
 
   const [userLocation, setUserLocation] = useState(null);
 
@@ -416,11 +416,11 @@ function MainScreen({ route, navigation }) {
         </View>
         <View style={styles.mapButtonView}>
           <MapButton
-            onPress={() => 
-                navigation.navigate("MapPage", {
-                  catsData: catsData[selectedIndex],
-                  likedCats: likeCats,
-            })}
+            onPress={() =>
+              navigation.navigate("MapPage", {
+                catsData,
+              })
+            }
             size={19}
             length={40}
           />
@@ -571,8 +571,7 @@ function MainScreen({ route, navigation }) {
             width: width,
             alignItems: "center",
           }}
-        >
-        </View>
+        ></View>
       ) : (
         <View />
       )}
