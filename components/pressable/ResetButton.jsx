@@ -13,7 +13,7 @@ export function ResetButton({ onPress }) {
         styles.submitButton,
       ]}
     >
-      <Text style={styles.submitText}>Reset</Text>
+      <Text style={styles.submitText}>Clear</Text>
     </Pressable>
   );
 }
