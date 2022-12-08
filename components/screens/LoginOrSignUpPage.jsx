@@ -326,7 +326,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 value={confirmPassword}
                 color={
                   confirmPassword !== "" && confirmPassword !== password
-                    ? "red"
+                    ? Colors.deleteButton
                     : Colors.orangeText
                 }
                 onChangeText={setConfirmPassword}
@@ -374,14 +374,18 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                       flex: 1,
                       width: "100%",
                       borderBottomWidth: 1,
-                      borderBottomColor: "rgb(149, 148, 148)",
+                      borderBottomColor: Colors.signUpDivider,
                       paddingTop: 6,
                       paddingBottom: 4,
-                      backgroundColor: "rgb(246,245,245)",
+                      backgroundColor: Colors.signUpBackground,
                       paddingLeft: 12,
                     }}
                   >
-                    <FontAwesome5 name="cat" size={24} color="rgb(97,97,97)" />
+                    <FontAwesome5
+                      name="cat"
+                      size={24}
+                      color={Colors.signUpIcon}
+                    />
                     <View style={{ flex: 1 }}>
                       <SelectList
                         setSelected={setBreed}
@@ -394,7 +398,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         }}
                         inputStyles={{
                           fontSize: 16,
-                          color: "rgb(34, 34, 34)",
+                          color: Colors.selectListInput,
                         }}
                         defaultOption={{ key: breed, value: breed }}
                       />
@@ -422,7 +426,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         <Feather
                           name="map-pin"
                           size={24}
-                          color="rgb(97,97,97)"
+                          color={Colors.signUpIcon}
                         />
                       ),
                     }}
@@ -431,7 +435,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         height: 52,
                         width: "100%",
                         color: Colors.black,
-                        backgroundColor: "rgb(246,245,245)",
+                        backgroundColor: Colors.signUpBackground,
                         fontSize: 16,
                         paddingHorizontal: 0,
                       },
@@ -511,13 +515,13 @@ const styles = StyleSheet.create({
   selectedButton: {
     fontFamily: "PoppinsSemiBold",
     fontSize: 20,
-    color: "#0C0C0E",
+    color: Colors.signUpSelectedButton,
     fontWeight: "600",
   },
   notSelectedButton: {
     fontFamily: "PoppinsMedium",
     fontSize: 14,
-    color: "rgba(12, 12, 14, 0.5)",
+    color: Colors.signUpNoteSelecteButton,
   },
   loginAndSignUpButton: {
     backgroundColor: Colors.orange,

@@ -98,10 +98,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 65,
     flex: 1,
-    backgroundColor: "rgb(250, 250, 250)",
+    backgroundColor: Colors.catInfoMainBackground,
   },
   inputsContainer: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 20,
     marginTop: 30,
     marginBottom: 15,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     fontSize: 14,
     paddingLeft: 14,
-    color: "rgb(154, 153, 153)",
+    color: Colors.reminderText,
   },
   SubmitButton: {
     backgroundColor: Colors.orange,

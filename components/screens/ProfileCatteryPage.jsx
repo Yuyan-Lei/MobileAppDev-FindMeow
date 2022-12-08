@@ -130,7 +130,7 @@ function MainScreen({ route, navigation }) {
     <ScrollView style={styles.container}>
       <View>
         <View>
-          <View style={{ height: width * 0.7, backgroundColor: "gray" }}>
+          <View style={{ height: width * 0.7, backgroundColor: Colors.gray }}>
             {cattery.picture && (
               <CachedImage
                 source={{ uri: cattery.picture }}
@@ -206,7 +206,11 @@ function MainScreen({ route, navigation }) {
 
           {/* cattery info: phone number, website, address */}
           <View
-            style={{ padding: 24, backgroundColor: "white", borderRadius: 12 }}
+            style={{
+              padding: 24,
+              backgroundColor: Colors.white,
+              borderRadius: 12,
+            }}
           >
             <Text style={styles.infoTitle}>About</Text>
             {/* <View
@@ -280,12 +284,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 25,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 12,
   },
   nameAndAddressView: {
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     padding: 16,
     borderRadius: 12,
   },
@@ -316,7 +320,7 @@ const styles = StyleSheet.create({
     borderRadius: 13,
   },
   container: {
-    backgroundColor: "rgb(250,250,250)",
+    backgroundColor: Colors.catInfoMainBackground,
   },
   catteryName: {
     color: Colors.orangeText,

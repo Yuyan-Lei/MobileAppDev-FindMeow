@@ -1,23 +1,25 @@
+import { DEVELOPER_EMAIL } from "@env";
 import { Avatar } from "@react-native-material/core";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState, React } from "react";
 import {
-  Alert,
-  Pressable,
+  Alert, Linking, Pressable,
   StyleSheet,
   Text,
-  View,
-  Linking,
+  View
 } from "react-native";
 import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
+import { getUserLocation } from "../../firebaseUtils/user";
+import { WeatherCard } from "../cards/WeatherCard";
 import { rootStackNavigate } from "../RootNavigation";
+import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
 import CatteryProfileScreen from "./CatteryProfileScreen";
-import PostNewCatScreen from "./PostNewCatScreen";
 import NotificationSettingsScreen from "./NotificationSettingsScreen";
+import PostNewCatScreen from "./PostNewCatScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
 import { DEVELOPER_EMAIL } from "@env";
@@ -215,7 +217,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 55,
     paddingBottom: 200,
-    backgroundColor: "rgb(250, 250, 250)",
+    backgroundColor: Colors.catInfoMainBackground,
   },
   catteryNameText: {
     fontFamily: "PoppinsBold",

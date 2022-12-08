@@ -92,7 +92,7 @@ export function BreederCard({ cattery, userLikedCatteryEmails, navigation }) {
           {/* Cattery Location */}
           <LocationText
             textStyle={styles.locationTextStyle}
-            locationIconColor={"#C5C4C4"}
+            locationIconColor={Colors.locationIcon}
             viewPosition={{ top: -1, left: -2 }}
           >
             {cattery.shortAddress}
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   locationTextStyle: {
     fontSize: 11,
-    color: "#C5C4C4",
+    color: Colors.locationIcon,
   },
   detailView: {
     flexGrow: 1,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     // paddingLeft: 8,
     marginHorizontal: 16,
     marginVertical: 8,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 20,
     // width: "90%",
   },

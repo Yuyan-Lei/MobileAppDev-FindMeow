@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "left",
     marginLeft: 5,
-    color: "#ADADAD",
+    color: Colors.gray,
   },
   submitButtonContainer: {
     flexDirection: "row",
@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   submitButton: {
-    // backgroundColor: Colors.orangeText,
     padding: 8,
     borderRadius: 25,
     height: 40,
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsSemiBold",
     alignItems: "center",
     textAlign: "center",
-    color: "white",
+    color: Colors.white,
     fontSize: 18,
   },
 });

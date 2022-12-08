@@ -2,7 +2,7 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { Colors } from "../styles/Colors";
 
-export function ApplyButton({ onPress }) {
+export function ResetButton({ onPress }) {
   return (
     <Pressable
       onPress={onPress}
@@ -13,7 +13,7 @@ export function ApplyButton({ onPress }) {
         styles.submitButton,
       ]}
     >
-      <Text style={styles.submitText}>Apply</Text>
+      <Text style={styles.submitText}>Clear</Text>
     </Pressable>
   );
 }
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsSemiBold",
     alignItems: "center",
     textAlign: "center",
-    color: "white",
+    color: Colors.white,
     fontSize: 18,
   },
 });

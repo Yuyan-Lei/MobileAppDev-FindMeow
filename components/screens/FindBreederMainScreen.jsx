@@ -150,7 +150,7 @@ function MainScreen({ route, navigation }) {
         </View>
         <FilterButton
           onPress={() => refRBSheet.current.open()}
-          size={24}
+          size={28}
           length={60}
         />
         <RBSheet
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   containter: {
     alignItems: "center",
     paddingTop: 55,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     flex: 1,
   },
   cardView: {

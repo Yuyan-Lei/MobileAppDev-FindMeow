@@ -232,7 +232,7 @@ const DiscoverFilter = ({
             titleStyle={
               vaccinatedLocal
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -253,7 +253,7 @@ const DiscoverFilter = ({
             titleStyle={
               vetCheckedLocal
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -274,7 +274,7 @@ const DiscoverFilter = ({
             titleStyle={
               dewormedLocal
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -295,7 +295,7 @@ const DiscoverFilter = ({
             titleStyle={
               readyLocal
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -316,7 +316,7 @@ const DiscoverFilter = ({
             titleStyle={
               neuteredLocal
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -378,16 +378,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "left",
     marginLeft: 5,
-    color: "#ADADAD",
+    color: Colors.gray,
   },
   submitButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingTop: 40,
-    paddingBottom: 10,
+    paddingTop: 30,
+    paddingBottom: 35,
   },
   submitButton: {
-    // backgroundColor: Colors.orangeText,
     padding: 8,
     borderRadius: 25,
     height: 40,
@@ -397,7 +396,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsSemiBold",
     alignItems: "center",
     textAlign: "center",
-    color: "white",
+    color: Colors.white,
     fontSize: 18,
   },
   ButtonContainer: {

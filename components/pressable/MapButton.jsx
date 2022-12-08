@@ -1,9 +1,9 @@
-import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from '@expo/vector-icons';
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
 
-export function FilterButton({ onPress, length, size }) {
+export function MapButton({ onPress, length, size }) {
   return (
     <Pressable
       onPress={onPress}
@@ -23,7 +23,7 @@ export function FilterButton({ onPress, length, size }) {
           styles.buttonView,
         ]}
       >
-        <AntDesign name="filter" size={size} color={Colors.white} />
+        <FontAwesome5 name="map-marked-alt" size={size} color={Colors.white} />
       </View>
     </Pressable>
   );

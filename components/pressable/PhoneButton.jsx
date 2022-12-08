@@ -49,7 +49,7 @@ export function PhoneButton({ onPress, cattery }) {
         <MaterialIcons
           name="phone-in-talk"
           size={24}
-          color="white"
+          color={Colors.white}
           onPress={() => callNumber(cattery.phoneNumber)}
         />
       </Pressable>
