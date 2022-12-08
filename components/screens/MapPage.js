@@ -70,23 +70,23 @@ export default function MapPage({
           top: 0,
         }}
       >
-        <View style={{ top: 40, position: "absolute" }}>
-          <Pressable onPress={navigation.goBack} style={{ marginLeft: 15 }}>
+        <View style={{ top: 52, position: "absolute", justifyContent: "center" }}>
+          <Pressable onPress={navigation.goBack} style={{ padding: 16, position: "absolute", alignItems: "center" }}>
             <Ionicons
               name="chevron-back"
               size={24}
               color="black"
-              style={{ top: 12 }}
             />
           </Pressable>
           <View
             style={{
               alignItems: "center",
-              width: width,
+              justifyContent: "center",
+              width: "100%",
             }}
           >
             <Text
-              style={{ fontFamily: "PoppinsSemiBold", fontSize: 20, top: -15 }}
+              style={{ fontFamily: "PoppinsSemiBold", fontSize: 20 }}
             >
               Location
             </Text>
