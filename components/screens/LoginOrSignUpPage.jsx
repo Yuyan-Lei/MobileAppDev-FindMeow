@@ -340,6 +340,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 textStyle={{
                   color: Colors.orangeText,
                   fontSize: FontSizes.text,
+                  fontFamily: FontFamily.bold,
                 }}
                 checkedColor={Colors.orangeText}
                 containerStyle={{ backgroundColor: "transparent" }}
@@ -354,6 +355,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                       <MaterialIcons name="storefront" {...props} />
                     )}
                     onChangeText={setName}
+                    inputStyle={{ fontFamily: FontFamily.regular }}
                   />
                   <TextInput
                     label="Cattery Phone"
@@ -362,6 +364,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     keyboardType="phone-pad"
                     leading={(props) => <Feather name="phone" {...props} />}
                     onChangeText={setPhoneNumber}
+                    inputStyle={{ fontFamily: FontFamily.regular }}
                   />
                   <TextInput
                     label="Cattery Website"
@@ -371,6 +374,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                       <MaterialCommunityIcons name="web" {...props} />
                     )}
                     onChangeText={setWebsite}
+                    inputStyle={{ fontFamily: FontFamily.regular }}
                   />
                   <View
                     style={{
@@ -404,6 +408,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         inputStyles={{
                           fontSize: FontSizes.subSubTitle,
                           color: Colors.selectListInput,
+                          fontFamily: FontFamily.regular,
                         }}
                         defaultOption={{ key: breed, value: breed }}
                       />
@@ -427,6 +432,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                       InputComp: TextInput,
                       label: "Cattery Address",
                       color: Colors.orangeText,
+
                       leading: (
                         <Feather
                           name="map-pin"

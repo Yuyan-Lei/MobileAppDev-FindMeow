@@ -254,9 +254,9 @@ function MainScreen({ route, navigation }) {
             <Text style={styles.catteryName}>{cattery.catteryName}</Text>
 
             <View style={{ padding: 4 }}>
-              <LocationText
-                textStyle={{top: -1}}
-              >{catteryShortAddress}</LocationText>
+              <LocationText textStyle={{ top: -1 }}>
+                {catteryShortAddress}
+              </LocationText>
             </View>
           </View>
 
@@ -408,8 +408,5 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.text,
     marginBottom: 8,
     fontFamily: FontFamily.bold,
-  },
-  infoText: {
-    fontSize: FontSizes.text,
   },
 });

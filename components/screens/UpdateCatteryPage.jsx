@@ -131,7 +131,10 @@ export default function UpdateCatteryPage({ route, navigation }) {
           {/* Address */}
           <Text style={styles.subTitle}>Address</Text>
           <GooglePlacesAutocomplete
-            styles={{textInput: styles.addressTextInput, description: styles.addressDescriptionText}}
+            styles={{
+              textInput: styles.addressTextInput,
+              description: styles.addressDescriptionText,
+            }}
             placeholder="Search"
             ref={ref}
             query={{
@@ -229,13 +232,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   addressTextInput: {
-    borderRadius: 10, 
-    height: 50, 
-    fontFamily: "Poppins", 
-    fontSize: 14
+    borderRadius: 10,
+    height: 50,
+    fontFamily: FontFamily.normal,
+    fontSize: FontSizes.text,
   },
   addressDescriptionText: {
-    fontFamily: "Poppins", 
-    fontSize: 14
-  }
+    fontFamily: FontFamily.normal,
+    fontSize: FontSizes.text,
+  },
 });

@@ -145,7 +145,6 @@ function MainScreen({ route, navigation }) {
         {/* Top left - back button */}
         <View style={styles.backButtonView}>
           <View>
-
             <Pressable
               onPress={rootStackNavigateBack}
               style={({ pressed }) => [
@@ -201,7 +200,9 @@ function MainScreen({ route, navigation }) {
             <Text style={styles.catteryName}>{cattery.catteryName}</Text>
 
             <View style={{ padding: 4 }}>
-              <LocationText textStyle={{top: -1}}>{catteryShortAddress}</LocationText>
+              <LocationText textStyle={{ top: -1 }}>
+                {catteryShortAddress}
+              </LocationText>
             </View>
           </View>
 

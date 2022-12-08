@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import { SwiperFlatList } from "react-native-swiper-flatlist";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { CatCard_map } from "../cards/CatCard_map";
@@ -107,7 +107,7 @@ export default function MapPage({
       {/* Header and goBack button */}
       <View
         style={{
-          flexDirection: 'row',
+          flexDirection: "row",
           width: width,
           height: 120,
           backgroundColor: "white",
@@ -127,19 +127,16 @@ export default function MapPage({
         </View>
 
         <View
-            style={{
-              marginLeft: 30,
-              marginTop: 65,
-            }}
-          >
-          <Pressable 
+          style={{
+            marginLeft: 30,
+            marginTop: 65,
+          }}
+        >
+          <Pressable
             onPress={navigation.goBack}
-            hitSlop={{left: 20, right: 60, bottom: 50, top: 80}}>
-              <Ionicons
-                name="chevron-back"
-                size={30}
-                color="black"
-              />
+            hitSlop={{ left: 20, right: 60, bottom: 50, top: 80 }}
+          >
+            <Ionicons name="chevron-back" size={30} color="black" />
           </Pressable>
         </View>
       </View>
@@ -169,19 +166,17 @@ export default function MapPage({
                 cat={item}
                 navigation={navigation}
                 likedCatInput={likedCatsEmails}
-                catteryInput={allCatteries.find(
-                  (cattery) => {
-                    cattery.id === item.Cattery
-                  })}
+                catteryInput={allCatteries.find((cattery) => {
+                  cattery.id === item.Cattery;
+                })}
               />
             )}
           ></SwiperFlatList>
         </View>
       ) : (
         <View />
-      )
-      }
-    </View >
+      )}
+    </View>
   );
 }
 
