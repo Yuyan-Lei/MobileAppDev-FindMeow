@@ -417,11 +417,11 @@ function MainScreen({ route, navigation }) {
         </View>
         <View style={styles.mapButtonView}>
           <MapButton
-            onPress={() => 
-                navigation.navigate("MapPage", {
-                  catsData,
-                  likedCats: likeCats,
-            })}
+            onPress={() =>
+              navigation.navigate("MapPage", {
+                catsData,
+              })
+            }
             size={19}
             length={40}
           />
@@ -516,8 +516,7 @@ function MainScreen({ route, navigation }) {
             width: width,
             alignItems: "center",
           }}
-        >
-        </View>
+        ></View>
       ) : (
         <View />
       )}
