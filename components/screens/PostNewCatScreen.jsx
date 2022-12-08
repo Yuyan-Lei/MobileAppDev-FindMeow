@@ -265,14 +265,7 @@ export default function PostNewCatScreen({
     >
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Screen Title */}
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: "20%",
-            alignItems: "center",
-            marginBottom: 20,
-          }}
-        >
+        <View style={styles.titleContainer}>
           {catId === "" ? (
             <Text style={styles.title}>Upload Cat</Text>
           ) : (
@@ -527,6 +520,11 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
     backgroundColor: Colors.postCatContainer,
+  },
+  titleContainer: {
+    marginTop: "20%",
+    alignItems: "center",
+    marginBottom: 20,
   },
   submitButton: {
     backgroundColor: Colors.orange,
