@@ -66,7 +66,7 @@ function MainScreen({ route, navigation }) {
   }, []);
 
   useEffect(() => {
-    const docRef = doc(db, "Users", getCurrentUserEmail());
+    const docRef = doc(db, "Users", cattery.email || cattery.id);
     const unSubscribe = onSnapshot(docRef, (snapshot) => {
       getCats(snapshot.data().cats).then((cats) => setCats(cats));
     });
@@ -254,9 +254,9 @@ function MainScreen({ route, navigation }) {
             <Text style={styles.catteryName}>{cattery.catteryName}</Text>
 
             <View style={{ padding: 4 }}>
-              <LocationText
-                textStyle={{top: -1}}
-              >{catteryShortAddress}</LocationText>
+              <LocationText textStyle={{ top: -1 }}>
+                {catteryShortAddress}
+              </LocationText>
             </View>
           </View>
 
