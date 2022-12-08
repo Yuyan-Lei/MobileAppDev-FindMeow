@@ -60,20 +60,22 @@ export default function CatImagePicker({ image, setImage }) {
   return (
     <View>
       <Pressable
-        style={
+        style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? Colors.catInfoMainBackground : Colors.white,
+              },
           image
             ? {
                 width: 200,
                 height: 200,
-                backgroundColor: Colors.white,
                 borderRadius: 12,
               }
             : {
                 width: "100%",
                 height: 200,
-                backgroundColor: Colors.white,
                 borderRadius: 12,
               }
+          ]
         }
         onPress={() => setIsBottomSheetVisible(true)}
       >
@@ -90,7 +92,7 @@ export default function CatImagePicker({ image, setImage }) {
         <Pressable
           style={({ pressed }) => [
             {
-              backgroundColor: pressed ? Colors.orange : Colors.white,
+              backgroundColor: pressed ? Colors.catInfoMainBackground : Colors.white,
             },
             styles.bottomSheetPressable,
           ]}
@@ -101,7 +103,7 @@ export default function CatImagePicker({ image, setImage }) {
         <Pressable
           style={({ pressed }) => [
             {
-              backgroundColor: pressed ? Colors.orange : Colors.white,
+              backgroundColor: pressed ? Colors.catInfoMainBackground : Colors.white,
             },
             styles.bottomSheetPressable,
           ]}
@@ -112,7 +114,7 @@ export default function CatImagePicker({ image, setImage }) {
         <Pressable
           style={({ pressed }) => [
             {
-              backgroundColor: pressed ? Colors.orange : Colors.white,
+              backgroundColor: pressed ? Colors.catInfoMainBackground : Colors.white,
             },
             styles.bottomSheetPressable,
           ]}
@@ -137,7 +139,6 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.button,
   },
   bottomSheetPressable: {
-    backgroundColor: Colors.white,
     alignItems: "center",
     padding: 20,
   },

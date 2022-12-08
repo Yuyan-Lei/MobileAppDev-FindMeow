@@ -301,7 +301,13 @@ export default function PostNewCatScreen({
         {/* Date picker */}
         <Pressable
             onPress={() => setShow(!show)}
-            style={styles.dateButtonView}
+            style={
+              ({ pressed }) => [
+              {
+                backgroundColor: pressed ? Colors.catInfoMainBackground : Colors.white,
+              },
+              styles.dateButtonView]
+            }
           >
             <Text style={styles.dateButtonText}>
               {birthDate === null
@@ -489,13 +495,12 @@ const styles = StyleSheet.create({
   dateButtonText: {
     fontFamily: FontFamily.normal,
     textAlign: "center",
-    fontSize:FontSizes.subSubTitle,
+    fontSize:FontSizes.text,
     height: 30,
     paddingTop: 5,
     color: Colors.black,
   },
   dateButtonView: {
-    backgroundColor: Colors.white,
     borderRadius: 10,
     alignItems: "flex-start",
     padding: 10,

@@ -10,7 +10,7 @@ export function ResetButton({ onPress }) {
       onPress={onPress}
       style={({ pressed }) => [
         {
-          backgroundColor: pressed ? Colors.orange : Colors.orangeText,
+          backgroundColor: pressed ? Colors.orangeTextOnPressed : Colors.orangeText,
         },
         styles.submitButton,
       ]}
