@@ -164,7 +164,7 @@ function MainScreen({ route, navigation }) {
           onPress={onLogout}
           style={({ pressed }) => [
             {
-              backgroundColor: pressed ? Colors.orangeText : Colors.orange,
+              backgroundColor: pressed ? Colors.orangeOnPressed : Colors.orange,
             },
             styles.logOutButton,
           ]}

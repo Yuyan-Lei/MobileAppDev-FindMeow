@@ -9,7 +9,7 @@ export function MapButton({ onPress, length, size }) {
       onPress={onPress}
       style={({ pressed }) => [
         {
-          backgroundColor: pressed ? Colors.orangeText : Colors.orange,
+          backgroundColor: pressed ? Colors.orangeOnPressed : Colors.orange,
         },
         styles.buttonView,
       ]}

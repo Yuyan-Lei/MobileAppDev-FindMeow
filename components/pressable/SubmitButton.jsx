@@ -10,7 +10,7 @@ export function SubmitButton({ onPress }) {
       onPress={onPress}
       style={({ pressed }) => [
         {
-          backgroundColor: pressed ? Colors.orangeText : Colors.orange,
+          backgroundColor: pressed ? Colors.orangeOnPressed : Colors.orange,
         },
         styles.SubmitButton,
       ]}
