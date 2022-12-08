@@ -24,6 +24,7 @@ import { CatCard } from "../cards/CatCard";
 import { stateFullNameToAbbr } from "../listContents/allStates";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
+import { MapButton } from "../pressable/MapButton";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
@@ -414,6 +415,17 @@ function MainScreen({ route, navigation }) {
             length={40}
           />
         </View>
+        <View style={styles.mapButtonView}>
+          <MapButton
+            onPress={() => 
+                navigation.navigate("MapPage", {
+                  catsData,
+                  likedCats: likeCats,
+            })}
+            size={22}
+            length={40}
+          />
+        </View>
       </View>
 
       <RBSheet
@@ -505,32 +517,6 @@ function MainScreen({ route, navigation }) {
             alignItems: "center",
           }}
         >
-          <View style={styles.showMapButton}>
-            <Pressable
-              onPress={() =>
-                navigation.navigate("MapPage", {
-                  catsData,
-                  likedCats: likeCats,
-                })
-              }
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? Colors.orangeText : Colors.orange,
-                },
-                styles.showMapButton,
-              ]}
-            >
-              <Text
-                style={{
-                  padding: 8,
-                  color: Colors.white,
-                  fontFamily: "PoppinsMedium",
-                }}
-              >
-                Show in Map
-              </Text>
-            </Pressable>
-          </View>
         </View>
       ) : (
         <View />
@@ -569,6 +555,11 @@ const styles = StyleSheet.create({
   filterButtonView: {
     position: "absolute",
     right: 24,
+    top: 2,
+  },
+  mapButtonView: {
+    position: "absolute",
+    left: 24,
     top: 2,
   },
   headerView: {
