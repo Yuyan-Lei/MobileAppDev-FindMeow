@@ -13,7 +13,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { SelectList } from "react-native-dropdown-select-list";
 import { createCat, deleteCat, updateCat } from "../../firebaseUtils/cat";
 import { db } from "../../firebaseUtils/firebase-setup";
 import {
@@ -21,6 +20,7 @@ import {
   writeImageToDB,
 } from "../../firebaseUtils/firestore";
 import CatBreedSelector from "../pressable/CatBreedSelector";
+import CatGenderSelector from "../pressable/CatGenderSelector"
 import CatImagePicker from "../pressable/CatImagePicker";
 // import { Button } from "react-native";
 import moment from "moment";
@@ -349,23 +349,10 @@ export default function PostNewCatScreen({
 
         {/* Gender */}
         <Text style={styles.subTitle}>Gender</Text>
-        <SelectList
-          setSelected={setGender}
-          data={[
-            { key: "Female", value: "Female" },
-            { key: "Male", value: "Male" },
-          ]}
-          save="value"
-          defaultOption={{ key: gender, value: gender }}
-          placeholder="Select Gender"
-          boxStyles={{
-            backgroundColor: Colors.white,
-            borderWidth: 0,
-            height: 50,
-          }}
-          fontFamily="Poppins"
-          search={false}
-          inputStyles={{ marginLeft: -10 }}
+        <CatGenderSelector
+          hideAllOption
+          selectedGender={gender}
+          setSelectedGender={setGender}
         />
 
         {/* Price */}

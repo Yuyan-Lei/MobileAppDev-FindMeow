@@ -20,7 +20,12 @@ export default function CatBreedSelector(props) {
       }}
       fontFamily="Poppins"
       defaultOption={{ key: props.selectedBreed, value: props.selectedBreed }}
-      inputStyles={{ marginLeft: -10 }}
+      inputStyles={{ 
+        marginLeft: -10, 
+        color: Colors.black,
+        marginTop: 4,
+        fontSize: 14,
+      }}
     />
   );
 }
