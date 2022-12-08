@@ -7,6 +7,9 @@ import { Colors } from "../styles/Colors";
 import { OrangeText } from "../texts/OrangeText";
 import { ResetButton } from "../pressable/ResetButton";
 import { ApplyButton } from "../pressable/ApplyButton";
+import { OrangeTitleText } from "../texts/OrangeTitleText";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 const FindBreederFilter = ({
   states: {
@@ -55,7 +58,7 @@ const FindBreederFilter = ({
       style={styles.filterContainer}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={styles.filterText}>Filter</Text>
+      <OrangeTitleText>Filter</OrangeTitleText>
 
       <Text style={styles.reminderText}>
         Arrange Based On The Following Choices
@@ -98,30 +101,11 @@ const styles = StyleSheet.create({
   filterContainer: {
     marginHorizontal: 15,
   },
-  filterText: {
-    fontFamily: "PoppinsBold",
-    fontSize: 26,
-    textAlign: "left",
-    color: Colors.orangeText,
-    marginTop: 20,
-    marginLeft: 5,
-    marginBottom: 5,
-  },
   button: {
     margin: 10,
     marginTop: 100,
     width: 100,
     alignSelf: "flex-end",
-  },
-  textPrimary: {
-    marginVertical: 20,
-    textAlign: "left",
-    fontSize: 20,
-  },
-  textSecondary: {
-    marginBottom: 10,
-    textAlign: "center",
-    fontSize: 17,
   },
   checkbox: {
     flexDirection: "row",
@@ -131,8 +115,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   reminderText: {
-    fontFamily: "PoppinsLight",
-    fontSize: 14,
+    fontFamily: FontFamily.light,
+    fontSize: FontSizes.text,
     textAlign: "left",
     marginLeft: 5,
     color: Colors.gray,
@@ -150,11 +134,11 @@ const styles = StyleSheet.create({
     width: 150,
   },
   submitText: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     alignItems: "center",
     textAlign: "center",
     color: Colors.white,
-    fontSize: 18,
+    fontSize: FontSizes.button,
   },
 });
 

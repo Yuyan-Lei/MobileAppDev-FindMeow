@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import {
   Pressable,
   StyleSheet,
-  Text, useWindowDimensions, View
+  Text,
+  useWindowDimensions,
+  View,
 } from "react-native";
 import CachedImage from "react-native-expo-cached-image";
 import { db } from "../../firebaseUtils/firebase-setup";
@@ -11,10 +13,12 @@ import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import {
   getCattery,
   userLikeACat,
-  userUnLikeACat
+  userUnLikeACat,
 } from "../../firebaseUtils/user";
 import { HeartButton2 } from "../pressable/HeartButton2";
 import { Colors } from "../styles/Colors";
+import { FontFamily } from "../styles/FontFamily";
+import { FontSizes } from "../styles/FontSizes";
 import { LocationText } from "../texts/LocationText";
 
 export function CatCard_map({ cat, navigation, showBreed }) {
@@ -52,12 +56,14 @@ export function CatCard_map({ cat, navigation, showBreed }) {
     navigation.navigate("CatInformation", { catId: cat.id });
 
   return (
-    <View style={{
-      width: width,
-      alignSelf: 'center',
-      padding: 10,
-      paddingBottom: 30
-    }}>
+    <View
+      style={{
+        width: width,
+        alignSelf: "center",
+        padding: 10,
+        paddingBottom: 30,
+      }}
+    >
       <View
         style={{
           justifyContent: "center",
@@ -147,19 +153,19 @@ const styles = StyleSheet.create({
   },
   catNameStyle: {
     color: Colors.text,
-    fontFamily: "PoppinsSemiBold",
-    fontSize: 15,
+    fontFamily: FontFamily.bold,
+    fontSize: FontSizes.tagContent,
     marginTop: 6,
     marginBottom: 2,
   },
   catDetailStyle: {
     marginTop: 6,
     color: Colors.grayText,
-    fontSize: 13,
-    fontFamily: "PoppinsRegular",
+    fontSize: FontSizes.tagTitle,
+    fontFamily: FontFamily.regular,
   },
   locationStyle: {
-    fontSize: 13,
+    fontSize: FontSizes.tagTitle,
     color: Colors.text,
   },
   locationIconStyle: {
@@ -172,7 +178,7 @@ const styles = StyleSheet.create({
   },
   priceTag: {
     color: Colors.priceColor,
-    fontFamily: "PoppinsSemiBold",
-    fontSize: 17,
+    fontFamily: FontFamily.bold,
+    fontSize: FontSizes.button,
   },
 });

@@ -1,6 +1,8 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export function SubmitButton({ onPress }) {
   return (
@@ -28,10 +30,10 @@ const styles = StyleSheet.create({
   },
   SubmitButtonText: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: FontSizes.subSubTitle,
     color: Colors.white,
     fontWeight: "600",
     marginTop: 5,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
   },
 });

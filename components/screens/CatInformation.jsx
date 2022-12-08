@@ -26,6 +26,8 @@ import { HeartButton_InfoPage } from "../pressable/HeartButton_InfoPage";
 import { MessageButton } from "../pressable/MessageButton";
 import { PhoneButton } from "../pressable/PhoneButton";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function CatInformation({ route, navigation }) {
   const catId = route.params.catId;
@@ -166,7 +168,11 @@ export default function CatInformation({ route, navigation }) {
         {allowEdit && (
           <View style={styles.editButtonView}>
             <Pressable onPress={onClickEditButton}>
-              <Feather name="edit" size={18} color={Colors.white} />
+              <Feather
+                name="edit"
+                size={FontSizes.button}
+                color={Colors.white}
+              />
             </Pressable>
           </View>
         )}
@@ -174,7 +180,11 @@ export default function CatInformation({ route, navigation }) {
         {/* Back Button*/}
         <View style={styles.backButtonContainer}>
           <Pressable onPress={navigation.goBack}>
-            <Ionicons name="chevron-back" size={24} color={Colors.white} />
+            <Ionicons
+              name="chevron-back"
+              size={FontSizes.backIcon}
+              color={Colors.white}
+            />
           </Pressable>
         </View>
 
@@ -234,7 +244,7 @@ export default function CatInformation({ route, navigation }) {
           <View style={{ flexDirection: "row", width: "70%" }}>
             <Ionicons
               name="location-sharp"
-              size={24}
+              size={FontSizes.locationIcon}
               color={Colors.darkOrange}
             />
             <Text style={styles.addressText}>{cattery.address}</Text>
@@ -257,7 +267,7 @@ export default function CatInformation({ route, navigation }) {
                   key={index}
                   containerStyle={styles.chip}
                   color={Colors.orangeText}
-                  titleStyle={{ fontFamily: "Poppins", marginTop: -1 }}
+                  titleStyle={{ fontFamily: FontFamily.normal, marginTop: -1 }}
                 />
               ))
             ) : (
@@ -362,7 +372,7 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 20,
     marginBottom: 10,
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
   },
   backButtonContainer: {
     padding: 5,
@@ -391,42 +401,42 @@ const styles = StyleSheet.create({
     paddingTop: 8,
   },
   tagTitleText: {
-    fontSize: 13,
+    fontSize: FontSizes.tagTitle,
     color: Colors.tagTitleText,
-    fontFamily: "PoppinsRegular",
+    fontFamily: FontFamily.regular,
     marginVertical: 5,
   },
   tagContentText: {
-    fontSize: 15,
+    fontSize: FontSizes.tagContent,
     color: Colors.text,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     marginBottom: 5,
   },
   catNameText: {
-    fontSize: 28,
+    fontSize: FontSizes.bigCatName,
     color: Colors.text,
-    fontFamily: "PoppinsBold",
+    fontFamily: FontFamily.heavy,
     marginBottom: 20,
     marginLeft: 5,
   },
   priceText: {
-    fontSize: 23,
+    fontSize: FontSizes.priceCatInfo,
     color: Colors.priceColor,
-    fontFamily: "PoppinsMedium",
+    fontFamily: FontFamily.medium,
     textAlign: "right",
     marginLeft: "auto",
     marginBottom: 20,
   },
   addressText: {
-    fontSize: 15,
+    fontSize: FontSizes.addressCatInfo,
     color: Colors.text,
-    fontFamily: "PoppinsMedium",
+    fontFamily: FontFamily.medium,
     marginLeft: 5,
   },
   PostDateText: {
-    fontSize: 14,
+    fontSize: FontSizes.text,
     color: Colors.postDateText,
-    fontFamily: "PoppinsLight",
+    fontFamily: FontFamily.light,
     marginTop: 8,
     marginBottom: 15,
     marginLeft: 5,
@@ -436,19 +446,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingVertical: 8,
     paddingHorizontal: 5,
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     marginBottom: 50,
   },
   detailTitleText: {
     marginBottom: 15,
     marginTop: 10,
-    fontSize: 16,
-    fontFamily: "PoppinsSemiBold",
+    fontSize: FontSizes.subSubTitle,
+    fontFamily: FontFamily.bold,
   },
   descriptionText: {
     fontSize: 15,
     color: Colors.descriptionText,
-    fontFamily: "PoppinsRegular",
+    fontFamily: FontFamily.regular,
   },
   contactLabelContainer: {
     backgroundColor: Colors.white,
@@ -461,18 +471,18 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginRight: "auto",
     marginTop: 10,
-    fontSize: 16,
-    fontFamily: "PoppinsSemiBold",
+    fontSize: FontSizes.subSubTitle,
+    fontFamily: FontFamily.bold,
   },
   catteryNameText: {
-    fontSize: 14,
+    fontSize: FontSizes.text,
     color: Colors.text,
-    fontFamily: "PoppinsMedium",
+    fontFamily: FontFamily.medium,
   },
   catteryLabelText: {
-    fontSize: 12,
+    fontSize: FontSizes.smallTag,
     color: Colors.catteryLabel,
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     marginTop: 4,
     marginBottom: 16,
   },

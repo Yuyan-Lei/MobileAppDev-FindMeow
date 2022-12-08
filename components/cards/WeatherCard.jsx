@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Colors } from "../styles/Colors";
 import { WEATHERS } from "../listContents/weathers";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export function WeatherCard({ weatherData }) {
   // Get current weather and temperature data.
@@ -41,8 +43,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   weatherText: {
-    fontFamily: "PoppinsLight",
-    fontSize: 14,
+    fontFamily: FontFamily.light,
+    fontSize: FontSizes.text,
     color: Colors.gray,
     textAlign: "center",
   },

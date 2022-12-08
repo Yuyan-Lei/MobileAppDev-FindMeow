@@ -12,6 +12,8 @@ import { SwiperFlatList } from "react-native-swiper-flatlist";
 import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
 import { TitleText } from "../texts/TitleText";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function MapPage({
   route: {
@@ -75,7 +77,7 @@ export default function MapPage({
           <Pressable onPress={navigation.goBack}>
             <Ionicons
               name="chevron-back"
-              size={24}
+              size={FontSizes.backIcon}
               color="black"
               style={{
                 padding: 30,
@@ -93,11 +95,6 @@ export default function MapPage({
               width: width,
             }}
           >
-            {/* <Text
-              style={{ fontFamily: "PoppinsSemiBold", fontSize: 20, top: -15 }}
-            >
-              Location
-            </Text> */}
             <TitleText>Location</TitleText>
           </View>
         </View>

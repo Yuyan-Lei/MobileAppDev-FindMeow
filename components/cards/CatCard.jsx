@@ -13,6 +13,8 @@ import { useSwipePressable } from "../../utils/useSwipe";
 import { HeartButton } from "../pressable/HeartButton";
 import { LocationText } from "../texts/LocationText";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export function CatCard({
   cat,
@@ -175,17 +177,17 @@ const styles = StyleSheet.create({
   },
   catNameStyle: {
     color: Colors.text,
-    fontFamily: "PoppinsMedium",
-    fontSize: 14,
+    fontFamily: FontFamily.medium,
+    fontSize: FontSizes.text,
     marginBottom: 2,
   },
   catDetailStyle: {
     marginTop: 3,
     color: Colors.grayText,
-    fontSize: 12,
+    fontSize: FontSizes.smallTag,
   },
   locationStyle: {
-    fontSize: 10,
+    fontSize: FontSizes.smallText,
     color: Colors.text,
   },
   locationIconStyle: {
@@ -209,7 +211,7 @@ const styles = StyleSheet.create({
   },
   priceTag: {
     color: Colors.priceColor,
-    fontFamily: "PoppinsMedium",
-    fontSize: 14,
+    fontFamily: FontFamily.medium,
+    fontSize: FontSizes.text,
   },
 });

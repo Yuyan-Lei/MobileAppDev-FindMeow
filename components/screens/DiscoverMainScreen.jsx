@@ -32,6 +32,8 @@ import CatteryProfileScreen from "./CatteryProfileScreen";
 import DiscoverFilter from "./DiscoverFilter";
 import MapPage from "./MapPage";
 import PostNewCatScreen from "./PostNewCatScreen";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -411,18 +413,19 @@ function MainScreen({ route, navigation }) {
         <View style={styles.filterButtonView}>
           <FilterButton
             onPress={() => refRBSheet.current.open()}
-            size={23}
+            size={FontSizes.smallFilter}
             length={40}
           />
         </View>
         <View style={styles.mapButtonView}>
           <MapButton
-            onPress={() => 
-                navigation.navigate("MapPage", {
-                  catsData,
-                  likedCats: likeCats,
-            })}
-            size={19}
+            onPress={() =>
+              navigation.navigate("MapPage", {
+                catsData,
+                likedCats: likeCats,
+              })
+            }
+            size={FontSizes.mapIcon}
             length={40}
           />
         </View>
@@ -516,8 +519,7 @@ function MainScreen({ route, navigation }) {
             width: width,
             alignItems: "center",
           }}
-        >
-        </View>
+        ></View>
       ) : (
         <View />
       )}
@@ -566,10 +568,8 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   container: {
-    // paddingHorizontal: 12,
     flex: 1,
     paddingTop: 55,
-    // paddingBottom: 200,
     backgroundColor: Colors.white,
   },
   showMapButton: {

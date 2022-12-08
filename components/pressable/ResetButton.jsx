@@ -1,6 +1,8 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export function ResetButton({ onPress }) {
   return (
@@ -26,10 +28,10 @@ const styles = StyleSheet.create({
     width: 150,
   },
   submitText: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     alignItems: "center",
     textAlign: "center",
     color: Colors.white,
-    fontSize: 18,
+    fontSize: FontSizes.button,
   },
 });

@@ -2,6 +2,8 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Text, View } from "react-native";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export function LocationText({
   textStyle,
@@ -21,10 +23,10 @@ export function LocationText({
       <Text
         style={[
           {
-            fontSize: 12,
+            fontSize: FontSizes.smallTag,
             color: Colors.gray,
             marginTop: 4,
-            fontFamily: "Poppins",
+            fontFamily: FontFamily.normal,
           },
           textStyle,
         ]}

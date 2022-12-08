@@ -20,6 +20,8 @@ import CatBreedSelector from "../pressable/CatBreedSelector";
 import CatImagePicker from "../pressable/CatImagePicker";
 import { SubmitButton } from "../pressable/SubmitButton";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function UpdateCatteryPage({ route, navigation }) {
   const user = route.params.cattery;
@@ -135,7 +137,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
           {/* Address */}
           <Text style={styles.subTitle}>Address</Text>
           <GooglePlacesAutocomplete
-            styles={{ textInput: { fontFamily: "Poppins" } }}
+            styles={{ textInput: { fontFamily: FontFamily.normal } }}
             placeholder="Search"
             ref={ref}
             query={{
@@ -204,28 +206,28 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.postCatContainer,
   },
   title: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     color: Colors.orangeText,
     fontStyle: "normal",
     fontWeight: "600",
-    fontSize: 24,
+    fontSize: FontSizes.pageTitle,
     textAlign: "center",
   },
   subTitle: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     color: Colors.orangeText,
     marginTop: 10,
     marginBottom: 10,
-    fontSize: 14,
+    fontSize: FontSizes.text,
     fontWeight: "600",
   },
   textInput: {
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     height: 60,
     borderRadius: 20,
     alignItems: "center",
     backgroundColor: Colors.white,
-    fontSize: 14,
+    fontSize: FontSizes.text,
     padding: 10,
   },
 });

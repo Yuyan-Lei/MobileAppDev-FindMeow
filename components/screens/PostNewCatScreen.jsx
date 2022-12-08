@@ -20,13 +20,15 @@ import {
   writeImageToDB,
 } from "../../firebaseUtils/firestore";
 import CatBreedSelector from "../pressable/CatBreedSelector";
-import CatGenderSelector from "../pressable/CatGenderSelector"
+import CatGenderSelector from "../pressable/CatGenderSelector";
 import CatImagePicker from "../pressable/CatImagePicker";
 // import { Button } from "react-native";
 import moment from "moment";
 import { deleteCatInCattery } from "../../firebaseUtils/user";
 import { Colors } from "../styles/Colors";
 import { globalVariables } from "../../utils/globalVariables";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function PostNewCatScreen({
   route: { params },
@@ -391,13 +393,13 @@ export default function PostNewCatScreen({
               vaccinated
                 ? {
                     color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.bold,
                   }
                 : {
                     color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.normal,
                   }
             }
             onPress={() => setVaccinated(!vaccinated)}
@@ -412,13 +414,13 @@ export default function PostNewCatScreen({
               vetChecked
                 ? {
                     color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.bold,
                   }
                 : {
                     color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.normal,
                   }
             }
             onPress={() => setVetChecked(!vetChecked)}
@@ -433,13 +435,13 @@ export default function PostNewCatScreen({
               dewormed
                 ? {
                     color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.bold,
                   }
                 : {
                     color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.normal,
                   }
             }
             onPress={() => setDewormed(!dewormed)}
@@ -454,13 +456,13 @@ export default function PostNewCatScreen({
               ready
                 ? {
                     color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.bold,
                   }
                 : {
                     color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.normal,
                   }
             }
             onPress={() => setReady(!ready)}
@@ -475,13 +477,13 @@ export default function PostNewCatScreen({
               neutered
                 ? {
                     color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: "PoppinsSemiBold",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.bold,
                   }
                 : {
                     color: Colors.orangeText,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
+                    fontSize: FontSizes.text,
+                    fontFamily: FontFamily.normal,
                   }
             }
             onPress={() => setNeutered(!neutered)}
@@ -515,9 +517,9 @@ export default function PostNewCatScreen({
 
 const styles = StyleSheet.create({
   dateButtonText: {
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     textAlign: "center",
-    fontSize: 16,
+    fontSize: FontSizes.subSubTitle,
     color: Colors.white,
     fontWeight: "600",
   },
@@ -558,40 +560,40 @@ const styles = StyleSheet.create({
     marginTop: "5%",
   },
   submitButtonText: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     textAlign: "center",
-    fontSize: 16,
+    fontSize: FontSizes.subSubTitle,
     color: Colors.white,
     fontWeight: "600",
     paddingTop: 3,
   },
   title: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     color: Colors.orangeText,
     fontStyle: "normal",
     fontWeight: "600",
-    fontSize: 24,
+    fontSize: FontSizes.pageTitle,
     textAlign: "center",
   },
   subTitle: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     color: Colors.orangeText,
     marginTop: 10,
     marginBottom: 10,
-    fontSize: 14,
+    fontSize: FontSizes.text,
     fontWeight: "600",
   },
   textInput: {
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     height: 50,
     borderRadius: 10,
     alignItems: "center",
     backgroundColor: Colors.white,
-    fontSize: 14,
+    fontSize: FontSizes.text,
     padding: 10,
   },
   priceInput: {
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     flexDirection: "row",
     backgroundColor: Colors.white,
     height: 50,

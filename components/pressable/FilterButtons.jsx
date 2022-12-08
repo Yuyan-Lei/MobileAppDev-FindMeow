@@ -2,6 +2,8 @@ import { ButtonGroup } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 // reference: https://reactnativeelements.com/docs/components/buttongroup
 export function FilterButtons({ selectedIndex, setSelectedIndex, buttons }) {
@@ -54,14 +56,14 @@ const styles = StyleSheet.create({
   },
 
   buttonTextStyle: {
-    fontSize: 14,
-    fontFamily: "PoppinsMedium",
+    fontSize: FontSizes.text,
+    fontFamily: FontFamily.medium,
     color: Colors.unselectedText,
     fontWeight: "500",
   },
   selectedTextStyle: {
     color: Colors.white,
-    fontFamily: "PoppinsSemiBold",
-    fontSize: 15,
+    fontFamily: FontFamily.bold,
+    fontSize: FontSizes.tagContent,
   },
 });

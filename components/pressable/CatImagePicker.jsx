@@ -4,6 +4,8 @@ import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function CatImagePicker({ image, setImage }) {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
@@ -112,9 +114,9 @@ const styles = StyleSheet.create({
     padding: 50,
   },
   text: {
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     color: Colors.gray,
-    fontSize: 17,
+    fontSize: FontSizes.button,
   },
   bottomSheetPressable: {
     backgroundColor: Colors.white,

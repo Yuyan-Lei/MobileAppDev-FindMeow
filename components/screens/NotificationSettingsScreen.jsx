@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Switch } from "react-native-paper";
 import {
-  getUserData, updateUserNotificationSettings
+  getUserData,
+  updateUserNotificationSettings,
 } from "../../firebaseUtils/user";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function NotificationSettingsScreen() {
   const [enableNotification, setEnableNotification] = useState(false);
@@ -87,8 +90,8 @@ export default function NotificationSettingsScreen() {
               borderRadius: 10,
             }}
             textStyle={{
-              fontSize: 15,
-              fontFamily: "Poppins",
+              fontSize: FontSizes.tagContent,
+              fontFamily: FontFamily.normal,
             }}
             buttonStyle={{
               paddingHorizontal: 14,
@@ -124,19 +127,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   askText: {
-    fontFamily: "Poppins",
-    fontSize: 15,
+    fontFamily: FontFamily.normal,
+    fontSize: FontSizes.tagContent,
   },
   reminderText: {
-    fontFamily: "Poppins",
-    fontSize: 14,
+    fontFamily: FontFamily.normal,
+    fontSize: FontSizes.text,
     paddingHorizontal: 14,
     color: Colors.reminderText,
   },
   subTitle: {
     color: Colors.black,
-    fontSize: 14,
+    fontSize: FontSizes.text,
     paddingHorizontal: 14,
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
   },
 });

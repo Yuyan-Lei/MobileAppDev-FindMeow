@@ -40,6 +40,8 @@ import {
   CATTERY_PASSWORD,
 } from "@env";
 import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 export default function LoginOrSignUpPage({ route, navigation }) {
   const [pageState, setPageState] = useState(0);
@@ -285,7 +287,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
           keyboardShouldPersistTaps="handled"
         >
           <TextInput
-            inputStyle={{ fontFamily: "Poppins" }}
+            inputStyle={{ fontFamily: FontFamily.regular }}
             label="EMAIL"
             value={userName}
             leading={(props) => (
@@ -295,7 +297,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             onChangeText={setUserName}
           />
           <TextInput
-            inputStyle={{ fontFamily: "Poppins" }}
+            inputStyle={{ fontFamily: FontFamily.regular }}
             label="PASSWORD"
             secureTextEntry={true}
             leading={(props) => <Entypo name="lock" {...props} />}
@@ -315,7 +317,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
           ) : (
             <View>
               <TextInput
-                inputStyle={{ fontFamily: "Poppins" }}
+                inputStyle={{ fontFamily: FontFamily.regular }}
                 label={
                   confirmPassword !== "" && confirmPassword !== password
                     ? "PASSWORDS NOT MATCH"
@@ -335,7 +337,10 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 title="I'm a cattery owner"
                 checked={isCattery}
                 onPress={() => setIsCattery(!isCattery)}
-                textStyle={{ color: Colors.orangeText, fontSize: 14 }}
+                textStyle={{
+                  color: Colors.orangeText,
+                  fontSize: FontSizes.text,
+                }}
                 checkedColor={Colors.orangeText}
                 containerStyle={{ backgroundColor: "transparent" }}
               />
@@ -383,7 +388,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                   >
                     <FontAwesome5
                       name="cat"
-                      size={24}
+                      size={FontSizes.catIcon}
                       color={Colors.signUpIcon}
                     />
                     <View style={{ flex: 1 }}>
@@ -397,7 +402,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                           paddingLeft: 13,
                         }}
                         inputStyles={{
-                          fontSize: 16,
+                          fontSize: FontSizes.subSubTitle,
                           color: Colors.selectListInput,
                         }}
                         defaultOption={{ key: breed, value: breed }}
@@ -436,7 +441,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         width: "100%",
                         color: Colors.black,
                         backgroundColor: Colors.signUpBackground,
-                        fontSize: 16,
+                        fontSize: FontSizes.subSubTitle,
                         paddingHorizontal: 0,
                       },
                       container: {
@@ -499,8 +504,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontFamily: "PoppinsBold",
-    fontSize: 30,
+    fontFamily: FontFamily.heavy,
+    fontSize: FontSizes.logInTitle,
     marginTop: 70,
     marginBottom: 35,
     textAlign: "center",
@@ -513,14 +518,14 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   selectedButton: {
-    fontFamily: "PoppinsSemiBold",
-    fontSize: 20,
+    fontFamily: FontFamily.bold,
+    fontSize: FontSizes.subTitle,
     color: Colors.signUpSelectedButton,
     fontWeight: "600",
   },
   notSelectedButton: {
-    fontFamily: "PoppinsMedium",
-    fontSize: 14,
+    fontFamily: FontFamily.medium,
+    fontSize: FontSizes.text,
     color: Colors.signUpNoteSelecteButton,
   },
   loginAndSignUpButton: {
@@ -532,14 +537,14 @@ const styles = StyleSheet.create({
     marginTop: "10%",
   },
   loginAndSignUpButtonText: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     textAlign: "center",
-    fontSize: 20,
+    fontSize: FontSizes.subTitle,
     color: Colors.white,
     fontWeight: "600",
   },
   textInput: {
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     color: Colors.orangeText,
   },
   submitButton: {
@@ -551,9 +556,9 @@ const styles = StyleSheet.create({
     marginTop: "10%",
   },
   submitButtonText: {
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
     textAlign: "center",
-    fontSize: 16,
+    fontSize: FontSizes.subSubTitle,
     color: Colors.white,
     fontWeight: "600",
     paddingTop: 3,

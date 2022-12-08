@@ -27,6 +27,8 @@ import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 import CatInformation from "./CatInformation";
 import PostNewCatScreen from "./PostNewCatScreen";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -144,7 +146,11 @@ function MainScreen({ route, navigation }) {
         <View style={styles.backButtonView}>
           <View>
             <Pressable onPress={rootStackNavigateBack}>
-              <Ionicons name="chevron-back" size={24} color={Colors.white} />
+              <Ionicons
+                name="chevron-back"
+                size={FontSizes.backIcon}
+                color={Colors.white}
+              />
             </Pressable>
           </View>
         </View>
@@ -153,7 +159,11 @@ function MainScreen({ route, navigation }) {
         <View style={styles.updateButtonView}>
           <View>
             <Pressable onPress={onUpdateCattery}>
-              <Feather name="edit" size={18} color={Colors.white} />
+              <Feather
+                name="edit"
+                size={FontSizes.editIcon}
+                color={Colors.white}
+              />
             </Pressable>
           </View>
         </View>
@@ -192,7 +202,7 @@ function MainScreen({ route, navigation }) {
             </View> */}
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Phone : </Text>
-              <Text style={{ fontFamily: "Poppins" }}>
+              <Text style={{ fontFamily: FontFamily.regular }}>
                 {cattery.phoneNumber}
               </Text>
             </View>
@@ -200,7 +210,11 @@ function MainScreen({ route, navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Website : </Text>
               <Text
-                style={{ fontFamily: "Poppins", flex: 1, flexWrap: "wrap" }}
+                style={{
+                  fontFamily: FontFamily.regular,
+                  flex: 1,
+                  flexWrap: "wrap",
+                }}
               >
                 {cattery.website}
               </Text>
@@ -209,7 +223,11 @@ function MainScreen({ route, navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Address : </Text>
               <Text
-                style={{ fontFamily: "Poppins", flex: 1, flexWrap: "wrap" }}
+                style={{
+                  fontFamily: FontFamily.regular,
+                  flex: 1,
+                  flexWrap: "wrap",
+                }}
               >
                 {catteryFullAddress}
               </Text>
@@ -291,24 +309,24 @@ const styles = StyleSheet.create({
   catteryName: {
     color: Colors.orangeText,
     fontWeight: "800",
-    fontSize: 24,
-    fontFamily: "PoppinsBold",
+    fontSize: FontSizes.pageTitle,
+    fontFamily: FontFamily.heavy,
   },
   infoTitle: {
     color: Colors.orangeText,
-    fontSize: 18,
+    fontSize: FontSizes.button,
     fontWeight: "600",
     marginBottom: 10,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
   },
   infoSubTitle: {
     fontWeight: "600",
-    fontSize: 14,
+    fontSize: FontSizes.text,
     marginBottom: 8,
-    fontFamily: "PoppinsSemiBold",
+    fontFamily: FontFamily.bold,
   },
   infoText: {
-    fontSize: 14,
-    fontFamily: "Poppins",
+    fontSize: FontSizes.text,
+    fontFamily: FontFamily.regular,
   },
 });
