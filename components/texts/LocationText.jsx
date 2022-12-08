@@ -3,7 +3,12 @@ import React from "react";
 import { Text, View } from "react-native";
 import { Colors } from "../styles/Colors";
 
-export function LocationText({ textStyle, locationIconColor, viewPosition,children }) {
+export function LocationText({
+  textStyle,
+  locationIconColor,
+  viewPosition,
+  children,
+}) {
   return (
     <View style={[{ flexDirection: "row" }, viewPosition]}>
       <View style={{ position: "relative", top: 5 }}>
@@ -17,7 +22,7 @@ export function LocationText({ textStyle, locationIconColor, viewPosition,childr
         style={[
           {
             fontSize: 12,
-            color: "gray",
+            color: Colors.gray,
             marginTop: 4,
             fontFamily: "Poppins",
           },

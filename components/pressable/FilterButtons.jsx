@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
   },
   buttonContainerStyle: {
     height: 40,
-    color: "white",
+    color: Colors.white,
     borderColor: "transparent",
   },
 
   unselectedButtonStyle: {
-    backgroundColor: "#F7F7F7",
+    backgroundColor: Colors.unselectedButton,
     borderRadius: 10,
     marginHorizontal: 3,
   },
@@ -56,11 +56,11 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     fontSize: 14,
     fontFamily: "PoppinsMedium",
-    color: "rgba(46, 37, 37, 0.43)",
+    color: Colors.unselectedText,
     fontWeight: "500",
   },
   selectedTextStyle: {
-    color: "white",
+    color: Colors.white,
     fontFamily: "PoppinsSemiBold",
     fontSize: 15,
   },

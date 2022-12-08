@@ -3,6 +3,7 @@ import { BottomSheet } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Colors } from "../styles/Colors";
 
 export default function CatImagePicker({ image, setImage }) {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
@@ -62,13 +63,13 @@ export default function CatImagePicker({ image, setImage }) {
             ? {
                 width: 200,
                 height: 200,
-                backgroundColor: "white",
+                backgroundColor: Colors.white,
                 borderRadius: 12,
               }
             : {
                 width: "100%",
                 height: 200,
-                backgroundColor: "white",
+                backgroundColor: Colors.white,
                 borderRadius: 12,
               }
         }
@@ -78,7 +79,7 @@ export default function CatImagePicker({ image, setImage }) {
           <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
         ) : (
           <View style={styles.container}>
-            <Entypo name="camera" size={57} color="#ADADAD" />
+            <Entypo name="camera" size={57} color={Colors.gray} />
             <Text style={styles.text}>Upload Image</Text>
           </View>
         )}
@@ -112,11 +113,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: "Poppins",
-    color: "#ADADAD",
+    color: Colors.gray,
     fontSize: 17,
   },
   bottomSheetPressable: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     alignItems: "center",
     padding: 20,
   },

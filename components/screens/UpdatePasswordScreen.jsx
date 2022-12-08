@@ -12,6 +12,7 @@ import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
+import { SubmitButton } from "../pressable/SubmitButton";
 
 export default function UpdatePasswordScreen({ navigation }) {
   const [newPassword, setNewPassword] = useState("");
@@ -84,9 +85,10 @@ export default function UpdatePasswordScreen({ navigation }) {
       </Text>
 
       {/* Submit Button */}
-      <Pressable onPress={onUpdatePassword} style={styles.SubmitButton}>
+      {/* <Pressable onPress={onUpdatePassword} style={styles.SubmitButton}>
         <Text style={styles.SubmitButtonText}>Submit</Text>
-      </Pressable>
+      </Pressable> */}
+      <SubmitButton onPress={onUpdatePassword} />
     </View>
   );
 }
@@ -96,10 +98,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 65,
     flex: 1,
-    backgroundColor: "rgb(250, 250, 250)"
+    backgroundColor: Colors.catInfoMainBackground,
   },
   inputsContainer: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 20,
     marginTop: 30,
     marginBottom: 15,
@@ -116,10 +118,10 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     fontSize: 14,
     paddingLeft: 14,
-    color: "rgb(154, 153, 153)",
+    color: Colors.reminderText,
   },
   SubmitButton: {
-    backgroundColor: "#FFB801",
+    backgroundColor: Colors.orange,
     borderRadius: 18,
     height: 60,
     alignItems: "center",
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
   SubmitButtonText: {
     textAlign: "center",
     fontSize: 16,
-    color: "#FFFFFF",
+    color: Colors.white,
     fontWeight: "600",
     marginTop: 3,
     fontFamily: "PoppinsSemiBold",

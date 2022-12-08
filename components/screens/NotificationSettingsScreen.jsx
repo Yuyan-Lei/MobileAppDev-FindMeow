@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Switch } from "react-native-paper";
 import {
-  getUserData,
-  updateUserNotificationSettings,
+  getUserData, updateUserNotificationSettings
 } from "../../firebaseUtils/user";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
@@ -49,7 +48,7 @@ export default function NotificationSettingsScreen() {
           marginTop: 30,
           marginBottom: 15,
           borderRadius: 8,
-          backgroundColor: "#FFFFFF",
+          backgroundColor: Colors.white,
           paddingVertical: 10,
           paddingHorizontal: 14,
         }}
@@ -95,7 +94,7 @@ export default function NotificationSettingsScreen() {
               paddingHorizontal: 14,
             }}
             selectedButtonStyle={{
-              backgroundColor: "#FFB801",
+              backgroundColor: Colors.orange,
             }}
             selectedIndex={selectedIndex}
             onPress={(value) => {
@@ -116,10 +115,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 65,
     flex: 1,
-    backgroundColor: "rgb(250, 250, 250)",
+    backgroundColor: Colors.catInfoMainBackground,
   },
   inputsContainer: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 20,
     marginTop: 30,
     marginBottom: 10,
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     fontSize: 14,
     paddingHorizontal: 14,
-    color: "rgb(154, 153, 153)",
+    color: Colors.reminderText,
   },
   subTitle: {
     color: Colors.black,

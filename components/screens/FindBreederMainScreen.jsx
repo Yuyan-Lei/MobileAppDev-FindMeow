@@ -150,7 +150,7 @@ function MainScreen({ route, navigation }) {
         </View>
         <FilterButton
           onPress={() => refRBSheet.current.open()}
-          size={24}
+          size={28}
           length={60}
         />
         <RBSheet
@@ -220,13 +220,13 @@ export default function FindBreederMainScreen() {
 const styles = StyleSheet.create({
   RBSheetCustomStyles: {
     wrapper: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backgroundColor: Colors.filterWrapper,
       container: {
         borderTopLeftRadius: 28,
         borderTopRightRadius: 28,
       },
       draggableIcon: {
-        backgroundColor: "#EFEFEF",
+        backgroundColor: Colors.dragglableIcon,
         width: 100,
       },
     },
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   containter: {
     alignItems: "center",
     paddingTop: 55,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     flex: 1,
   },
   cardView: {

@@ -24,6 +24,7 @@ import { CatCard } from "../cards/CatCard";
 import { stateFullNameToAbbr } from "../listContents/allStates";
 import { FilterButton } from "../pressable/FilterButton";
 import { FilterButtons } from "../pressable/FilterButtons";
+import { MapButton } from "../pressable/MapButton";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
@@ -410,8 +411,19 @@ function MainScreen({ route, navigation }) {
         <View style={styles.filterButtonView}>
           <FilterButton
             onPress={() => refRBSheet.current.open()}
-            size={18}
-            length={29}
+            size={23}
+            length={40}
+          />
+        </View>
+        <View style={styles.mapButtonView}>
+          <MapButton
+            onPress={() => 
+                navigation.navigate("MapPage", {
+                  catsData,
+                  likedCats: likeCats,
+            })}
+            size={19}
+            length={40}
           />
         </View>
       </View>
@@ -505,34 +517,6 @@ function MainScreen({ route, navigation }) {
             alignItems: "center",
           }}
         >
-          <View
-            style={{
-              width: 143,
-              backgroundColor: Colors.orange,
-              alignItems: "center",
-              height: 39,
-              borderRadius: 10,
-            }}
-          >
-            <Pressable
-              onPress={() =>
-                navigation.navigate("MapPage", {
-                  catsData,
-                  likedCats: likeCats,
-                })
-              }
-            >
-              <Text
-                style={{
-                  padding: 8,
-                  color: "white",
-                  fontFamily: "PoppinsMedium",
-                }}
-              >
-                Show in Map
-              </Text>
-            </Pressable>
-          </View>
         </View>
       ) : (
         <View />
@@ -557,9 +541,9 @@ export default function DiscoverMainScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   RBSheetCustomStyles: {
     wrapper: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backgroundColor: Colors.filterWrapper,
       draggableIcon: {
-        backgroundColor: "#EFEFEF",
+        backgroundColor: Colors.dragglableIcon,
         width: 100,
       },
     },
@@ -571,7 +555,12 @@ const styles = StyleSheet.create({
   filterButtonView: {
     position: "absolute",
     right: 24,
-    top: 18,
+    top: 9,
+  },
+  mapButtonView: {
+    position: "absolute",
+    left: 24,
+    top: 10,
   },
   headerView: {
     padding: 12,
@@ -581,6 +570,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 55,
     // paddingBottom: 200,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
+  },
+  showMapButton: {
+    width: 143,
+    alignItems: "center",
+    height: 39,
+    borderRadius: 10,
   },
 });

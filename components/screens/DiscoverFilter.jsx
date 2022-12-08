@@ -14,6 +14,8 @@ import { ALL_BREEDS } from "../listContents/allBreeds";
 import { ALL_STATES } from "../listContents/allStates";
 import { Colors } from "../styles/Colors";
 import { OrangeText } from "../texts/OrangeText";
+import { ResetButton } from "../pressable/ResetButton";
+import { ApplyButton } from "../pressable/ApplyButton";
 
 const DiscoverFilter = ({
   states: {
@@ -230,7 +232,7 @@ const DiscoverFilter = ({
             titleStyle={
               vaccinatedLocal
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -251,7 +253,7 @@ const DiscoverFilter = ({
             titleStyle={
               vetCheckedLocal
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -272,7 +274,7 @@ const DiscoverFilter = ({
             titleStyle={
               dewormedLocal
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -293,7 +295,7 @@ const DiscoverFilter = ({
             titleStyle={
               readyLocal
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -314,7 +316,7 @@ const DiscoverFilter = ({
             titleStyle={
               neuteredLocal
                 ? {
-                    color: "white",
+                    color: Colors.white,
                     fontSize: 14,
                     fontFamily: "PoppinsSemiBold",
                   }
@@ -331,13 +333,8 @@ const DiscoverFilter = ({
 
       {/* Submit buttons */}
       <View style={styles.submitButtonContainer}>
-        <Pressable onPress={resetHandler} style={styles.submitButton}>
-          <Text style={styles.submitText}>Reset</Text>
-        </Pressable>
-
-        <Pressable onPress={applyHandler} style={styles.submitButton}>
-          <Text style={styles.submitText}>Apply</Text>
-        </Pressable>
+        <ResetButton onPress={resetHandler} />
+        <ApplyButton onPress={applyHandler} />
       </View>
     </ScrollView>
   );
@@ -381,16 +378,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "left",
     marginLeft: 5,
-    color: "#ADADAD",
+    color: Colors.gray,
   },
   submitButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingTop: 40,
-    paddingBottom: 10,
+    paddingTop: 30,
+    paddingBottom: 35,
   },
   submitButton: {
-    backgroundColor: Colors.orangeText,
     padding: 8,
     borderRadius: 25,
     height: 40,
@@ -400,7 +396,7 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsSemiBold",
     alignItems: "center",
     textAlign: "center",
-    color: "white",
+    color: Colors.white,
     fontSize: 18,
   },
   ButtonContainer: {

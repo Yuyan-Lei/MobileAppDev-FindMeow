@@ -1,10 +1,12 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import {
-  Alert, Linking,
-  Platform, Pressable,
+  Alert,
+  Linking,
+  Platform,
+  Pressable,
   StyleSheet,
-  View
+  View,
 } from "react-native";
 import { Colors } from "../styles/Colors";
 
@@ -39,7 +41,7 @@ export function PhoneButton({ onPress, cattery }) {
         <MaterialIcons
           name="phone-in-talk"
           size={24}
-          color="white"
+          color={Colors.white}
           onPress={() => callNumber(cattery.phoneNumber)}
         />
       </Pressable>
