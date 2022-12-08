@@ -107,7 +107,7 @@ export default function MapPage({
       {/* Header and goBack button */}
       <View
         style={{
-          flexDirection: "row",
+          flexDirection: 'row',
           width: width,
           height: 120,
           backgroundColor: "white",
@@ -115,21 +115,6 @@ export default function MapPage({
           top: 0,
         }}
       >
-        <View>
-          <Pressable onPress={navigation.goBack}>
-            <Ionicons
-              name="chevron-back"
-              size={FontSizes.backIcon}
-              color="black"
-              style={{
-                padding: 30,
-                paddingTop: 30,
-                top: 35,
-                position: "absolute",
-              }}
-            />
-          </Pressable>
-        </View>
         <View style={{ top: 63, position: "absolute" }}>
           <View
             style={{
@@ -139,6 +124,23 @@ export default function MapPage({
           >
             <TitleText>Location</TitleText>
           </View>
+        </View>
+
+        <View
+            style={{
+              marginLeft: 30,
+              marginTop: 65,
+            }}
+          >
+          <Pressable 
+            onPress={navigation.goBack}
+            hitSlop={{left: 20, right: 60, bottom: 50, top: 80}}>
+              <Ionicons
+                name="chevron-back"
+                size={30}
+                color="black"
+              />
+          </Pressable>
         </View>
       </View>
 
