@@ -134,7 +134,7 @@ export default function MapPage({
           >
           <Pressable 
             onPress={navigation.goBack}
-            hitSlop={{right: 60, bottom: 50, top: 80}}>
+            hitSlop={{left: 20, right: 60, bottom: 50, top: 80}}>
               <Ionicons
                 name="chevron-back"
                 size={30}

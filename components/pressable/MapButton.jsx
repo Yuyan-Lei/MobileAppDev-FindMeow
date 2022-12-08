@@ -7,6 +7,7 @@ export function MapButton({ onPress, length, size }) {
   return (
     <Pressable
       onPress={onPress}
+      hitSlop={{left: 20, right: 40, bottom: 20, top: 30}}
       style={({ pressed }) => [
         {
           backgroundColor: pressed ? Colors.orangeOnPressed : Colors.orange,
