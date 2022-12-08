@@ -489,7 +489,7 @@ const styles = StyleSheet.create({
   dateButtonText: {
     fontFamily: FontFamily.normal,
     textAlign: "center",
-    fontSize:FontSizes.subSubTitle,
+    fontSize:FontSizes.text,
     height: 30,
     paddingTop: 5,
     color: Colors.black,
