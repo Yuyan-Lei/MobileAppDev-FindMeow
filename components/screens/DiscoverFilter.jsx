@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     paddingTop: 40,
-    paddingBottom: 10,
+    paddingBottom: 35,
   },
   submitButton: {
     padding: 8,
