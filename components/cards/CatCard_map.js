@@ -17,28 +17,36 @@ import { HeartButton2 } from "../pressable/HeartButton2";
 import { Colors } from "../styles/Colors";
 import { LocationText } from "../texts/LocationText";
 
-export function CatCard_map({ cat, navigation, showBreed }) {
+export function CatCard_map({ cat, catteriesInput, likedCatInput, navigation, showBreed }) {
   const { width } = useWindowDimensions();
   const [cattery, setCattery] = useState(null);
   const [likeCats, setLikeCats] = useState([]);
 
   useEffect(() => {
-    if (cat.cattery) {
-      getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+    if (catteriesInput === undefined) {
+      if (cat.cattery) {
+        getCattery(cat.cattery).then((cattery) => setCattery(cattery));
+      }
+    } else {
+      setCattery(catteriesInput);
     }
-  }, [cat]);
+  }, [cat, catteriesInput]);
 
   useEffect(() => {
-    const unSubscribe = onSnapshot(
-      doc(db, "Users", getCurrentUserEmail()),
-      (snapshot) => {
-        const likeCats = snapshot.data().likeCats;
-        setLikeCats(likeCats);
-      }
-    );
+    if (likedCatInput === undefined) {
+      const unSubscribe = onSnapshot(
+        doc(db, "Users", getCurrentUserEmail()),
+        (snapshot) => {
+          const likeCats = snapshot.data().likeCats;
+          setLikeCats(likeCats);
+        }
+      );
 
-    return () => unSubscribe();
-  }, []);
+      return () => unSubscribe();
+    } else {
+      setLikeCats(likedCatInput);
+    }
+  }, [likedCatInput]);
 
   const onClickLikeButton = () => {
     if (!likeCats.includes(cat.id)) {
