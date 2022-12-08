@@ -18,7 +18,16 @@ export function HeartButton({
   }
 
   return (
-    <Pressable onPress={onPress}>
+    <Pressable
+      onPress={onPress}
+      // style={({ pressed }) => [
+      //   {
+      //     backgroundColor: pressed ? Colors.orange : Colors.orangeText,
+      //     // padding: 5,
+      //     // borderRadius: 20,
+      //   },
+      // ]}
+    >
       <View
         style={{
           padding: 5,
