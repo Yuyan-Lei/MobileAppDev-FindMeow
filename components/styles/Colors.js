@@ -8,7 +8,7 @@ export const Colors = {
   orangeText: "#F59156",
   orangeTextOnPressed: "#de834e",
   orange: "#FFB801",
-  orangeOnPressed:'#ebaa02',
+  orangeOnPressed: "#ebaa02",
   dimGray: "#F9F9F9",
   backgroundGray: "#F5F5F5",
   cardShadow: "#f7f7fd",

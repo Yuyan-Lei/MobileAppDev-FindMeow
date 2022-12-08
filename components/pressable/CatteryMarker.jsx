@@ -5,7 +5,7 @@ import { Callout, Marker } from "react-native-maps";
 import {
   getCattery,
   userLikeACat,
-  userUnLikeACat
+  userUnLikeACat,
 } from "../../firebaseUtils/user";
 import { CatCard_map } from "../cards/CatCard_map";
 import { Colors } from "../styles/Colors";
@@ -41,7 +41,7 @@ export function CatteryMarker({
     if (catNumber === 1) {
       return "1 cat at this position.";
     } else {
-      return catNumber + " cats at this position."
+      return catNumber + " cats at this position.";
     }
   };
 

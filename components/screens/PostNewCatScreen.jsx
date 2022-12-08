@@ -1,5 +1,5 @@
 import RNDateTimePicker from "@react-native-community/datetimepicker";
-import CalendarPicker from 'react-native-calendar-picker';
+import CalendarPicker from "react-native-calendar-picker";
 import { Button } from "@rneui/themed";
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -300,30 +300,32 @@ export default function PostNewCatScreen({
 
         {/* Date picker */}
         <Pressable
-            onPress={() => setShow(!show)}
-            style={
-              ({ pressed }) => [
-              {
-                backgroundColor: pressed ? Colors.catInfoMainBackground : Colors.white,
-              },
-              styles.dateButtonView]
-            }
-          >
-            <Text style={styles.dateButtonText}>
-              {birthDate === null
-                ? "Select date"
-                : convertDateToStr(birthDate)}
-            </Text>
+          onPress={() => setShow(!show)}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed
+                ? Colors.catInfoMainBackground
+                : Colors.white,
+            },
+            styles.dateButtonView,
+          ]}
+        >
+          <Text style={styles.dateButtonText}>
+            {birthDate === null ? "Select date" : convertDateToStr(birthDate)}
+          </Text>
         </Pressable>
-        {show && <View style={styles.calendarContainer}>
-        <CalendarPicker
-          maxDate={new Date()}
-          scaleFactor={420}
-          textStyle={styles.calendarTextStyle}
-          todayBackgroundColor={Colors.white}
-          headerWrapperStyle={styles.calendarHeader}
-          onDateChange={onDateChange}
-        /></View>}
+        {show && (
+          <View style={styles.calendarContainer}>
+            <CalendarPicker
+              maxDate={new Date()}
+              scaleFactor={420}
+              textStyle={styles.calendarTextStyle}
+              todayBackgroundColor={Colors.white}
+              headerWrapperStyle={styles.calendarHeader}
+              onDateChange={onDateChange}
+            />
+          </View>
+        )}
 
         {/* Gender */}
         <Text style={styles.subTitle}>Gender</Text>
@@ -495,7 +497,7 @@ const styles = StyleSheet.create({
   dateButtonText: {
     fontFamily: FontFamily.normal,
     textAlign: "center",
-    fontSize:FontSizes.text,
+    fontSize: FontSizes.text,
     height: 30,
     paddingTop: 5,
     color: Colors.black,
@@ -521,7 +523,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   calendarTextStyle: {
-    fontFamily: "Poppins",
+    fontFamily: FontFamily.normal,
     color: Colors.black,
   },
   container: {
