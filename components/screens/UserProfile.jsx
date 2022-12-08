@@ -1,12 +1,14 @@
 import { DEVELOPER_EMAIL } from "@env";
 import { Avatar } from "@react-native-material/core";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useEffect, useState, React } from "react";
+import { React, useEffect, useState } from "react";
 import {
-  Alert, Linking, Pressable,
+  Alert,
+  Linking,
+  Pressable,
   StyleSheet,
   Text,
-  View
+  View,
 } from "react-native";
 import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
@@ -22,10 +24,6 @@ import NotificationSettingsScreen from "./NotificationSettingsScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
 import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
-import { DEVELOPER_EMAIL } from "@env";
-import { Colors } from "../styles/Colors";
-import { WeatherCard } from "../cards/WeatherCard";
-import { getUserLocation } from "../../firebaseUtils/user";
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
