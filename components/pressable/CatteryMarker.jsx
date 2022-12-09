@@ -1,6 +1,12 @@
 import { Foundation } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, useWindowDimensions, View } from "react-native";
+import {
+  FlatList,
+  Pressable,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { Callout, Marker } from "react-native-maps";
 import {
   getCattery,
@@ -9,6 +15,7 @@ import {
 } from "../../firebaseUtils/user";
 import { CatCard_map } from "../cards/CatCard_map";
 import { Colors } from "../styles/Colors";
+import { FontFamily } from "../styles/FontFamily";
 
 export function CatteryMarker({
   catsData,
@@ -40,9 +47,9 @@ export function CatteryMarker({
     const catNumber = cat.catteryDoc.cats.length;
 
     if (catNumber === 1) {
-      return "1 cat at this position.";
+      return "1 cat";
     } else {
-      return catNumber + " cats at this position.";
+      return catNumber + " cats";
     }
   };
 
@@ -83,11 +90,26 @@ export function CatteryMarker({
           >
             <Foundation name="marker" size={40} color={Colors.orangeText} />
 
-            <Callout>
-              <View style={{ backgroundColor: "white", width: 90 }}>
-                <Text>{HelperText(cat)}</Text>
+            <Pressable onPress={markerOnPress}>
+              <View
+                style={{
+                  backgroundColor: "white",
+                  opacity: "50%",
+                  borderRadius: 12,
+                  padding: 4,
+                  paddingHorizontal: 8,
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: FontFamily.medium,
+                    color: Colors.reminderText,
+                  }}
+                >
+                  {HelperText(cat)}
+                </Text>
               </View>
-            </Callout>
+            </Pressable>
           </Marker>
         );
       })}
