@@ -80,7 +80,7 @@ const ButtonToggleGroup = ({
 	 * the ripple effect continues to work on Android. As such, we conditionally
 	 * apply the logic for Android vs iOS
 	 */
-	const inactiveContainerIOS = Platform.OS === "ios" ? { zIndex: -1 } : {};
+	const inactiveContainerIOS = { zIndex: -1 };
 
 	return (
 		<View
@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: "row",
 		flexWrap: "nowrap",
+		justifyContent: "space-around",
 		alignItems: "center",
 		borderRadius: 10,
 	},
@@ -210,6 +211,7 @@ const styles = StyleSheet.create({
 	baseTouchableRipple: {
 		height: "100%",
 		flex: 1,
+		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
 		borderRadius: 10,

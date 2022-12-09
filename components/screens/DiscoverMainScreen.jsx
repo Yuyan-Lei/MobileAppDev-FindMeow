@@ -483,9 +483,7 @@ function MainScreen({ route, navigation }) {
       <ButtonGroup
         selectedValue={availableSelections[selectedIndex]}
         setSelectedValue={(value) => {
-          console.log(value);
           const index = availableSelections.indexOf(value);
-          setSelectedIndex(index);
           flatListRef.current.scrollToIndex({ index, animated: true });
           }}
         selections={availableSelections} 

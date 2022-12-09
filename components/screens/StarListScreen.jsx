@@ -314,10 +314,11 @@ function MainScreen({ route, navigation }) {
         selectedValue={availableSelections[selectedIndex]}
         setSelectedValue={(value) => {
           const index = availableSelections.indexOf(value);
-          setSelectedIndex(index);
-          // flatListRef.current.scrollToIndex({ index, animated: true });
+          flatListRef.current.scrollToIndex({ index, animated: true });
           }}
-        selections={availableSelections} />
+        selections={availableSelections}
+        marginHorizontal={28} />
+
       <View style={{ flex: 1 }}>
         <SwiperFlatList
           ref={flatListRef} 
@@ -343,26 +344,6 @@ function MainScreen({ route, navigation }) {
           </View>
         </SwiperFlatList>
       </View>
-      {/* {selectedIndex === 0 && (
-        <CatsScreen
-          navigation={navigation}
-          cats={likedCats}
-          // refreshing={refreshingCat}
-          // onRefresh={() => refreshLikedCatData({ forceLoad: true })}
-          setSelectedIndex={setSelectedIndex}
-          allCatteries={allCatteries}
-        />
-      )}
-      {selectedIndex === 1 && (
-        <CatteriesScreen
-          navigation={navigation}
-          catteries={likedCatteries}
-          userLikedCatteryEmails={userLikedCatteryEmails}
-          // refreshing={refreshingCattery}
-          // onRefresh={() => refreshLikedCatteryData({ forceLoad: true })}
-          setSelectedIndex={setSelectedIndex}
-        />
-      )} */}
     </View>
   );
 }

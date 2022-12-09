@@ -6,10 +6,10 @@ import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
 
 
-export function ButtonGroup({ selections, selectedValue, setSelectedValue }) {
+export function ButtonGroup({ selections, selectedValue, setSelectedValue, marginHorizontal }) {
 
     return (
-    <View style={styles.container}>
+    <View style={[styles.container, {marginHorizontal}]}>
         <View style={{ flex: 1 }}>
             <ButtonToggleGroup
                 values={selections}
@@ -21,9 +21,6 @@ export function ButtonGroup({ selections, selectedValue, setSelectedValue }) {
 
                 inactiveBackgroundColor={Colors.unselectedButton}
                 inactiveTextColor={Colors.gray}
-
-                style={styles.baseStyle}
-                textStyle={styles.text}
             />
         </View>
     </View>
