@@ -109,7 +109,9 @@ function MainScreen({ route, navigation }) {
                 onPress={onViewCatteryPage}
                 style={({ pressed }) => [
                   {
-                    backgroundColor: pressed ? Colors.catInfoMainBackground : Colors.white,
+                    backgroundColor: pressed
+                      ? Colors.catInfoMainBackground
+                      : Colors.white,
                   },
                   styles.button,
                 ]}
@@ -124,7 +126,9 @@ function MainScreen({ route, navigation }) {
             onPress={onUpdatePassword}
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? Colors.catInfoMainBackground : Colors.white,
+                backgroundColor: pressed
+                  ? Colors.catInfoMainBackground
+                  : Colors.white,
               },
               styles.button,
             ]}
@@ -137,7 +141,9 @@ function MainScreen({ route, navigation }) {
             onPress={onNotificationSettings}
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? Colors.catInfoMainBackground : Colors.white,
+                backgroundColor: pressed
+                  ? Colors.catInfoMainBackground
+                  : Colors.white,
               },
               styles.button,
             ]}
@@ -150,7 +156,9 @@ function MainScreen({ route, navigation }) {
             onPress={onSendFeedback}
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? Colors.catInfoMainBackground : Colors.white,
+                backgroundColor: pressed
+                  ? Colors.catInfoMainBackground
+                  : Colors.white,
               },
               styles.button,
             ]}
