@@ -12,7 +12,7 @@ export function HeartButton2({
   notSelectedColor,
 }) {
   if (selectedColor === undefined) {
-    selectedColor = Colors.orange;
+    selectedColor = Colors.orangeText;
   }
 
   if (notSelectedColor === undefined) {
@@ -20,7 +20,17 @@ export function HeartButton2({
   }
 
   return (
-    <Pressable onPress={onPress}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        {
+          backgroundColor: pressed ? Colors.orange : Colors.white,
+
+          borderRadius: 20,
+        },
+        styles.buttonView,
+      ]}
+    >
       <View
         style={{
           padding: 5,
