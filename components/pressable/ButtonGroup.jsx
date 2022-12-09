@@ -6,16 +6,15 @@ import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
 
 
-export function ButtonGroup({ selections }) {
-    const [value, setValue] = useState('Newer Post');
+export function ButtonGroup({ selections, selectedValue, setSelectedValue }) {
 
     return (
     <View style={styles.container}>
         <View style={{ flex: 1 }}>
             <ButtonToggleGroup
                 values={selections}
-                value={value}
-                onSelect={val => setValue(val)}
+                value={selectedValue}
+                onSelect={setSelectedValue}
 
                 highlightBackgroundColor={Colors.orange}
                 highlightTextColor={Colors.white}

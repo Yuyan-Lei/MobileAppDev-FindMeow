@@ -70,6 +70,7 @@ function MainScreen({ route, navigation }) {
 
   const [enableNotification, setEnableNotification] = useState(false);
   const [maxNotificationRange, setMaxNotificationRange] = useState(0);
+  const availableSelections = ['Newer Post', 'Nearby', 'Lower Price'];
 
   const refRBSheet = useRef();
   const flatListRef = useRef();
@@ -479,17 +480,15 @@ function MainScreen({ route, navigation }) {
         />
       </RBSheet>
 
-      <FilterButtons
-        selectedIndex={selectedIndex}
-        setSelectedIndex={(index) => {
+      <ButtonGroup
+        selectedValue={availableSelections[selectedIndex]}
+        setSelectedValue={(value) => {
+          console.log(value);
+          const index = availableSelections.indexOf(value);
           setSelectedIndex(index);
           flatListRef.current.scrollToIndex({ index, animated: true });
           }}
-        buttons={["Newer Post", "Nearby", "Lower Price"]}
-      />
-
-      <ButtonGroup
-        selections={['Newer Post', 'Nearby', 'Lower Price']} 
+        selections={availableSelections} 
       />
 
       <View style={{ flex: 1 }}>
