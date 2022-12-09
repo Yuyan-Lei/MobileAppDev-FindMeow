@@ -477,7 +477,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                       },
                     }}
                     onFail={(error) => console.error(error)}
-                    textInputProps={{ fontFamily: "Poppins" }}
+                    // textInputProps={{ fontFamily: "Poppins" }}
                   />
                 </View>
               )}
