@@ -35,6 +35,7 @@ import PostNewCatScreen from "./PostNewCatScreen";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import { ButtonGroup } from '../pressable/ButtonGroup';
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -69,6 +70,7 @@ function MainScreen({ route, navigation }) {
 
   const [enableNotification, setEnableNotification] = useState(false);
   const [maxNotificationRange, setMaxNotificationRange] = useState(0);
+  const availableSelections = ['Newer Post', 'Nearby', 'Lower Price'];
 
   const refRBSheet = useRef();
   const flatListRef = useRef();
@@ -478,13 +480,13 @@ function MainScreen({ route, navigation }) {
         />
       </RBSheet>
 
-      <FilterButtons
-        selectedIndex={selectedIndex}
-        setSelectedIndex={(index) => {
-          setSelectedIndex(index);
+      <ButtonGroup
+        selectedValue={availableSelections[selectedIndex]}
+        setSelectedValue={(value) => {
+          const index = availableSelections.indexOf(value);
           flatListRef.current.scrollToIndex({ index, animated: true });
           }}
-        buttons={["Newer Post", "Nearby", "Lower Price"]}
+        selections={availableSelections} 
       />
 
       <View style={{ flex: 1 }}>

@@ -25,6 +25,7 @@ import CatteryProfileScreen from "./CatteryProfileScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
+import { ButtonGroup } from "../pressable/ButtonGroup";
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 function EmptyStarPage({ origin, setSelectedIndex }) {
@@ -188,6 +189,7 @@ function MainScreen({ route, navigation }) {
   const [location, setLocation] = useState(null);
   const [userLikedCatEmails, setUserLikedCatEmails] = useState([]);
   const [userLikedCatteryEmails, setUserLikedCatteryEmails] = useState([]);
+  const availableSelections = ["Cats", "Catteries"];
 
   const flatListRef = useRef();
   const { height, width } = useWindowDimensions();
@@ -308,14 +310,15 @@ function MainScreen({ route, navigation }) {
         </View>
       </View>
 
-      <FilterButtons
-        selectedIndex={selectedIndex}
-        setSelectedIndex={(index) => {
-          setSelectedIndex(index);
+      <ButtonGroup
+        selectedValue={availableSelections[selectedIndex]}
+        setSelectedValue={(value) => {
+          const index = availableSelections.indexOf(value);
           flatListRef.current.scrollToIndex({ index, animated: true });
-        }}
-        buttons={["Cats", "Catteries"]}
-      />
+          }}
+        selections={availableSelections}
+        marginHorizontal={28} />
+
       <View style={{ flex: 1 }}>
         <SwiperFlatList
           ref={flatListRef} 
@@ -341,26 +344,6 @@ function MainScreen({ route, navigation }) {
           </View>
         </SwiperFlatList>
       </View>
-      {/* {selectedIndex === 0 && (
-        <CatsScreen
-          navigation={navigation}
-          cats={likedCats}
-          // refreshing={refreshingCat}
-          // onRefresh={() => refreshLikedCatData({ forceLoad: true })}
-          setSelectedIndex={setSelectedIndex}
-          allCatteries={allCatteries}
-        />
-      )}
-      {selectedIndex === 1 && (
-        <CatteriesScreen
-          navigation={navigation}
-          catteries={likedCatteries}
-          userLikedCatteryEmails={userLikedCatteryEmails}
-          // refreshing={refreshingCattery}
-          // onRefresh={() => refreshLikedCatteryData({ forceLoad: true })}
-          setSelectedIndex={setSelectedIndex}
-        />
-      )} */}
     </View>
   );
 }

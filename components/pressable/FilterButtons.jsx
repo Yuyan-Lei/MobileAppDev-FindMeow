@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.text,
     fontFamily: FontFamily.medium,
     color: Colors.unselectedText,
-    fontWeight: "500",
   },
   selectedTextStyle: {
     color: Colors.white,
