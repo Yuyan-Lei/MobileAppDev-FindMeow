@@ -254,7 +254,12 @@ export default function LoginOrSignUpPage({ route, navigation }) {
       >
         <View style={{ flexDirection: "row" }}>
           <Pressable
-            style={styles.headPressable}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? Colors.orange : "transparent",
+              },
+              styles.headPressable,
+            ]}
             onPress={() => setPageState(0)}
           >
             <Text
@@ -268,7 +273,12 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             </Text>
           </Pressable>
           <Pressable
-            style={styles.headPressable}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? Colors.orange : "transparent",
+              },
+              styles.headPressable,
+            ]}
             onPress={() => setPageState(1)}
           >
             <Text
@@ -309,7 +319,14 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             <View>
               <Pressable
                 onPress={() => onSignIn()}
-                style={styles.loginAndSignUpButton}
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed
+                      ? Colors.orangeText
+                      : Colors.orange,
+                  },
+                  styles.loginAndSignUpButton,
+                ]}
               >
                 <Text style={styles.loginAndSignUpButtonText}>Log In</Text>
               </Pressable>
@@ -460,7 +477,14 @@ export default function LoginOrSignUpPage({ route, navigation }) {
               )}
               <Pressable
                 onPress={() => onCreateAccount()}
-                style={styles.loginAndSignUpButton}
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed
+                      ? Colors.orangeText
+                      : Colors.orange,
+                  },
+                  styles.loginAndSignUpButton,
+                ]}
               >
                 <Text style={styles.loginAndSignUpButtonText}>
                   Create Account
@@ -535,7 +559,6 @@ const styles = StyleSheet.create({
     color: Colors.signUpNoteSelecteButton,
   },
   loginAndSignUpButton: {
-    backgroundColor: Colors.orange,
     borderRadius: 18,
     height: 72,
     alignItems: "center",
