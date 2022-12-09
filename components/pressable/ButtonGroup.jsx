@@ -1,4 +1,4 @@
-import ButtonToggleGroup from 'react-native-button-toggle-group';
+import ButtonToggleGroup from './ButtonGroupInitial';
 import { useState } from  'react';
 import { StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
@@ -20,7 +20,7 @@ export function ButtonGroup({ selections }) {
                 highlightBackgroundColor={Colors.orange}
                 highlightTextColor={Colors.white}
 
-                inactiveBackgroundColor={'transparent'}
+                inactiveBackgroundColor={Colors.unselectedButton}
                 inactiveTextColor={Colors.gray}
 
                 style={styles.baseStyle}
@@ -38,16 +38,6 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignSelf: "center",
       margin: 20,
-    },
-    text: {
-        fontFamily: FontFamily.bold,
-        fontSize: FontSizes.medium,
-    },
-    baseStyle:{
-        borderWidth: 1.2,
-        borderColor: Colors.orange,
-        borderRadius: 5,
-        height: 40,
     },
 });
   

@@ -1,7 +1,12 @@
+// Code reference: https://www.npmjs.com/package/react-native-button-toggle-group?activeTab=readme
 import * as React from "react";
 import { Animated, View, Text, StyleSheet, Platform } from "react-native";
 import { TouchableRipple } from "react-native-paper";
 import MaskedView from "@react-native-masked-view/masked-view";
+import { Colors } from "../styles/Colors";
+import { FontSizes } from "../styles/FontSizes";
+import { FontFamily } from "../styles/FontFamily";
+
 
 const ButtonToggleGroup = ({
 	values,
@@ -171,8 +176,11 @@ export default ButtonToggleGroup;
 
 const styles = StyleSheet.create({
 	container: {
-		height: 48,
+		height: 38,
 		position: "relative",
+		borderRadius: 12,
+		// borderWidth: 1.2,
+        // borderColor: Colors.orange,
 	},
 	maskViewContainer: {
 		width: "100%",
@@ -182,36 +190,39 @@ const styles = StyleSheet.create({
 	blueMaskContainer: {
 		position: "absolute",
 		backgroundColor: "black",
-		borderRadius: 4,
+		borderRadius: 10,
 		height: "100%",
-		left: 0,
-		top: 0,
 	},
 	baseButtonContainer: {
 		flex: 1,
 		flexDirection: "row",
 		flexWrap: "nowrap",
-		justifyContent: "space-around",
 		alignItems: "center",
+		borderRadius: 10,
 	},
 	inactiveButtonContainer: {
 		position: "absolute",
-		top: 4,
-		left: 4,
 		width: "100%",
 		height: "100%",
+		borderRadius: 10,
 	},
 	baseTouchableRipple: {
 		height: "100%",
 		flex: 1,
-		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
+		borderRadius: 10,
+		margin: 5,
 	},
 	baseButtonText: {
-		paddingHorizontal: 16,
+		fontSize: FontSizes.text,
+		fontFamily: FontFamily.medium,
+		color: Colors.unselectedText,
 	},
 	highlightText: {
 		zIndex: 1,
+		color: Colors.white,
+		fontFamily: FontFamily.bold,
+		fontSize: FontSizes.tagContent,
 	},
 });
