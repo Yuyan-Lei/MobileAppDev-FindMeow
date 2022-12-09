@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   FlatList,
   Pressable,
@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { db } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
@@ -24,6 +25,7 @@ import CatteryProfileScreen from "./CatteryProfileScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 function EmptyStarPage({ origin, setSelectedIndex }) {
   function onSwipeLeft() {
@@ -88,7 +90,6 @@ function CatsScreen({
   cats,
   refreshing,
   onRefresh,
-  setSelectedIndex,
   allCatteries,
 }) {
   const [location, setLocation] = useState(null);
@@ -101,28 +102,10 @@ function CatsScreen({
     })();
   }, []);
 
-  function onSwipeLeft() {
-    setSelectedIndex(1);
-  }
-
-  function onSwipeRight() {
-    setSelectedIndex(0);
-  }
-
-  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
-
   return (
-    <View
-      style={{
-        paddingHorizontal: 16,
-        paddingTop: 0,
-        width: "100%",
-        flex: 1,
-      }}
-    >
+    <View>
       {cats.length > 0 ? (
         <FlatList
-          style={{ flex: 1 }}
           data={cats}
           renderItem={({ item, index }) => {
             return (
@@ -144,8 +127,6 @@ function CatsScreen({
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
           showsVerticalScrollIndicator={false}
         />
       ) : (
@@ -163,22 +144,12 @@ function CatteriesScreen({
   setSelectedIndex,
   userLikedCatteryEmails,
 }) {
-  function onSwipeLeft() {
-    setSelectedIndex(1);
-  }
-
-  function onSwipeRight() {
-    setSelectedIndex(0);
-  }
-
-  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
 
   return (
     <View
       style={{
         flex: 1,
         width: "100%",
-        padding: 16,
       }}
     >
       {catteries.length > 0 ? (
@@ -199,8 +170,6 @@ function CatteriesScreen({
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
         />
       ) : (
         <EmptyStarPage origin="catteries" setSelectedIndex={setSelectedIndex} />
@@ -219,6 +188,9 @@ function MainScreen({ route, navigation }) {
   const [location, setLocation] = useState(null);
   const [userLikedCatEmails, setUserLikedCatEmails] = useState([]);
   const [userLikedCatteryEmails, setUserLikedCatteryEmails] = useState([]);
+
+  const flatListRef = useRef();
+  const { height, width } = useWindowDimensions();
 
   /* renew allCats, allCatteries, location, userLikedCats, userLikedCatteries */
   useEffect(() => {
@@ -338,10 +310,38 @@ function MainScreen({ route, navigation }) {
 
       <FilterButtons
         selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
+        setSelectedIndex={(index) => {
+          setSelectedIndex(index);
+          flatListRef.current.scrollToIndex({ index, animated: true });
+        }}
         buttons={["Cats", "Catteries"]}
       />
-      {selectedIndex === 0 && (
+      <View style={{ flex: 1 }}>
+        <SwiperFlatList
+          ref={flatListRef} 
+          onViewableItemsChanged={(params) => setSelectedIndex(params.changed?.[0]?.index)}>
+          <View style={{width, justifyContent: 'center', paddingHorizontal: 16}}>
+            <CatsScreen
+              navigation={navigation}
+              cats={likedCats}
+              // refreshing={refreshingCat}
+              // onRefresh={() => refreshLikedCatData({ forceLoad: true })}
+              allCatteries={allCatteries}
+            />
+          </View>
+          <View style={{width, paddingHorizontal: 16}}>
+            <CatteriesScreen
+              navigation={navigation}
+              catteries={likedCatteries}
+              userLikedCatteryEmails={userLikedCatteryEmails}
+              // refreshing={refreshingCattery}
+              // onRefresh={() => refreshLikedCatteryData({ forceLoad: true })}
+              setSelectedIndex={setSelectedIndex}
+            />
+          </View>
+        </SwiperFlatList>
+      </View>
+      {/* {selectedIndex === 0 && (
         <CatsScreen
           navigation={navigation}
           cats={likedCats}
@@ -360,7 +360,7 @@ function MainScreen({ route, navigation }) {
           // onRefresh={() => refreshLikedCatteryData({ forceLoad: true })}
           setSelectedIndex={setSelectedIndex}
         />
-      )}
+      )} */}
     </View>
   );
 }

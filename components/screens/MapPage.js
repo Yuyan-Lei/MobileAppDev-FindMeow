@@ -82,6 +82,8 @@ export default function MapPage({
 
   const flatListRef = useRef();
 
+  const flatListMovingLock = useRef(false);
+
   return (
     <View style={styles.container}>
       <MapView
@@ -101,6 +103,7 @@ export default function MapPage({
           showCatList={showCatList}
           setShowCatList={setShowCatList}
           flatListRef={flatListRef}
+          flatListMovingLock={flatListMovingLock}
         />
       </MapView>
 
@@ -153,12 +156,20 @@ export default function MapPage({
             ref={flatListRef}
             showsPagination={false}
             onChangeIndex={({ index }) => {
+              if (flatListMovingLock.current) return;
+              flatListMovingLock.current = true;
+              console.debug("onChangeIndex", index);
               selectLocation({
                 latitude: catsData[index].geoLocation.lat,
                 longitude: catsData[index].geoLocation.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               });
+
+              new Promise((resolve) => setTimeout(resolve, 500))
+                .then(() => {
+                  flatListMovingLock.current = false;
+                });
             }}
             data={catsData}
             renderItem={({ item }) => (

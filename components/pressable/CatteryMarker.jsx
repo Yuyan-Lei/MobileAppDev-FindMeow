@@ -16,6 +16,7 @@ export function CatteryMarker({
   showCatList,
   setShowCatList,
   flatListRef,
+  flatListMovingLock,
 }) {
   const { height, width } = useWindowDimensions();
   const [cattery, setCattery] = useState(null);
@@ -46,17 +47,24 @@ export function CatteryMarker({
   };
 
   const markerOnPress = async (event) => {
-    const idString = event._targetInst._debugOwner.memoizedProps.indentifier;
-    const id = parseInt(idString, 10);
-    if (!isNaN(id)) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      try {
-        if (flatListRef.current)
+    try {
+      const idString = event._targetInst._debugOwner.memoizedProps.indentifier;
+      const id = parseInt(idString, 10);
+      if (!isNaN(id)) {
+        // await new Promise((resolve) => setTimeout(resolve, 500));
+
+        if (flatListRef.current) {
+          flatListMovingLock.current = true;
+          console.debug(`scroll to index ${id}`);
           flatListRef.current.scrollToIndex({ index: id, animated: true });
-        else console.log("flatListRef.current is null");
-      } catch (e) {
-        console.error(e);
+          await new Promise((resolve) => setTimeout(resolve, 300));
+          flatListMovingLock.current = false;
+        } else {
+          console.log("flatListRef.current is null");
+        }
       }
+    } catch (e) {
+      console.error(e);
     }
   };
 

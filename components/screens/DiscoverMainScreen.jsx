@@ -420,7 +420,7 @@ function MainScreen({ route, navigation }) {
           <MapButton
             onPress={() =>
               navigation.navigate("MapPage", {
-                catsData: catsData[selectedIndex]
+                catsData: catsData[selectedIndex],
               })
             }
             size={FontSizes.mapIcon}
@@ -490,7 +490,7 @@ function MainScreen({ route, navigation }) {
       <View style={{ flex: 1 }}>
         <SwiperFlatList
           ref={flatListRef} 
-          onChangeIndex={({index}) => setSelectedIndex(index)}>
+          onViewableItemsChanged={(params) => setSelectedIndex(params.changed?.[0]?.index)}>
           <View style={{width, justifyContent: 'center', paddingHorizontal: 16}}>
             <FlatList
             data={catsData[0]}

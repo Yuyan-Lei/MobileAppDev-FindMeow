@@ -29,6 +29,7 @@ import CatInformation from "./CatInformation";
 import PostNewCatScreen from "./PostNewCatScreen";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
+import UpdateCatteryPage from "./UpdateCatteryPage";
 
 function MainScreen({ route, navigation }) {
   const { height, width } = useWindowDimensions();
@@ -287,6 +288,7 @@ export default function ProfileCatteryPage({ route, navigation }) {
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="CatInformation" component={CatInformation} />
       <Stack.Screen name="PostNewCatScreen" component={PostNewCatScreen} />
+      <Stack.Screen name="UpdateCatteryPage" component={UpdateCatteryPage} />
     </Stack.Navigator>
   );
 }

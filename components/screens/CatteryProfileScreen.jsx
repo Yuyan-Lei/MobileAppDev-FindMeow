@@ -66,7 +66,7 @@ function MainScreen({ route, navigation }) {
   }, []);
 
   useEffect(() => {
-    const docRef = doc(db, "Users", getCurrentUserEmail());
+    const docRef = doc(db, "Users", cattery.email || cattery.id);
     const unSubscribe = onSnapshot(docRef, (snapshot) => {
       getCats(snapshot.data().cats).then((cats) => setCats(cats));
     });
@@ -149,7 +149,7 @@ function MainScreen({ route, navigation }) {
       );
     }
     setCatsListComponent(catsList);
-  }, [cats, allCatteries]);
+  }, [cats, likeCats, allCatteries]);
 
   const onClickLikeButton = () => {
     if (!likeCatteries.includes(cattery.email)) {
