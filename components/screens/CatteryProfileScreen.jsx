@@ -149,7 +149,7 @@ function MainScreen({ route, navigation }) {
       );
     }
     setCatsListComponent(catsList);
-  }, [cats, allCatteries]);
+  }, [cats, likeCats, allCatteries]);
 
   const onClickLikeButton = () => {
     if (!likeCatteries.includes(cattery.email)) {
