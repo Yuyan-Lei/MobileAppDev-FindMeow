@@ -167,7 +167,20 @@ export default function CatInformation({ route, navigation }) {
         {/* Edit Button */}
         {allowEdit && (
           <View style={styles.editButtonView}>
-            <Pressable onPress={onClickEditButton}>
+            <Pressable
+              onPress={onClickEditButton}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed
+                    ? Colors.orange
+                    : Colors.arrowBackground,
+                  padding: 8,
+                  borderRadius: 13,
+                  width: 35,
+                  height: 35,
+                },
+              ]}
+            >
               <Feather
                 name="edit"
                 size={FontSizes.button}
@@ -392,7 +405,7 @@ const styles = StyleSheet.create({
     // backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
     position: "absolute",
-    top: 50,
+    top: 46,
     left: 22,
     width: 35,
     height: 35,
@@ -404,11 +417,11 @@ const styles = StyleSheet.create({
   },
   editButtonView: {
     position: "absolute",
-    top: 50,
+    top: 43,
     right: 68,
     width: 35,
     height: 35,
-    backgroundColor: Colors.arrowBackground,
+    // backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
     alignItems: "center",
     paddingTop: 8,
