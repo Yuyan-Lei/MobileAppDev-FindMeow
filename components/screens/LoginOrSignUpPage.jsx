@@ -395,6 +395,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     )}
                     onChangeText={setWebsite}
                     inputStyle={{ fontFamily: FontFamily.regular }}
+                    // style={{ fontFamily: FontFamily.regular }}
                   />
                   <View
                     style={{
