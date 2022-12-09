@@ -26,6 +26,7 @@ export function SearchBar({ text, setText }) {
 const styles = StyleSheet.create({
   inputContainer: {
     borderBottomWidth: 0,
+    height: "100%",
   },
   container: {
     flexDirection: "row",
@@ -34,13 +35,10 @@ const styles = StyleSheet.create({
   leftIconContainerStyle: {
     paddingRight: 8,
   },
-  inputBarStyle: {
-    height: 60,
-  },
+  inputBarStyle: {},
   inputStyle: {
     fontSize: FontSizes.subSubTitle,
     fontFamily: FontFamily.normal,
     color: Colors.grayText,
-    // top: 2,
   },
 });

@@ -152,8 +152,8 @@ function MainScreen({ route, navigation }) {
         </View>
         <FilterButton
           onPress={() => refRBSheet.current.open()}
-          size={FontSizes.bigFilter}
-          length={60}
+          size={FontSizes.smallFilter}
+          length={40}
         />
         <RBSheet
           ref={refRBSheet}
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     padding: 5,
-    paddingHorizontal: 60,
+    paddingHorizontal: 52,
   },
   searchBarView: {
     backgroundColor: Colors.dimGray,
