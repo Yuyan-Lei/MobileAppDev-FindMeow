@@ -17,12 +17,16 @@ export function SearchBar({ text, setText }) {
         placeholder="Search"
         style={styles.inputBarStyle}
         inputStyle={styles.inputStyle}
+        inputContainerStyle={styles.inputContainer}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    borderBottomWidth: 0,
+  },
   container: {
     flexDirection: "row",
     flex: 1,
