@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 5,
     paddingHorizontal: 52,
+    marginTop: 12,
   },
   searchBarView: {
     backgroundColor: Colors.dimGray,
