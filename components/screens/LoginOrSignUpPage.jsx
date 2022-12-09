@@ -256,7 +256,9 @@ export default function LoginOrSignUpPage({ route, navigation }) {
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? Colors.orange : "transparent",
+                backgroundColor: pressed
+                  ? Colors.orangeOnPressed
+                  : "transparent",
               },
               styles.headPressable,
             ]}
@@ -275,7 +277,9 @@ export default function LoginOrSignUpPage({ route, navigation }) {
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? Colors.orange : "transparent",
+                backgroundColor: pressed
+                  ? Colors.orangeOnPressed
+                  : "transparent",
               },
               styles.headPressable,
             ]}
@@ -316,21 +320,19 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             onChangeText={setPassword}
           />
           {pageState === 0 ? (
-            <View>
-              <Pressable
-                onPress={() => onSignIn()}
-                style={({ pressed }) => [
-                  {
-                    backgroundColor: pressed
-                      ? Colors.orangeText
-                      : Colors.orange,
-                  },
-                  styles.loginAndSignUpButton,
-                ]}
-              >
-                <Text style={styles.loginAndSignUpButtonText}>Log In</Text>
-              </Pressable>
-            </View>
+            <Pressable
+              onPress={() => onSignIn()}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed
+                    ? Colors.orangeOnPressed
+                    : Colors.orange,
+                },
+                styles.loginAndSignUpButton,
+              ]}
+            >
+              <Text style={styles.loginAndSignUpButtonText}>Log In</Text>
+            </Pressable>
           ) : (
             <View>
               <TextInput
@@ -373,6 +375,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     )}
                     onChangeText={setName}
                     inputStyle={{ fontFamily: FontFamily.regular }}
+                    style={{ fontFamily: FontFamily.regular }}
                   />
                   <TextInput
                     label="Cattery Phone"
@@ -428,6 +431,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                           fontFamily: FontFamily.regular,
                         }}
                         defaultOption={{ key: breed, value: breed }}
+                        dropdownTextStyles={{ fontFamily: FontFamily.normal }}
                       />
                     </View>
                   </View>
@@ -466,12 +470,14 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         backgroundColor: Colors.signUpBackground,
                         fontSize: FontSizes.subSubTitle,
                         paddingHorizontal: 0,
+                        // fontFamily: FontFamily.regular,
                       },
                       container: {
                         color: Colors.black,
                       },
                     }}
                     onFail={(error) => console.error(error)}
+                    textInputProps={{ fontFamily: "Poppins" }}
                   />
                 </View>
               )}
@@ -480,7 +486,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 style={({ pressed }) => [
                   {
                     backgroundColor: pressed
-                      ? Colors.orangeText
+                      ? Colors.orangeOnPressed
                       : Colors.orange,
                   },
                   styles.loginAndSignUpButton,
