@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "black",
 		borderRadius: 10,
 		height: "100%",
+		
 	},
 	baseButtonContainer: {
 		flex: 1,
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		borderRadius: 10,
-		margin: 5,
+		marginHorizontal: 5,
 	},
 	baseButtonText: {
 		fontSize: FontSizes.text,

@@ -24,6 +24,7 @@ import CatteryProfileScreen from "./CatteryProfileScreen";
 import PostNewCatScreen from "./PostNewCatScreen";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
+import { ButtonGroup } from "../pressable/ButtonGroup";
 
 function EmptyStarPage({ origin, setSelectedIndex }) {
   function onSwipeLeft() {
@@ -219,6 +220,7 @@ function MainScreen({ route, navigation }) {
   const [location, setLocation] = useState(null);
   const [userLikedCatEmails, setUserLikedCatEmails] = useState([]);
   const [userLikedCatteryEmails, setUserLikedCatteryEmails] = useState([]);
+  const availableSelections = ["Cats", "Catteries"];
 
   /* renew allCats, allCatteries, location, userLikedCats, userLikedCatteries */
   useEffect(() => {
@@ -336,10 +338,14 @@ function MainScreen({ route, navigation }) {
         </View>
       </View>
 
-      <FilterButtons
-        selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
-        buttons={["Cats", "Catteries"]}
+      <ButtonGroup
+        selectedValue={availableSelections[selectedIndex]}
+        setSelectedValue={(value) => {
+          const index = availableSelections.indexOf(value);
+          setSelectedIndex(index);
+          // flatListRef.current.scrollToIndex({ index, animated: true });
+          }}
+        selections={availableSelections} 
       />
       {selectedIndex === 0 && (
         <CatsScreen
