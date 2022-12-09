@@ -22,21 +22,24 @@ export function HeartButton({
   return (
     <Pressable
       onPress={onPress}
-      // style={({ pressed }) => [
-      //   {
-      //     backgroundColor: pressed ? Colors.orange : Colors.orangeText,
-      //     // padding: 5,
-      //     // borderRadius: 20,
-      //   },
-      // ]}
+      style={({ pressed }) => [
+        {
+          backgroundColor: pressed ? Colors.orange : "transparent",
+          // padding: 5,
+          borderRadius: 20,
+          marginTop: 10,
+          marginLeft: 6,
+        },
+      ]}
     >
       <View
         style={{
           padding: 5,
           backgroundColor: Colors.heartBackground,
           borderRadius: 20,
-          marginTop: 10,
-          marginLeft: 6,
+          // marginTop: 10,
+          // marginLeft: 6,
+          alignItems: "center",
         }}
       >
         <AntDesign

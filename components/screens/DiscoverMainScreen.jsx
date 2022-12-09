@@ -422,7 +422,7 @@ function MainScreen({ route, navigation }) {
           <MapButton
             onPress={() =>
               navigation.navigate("MapPage", {
-                catsData: catsData[selectedIndex]
+                catsData: catsData[selectedIndex],
               })
             }
             size={FontSizes.mapIcon}

@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
   },
   backButtonView: {
     position: "absolute",
-    top: 50,
+    top: 46,
     left: 12,
     padding: 5,
     height: 35,
@@ -408,8 +408,5 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.text,
     marginBottom: 8,
     fontFamily: FontFamily.bold,
-  },
-  infoText: {
-    fontSize: FontSizes.text,
   },
 });
