@@ -32,6 +32,60 @@
 
    Feel free to sign up for your own accounts!
 
+## ScreenShots
+
+![](screenshots/Login.jpg)
+
+![](screenshots/Cat.jpg)
+
+![](screenshots/Cattery.jpg)
+
+![](screenshots/User.jpg)
+
+![](screenshots/Cattery's.jpg)
+
+
+## Iteration 3
+
+### Contributions
+
+**Group members**:
+Cuichan Wu, Yuyan Lei, Zhongyi Lu.
+
+**Cuichan Wu**:
+
+
+**Yuyan Lei**:
+
+
+**Zhongyi Lu**:
+
+- Feat:
+1. Refactored and optimized data loading on several pages including `DiscoverMain`, `FindBreeder`, `MapPage`, and `StarList`.
+2. Refactored and optimized data loading in several components including `CatCard` and `BreederCard`.
+3. Optimized `likeCat` operations.
+4. Used `CacheImage` to improve image loading.
+5. Enabled queries in `DiscoverMain` and `FindBreeder` working.
+6. Add text ellipsis for `CatCard` and `CatInformation`.
+7. Rewrote `CatCard`.
+8. Added text wrap and ellipsis for several components.
+9. Swiping list controls map location in `MapPage`.
+
+- Fix:
+1. Horizontal swipe in `StarList` conflicts with 1CatCard1 and 1BreederCard1.
+2. Some navigations do not work.
+3. Getting the user location does not work when loading at the first time.
+4. Add more error handling for async functions.
+5. `setInterval()` function does not renew parameters.
+6. A few other bugs in `StarList` and `MapPage`.
+
+- Style:
+1. Hide some scroll indicators.
+  
+- Test:
+1. All functions in Android and iOS.
+
+
 ## Iteration 2
 
 ### Contributions
@@ -186,17 +240,6 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 2. Require to unify style sheets.
 3. Require to unify colors.
 
-### ScreenShots For Iteratio 1
-
-![](screenshots/Login.jpg)
-
-![](screenshots/Cat.jpg)
-
-![](screenshots/Cattery.jpg)
-
-![](screenshots/User.jpg)
-
-![](screenshots/Cattery's.jpg)
 
 ## Project Descriptions
 
