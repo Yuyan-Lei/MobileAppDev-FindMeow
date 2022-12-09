@@ -35,6 +35,7 @@ import PostNewCatScreen from "./PostNewCatScreen";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import { ButtonGroup } from '../pressable/ButtonGroup';
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -485,6 +486,10 @@ function MainScreen({ route, navigation }) {
           flatListRef.current.scrollToIndex({ index, animated: true });
           }}
         buttons={["Newer Post", "Nearby", "Lower Price"]}
+      />
+
+      <ButtonGroup
+        selections={['Newer Post', 'Nearby', 'Lower Price']} 
       />
 
       <View style={{ flex: 1 }}>
