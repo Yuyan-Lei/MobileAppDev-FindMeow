@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
   },
   backButtonView: {
     position: "absolute",
-    top: 50,
+    top: 46,
     left: 12,
     padding: 5,
     height: 35,

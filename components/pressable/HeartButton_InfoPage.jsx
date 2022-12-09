@@ -20,7 +20,18 @@ export function HeartButton_InfoPage({
   }
 
   return (
-    <Pressable onPress={onPress}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        {
+          backgroundColor: pressed ? Colors.orange : Colors.notSelectedColor,
+          // paddingTop: 8,
+          borderRadius: 13,
+          width: 35,
+          height: 35,
+        },
+      ]}
+    >
       <View
         style={{
           backgroundColor: Colors.arrowBackground,
