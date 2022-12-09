@@ -5,7 +5,7 @@ import { Callout, Marker } from "react-native-maps";
 import {
   getCattery,
   userLikeACat,
-  userUnLikeACat
+  userUnLikeACat,
 } from "../../firebaseUtils/user";
 import { CatCard_map } from "../cards/CatCard_map";
 import { Colors } from "../styles/Colors";
@@ -16,6 +16,7 @@ export function CatteryMarker({
   showCatList,
   setShowCatList,
   flatListRef,
+  flatListMovingLock,
 }) {
   const { height, width } = useWindowDimensions();
   const [cattery, setCattery] = useState(null);
@@ -41,22 +42,29 @@ export function CatteryMarker({
     if (catNumber === 1) {
       return "1 cat at this position.";
     } else {
-      return catNumber + " cats at this position."
+      return catNumber + " cats at this position.";
     }
   };
 
   const markerOnPress = async (event) => {
-    const idString = event._targetInst._debugOwner.memoizedProps.indentifier;
-    const id = parseInt(idString, 10);
-    if (!isNaN(id)) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      try {
-        if (flatListRef.current)
+    try {
+      const idString = event._targetInst._debugOwner.memoizedProps.indentifier;
+      const id = parseInt(idString, 10);
+      if (!isNaN(id)) {
+        // await new Promise((resolve) => setTimeout(resolve, 500));
+
+        if (flatListRef.current) {
+          flatListMovingLock.current = true;
+          console.debug(`scroll to index ${id}`);
           flatListRef.current.scrollToIndex({ index: id, animated: true });
-        else console.log("flatListRef.current is null");
-      } catch (e) {
-        console.error(e);
+          await new Promise((resolve) => setTimeout(resolve, 300));
+          flatListMovingLock.current = false;
+        } else {
+          console.log("flatListRef.current is null");
+        }
       }
+    } catch (e) {
+      console.error(e);
     }
   };
 
