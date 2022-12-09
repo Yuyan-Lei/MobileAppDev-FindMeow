@@ -471,7 +471,12 @@ export default function PostNewCatScreen({
         {/* Submit Button */}
         <Pressable
           onPress={catId === "" ? onPostNewCat : onUpdateCat}
-          style={submitting ? styles.submittingButton : styles.submitButton}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? Colors.orangeOnPressed : Colors.orange,
+            },
+            submitting ? styles.submittingButton : styles.submitButton,
+          ]}
           disabled={submitting}
         >
           <Text style={styles.submitButtonText}>
@@ -481,7 +486,17 @@ export default function PostNewCatScreen({
 
         {/* Delete Button */}
         {catId !== "" && (
-          <Pressable onPress={onDeleteCat} style={styles.deleteButton}>
+          <Pressable
+            onPress={onDeleteCat}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? Colors.deleteButtonOnPress
+                  : Colors.deleteButton,
+              },
+              styles.deleteButton,
+            ]}
+          >
             <Text style={styles.submitButtonText}>Delete</Text>
           </Pressable>
         )}
@@ -536,7 +551,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   submitButton: {
-    backgroundColor: Colors.orange,
     borderRadius: 18,
     height: 60,
     alignItems: "center",
@@ -552,7 +566,6 @@ const styles = StyleSheet.create({
     marginTop: "10%",
   },
   deleteButton: {
-    backgroundColor: Colors.deleteButton,
     borderRadius: 18,
     height: 60,
     alignItems: "center",

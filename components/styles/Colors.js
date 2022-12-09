@@ -27,6 +27,7 @@ export const Colors = {
   filterWrapper: "rgba(0, 0, 0, 0.5)",
   dragglableIcon: "#EFEFEF",
   deleteButton: "#e84f15",
+  deleteButtonOnPress: "#c94512",
   submittingButton: "#b8b8b8",
   postCatContainer: "#FFFCF6",
   locationIcon: "#C5C4C4",
