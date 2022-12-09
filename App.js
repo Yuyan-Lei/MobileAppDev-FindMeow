@@ -112,10 +112,6 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="LoginOrSignUp" component={LoginOrSignUpPage} />
           <Stack.Screen name="Home" component={HomePage} />
-          <Stack.Screen
-            name="UpdateCatteryPage"
-            component={UpdateCatteryPage}
-          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
