@@ -37,6 +37,6 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.subSubTitle,
     fontFamily: FontFamily.normal,
     color: Colors.grayText,
-    top: 2,
+    // top: 2,
   },
 });
