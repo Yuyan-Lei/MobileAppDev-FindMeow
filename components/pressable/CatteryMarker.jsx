@@ -89,7 +89,7 @@ export function CatteryMarker({
               <View
                 style={{
                   backgroundColor: Colors.white,
-                  opacity: 0.5,
+                  opacity: 1,
                   borderRadius: 12,
                   marginTop: 5,
                   padding: 4,
