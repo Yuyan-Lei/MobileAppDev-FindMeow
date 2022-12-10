@@ -45,9 +45,12 @@
 
 ![](screenshots/Cattery.jpg)
 
+![](screenshots/settings.jpg)
+
 ![](screenshots/User.jpg)
 
 ![](screenshots/Cattery's.jpg)
+
 
 ## Iteration 3
 
