@@ -306,21 +306,21 @@ export default function CatInformation({ route, navigation }) {
             <View style={{ marginLeft: 15 }}>
               <Text style={styles.contactText}>Contact Info</Text>
               <View style={{ flexDirection: "row" }}>
-                <Pressable
+                {/* <Pressable
                   onPress={() => navigation.push("CatteryProfile", { cattery })}
-                >
-                  <CachedImage
-                    source={{ uri: cattery.picture }}
-                    resizeMode="cover"
-                    style={{
-                      padding: 8,
-                      borderRadius: 100,
-                      height: 40,
-                      width: 40,
-                      marginRight: 10,
-                    }}
-                  ></CachedImage>
-                </Pressable>
+                > */}
+                <CachedImage
+                  source={{ uri: cattery.picture }}
+                  resizeMode="cover"
+                  style={{
+                    padding: 8,
+                    borderRadius: 100,
+                    height: 40,
+                    width: 40,
+                    marginRight: 10,
+                  }}
+                />
+                {/* </Pressable> */}
                 <View>
                   <Text style={styles.catteryNameText}>
                     {cattery.catteryName}

@@ -155,21 +155,15 @@ export default function MapPage({
           <SwiperFlatList
             ref={flatListRef}
             showsPagination={false}
+            // disable lazy loading to prevent the bug of swiper
+            renderAll={true}
             onChangeIndex={({ index }) => {
-              if (flatListMovingLock.current) return;
-              flatListMovingLock.current = true;
-              console.debug("onChangeIndex", index);
               selectLocation({
                 latitude: catsData[index].geoLocation.lat,
                 longitude: catsData[index].geoLocation.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               });
-
-              new Promise((resolve) => setTimeout(resolve, 500))
-                .then(() => {
-                  flatListMovingLock.current = false;
-                });
             }}
             data={catsData}
             renderItem={({ item }) => (
@@ -182,7 +176,7 @@ export default function MapPage({
                 })}
               />
             )}
-          ></SwiperFlatList>
+          />
         </View>
       ) : (
         <View />
