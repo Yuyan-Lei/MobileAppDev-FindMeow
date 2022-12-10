@@ -1,9 +1,6 @@
 import ButtonToggleGroup from './ButtonGroupInitial';
-import { useState } from  'react';
 import { StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
-import { FontSizes } from "../styles/FontSizes";
-import { FontFamily } from "../styles/FontFamily";
 
 
 export function ButtonGroup({ selections, selectedValue, setSelectedValue, marginHorizontal }) {

@@ -3,7 +3,6 @@ import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
 import { FontSizes } from "../styles/FontSizes";
-import { FontFamily } from "../styles/FontFamily";
 
 export function HeartButton_InfoPage({
   onPress,
@@ -25,7 +24,6 @@ export function HeartButton_InfoPage({
       style={({ pressed }) => [
         {
           backgroundColor: pressed ? Colors.orange : Colors.notSelectedColor,
-          // paddingTop: 8,
           borderRadius: 13,
           width: 35,
           height: 35,
@@ -55,10 +53,3 @@ export function HeartButton_InfoPage({
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  heartText: {
-    fontSize: FontSizes.button,
-    marginTop: 1,
-  },
-});
