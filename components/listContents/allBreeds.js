@@ -9,6 +9,7 @@ export const ALL_BREEDS = [
     { key: "Bengal", value: "Bengal" },
     { key: "Birman", value: "Birman" },
     { key: "Bombay", value: "Bombay" },
+    { key: "British Shorthair", value: "British Shorthair" },
     { key: "Burmese", value: "Burmese" },
     { key: "Burmilla", value: "Burmilla" },
     { key: "Chartreux", value: "Chartreux" },
