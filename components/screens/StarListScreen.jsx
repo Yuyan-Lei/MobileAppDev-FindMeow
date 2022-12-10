@@ -218,8 +218,8 @@ function MainScreen({ route, navigation }) {
     const unsubscribeUser = onSnapshot(userDoc, (userSnapShot) => {
       const userLikedCats = userSnapShot.data().likeCats;
       const userLikedCatteries = userSnapShot.data().likeCatteries;
-      setUserLikedCatEmails(userLikedCats);
-      setUserLikedCatteryEmails(userLikedCatteries);
+      setUserLikedCatEmails(userLikedCats || []);
+      setUserLikedCatteryEmails(userLikedCatteries || []);
     });
 
     return () => {
