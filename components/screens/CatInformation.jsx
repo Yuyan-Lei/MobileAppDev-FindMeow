@@ -334,6 +334,8 @@ export default function CatInformation({ route, navigation }) {
               <Text style={styles.descriptionText}>{cat.Description}</Text>
             </View>
           </View>
+
+          <View style={{height: 60 }}></View>
         </View>
       </View>
     </ScrollView>

@@ -28,15 +28,6 @@ import { ButtonGroup } from "../pressable/ButtonGroup";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 function EmptyStarPage({ origin, setSelectedIndex }) {
-  function onSwipeLeft() {
-    setSelectedIndex(1);
-  }
-
-  function onSwipeRight() {
-    setSelectedIndex(0);
-  }
-
-  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight);
 
   return (
     <Pressable
@@ -45,8 +36,6 @@ function EmptyStarPage({ origin, setSelectedIndex }) {
         width: "100%",
         alignItems: "center",
       }}
-      onPressIn={onTouchStart}
-      onPressOut={onTouchEnd}
     >
       <View
         style={{
@@ -97,7 +86,11 @@ function CatsScreen({ navigation, cats, refreshing, onRefresh, allCatteries }) {
   }, []);
 
   return (
-    <View>
+    <View 
+      style={{
+        flex: 1,
+        width: "100%",
+      }}>
       {cats.length > 0 ? (
         <FlatList
           data={cats}
@@ -166,7 +159,7 @@ function CatteriesScreen({
           }
         />
       ) : (
-        <EmptyStarPage origin="catteries" setSelectedIndex={setSelectedIndex} />
+        <EmptyStarPage origin="catteries" />
       )}
     </View>
   );
@@ -225,8 +218,8 @@ function MainScreen({ route, navigation }) {
     const unsubscribeUser = onSnapshot(userDoc, (userSnapShot) => {
       const userLikedCats = userSnapShot.data().likeCats;
       const userLikedCatteries = userSnapShot.data().likeCatteries;
-      setUserLikedCatEmails(userLikedCats);
-      setUserLikedCatteryEmails(userLikedCatteries);
+      setUserLikedCatEmails(userLikedCats || []);
+      setUserLikedCatteryEmails(userLikedCatteries || []);
     });
 
     return () => {
@@ -285,7 +278,6 @@ function MainScreen({ route, navigation }) {
           name: cattery.name,
           photo: cattery.photo,
           distance,
-          uploadTime: cattery.uploadTime,
           ...cattery,
         };
       })

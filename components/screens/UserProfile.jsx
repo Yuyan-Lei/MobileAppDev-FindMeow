@@ -49,17 +49,17 @@ function MainScreen({ route, navigation }) {
       },
       {
         text: "Confirm",
-        onPress: () =>
+        onPress: () =>{
+          navigateToLoginPageSafely();
           auth
             .signOut()
-            .then(() => navigateToLoginPageSafely())
-            .catch((error) =>
+            .catch((error) =>{
               Alert.alert(
                 "Error",
                 "Log out failed. Please check your internet connection."
               )
-            ),
-      },
+            })
+      },}
     ]);
   };
 

@@ -57,7 +57,7 @@ export default function HomePage({ route, navigation }) {
             marginHorizontal: user.isCattery ? "5%" : "12.5%",
             elevation: 0,
             borderRadius: 36,
-            height: "8%",
+            height: 70,
             width: user.isCattery ? "90%" : "75%",
             backgroundColor: "white",
             shadowColor: Colors.black,
