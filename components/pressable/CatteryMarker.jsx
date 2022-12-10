@@ -58,17 +58,7 @@ export function CatteryMarker({
       const idString = event._targetInst._debugOwner.memoizedProps.indentifier;
       const id = parseInt(idString, 10);
       if (!isNaN(id)) {
-        // await new Promise((resolve) => setTimeout(resolve, 500));
-
-        if (flatListRef.current) {
-          flatListMovingLock.current = true;
-          console.debug(`scroll to index ${id}`);
-          flatListRef.current.scrollToIndex({ index: id, animated: true });
-          await new Promise((resolve) => setTimeout(resolve, 300));
-          flatListMovingLock.current = false;
-        } else {
-          console.log("flatListRef.current is null");
-        }
+        flatListRef.current.scrollToIndex({ index: id, animated: true });
       }
     } catch (e) {
       console.error(e);
