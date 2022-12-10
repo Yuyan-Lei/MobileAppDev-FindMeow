@@ -78,6 +78,14 @@ export function CatCard_map({ cat, catteryInput, likedCatInput, navigation, show
           backgroundColor: "white",
           borderRadius: 10,
           height: 110,
+          shadowColor: Colors.black,
+            shadowRadius: 5,
+            shadowOpacity: 0.3,
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            elevation: 15,
         }}
       >
         <Pressable
