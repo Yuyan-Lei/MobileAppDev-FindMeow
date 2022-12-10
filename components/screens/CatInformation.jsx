@@ -152,7 +152,7 @@ export default function CatInformation({ route, navigation }) {
         <CachedImage
           source={{ uri: cat.Picture }}
           resizeMode="cover"
-          style={{ height: 450, width: 500 }}
+          style={styles.image}
         ></CachedImage>
 
         {/* Heart button */}
@@ -266,7 +266,7 @@ export default function CatInformation({ route, navigation }) {
             <Text style={styles.priceText}>${cat.Price}</Text>
           </View>
 
-          {/* CATTERY LOCATION */}
+          {/* Cattery Location */}
           <View style={{ flexDirection: "row", width: "70%" }}>
             <Ionicons
               name="location-sharp"
@@ -301,14 +301,11 @@ export default function CatInformation({ route, navigation }) {
             )}
           </View>
 
-          {/* contact info label */}
+          {/* Contact info label */}
           <View style={styles.contactLabelContainer}>
             <View style={{ marginLeft: 15 }}>
               <Text style={styles.contactText}>Contact Info</Text>
               <View style={{ flexDirection: "row" }}>
-                {/* <Pressable
-                  onPress={() => navigation.push("CatteryProfile", { cattery })}
-                > */}
                 <CachedImage
                   source={{ uri: cattery.picture }}
                   resizeMode="cover"
@@ -320,7 +317,7 @@ export default function CatInformation({ route, navigation }) {
                     marginRight: 10,
                   }}
                 />
-                {/* </Pressable> */}
+
                 <View>
                   <Text style={styles.catteryNameText}>
                     {cattery.catteryName}
@@ -336,7 +333,7 @@ export default function CatInformation({ route, navigation }) {
             </View>
           </View>
 
-          {/* contact info label end */}
+          {/* Contact info label end */}
           <View style={styles.detailLabel}>
             <Text style={styles.detailTitleText}>Details</Text>
 
@@ -402,7 +399,6 @@ const styles = StyleSheet.create({
   },
   backButtonContainer: {
     padding: 5,
-    // backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
     position: "absolute",
     top: 46,
@@ -421,7 +417,6 @@ const styles = StyleSheet.create({
     right: 68,
     width: 35,
     height: 35,
-    // backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
     alignItems: "center",
     paddingTop: 8,
