@@ -59,9 +59,30 @@ export default function LoginOrSignUpPage({ route, navigation }) {
 
   const ref = useRef();
 
+  useEffect(() => {
+    ref.current?.setAddressText(address || "");
+  }, []);
+
+  useEffect(() => {
+    setUserName("");
+    setPassword("");
+    setConfirmPassword("");
+  }, [pageState]);
+
+  function navigateToHomeSafely() {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "Home" }],
+      })
+    );
+  }
+
+
+  {/* Verification Codes - starts */}
   // Verify all the inputs in this page and return the error message if any errors.
   const verifyInput = () => {
-    // Don't verify anything if the user is not a cattery.
+    // Don't verify the cattery info inputs if the user is not a cattery.
     if (!isCattery) {
       return "";
     }
@@ -90,16 +111,6 @@ export default function LoginOrSignUpPage({ route, navigation }) {
     return "";
   };
 
-  useEffect(() => {
-    ref.current?.setAddressText(address || "");
-  }, []);
-
-  useEffect(() => {
-    setUserName("");
-    setPassword("");
-    setConfirmPassword("");
-  }, [pageState]);
-
   const verifyPassword = (password) => {
     // Valid password pattern:
     // 1. Contains both digit and word character
@@ -107,15 +118,6 @@ export default function LoginOrSignUpPage({ route, navigation }) {
     const validPasswordPattern = /(?=.*[0-9]+)(?=.*[a-zA-Z]+).{6,}/g;
     return password.match(validPasswordPattern);
   };
-
-  function navigateToHomeSafely() {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{ name: "Home" }],
-      })
-    );
-  }
 
   const onCreateAccount = () => {
     if (password !== confirmPassword) {
@@ -199,7 +201,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
         }
       });
   };
-
+  
   const onSignIn = () => {
     signInWithEmailAndPassword(auth, userName, password)
       .then((userCredential) => {
@@ -243,11 +245,18 @@ export default function LoginOrSignUpPage({ route, navigation }) {
         Alert.alert("Login Failed", errorMessage);
       });
   };
+  {/* Verification Codes - ends */}
+
+
   return (
     <KeyboardAvoidingView style={styles.container}>
+
+      {/* Title */}
       <Text style={styles.title}>
         Find Your Favorite Cat to Join Your Family
       </Text>
+
+      {/* Switch - Log in / Sign up */}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.majorContent}
@@ -257,7 +266,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             style={({ pressed }) => [
               {
                 backgroundColor: pressed
-                  ? Colors.orangeOnPressed
+                  ? Colors.signUpButtonPressed
                   : "transparent",
               },
               styles.headPressable,
@@ -278,7 +287,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             style={({ pressed }) => [
               {
                 backgroundColor: pressed
-                  ? Colors.orangeOnPressed
+                  ? Colors.signUpButtonPressed
                   : "transparent",
               },
               styles.headPressable,
@@ -296,6 +305,9 @@ export default function LoginOrSignUpPage({ route, navigation }) {
             </Text>
           </Pressable>
         </View>
+
+
+        {/* Input boxes */}
         <ScrollView
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -353,6 +365,8 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 }
                 onChangeText={setConfirmPassword}
               />
+
+              {/* Choose to register as a cattery owner or not */}
               <CheckBox
                 title="I'm a cattery owner"
                 checked={isCattery}
@@ -365,8 +379,11 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 checkedColor={Colors.orangeText}
                 containerStyle={{ backgroundColor: "transparent" }}
               />
+
+              {/* More input boxes if the user chooses to register as a cattery owner */}
               {isCattery && (
                 <View>
+                  {/* 1. Cattery Name */}
                   <TextInput
                     label="Cattery Name"
                     value={name}
@@ -378,6 +395,8 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     inputStyle={{ fontFamily: FontFamily.regular }}
                     style={{ fontFamily: FontFamily.regular }}
                   />
+
+                  {/* 2. Cattery Phone Number */}
                   <TextInput
                     label="Cattery Phone"
                     value={phoneNumber}
@@ -387,6 +406,8 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     onChangeText={setPhoneNumber}
                     inputStyle={{ fontFamily: FontFamily.regular }}
                   />
+
+                  {/* 3. Cattery Website */}
                   <TextInput
                     label="Cattery Website"
                     value={website}
@@ -396,8 +417,9 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     )}
                     onChangeText={setWebsite}
                     inputStyle={{ fontFamily: FontFamily.regular }}
-                    // style={{ fontFamily: FontFamily.regular }}
                   />
+
+                  {/* 4. Cattery Breed */}
                   <View
                     style={{
                       flexDirection: "row",
@@ -436,8 +458,9 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         dropdownTextStyles={{ fontFamily: FontFamily.normal }}
                       />
                     </View>
+
+                  {/* 5. Cattery Address */}
                   </View>
-                  {/* <Text style={styles.subTitle}>Address</Text> */}
                   <GooglePlacesAutocomplete
                     ref={ref}
                     query={{
@@ -455,7 +478,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                       InputComp: TextInput,
                       label: "Cattery Address",
                       color: Colors.orangeText,
-
+                      inputStyle: {fontFamily: FontFamily.regular },
                       leading: (
                         <Feather
                           name="map-pin"
@@ -472,17 +495,22 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         backgroundColor: Colors.signUpBackground,
                         fontSize: FontSizes.subSubTitle,
                         paddingHorizontal: 0,
-                        // fontFamily: FontFamily.regular,
+                        fontFamily: FontFamily.regular,
                       },
                       container: {
                         color: Colors.black,
                       },
+                      description: {
+                        fontSize: FontSizes.text,
+                        fontFamily: FontFamily.regular,
+                      },
                     }}
                     onFail={(error) => console.error(error)}
-                    // textInputProps={{ fontFamily: "Poppins" }}
                   />
                 </View>
               )}
+
+              {/* Sign up button */}
               <Pressable
                 onPress={() => onCreateAccount()}
                 style={({ pressed }) => [
@@ -496,7 +524,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                 ]}
               >
                 <Text style={styles.loginAndSignUpButtonText}>
-                  Create Account
+                  Sign Up
                 </Text>
               </Pressable>
             </View>
@@ -549,7 +577,6 @@ const styles = StyleSheet.create({
     marginBottom: 35,
     textAlign: "center",
     padding: 20,
-    fontWeight: "700",
   },
   headPressable: {
     marginHorizontal: 5,
@@ -569,10 +596,11 @@ const styles = StyleSheet.create({
   },
   loginAndSignUpButton: {
     borderRadius: 18,
-    height: 72,
+    height: 60,
     alignItems: "center",
-    padding: 22,
+    padding: 16,
     marginTop: "10%",
+    marginBottom: 40,
   },
   loginAndSignUpButtonText: {
     fontFamily: FontFamily.bold,
