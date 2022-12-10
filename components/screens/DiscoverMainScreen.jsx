@@ -238,6 +238,7 @@ function MainScreen({ route, navigation }) {
           }
 
           return {
+            ...catDoc.data(),
             id: catDoc.id,
             name: catDoc.data().Breed,
             sex: catDoc.data().Gender,
