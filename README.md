@@ -12,12 +12,12 @@
    REACT_APP_FIREBASE_MEASUREMENT_ID=
 
    REACT_APP_GOOGLE_MAP_APP_KEY=
-   
-   DEVELOPER_EMAIL= 
 
-   REACT_APP_API_URL = 
-   REACT_APP_API_KEY = 
-   REACT_APP_ICON_URL = 
+   DEVELOPER_EMAIL=
+
+   REACT_APP_API_URL =
+   REACT_APP_API_KEY =
+   REACT_APP_ICON_URL =
    ```
 
 2. **Installation**: Open the terminal in your IDE, and then enter `npm install` to the terminal.
@@ -49,7 +49,6 @@
 
 ![](screenshots/Cattery's.jpg)
 
-
 ## Iteration 3
 
 ### Contributions
@@ -59,9 +58,10 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 
 **Cuichan Wu**:
 
-
 **Yuyan Lei**:
+
 - Feat:
+
 1. Implemented the notification feature, and built related screens. Enabled users to switch the range of distance that they would like to be notified within.
 2. Implemented the nearby feature.
 3. Implemented the page-swiping gesture and effects in screens.
@@ -70,45 +70,60 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 6. Implemented a special display on the `StarList` page, while the collection list is empty.
 7. Implemented the send-feedback feature on the `UserProfile` page.
 8. Developed the map feature. Rewrote the cat-card list, implemented the card-swiping gesture and effects, and linked the map markers with the cat card.
+
 - Components:
+
 1. Built a new button group with animations on both IOS and Android, and linked the button clicks with the page-swiping effects.
 2. Implemented a new date-picker component.
 3. Built the multi-slider for the `DiscoverCat filter`.
+
 - Refactor:
+
 1. Refactor the firebase storing structure.
 2. Rewrote the address retriever function.
 3. Rewrote the shadow display for `BreederCard` on IOS.
 4. Rewrote the distance calculation and display effect on the `CatCard`.
+
 - Restyled screens and components, and added button effects to some buttons.
 - Fixed errors and tested pull requests.
 
 **Zhongyi Lu**:
 
 - Feat:
-1. Refactored and optimized data loading on several pages including `DiscoverMain`, `FindBreeder`, `MapPage`, and `StarList`.
-2. Refactored and optimized data loading in several components including `CatCard` and `BreederCard`.
+
+1. Rewrote `CatCard`.
+2. Replace map callout by text.
 3. Optimized `likeCat` operations.
 4. Used `CacheImage` to improve image loading.
-5. Enabled queries in `DiscoverMain` and `FindBreeder` working.
-6. Add text ellipsis for `CatCard` and `CatInformation`.
-7. Rewrote `CatCard`.
-8. Added text wrap and ellipsis for several components.
-9. Swiping list controls map location in `MapPage`.
+5. Swiping list controls map location in `MapPage`.
+6. Added text wrap and ellipsis for several components.
+7. Added text ellipsis for `CatCard` and `CatInformation`.
+8. Enabled queries in `DiscoverMain` and `FindBreeder` working.
+9. Refactored and optimized data loading in several components including `CatCard` and `BreederCard`.
+10. Refactored and optimized data loading on several pages including `DiscoverMain`, `FindBreeder`, `MapPage`, and `StarList`.
 
 - Fix:
-1. Horizontal swipe in `StarList` conflicts with 1CatCard1 and 1BreederCard1.
+
+1. A few bugs in `StarList`.
 2. Some navigations do not work.
-3. Getting the user location does not work when loading at the first time.
-4. Add more error handling for async functions.
+3. Cats not shown in `CatteryProfile`.
+4. app breaks when pressing map icon too early.
 5. `setInterval()` function does not renew parameters.
-6. A few other bugs in `StarList` and `MapPage`.
+6. Add more error handling for async functions for Firebase connection.
+7. Getting the user location does not work when loading at the first time.
+8. Horizontal swipe in `StarList` conflicts with `CatCard` and `BreederCard`.
+9. Map keeps moving and flat list not working in `MapPage` by disabling lazy loading.
 
 - Style:
-1. Hide some scroll indicators.
-  
-- Test:
-1. All functions in Android and iOS.
 
+1. Hide some scroll indicators.
+2. Fix button overflow in `Login` page.
+3. Adjusted `SearchBar` styles and removed underline.
+
+- Test:
+
+1. Pull requests in GitHub.
+2. All functions in Android and iOS.
 
 ## Iteration 2
 
@@ -152,12 +167,12 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 **Zhongyi Lu**:
 
 - Feat:
-   1. Changed the behaviors of `Navigation Bar` to always show on screen.
-   2. Linked `CatInformation` with firebase database to show real data.
-   3. Linked `SearchBar` to firebase database with searching.
-   4. Selected and Added a new `DataPicker` to `PostCat` screen.
-   5. Replaced onSnapShot in `DiscoverMain`, `FindBreeder`, and `LikeList` with an on-demand data refreshing strategies. Added a global trigger for `LikeList` reloading.
-   6. Added swipe gestures for `LikeList`.
+  1.  Changed the behaviors of `Navigation Bar` to always show on screen.
+  2.  Linked `CatInformation` with firebase database to show real data.
+  3.  Linked `SearchBar` to firebase database with searching.
+  4.  Selected and Added a new `DataPicker` to `PostCat` screen.
+  5.  Replaced onSnapShot in `DiscoverMain`, `FindBreeder`, and `LikeList` with an on-demand data refreshing strategies. Added a global trigger for `LikeList` reloading.
+  6.  Added swipe gestures for `LikeList`.
 - Fix:
   1.  Some buttons do not avoid multiple clicks.
   2.  Going back in `CatInformation` leads to the wrong page.
@@ -165,11 +180,11 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
   4.  Some dates do not work correctly in `DataPicker` in iOS.
   5.  Left slides in `HomePage` leads to `LoginPage`.
 - Style:
-   1. Grouped inline styles to `StyleSheet`.
-   2. Fixed unexpected padding in `LikeList`.
+  1.  Grouped inline styles to `StyleSheet`.
+  2.  Fixed unexpected padding in `LikeList`.
 - Test:
-   1. Tested all pages.
-   2. Reviewed and tested 10 pull requests from group members.
+  1.  Tested all pages.
+  2.  Reviewed and tested 10 pull requests from group members.
 
 ### Features and bugs remaining to resolve in the next iteration
 
@@ -263,7 +278,6 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 1. Require to unify all fonts and font sizes.
 2. Require to unify style sheets.
 3. Require to unify colors.
-
 
 ## Project Descriptions
 
