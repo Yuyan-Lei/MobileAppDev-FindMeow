@@ -15,7 +15,7 @@ import { auth } from "../../firebaseUtils/firebase-setup";
 import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { getUserLocation } from "../../firebaseUtils/user";
 import { WeatherCard } from "../cards/WeatherCard";
-import { rootStackNavigate } from "../RootNavigation";
+import { navigationRef, rootStackNavigate } from "../RootNavigation";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
@@ -26,9 +26,19 @@ import ProfileCatteryPage from "./ProfileCatteryPage";
 import UpdatePasswordScreen from "./UpdatePasswordScreen";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
+import { CommonActions } from "@react-navigation/native";
 
 function MainScreen({ route, navigation }) {
   const user = route.params.user;
+
+  function navigateToLoginPageSafely() {
+    navigationRef.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "LoginOrSignUp" }],
+      })
+    );
+  }
 
   // Confirm to log out
   const onLogout = () => {
@@ -39,7 +49,15 @@ function MainScreen({ route, navigation }) {
       {
         text: "Confirm",
         onPress: () =>
-          auth.signOut().then(() => rootStackNavigate("LoginOrSignUp")),
+          auth
+            .signOut()
+            .then(() => navigateToLoginPageSafely())
+            .catch((error) =>
+              Alert.alert(
+                "Error",
+                "Log out failed. Please check your internet connection."
+              )
+            ),
       },
     ]);
   };
