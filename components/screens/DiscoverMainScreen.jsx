@@ -23,7 +23,6 @@ import {
 import { CatCard } from "../cards/CatCard";
 import { stateFullNameToAbbr } from "../listContents/allStates";
 import { FilterButton } from "../pressable/FilterButton";
-import { FilterButtons } from "../pressable/FilterButtons";
 import { MapButton } from "../pressable/MapButton";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
