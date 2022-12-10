@@ -1,12 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Pressable,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import { db } from "../../firebaseUtils/firebase-setup";

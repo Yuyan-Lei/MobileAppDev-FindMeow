@@ -1,4 +1,3 @@
-import RNDateTimePicker from "@react-native-community/datetimepicker";
 import CalendarPicker from "react-native-calendar-picker";
 import { Button } from "@rneui/themed";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -23,7 +22,6 @@ import {
 import CatBreedSelector from "../pressable/CatBreedSelector";
 import CatGenderSelector from "../pressable/CatGenderSelector";
 import CatImagePicker from "../pressable/CatImagePicker";
-// import { Button } from "react-native";
 import moment from "moment";
 import { deleteCatInCattery } from "../../firebaseUtils/user";
 import { Colors } from "../styles/Colors";

@@ -195,7 +195,7 @@ function MainScreen({ route, navigation }) {
   );
 }
 
-export default function UserProfile({ route, navigation }) {
+export default function UserProfile({ route }) {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

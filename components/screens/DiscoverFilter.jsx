@@ -345,7 +345,6 @@ const styles = StyleSheet.create({
   filterContainer: {
     marginHorizontal: 15,
   },
-
   button: {
     margin: 10,
     marginTop: 100,

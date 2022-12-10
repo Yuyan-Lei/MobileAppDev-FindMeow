@@ -499,6 +499,7 @@ function MainScreen({ route, navigation }) {
                 />
               )}
               numColumns={2}
+              refreshControl={<RefreshControl />}
               ListFooterComponent={<View style={{ height: 80 }} />}
               showsVerticalScrollIndicator={false}
             />
@@ -516,6 +517,7 @@ function MainScreen({ route, navigation }) {
                 />
               )}
               numColumns={2}
+              refreshControl={<RefreshControl />}
               ListFooterComponent={<View style={{ height: 80 }} />}
               showsVerticalScrollIndicator={false}
             />
@@ -533,6 +535,7 @@ function MainScreen({ route, navigation }) {
                 />
               )}
               numColumns={2}
+              refreshControl={<RefreshControl />}
               ListFooterComponent={<View style={{ height: 80 }} />}
               showsVerticalScrollIndicator={false}
             />

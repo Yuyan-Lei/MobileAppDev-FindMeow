@@ -1,18 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  collection,
-  doc,
-  documentId,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
-  FlatList,
-  Image,
   ScrollView,
   Linking,
   Platform,
@@ -268,9 +259,6 @@ function MainScreen({ route, navigation }) {
 
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Phone : </Text>
-              {/* <Pressable
-                onPress={() => Linking.openURL(`tel:${cattery.phoneNumber}`)}
-              > */}
               <Pressable onPress={() => callNumber(cattery.phoneNumber)}>
                 <Text style={{ fontFamily: FontFamily.regular }}>
                   {cattery.phoneNumber}
@@ -362,7 +350,6 @@ const styles = StyleSheet.create({
     padding: 5,
     height: 35,
     width: 35,
-    // backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
     marginLeft: 10,
   },
