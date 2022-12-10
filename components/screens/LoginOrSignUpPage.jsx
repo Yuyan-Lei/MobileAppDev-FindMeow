@@ -327,6 +327,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                   backgroundColor: pressed
                     ? Colors.orangeOnPressed
                     : Colors.orange,
+                  overflow: "hidden",
                 },
                 styles.loginAndSignUpButton,
               ]}
@@ -489,6 +490,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                     backgroundColor: pressed
                       ? Colors.orangeOnPressed
                       : Colors.orange,
+                    overflow: "hidden",
                   },
                   styles.loginAndSignUpButton,
                 ]}

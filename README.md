@@ -12,13 +12,18 @@
    REACT_APP_FIREBASE_MEASUREMENT_ID=
 
    REACT_APP_GOOGLE_MAP_APP_KEY=
+   
+   DEVELOPER_EMAIL= 
+
+   REACT_APP_API_URL = 
+   REACT_APP_API_KEY = 
+   REACT_APP_ICON_URL = 
    ```
 
 2. **Installation**: Open the terminal in your IDE, and then enter `npm install` to the terminal.
 3. **Load the App**: After installation, type `npx expo r` and press enter in the terminal. Now the App is ready to use!
 4. **Reload the App**: If there is any loading issue, type `r` and press enter in the terminal to reload the App.
-5. Due to some latent bugs, the App can somentimes be choking, especially for the filter component. This issue will be solved in the next iteration.
-6. **Testing accounts**: For better experience, you can use our pre-prepared testing accounts, as follows.
+5. **Testing accounts**: For better experience, you can use our pre-prepared testing accounts, as follows.
 
    ```
    Buyer account:
@@ -56,7 +61,26 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 
 
 **Yuyan Lei**:
-
+- Feat:
+1. Implemented the notification feature, and built related screens. Enabled users to switch the range of distance that they would like to be notified within.
+2. Implemented the nearby feature.
+3. Implemented the page-swiping gesture and effects in screens.
+4. Implemented the weather feature with a web api.
+5. Implemented the loading spinners on the `DiscoverMainScreen`, `FindBreederMainScreen` and `StarListScreen`.
+6. Implemented a special display on the `StarList` page, while the collection list is empty.
+7. Implemented the send-feedback feature on the `UserProfile` page.
+8. Developed the map feature. Rewrote the cat-card list, implemented the card-swiping gesture and effects, and linked the map markers with the cat card.
+- Components:
+1. Built a new button group with animations on both IOS and Android, and linked the button clicks with the page-swiping effects.
+2. Implemented a new date-picker component.
+3. Built the multi-slider for the `DiscoverCat filter`.
+- Refactor:
+1. Refactor the firebase storing structure.
+2. Rewrote the address retriever function.
+3. Rewrote the shadow display for `BreederCard` on IOS.
+4. Rewrote the distance calculation and display effect on the `CatCard`.
+- Restyled screens and components, and added button effects to some buttons.
+- Fixed errors and tested pull requests.
 
 **Zhongyi Lu**:
 
