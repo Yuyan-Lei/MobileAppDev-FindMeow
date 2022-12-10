@@ -30,7 +30,7 @@ export function MessageButton({ onPress, cattery }) {
   return (
     <View style={{ width: 60, height: 40, top: 4 }}>
       <Pressable
-        onPress={onPress}
+        onPress={() => messageNumber(cattery.phoneNumber)}
         style={({ pressed }) => [
           {
             backgroundColor: pressed ? Colors.orangeText : Colors.messageButton,
@@ -42,7 +42,6 @@ export function MessageButton({ onPress, cattery }) {
           name="textsms"
           size={24}
           color={Colors.white}
-          onPress={() => messageNumber(cattery.phoneNumber)}
           style={{}}
         />
       </Pressable>

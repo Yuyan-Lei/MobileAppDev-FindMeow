@@ -11,11 +11,6 @@ import {
 import { Colors } from "../styles/Colors";
 
 export function PhoneButton({ onPress, cattery }) {
-  const args = {
-    number: "123-456-7890",
-    prompt: false,
-    skipCanOpen: true,
-  };
 
   const callNumber = (phone) => {
     let phoneNumber = phone;
@@ -38,7 +33,7 @@ export function PhoneButton({ onPress, cattery }) {
   return (
     <View style={{ width: 60, height: 40, top: 4, marginBottom: 10 }}>
       <Pressable
-        onPress={onPress}
+        onPress={() => callNumber(cattery.phoneNumber)}
         style={({ pressed }) => [
           {
             backgroundColor: pressed ? Colors.orangeText : Colors.phoneButton,
@@ -50,7 +45,6 @@ export function PhoneButton({ onPress, cattery }) {
           name="phone-in-talk"
           size={24}
           color={Colors.white}
-          onPress={() => callNumber(cattery.phoneNumber)}
         />
       </Pressable>
     </View>
