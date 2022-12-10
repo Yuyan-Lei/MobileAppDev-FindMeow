@@ -156,20 +156,12 @@ export default function MapPage({
             ref={flatListRef}
             showsPagination={false}
             onChangeIndex={({ index }) => {
-              if (flatListMovingLock.current) return;
-              flatListMovingLock.current = true;
-              console.debug("onChangeIndex", index);
               selectLocation({
                 latitude: catsData[index].geoLocation.lat,
                 longitude: catsData[index].geoLocation.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               });
-
-              new Promise((resolve) => setTimeout(resolve, 500))
-                .then(() => {
-                  flatListMovingLock.current = false;
-                });
             }}
             data={catsData}
             renderItem={({ item }) => (
@@ -182,7 +174,7 @@ export default function MapPage({
                 })}
               />
             )}
-          ></SwiperFlatList>
+          />
         </View>
       ) : (
         <View />
