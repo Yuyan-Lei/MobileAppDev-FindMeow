@@ -4,10 +4,8 @@ import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
-  Pressable,
   RefreshControl,
   StyleSheet,
-  Text,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -33,7 +31,6 @@ import DiscoverFilter from "./DiscoverFilter";
 import MapPage from "./MapPage";
 import PostNewCatScreen from "./PostNewCatScreen";
 import { FontSizes } from "../styles/FontSizes";
-import { FontFamily } from "../styles/FontFamily";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import { ButtonGroup } from "../pressable/ButtonGroup";
 
@@ -301,8 +298,7 @@ function MainScreen({ route, navigation }) {
         cat.distance <= maxNotificationRange
       );
     });
-    // console.log(addedCatWithinRange);
-    // setAllCats(allCats);
+
     // If any new cats within maxNotificationRange are added, send out a notification.
     if (addedCatWithinRange.length > 0 && enableNotification) {
       await Notifications.scheduleNotificationAsync({
@@ -394,19 +390,6 @@ function MainScreen({ route, navigation }) {
   }
 
   const { height, width } = useWindowDimensions();
-
-  // useEffect(() => {
-  //   const selectedIndex = savedCallback.selectedIndex;
-  //   const sortedData = sortCatsData(catsData, selectedIndex);
-  //   setCatsData(sortedData);
-  // }, [selectedIndex]);
-  /* data collector used for top filter tags - end */
-
-  /* events for top filter tags - start */
-  const onFilterChange = (value) => {
-    setSelectedIndex(value);
-  };
-  /* events for top filter tags - end */
 
   return (
     <View style={styles.container}>
@@ -517,14 +500,6 @@ function MainScreen({ route, navigation }) {
                 />
               )}
               numColumns={2}
-              refreshControl={
-                <RefreshControl
-                // refreshing={refreshCatDataLock}
-                // onRefresh={() => {
-                //   refreshCatData({ selectedIndex, forceLoad: true });
-                // }}
-                />
-              }
               ListFooterComponent={<View style={{ height: 80 }} />}
               showsVerticalScrollIndicator={false}
             />
@@ -542,14 +517,6 @@ function MainScreen({ route, navigation }) {
                 />
               )}
               numColumns={2}
-              refreshControl={
-                <RefreshControl
-                // refreshing={refreshCatDataLock}
-                // onRefresh={() => {
-                //   refreshCatData({ selectedIndex, forceLoad: true });
-                // }}
-                />
-              }
               ListFooterComponent={<View style={{ height: 80 }} />}
               showsVerticalScrollIndicator={false}
             />
@@ -567,14 +534,6 @@ function MainScreen({ route, navigation }) {
                 />
               )}
               numColumns={2}
-              refreshControl={
-                <RefreshControl
-                // refreshing={refreshCatDataLock}
-                // onRefresh={() => {
-                //   refreshCatData({ selectedIndex, forceLoad: true });
-                // }}
-                />
-              }
               ListFooterComponent={<View style={{ height: 80 }} />}
               showsVerticalScrollIndicator={false}
             />
