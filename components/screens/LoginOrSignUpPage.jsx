@@ -202,7 +202,7 @@ export default function LoginOrSignUpPage({ navigation }) {
 
   const onSignIn = () => {
     signInWithEmailAndPassword(auth, userName, password)
-      .then((userCredential) => {
+      .then(() => {
         // Signed in
         getUserData().then(() => navigateToHomeSafely());
       })
@@ -470,6 +470,7 @@ export default function LoginOrSignUpPage({ navigation }) {
                         backgroundColor: Colors.signUpBackground,
                         fontSize: FontSizes.subSubTitle,
                         paddingHorizontal: 0,
+                        fontFamily: FontFamily.regular,
                       },
                       container: {
                         color: Colors.black,
