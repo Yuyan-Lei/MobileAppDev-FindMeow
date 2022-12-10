@@ -39,7 +39,7 @@ export function WeatherCard({ weatherData }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 60,
+    paddingTop: 10,
     paddingBottom: 10,
   },
   weatherText: {

@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView
 } from "react-native";
 import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
@@ -95,7 +96,9 @@ function MainScreen({ route, navigation }) {
     );
 
   return (
-    <View style={styles.container}>
+    <ScrollView 
+      style={styles.container}
+      showsVerticalScrollIndicator={false}>
       <View style={{ margin: 12 }}>
         <View>
           <TitleText>Profile</TitleText>
@@ -203,13 +206,13 @@ function MainScreen({ route, navigation }) {
           {typeof data.main != "undefined" ? (
             <WeatherCard weatherData={data} />
           ) : (
-            <Text> Loading...</Text>
+            <Text> </Text>
           )}
         </View>
       </View>
       {/* weather  */}
-      <View></View>
-    </View>
+      <View style={{ height: 130 }}/>
+    </ScrollView>
   );
 }
 
