@@ -34,8 +34,8 @@ import MapPage from "./MapPage";
 import PostNewCatScreen from "./PostNewCatScreen";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
-import { SwiperFlatList } from 'react-native-swiper-flatlist';
-import { ButtonGroup } from '../pressable/ButtonGroup';
+import { SwiperFlatList } from "react-native-swiper-flatlist";
+import { ButtonGroup } from "../pressable/ButtonGroup";
 
 function MainScreen({ route, navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -70,7 +70,7 @@ function MainScreen({ route, navigation }) {
 
   const [enableNotification, setEnableNotification] = useState(false);
   const [maxNotificationRange, setMaxNotificationRange] = useState(0);
-  const availableSelections = ['Newer Post', 'Nearby', 'Lower Price'];
+  const availableSelections = ["Newer Post", "Nearby", "Lower Price"];
 
   const refRBSheet = useRef();
   const flatListRef = useRef();
@@ -373,21 +373,23 @@ function MainScreen({ route, navigation }) {
   function sortCatsData(dataBeforeSorting, index) {
     let sortedData = [];
     // 1. newer post
-      sortedData[0] = dataBeforeSorting
-        .slice(0)
-        .sort((d1, d2) => d2.uploadTime - d1.uploadTime);
+    sortedData[0] = dataBeforeSorting
+      .slice(0)
+      .sort((d1, d2) => d2.uploadTime - d1.uploadTime);
     // 2. nearby Post
-      try {
-        sortedData[1] = dataBeforeSorting
-          .slice(0)
-          .sort((d1, d2) => d1.distance - d2.distance);
-      } catch (e) {
-        console.log("error sorting by distance", e);
-      }
+    try {
+      sortedData[1] = dataBeforeSorting
+        .slice(0)
+        .sort((d1, d2) => d1.distance - d2.distance);
+    } catch (e) {
+      console.log("error sorting by distance", e);
+    }
     // 3. Lower Price
-      sortedData[2] = dataBeforeSorting.slice(0).sort((d1, d2) => d1.price - d2.price);
-    
-      return sortedData;
+    sortedData[2] = dataBeforeSorting
+      .slice(0)
+      .sort((d1, d2) => d1.price - d2.price);
+
+    return sortedData;
   }
 
   const { height, width } = useWindowDimensions();
@@ -436,7 +438,7 @@ function MainScreen({ route, navigation }) {
         closeOnDragDown={true}
         closeOnPressMask={true}
         customStyles={styles.RBSheetCustomStyles}
-        height={670}
+        height={height * 0.8}
       >
         <DiscoverFilter
           states={{
@@ -485,85 +487,93 @@ function MainScreen({ route, navigation }) {
         setSelectedValue={(value) => {
           const index = availableSelections.indexOf(value);
           flatListRef.current.scrollToIndex({ index, animated: true });
-          }}
-        selections={availableSelections} 
+        }}
+        selections={availableSelections}
       />
 
       <View style={{ flex: 1 }}>
         <SwiperFlatList
-          ref={flatListRef} 
-          onViewableItemsChanged={(params) => setSelectedIndex(params.changed?.[0]?.index)}>
-          <View style={{width, justifyContent: 'center', paddingHorizontal: 16}}>
+          ref={flatListRef}
+          onViewableItemsChanged={(params) =>
+            setSelectedIndex(params.changed?.[0]?.index)
+          }
+        >
+          <View
+            style={{ width, justifyContent: "center", paddingHorizontal: 16 }}
+          >
             <FlatList
-            data={catsData[0]}
-            renderItem={({ item, index }) => (
-              <CatCard
-                cat={item}
-                navigation={navigation}
-                userLikedCats={likeCats}
-              />
-            )}
-            numColumns={2}
-            refreshControl={
-              <RefreshControl
-              // refreshing={refreshCatDataLock}
-              // onRefresh={() => {
-              //   refreshCatData({ selectedIndex, forceLoad: true });
-              // }}
-              />
-            }
-            ListFooterComponent={<View style={{ height: 80 }} />}
-            showsVerticalScrollIndicator={false}
-          />
+              data={catsData[0]}
+              renderItem={({ item, index }) => (
+                <CatCard
+                  cat={item}
+                  navigation={navigation}
+                  userLikedCats={likeCats}
+                />
+              )}
+              numColumns={2}
+              refreshControl={
+                <RefreshControl
+                // refreshing={refreshCatDataLock}
+                // onRefresh={() => {
+                //   refreshCatData({ selectedIndex, forceLoad: true });
+                // }}
+                />
+              }
+              ListFooterComponent={<View style={{ height: 80 }} />}
+              showsVerticalScrollIndicator={false}
+            />
           </View>
-          <View style={{width, justifyContent: 'center', paddingHorizontal: 16}}>
+          <View
+            style={{ width, justifyContent: "center", paddingHorizontal: 16 }}
+          >
             <FlatList
-            data={catsData[1]}
-            renderItem={({ item, index }) => (
-              <CatCard
-                cat={item}
-                navigation={navigation}
-                userLikedCats={likeCats}
-              />
-            )}
-            numColumns={2}
-            refreshControl={
-              <RefreshControl
-              // refreshing={refreshCatDataLock}
-              // onRefresh={() => {
-              //   refreshCatData({ selectedIndex, forceLoad: true });
-              // }}
-              />
-            }
-            ListFooterComponent={<View style={{ height: 80 }} />}
-            showsVerticalScrollIndicator={false}
-          />
+              data={catsData[1]}
+              renderItem={({ item, index }) => (
+                <CatCard
+                  cat={item}
+                  navigation={navigation}
+                  userLikedCats={likeCats}
+                />
+              )}
+              numColumns={2}
+              refreshControl={
+                <RefreshControl
+                // refreshing={refreshCatDataLock}
+                // onRefresh={() => {
+                //   refreshCatData({ selectedIndex, forceLoad: true });
+                // }}
+                />
+              }
+              ListFooterComponent={<View style={{ height: 80 }} />}
+              showsVerticalScrollIndicator={false}
+            />
           </View>
-          <View style={{width, justifyContent: 'center', paddingHorizontal: 16}}>
+          <View
+            style={{ width, justifyContent: "center", paddingHorizontal: 16 }}
+          >
             <FlatList
-            data={catsData[2]}
-            renderItem={({ item, index }) => (
-              <CatCard
-                cat={item}
-                navigation={navigation}
-                userLikedCats={likeCats}
-              />
-            )}
-            numColumns={2}
-            refreshControl={
-              <RefreshControl
-              // refreshing={refreshCatDataLock}
-              // onRefresh={() => {
-              //   refreshCatData({ selectedIndex, forceLoad: true });
-              // }}
-              />
-            }
-            ListFooterComponent={<View style={{ height: 80 }} />}
-            showsVerticalScrollIndicator={false}
-          />
+              data={catsData[2]}
+              renderItem={({ item, index }) => (
+                <CatCard
+                  cat={item}
+                  navigation={navigation}
+                  userLikedCats={likeCats}
+                />
+              )}
+              numColumns={2}
+              refreshControl={
+                <RefreshControl
+                // refreshing={refreshCatDataLock}
+                // onRefresh={() => {
+                //   refreshCatData({ selectedIndex, forceLoad: true });
+                // }}
+                />
+              }
+              ListFooterComponent={<View style={{ height: 80 }} />}
+              showsVerticalScrollIndicator={false}
+            />
           </View>
         </SwiperFlatList>
-        
       </View>
 
       {/* floating map button */}

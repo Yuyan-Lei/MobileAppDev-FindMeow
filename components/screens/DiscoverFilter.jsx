@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { ALL_BREEDS } from "../listContents/allBreeds";
@@ -138,6 +139,7 @@ const DiscoverFilter = ({
   const [multiSliderValue, setMultiSliderValue] = React.useState([1, 10000]);
   const multiSliderValuesChange = (values) => setMultiSliderValue(values);
   const onPriceChange = (values) => setPriceLocal(values);
+  const { height, width } = useWindowDimensions();
 
   return (
     <ScrollView
@@ -161,7 +163,7 @@ const DiscoverFilter = ({
         min={0}
         max={10000}
         step={100}
-        sliderLength={330}
+        sliderLength={width * 0.848}
         containerStyle={{
           marginLeft: 15,
           marginRight: 15,
