@@ -115,6 +115,7 @@ export async function createCattery(
     placeId,
     cats: [],
     likeCats: [],
+    likeCatteries: [],
     shortAddress,
     geoLocation: catteryPlaceDetails.data.result.geometry.location
   };
