@@ -44,7 +44,6 @@
 
 ![](screenshots/Cattery's.jpg)
 
-
 ## Iteration 3
 
 ### Contributions
@@ -54,13 +53,36 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 
 **Cuichan Wu**:
 
+- Feat:
+
+1. Implemented map button on `DiscoverMainScreen` and linked to `MapPage`.
+2. Used lots of time to do research on map page and added initial map location.
+3. Implemented go back button, header title and `CatCard` part to `MapPage`.
+4. Unified all font family, font size, and colors in all pages.
+5. Added all map markers and the connection between `CatCard` and map marker.
+6. Exacted `SubmitButton` from multiple pages.
+7. Implemented button effect for all buttons.
+8. Exacted `ApplyButton` and `ResetButton` from `DiscoverFilter` and `FindBreederFilter`.
+
+- Style:
+
+1. Adjusted style in contact card.
+2. Adjusted style in `CatInformation`.
+3. Redesigned the filter icon size.
+4. Restyled the size of datePicker on `PostNewCat`.
+5. Adjusted slider style on `DiscoverFilter`.
+6. Redesigned the height of `DiscoverMainScreen`.
+
+- Test:
+
+1. All functions and pull requests in multiple iOS platforms.
 
 **Yuyan Lei**:
-
 
 **Zhongyi Lu**:
 
 - Feat:
+
 1. Refactored and optimized data loading on several pages including `DiscoverMain`, `FindBreeder`, `MapPage`, and `StarList`.
 2. Refactored and optimized data loading in several components including `CatCard` and `BreederCard`.
 3. Optimized `likeCat` operations.
@@ -72,7 +94,8 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 9. Swiping list controls map location in `MapPage`.
 
 - Fix:
-1. Horizontal swipe in `StarList` conflicts with 1CatCard1 and 1BreederCard1.
+
+1. Horizontal swipe in `StarList` conflicts with `CatCard` and `BreederCard`.
 2. Some navigations do not work.
 3. Getting the user location does not work when loading at the first time.
 4. Add more error handling for async functions.
@@ -80,11 +103,12 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 6. A few other bugs in `StarList` and `MapPage`.
 
 - Style:
-1. Hide some scroll indicators.
-  
-- Test:
-1. All functions in Android and iOS.
 
+1. Hide some scroll indicators.
+
+- Test:
+
+1. All functions in Android and iOS.
 
 ## Iteration 2
 
@@ -128,12 +152,12 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 **Zhongyi Lu**:
 
 - Feat:
-   1. Changed the behaviors of `Navigation Bar` to always show on screen.
-   2. Linked `CatInformation` with firebase database to show real data.
-   3. Linked `SearchBar` to firebase database with searching.
-   4. Selected and Added a new `DataPicker` to `PostCat` screen.
-   5. Replaced onSnapShot in `DiscoverMain`, `FindBreeder`, and `LikeList` with an on-demand data refreshing strategies. Added a global trigger for `LikeList` reloading.
-   6. Added swipe gestures for `LikeList`.
+  1.  Changed the behaviors of `Navigation Bar` to always show on screen.
+  2.  Linked `CatInformation` with firebase database to show real data.
+  3.  Linked `SearchBar` to firebase database with searching.
+  4.  Selected and Added a new `DataPicker` to `PostCat` screen.
+  5.  Replaced onSnapShot in `DiscoverMain`, `FindBreeder`, and `LikeList` with an on-demand data refreshing strategies. Added a global trigger for `LikeList` reloading.
+  6.  Added swipe gestures for `LikeList`.
 - Fix:
   1.  Some buttons do not avoid multiple clicks.
   2.  Going back in `CatInformation` leads to the wrong page.
@@ -141,11 +165,11 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
   4.  Some dates do not work correctly in `DataPicker` in iOS.
   5.  Left slides in `HomePage` leads to `LoginPage`.
 - Style:
-   1. Grouped inline styles to `StyleSheet`.
-   2. Fixed unexpected padding in `LikeList`.
+  1.  Grouped inline styles to `StyleSheet`.
+  2.  Fixed unexpected padding in `LikeList`.
 - Test:
-   1. Tested all pages.
-   2. Reviewed and tested 10 pull requests from group members.
+  1.  Tested all pages.
+  2.  Reviewed and tested 10 pull requests from group members.
 
 ### Features and bugs remaining to resolve in the next iteration
 
@@ -239,7 +263,6 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 1. Require to unify all fonts and font sizes.
 2. Require to unify style sheets.
 3. Require to unify colors.
-
 
 ## Project Descriptions
 
