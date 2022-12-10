@@ -117,7 +117,7 @@ function CatsScreen({ navigation, cats, refreshing, onRefresh, allCatteries }) {
           }}
           numColumns={2}
           extraData={location}
-          ListFooterComponent={<View style={{ height: 60 }} />}
+          ListFooterComponent={<View style={{ height: 100 }} />}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -158,8 +158,9 @@ function CatteriesScreen({
               />
             );
           }}
+          showsVerticalScrollIndicator={false}
           numColumns={1}
-          ListFooterComponent={<View style={{ height: 60 }} />}
+          ListFooterComponent={<View style={{ height: 100 }} />}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -320,7 +321,7 @@ function MainScreen({ route, navigation }) {
           }
         >
           <View
-            style={{ width, justifyContent: "center", paddingHorizontal: 16 }}
+            style={{ width, paddingHorizontal: 16 }}
           >
             <CatsScreen
               navigation={navigation}

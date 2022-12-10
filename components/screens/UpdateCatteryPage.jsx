@@ -118,7 +118,7 @@ export default function UpdateCatteryPage({ route, navigation }) {
     >
       <FillAndroidTopBar />
       <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
-        <View style={{ margin: 12, paddingBottom: 60 }}>
+        <View style={{ margin: 12, paddingBottom: 150 }}>
           {/* Screen Title */}
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Update Cattery</Text>
