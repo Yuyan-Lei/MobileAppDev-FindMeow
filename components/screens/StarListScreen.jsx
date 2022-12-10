@@ -17,7 +17,6 @@ import { calculateDistance, getUserLocation } from "../../firebaseUtils/user";
 import { useSwipe } from "../../utils/useSwipe";
 import { BreederCard } from "../cards/BreederCard";
 import { CatCard } from "../cards/CatCard";
-import { FilterButtons } from "../pressable/FilterButtons";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
@@ -26,7 +25,7 @@ import PostNewCatScreen from "./PostNewCatScreen";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
 import { ButtonGroup } from "../pressable/ButtonGroup";
-import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 function EmptyStarPage({ origin, setSelectedIndex }) {
   function onSwipeLeft() {
@@ -86,13 +85,7 @@ function EmptyStarPage({ origin, setSelectedIndex }) {
   );
 }
 
-function CatsScreen({
-  navigation,
-  cats,
-  refreshing,
-  onRefresh,
-  allCatteries,
-}) {
+function CatsScreen({ navigation, cats, refreshing, onRefresh, allCatteries }) {
   const [location, setLocation] = useState(null);
 
   /* Set user location. */
@@ -145,7 +138,6 @@ function CatteriesScreen({
   setSelectedIndex,
   userLikedCatteryEmails,
 }) {
-
   return (
     <View
       style={{
@@ -315,30 +307,32 @@ function MainScreen({ route, navigation }) {
         setSelectedValue={(value) => {
           const index = availableSelections.indexOf(value);
           flatListRef.current.scrollToIndex({ index, animated: true });
-          }}
+        }}
         selections={availableSelections}
-        marginHorizontal={28} />
+        marginHorizontal={28}
+      />
 
       <View style={{ flex: 1 }}>
         <SwiperFlatList
-          ref={flatListRef} 
-          onViewableItemsChanged={(params) => setSelectedIndex(params.changed?.[0]?.index)}>
-          <View style={{width, justifyContent: 'center', paddingHorizontal: 16}}>
+          ref={flatListRef}
+          onViewableItemsChanged={(params) =>
+            setSelectedIndex(params.changed?.[0]?.index)
+          }
+        >
+          <View
+            style={{ width, justifyContent: "center", paddingHorizontal: 16 }}
+          >
             <CatsScreen
               navigation={navigation}
               cats={likedCats}
-              // refreshing={refreshingCat}
-              // onRefresh={() => refreshLikedCatData({ forceLoad: true })}
               allCatteries={allCatteries}
             />
           </View>
-          <View style={{width, paddingHorizontal: 16}}>
+          <View style={{ width, paddingHorizontal: 16 }}>
             <CatteriesScreen
               navigation={navigation}
               catteries={likedCatteries}
               userLikedCatteryEmails={userLikedCatteryEmails}
-              // refreshing={refreshingCattery}
-              // onRefresh={() => refreshLikedCatteryData({ forceLoad: true })}
               setSelectedIndex={setSelectedIndex}
             />
           </View>

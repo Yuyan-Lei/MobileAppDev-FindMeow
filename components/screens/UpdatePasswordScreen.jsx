@@ -1,13 +1,6 @@
 import { updatePassword } from "firebase/auth";
 import { useState } from "react";
-import {
-  Alert,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import { Divider } from "react-native-elements";
 import { auth } from "../../firebaseUtils/firebase-setup";
 import { Colors } from "../styles/Colors";
@@ -86,10 +79,6 @@ export default function UpdatePasswordScreen({ navigation }) {
         Please use 6 or more characters with a mix of numbers and letters.
       </Text>
 
-      {/* Submit Button */}
-      {/* <Pressable onPress={onUpdatePassword} style={styles.SubmitButton}>
-        <Text style={styles.SubmitButtonText}>Submit</Text>
-      </Pressable> */}
       <SubmitButton onPress={onUpdatePassword} />
     </View>
   );

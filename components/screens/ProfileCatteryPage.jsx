@@ -24,8 +24,8 @@ import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
 import UpdateCatteryPage from "./UpdateCatteryPage";
 
-function MainScreen({ route, navigation }) {
-  const { height, width } = useWindowDimensions();
+function MainScreen({ navigation }) {
+  const { width } = useWindowDimensions();
   const [cats, setCats] = useState([]);
   const [cattery, setCattery] = useState(null);
   const [catteryShortAddress, setCatteryShortAddress] = useState("");
@@ -263,7 +263,7 @@ function MainScreen({ route, navigation }) {
   );
 }
 
-export default function ProfileCatteryPage({ route, navigation }) {
+export default function ProfileCatteryPage() {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
