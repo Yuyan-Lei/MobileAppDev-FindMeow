@@ -58,6 +58,31 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 
 **Cuichan Wu**:
 
+- Feat:
+
+1. Implemented map button on `DiscoverMainScreen` and linked to `MapPage`.
+2. Used lots of time to do research on map page and added initial map location.
+3. Implemented go back button, header title and `CatCard` part to `MapPage`.
+4. Unified all font family, font size, and colors in all pages.
+5. Added all map markers and the connection between `CatCard` and map marker.
+6. Exacted `SubmitButton` from multiple pages.
+7. Implemented button effect for all buttons.
+8. Exacted `ApplyButton` and `ResetButton` from `DiscoverFilter` and `FindBreederFilter`.
+
+- Style:
+
+1. Adjusted style in contact card.
+2. Adjusted style in `CatInformation`.
+3. Redesigned the filter icon size.
+4. Restyled the size of datePicker on `PostNewCat`.
+5. Adjusted slider style on `DiscoverFilter`.
+6. Redesigned the height of `DiscoverMainScreen`.
+
+- Test:
+
+1. All functions in multiple iOS platforms.
+2. Pull requests in GitHub.
+
 **Yuyan Lei**:
 
 - Feat:
