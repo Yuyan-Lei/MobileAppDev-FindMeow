@@ -211,7 +211,7 @@ function MainScreen({ route, navigation }) {
         </View>
       </View>
       {/* weather  */}
-      <View></View>
+      <View style={{ height: 130 }}/>
     </ScrollView>
   );
 }
