@@ -285,7 +285,6 @@ function MainScreen({ route, navigation }) {
           name: cattery.name,
           photo: cattery.photo,
           distance,
-          uploadTime: cattery.uploadTime,
           ...cattery,
         };
       })
