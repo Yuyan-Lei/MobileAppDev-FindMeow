@@ -3,7 +3,6 @@ import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "../styles/Colors";
 import { FontSizes } from "../styles/FontSizes";
-import { FontFamily } from "../styles/FontFamily";
 
 export function HeartButton({
   onPress,
@@ -25,7 +24,6 @@ export function HeartButton({
       style={({ pressed }) => [
         {
           backgroundColor: pressed ? Colors.orange : "transparent",
-          // padding: 5,
           borderRadius: 20,
           marginTop: 10,
           marginLeft: 6,
@@ -37,8 +35,6 @@ export function HeartButton({
           padding: 5,
           backgroundColor: Colors.heartBackground,
           borderRadius: 20,
-          // marginTop: 10,
-          // marginLeft: 6,
           alignItems: "center",
         }}
       >
