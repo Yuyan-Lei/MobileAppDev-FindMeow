@@ -183,7 +183,7 @@ function MainScreen({ route, navigation }) {
               userLikedCatteryEmails={userLikedCatteryEmails}
             />
           )}
-          ListFooterComponent={<View style={{ height: 120 }} />}
+          ListFooterComponent={<View style={{ height: 200 }} />}
           refreshControl={<RefreshControl />}
           showsVerticalScrollIndicator={false}
         />

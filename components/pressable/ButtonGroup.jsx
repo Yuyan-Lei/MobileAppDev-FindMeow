@@ -16,7 +16,7 @@ export function ButtonGroup({ selections, selectedValue, setSelectedValue, margi
                 highlightBackgroundColor={Colors.orange}
                 highlightTextColor={Colors.white}
 
-                inactiveBackgroundColor={Colors.unselectedButton}
+                inactiveBackgroundColor={Colors.white}
                 inactiveTextColor={Colors.gray}
             />
         </View>

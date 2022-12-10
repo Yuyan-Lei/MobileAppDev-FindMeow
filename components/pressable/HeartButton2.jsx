@@ -23,8 +23,6 @@ export function HeartButton2({
       onPress={onPress}
       style={({ pressed }) => [
         {
-          backgroundColor: pressed ? Colors.orange : Colors.white,
-
           borderRadius: 20,
         },
         styles.buttonView,

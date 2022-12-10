@@ -500,7 +500,7 @@ export default function PostNewCatScreen({
         )}
 
         {/* Empty Footer */}
-        <View style={{ height: 20 }} />
+        <View style={{ height: 100 }} />
       </ScrollView>
     </KeyboardAvoidingView>
   );

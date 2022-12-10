@@ -531,28 +531,6 @@ export default function LoginOrSignUpPage({ navigation }) {
         </ScrollView>
         <View style={{ height: 30 }}></View>
       </KeyboardAvoidingView>
-
-      {/* remove when publishing */}
-      <View style={{ position: "absolute", flexDirection: "row" }}>
-        <Pressable
-          onPress={() => {
-            setUserName(BUYER_USERNAME);
-            setPassword(BUYER_PASSWORD);
-          }}
-          style={styles.submitButton}
-        >
-          <Text style={styles.submitButtonText}>Login as buyer</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            setUserName(CATTERY_USERNAME);
-            setPassword(CATTERY_PASSWORD);
-          }}
-          style={styles.submitButton}
-        >
-          <Text style={styles.submitButtonText}>Login as cattery</Text>
-        </Pressable>
-      </View>
     </KeyboardAvoidingView>
   );
 }

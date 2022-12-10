@@ -23,7 +23,6 @@ export function HeartButton_InfoPage({
       onPress={onPress}
       style={({ pressed }) => [
         {
-          backgroundColor: pressed ? Colors.orange : Colors.notSelectedColor,
           borderRadius: 13,
           width: 35,
           height: 35,

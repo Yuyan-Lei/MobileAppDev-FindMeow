@@ -15,8 +15,26 @@ import PostNewCatScreen from "./PostNewCatScreen";
 import StarListScreen from "./StarListScreen";
 import UserProfile from "./UserProfile";
 import { Colors } from "../styles/Colors";
+import { Pressable, View, Platform } from "react-native";
 
-export default function HomePage() {
+const CustomTabBarButton = ({children, onPress}) => (
+  <Pressable 
+    style={{ 
+      // top: Platform.OS === "ios" ? 11 : -2,
+      // alignSelf: "center"
+      flex: 1,
+    }}
+    onPress={onPress}>
+    <View
+      style={{
+        width: 60,
+        height: 50,
+        marginVertical: 5
+      }}
+    >{children}</View>
+  </Pressable>
+);
+export default function HomePage({ route, navigation }) {
   const Tab = createBottomTabNavigator();
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -33,43 +51,65 @@ export default function HomePage() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
-          tabBarActiveTintColor: Colors.activeTabNav,
-          tabBarIcon: ({ color, size }) => {
-            if (route.name === "Post") {
-              return (
-                <Ionicons name="add-circle-outline" size={size} color={color} />
-              );
-            } else if (route.name === "Cats") {
-              return <FontAwesome5 name="cat" size={size} color={color} />;
-            } else if (route.name === "Catteries") {
-              return (
-                <MaterialIcons name="storefront" size={size} color={color} />
-              );
-            } else if (route.name === "Liked") {
-              return (
-                <Ionicons name="heart-outline" size={size} color={color} />
-              );
-            } else {
-              return <AntDesign name="user" size={size} color={color} />;
-            }
+          tabBarStyle: {
+            position: "absolute",
+            marginBottom: 20,
+            marginHorizontal: user.isCattery ? "5%" : "12.5%",
+            elevation: 0,
+            borderRadius: 36,
+            height: "8%",
+            width: user.isCattery ? "90%" : "75%",
+            backgroundColor: "white",
+            shadowColor: Colors.black,
+            shadowRadius: 8,
+            shadowOpacity: 0.5,
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            elevation: 17,
+            alignItems: "center",
+            paddingHorizontal: "5%"
           },
+          tabBarButton: (props) => (<CustomTabBarButton {...props} />),
+          tabBarActiveTintColor: Colors.activeTabNav,
         })}
       >
-        <Tab.Screen name="Cats" component={DiscoverMainScreen} />
-        <Tab.Screen name="Catteries" component={FindBreederMainScreen} />
+        <Tab.Screen 
+          name="Cats" 
+          component={DiscoverMainScreen}
+          options={{
+            tabBarIcon: ({color, size}) => <FontAwesome5 name="cat" size={size} color={color} />
+          }} />
+        <Tab.Screen 
+          name="Catteries" 
+          component={FindBreederMainScreen}
+          options={{
+            tabBarIcon: ({color, size}) => <MaterialIcons name="storefront" size={size} color={color} />
+          }} />
         {user && user.isCattery && (
           <Tab.Screen
             name="Post"
             component={PostNewCatScreen}
-            screenOptions={{ tabBarLabel: "Add" }}
+            options={{ 
+              tabBarIcon: ({color, size}) => <Ionicons name="add-circle-outline" size={size} color={color} />
+              }}
             initialParams={{ user }}
           />
         )}
-        <Tab.Screen name="Liked" component={StarListScreen} />
+        <Tab.Screen 
+          name="Liked" 
+          component={StarListScreen}
+          options={{ 
+              tabBarIcon: ({color, size}) => <Ionicons name="heart-outline" size={size} color={color} />
+              }} />
         <Tab.Screen
           name="Profile"
           component={UserProfile}
           initialParams={{ user }}
+          options={{ 
+              tabBarIcon: ({color, size}) => <AntDesign name="user" size={size} color={color} />
+              }}
         />
       </Tab.Navigator>
     )

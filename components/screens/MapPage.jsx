@@ -167,6 +167,7 @@ export default function MapPage({
       ) : (
         <View />
       )}
+      <View style={{height: 40}}></View>
     </View>
   );
 }
