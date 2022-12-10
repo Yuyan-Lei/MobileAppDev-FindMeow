@@ -1,9 +1,7 @@
-import { Button, Icon, Slider } from "@rneui/themed";
+import { Button, Icon } from "@rneui/themed";
 import React, { useState } from "react";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import {
-  Alert,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -181,7 +179,6 @@ const DiscoverFilter = ({
               size={FontSizes.smallIcon}
               color={Colors.orangeText}
               reverse
-              // containerStyle={styles.sliderThumbContainerStyle}
             />
           );
         }}
@@ -349,7 +346,6 @@ const styles = StyleSheet.create({
   filterContainer: {
     marginHorizontal: 15,
   },
-
   button: {
     margin: 10,
     marginTop: 100,
