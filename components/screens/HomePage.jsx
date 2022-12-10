@@ -16,7 +16,7 @@ import StarListScreen from "./StarListScreen";
 import UserProfile from "./UserProfile";
 import { Colors } from "../styles/Colors";
 
-export default function HomePage({ route, navigation }) {
+export default function HomePage() {
   const Tab = createBottomTabNavigator();
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function HomePage({ route, navigation }) {
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarActiveTintColor: Colors.activeTabNav,
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ color, size }) => {
             if (route.name === "Post") {
               return (
                 <Ionicons name="add-circle-outline" size={size} color={color} />

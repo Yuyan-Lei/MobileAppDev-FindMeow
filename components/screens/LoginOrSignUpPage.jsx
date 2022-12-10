@@ -43,7 +43,7 @@ import { Colors } from "../styles/Colors";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
 
-export default function LoginOrSignUpPage({ route, navigation }) {
+export default function LoginOrSignUpPage({ navigation }) {
   const [pageState, setPageState] = useState(0);
   const [isCattery, setIsCattery] = useState(false);
   const [userName, setUserName] = useState("");
@@ -204,8 +204,7 @@ export default function LoginOrSignUpPage({ route, navigation }) {
     signInWithEmailAndPassword(auth, userName, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
-        getUserData().then((user) => navigateToHomeSafely());
+        getUserData().then(() => navigateToHomeSafely());
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -437,7 +436,6 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                       />
                     </View>
                   </View>
-                  {/* <Text style={styles.subTitle}>Address</Text> */}
                   <GooglePlacesAutocomplete
                     ref={ref}
                     query={{
@@ -472,14 +470,12 @@ export default function LoginOrSignUpPage({ route, navigation }) {
                         backgroundColor: Colors.signUpBackground,
                         fontSize: FontSizes.subSubTitle,
                         paddingHorizontal: 0,
-                        // fontFamily: FontFamily.regular,
                       },
                       container: {
                         color: Colors.black,
                       },
                     }}
                     onFail={(error) => console.error(error)}
-                    // textInputProps={{ fontFamily: "Poppins" }}
                   />
                 </View>
               )}
