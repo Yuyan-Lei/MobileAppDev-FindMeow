@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Colors } from "../styles/Colors";
 import { WEATHERS } from "../listContents/weathers";
