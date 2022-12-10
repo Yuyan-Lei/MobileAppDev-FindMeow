@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-import { Callout, Marker } from "react-native-maps";
+import { Marker } from "react-native-maps";
 import {
   getCattery,
   userLikeACat,
@@ -21,9 +21,7 @@ export function CatteryMarker({
   catsData,
   navigation,
   showCatList,
-  setShowCatList,
   flatListRef,
-  flatListMovingLock,
 }) {
   const { height, width } = useWindowDimensions();
   const [cattery, setCattery] = useState(null);
@@ -78,14 +76,22 @@ export function CatteryMarker({
             onPress={markerOnPress}
             indentifier={`${index}`}
           >
-            <Foundation name="marker" size={40} color={Colors.orangeText} />
+            <View
+              style={{
+                  alignItems: "center",
+                  alignSelf: "center",
+              }}
+            >
+              <Foundation name="marker" size={40} color={Colors.orangeText} />
+            </View>
 
             <Pressable onPress={markerOnPress}>
               <View
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: Colors.white,
                   opacity: "50%",
                   borderRadius: 12,
+                  marginTop: 5,
                   padding: 4,
                   paddingHorizontal: 8,
                 }}
@@ -93,7 +99,7 @@ export function CatteryMarker({
                 <Text
                   style={{
                     fontFamily: FontFamily.medium,
-                    color: Colors.reminderText,
+                    color: Colors.orangeText,
                   }}
                 >
                   {HelperText(cat)}

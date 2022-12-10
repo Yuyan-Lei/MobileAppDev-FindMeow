@@ -1,4 +1,8 @@
 // Code reference: https://www.npmjs.com/package/react-native-button-toggle-group?activeTab=readme
+// This component has lots of bugs in its initial codes. 
+// So I copied the source code here, and refined the codes on my own.
+// I also changed the styles in this component to meet the need of this app.
+
 import * as React from "react";
 import { Animated, View, Text, StyleSheet, Platform } from "react-native";
 import { TouchableRipple } from "react-native-paper";
@@ -179,8 +183,6 @@ const styles = StyleSheet.create({
 		height: 38,
 		position: "relative",
 		borderRadius: 12,
-		// borderWidth: 1.2,
-        // borderColor: Colors.orange,
 	},
 	maskViewContainer: {
 		width: "100%",

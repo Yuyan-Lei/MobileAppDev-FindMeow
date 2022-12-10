@@ -43,7 +43,7 @@ import { Colors } from "../styles/Colors";
 import { FontSizes } from "../styles/FontSizes";
 import { FontFamily } from "../styles/FontFamily";
 
-export default function LoginOrSignUpPage({ route, navigation }) {
+export default function LoginOrSignUpPage({ navigation }) {
   const [pageState, setPageState] = useState(0);
   const [isCattery, setIsCattery] = useState(false);
   const [userName, setUserName] = useState("");
@@ -204,10 +204,9 @@ export default function LoginOrSignUpPage({ route, navigation }) {
   
   const onSignIn = () => {
     signInWithEmailAndPassword(auth, userName, password)
-      .then((userCredential) => {
+      .then(() => {
         // Signed in
-        const user = userCredential.user;
-        getUserData().then((user) => navigateToHomeSafely());
+        getUserData().then(() => navigateToHomeSafely());
       })
       .catch((error) => {
         const errorCode = error.code;

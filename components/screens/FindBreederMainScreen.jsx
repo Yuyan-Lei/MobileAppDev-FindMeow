@@ -1,12 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, View, RefreshControl } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -23,7 +16,6 @@ import CatteryProfileScreen from "./CatteryProfileScreen";
 import FindBreederFilter from "./FindBreederFilter";
 import PostNewCatScreen from "./PostNewCatScreen";
 import { FontSizes } from "../styles/FontSizes";
-import { FontFamily } from "../styles/FontFamily";
 
 function MainScreen({ route, navigation }) {
   const [searchName, setSearchName] = useState("");
@@ -192,14 +184,7 @@ function MainScreen({ route, navigation }) {
             />
           )}
           ListFooterComponent={<View style={{ height: 120 }} />}
-          refreshControl={
-            <RefreshControl
-            // refreshing={refreshCatteryDataLock}
-            // onRefresh={() => {
-            //   refreshCatteryData();
-            // }}
-            />
-          }
+          refreshControl={<RefreshControl />}
           showsVerticalScrollIndicator={false}
         />
       </View>

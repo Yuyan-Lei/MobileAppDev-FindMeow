@@ -1,7 +1,6 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
-  Image,
   Platform,
   Pressable,
   StyleSheet,
@@ -50,7 +49,6 @@ export function BreederCard({ cattery, userLikedCatteryEmails, navigation }) {
   );
 
   return (
-    // <View style={styles.breederView}>
     <View
       style={[
         styles.cardView,
@@ -118,9 +116,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   heartButtonView: {
-    // top: 20,
-    // marginRight: 24,
-    // width:48,
     justifyContent: "center",
   },
   breederNameText: {
@@ -161,12 +156,10 @@ const styles = StyleSheet.create({
   cardView: {
     flexDirection: "row",
     padding: 16,
-    // paddingLeft: 8,
     marginHorizontal: 16,
     marginVertical: 8,
     backgroundColor: Colors.white,
     borderRadius: 20,
-    // width: "90%",
   },
   iosShadowView: {
     shadowColor: Colors.black,

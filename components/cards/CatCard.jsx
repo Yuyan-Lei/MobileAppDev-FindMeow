@@ -1,4 +1,4 @@
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CachedImage from "react-native-expo-cached-image";
@@ -136,7 +136,6 @@ export function CatCard({
       {/* floating components */}
       <View style={styles.heartButtonView}>
         <HeartButton
-          // notSelectedColor="white"
           isLiked={likeCats.includes(cat.id)}
           onPress={onClickLikeButton}
         />
