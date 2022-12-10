@@ -1,13 +1,6 @@
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  collection,
-  doc,
-  documentId,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
   Pressable,
@@ -218,17 +211,6 @@ function MainScreen({ route, navigation }) {
             }}
           >
             <Text style={styles.infoTitle}>About</Text>
-            {/* <View
-              style={{
-                flexDirection: "row",
-                alignSelf: "flex-end",
-                position: "absolute",
-                marginTop: 20,
-              }}
-            >
-              <PhoneButton />
-              <MessageButton />
-            </View> */}
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.infoSubTitle}>Phone : </Text>
               <Text style={{ fontFamily: FontFamily.regular }}>
@@ -318,7 +300,6 @@ const styles = StyleSheet.create({
     right: 22,
     width: 35,
     height: 35,
-    // backgroundColor: Colors.arrowBackground,
     alignItems: "center",
     borderRadius: 13,
     paddingTop: 8,
@@ -330,7 +311,6 @@ const styles = StyleSheet.create({
     padding: 5,
     height: 35,
     width: 35,
-    // backgroundColor: Colors.arrowBackground,
     borderRadius: 13,
   },
   container: {

@@ -1,13 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import { db } from "../../firebaseUtils/firebase-setup";
@@ -15,8 +9,6 @@ import { getCurrentUserEmail } from "../../firebaseUtils/firestore";
 import { CatCard_map } from "../cards/CatCard_map";
 import { CatteryMarker } from "../pressable/CatteryMarker";
 import { TitleText } from "../texts/TitleText";
-import { FontSizes } from "../styles/FontSizes";
-import { FontFamily } from "../styles/FontFamily";
 
 export default function MapPage({
   route: {
