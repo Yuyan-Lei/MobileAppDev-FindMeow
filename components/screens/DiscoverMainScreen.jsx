@@ -238,6 +238,7 @@ function MainScreen({ route, navigation }) {
           }
 
           return {
+            ...catDoc.data(),
             id: catDoc.id,
             name: catDoc.data().Breed,
             sex: catDoc.data().Gender,
@@ -422,11 +423,16 @@ function MainScreen({ route, navigation }) {
         </View>
         <View style={styles.mapButtonView}>
           <MapButton
-            onPress={() =>
-              navigation.navigate("MapPage", {
-                catsData: catsData[selectedIndex],
-              })
-            }
+            onPress={() => {
+              if (
+                catsData.length !== 0 &&
+                catsData[selectedIndex].length !== 0
+              ) {
+                navigation.navigate("MapPage", {
+                  catsData: catsData[selectedIndex],
+                });
+              }
+            }}
             size={FontSizes.mapIcon}
             length={40}
           />
