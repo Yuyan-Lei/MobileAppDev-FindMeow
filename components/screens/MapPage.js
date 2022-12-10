@@ -155,6 +155,8 @@ export default function MapPage({
           <SwiperFlatList
             ref={flatListRef}
             showsPagination={false}
+            // disable lazy loading to prevent the bug of swiper
+            renderAll={true}
             onChangeIndex={({ index }) => {
               selectLocation({
                 latitude: catsData[index].geoLocation.lat,
