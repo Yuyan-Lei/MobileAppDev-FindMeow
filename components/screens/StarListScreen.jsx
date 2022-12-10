@@ -97,7 +97,12 @@ function CatsScreen({ navigation, cats, refreshing, onRefresh, allCatteries }) {
   }, []);
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        width: "100%",
+      }}
+    >
       {cats.length > 0 ? (
         <FlatList
           data={cats}
