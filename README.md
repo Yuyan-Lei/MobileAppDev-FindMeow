@@ -12,13 +12,18 @@
    REACT_APP_FIREBASE_MEASUREMENT_ID=
 
    REACT_APP_GOOGLE_MAP_APP_KEY=
+
+   DEVELOPER_EMAIL=
+
+   REACT_APP_API_URL =
+   REACT_APP_API_KEY =
+   REACT_APP_ICON_URL =
    ```
 
 2. **Installation**: Open the terminal in your IDE, and then enter `npm install` to the terminal.
 3. **Load the App**: After installation, type `npx expo r` and press enter in the terminal. Now the App is ready to use!
 4. **Reload the App**: If there is any loading issue, type `r` and press enter in the terminal to reload the App.
-5. Due to some latent bugs, the App can somentimes be choking, especially for the filter component. This issue will be solved in the next iteration.
-6. **Testing accounts**: For better experience, you can use our pre-prepared testing accounts, as follows.
+5. **Testing accounts**: For better experience, you can use our pre-prepared testing accounts, as follows.
 
    ```
    Buyer account:
@@ -75,40 +80,76 @@ Cuichan Wu, Yuyan Lei, Zhongyi Lu.
 
 - Test:
 
-1. All functions and pull requests in multiple iOS platforms.
+1. All functions in multiple iOS platforms.
+2. Pull requests in GitHub.
 
 **Yuyan Lei**:
+
+- Feat:
+
+1. Implemented the notification feature, and built related screens. Enabled users to switch the range of distance that they would like to be notified within.
+2. Implemented the nearby feature.
+3. Implemented the page-swiping gesture and effects in screens.
+4. Implemented the weather feature with a web api.
+5. Implemented the loading spinners on the `DiscoverMainScreen`, `FindBreederMainScreen` and `StarListScreen`.
+6. Implemented a special display on the `StarList` page, while the collection list is empty.
+7. Implemented the send-feedback feature on the `UserProfile` page.
+8. Developed the map feature. Rewrote the cat-card list, implemented the card-swiping gesture and effects, and linked the map markers with the cat card.
+
+- Components:
+
+1. Built a new button group with animations on both IOS and Android, and linked the button clicks with the page-swiping effects.
+2. Implemented a new date-picker component.
+3. Built the multi-slider for the `DiscoverCat filter`.
+
+- Refactor:
+
+1. Refactor the firebase storing structure.
+2. Rewrote the address retriever function.
+3. Rewrote the shadow display for `BreederCard` on IOS.
+4. Rewrote the distance calculation and display effect on the `CatCard`.
+
+- Restyled screens and components, and added button effects to some buttons.
+- Fixed errors and tested pull requests.
+  > > > > > > > main
 
 **Zhongyi Lu**:
 
 - Feat:
 
-1. Refactored and optimized data loading on several pages including `DiscoverMain`, `FindBreeder`, `MapPage`, and `StarList`.
-2. Refactored and optimized data loading in several components including `CatCard` and `BreederCard`.
+1. Rewrote `CatCard`.
+2. Replace map callout by text.
 3. Optimized `likeCat` operations.
 4. Used `CacheImage` to improve image loading.
-5. Enabled queries in `DiscoverMain` and `FindBreeder` working.
-6. Add text ellipsis for `CatCard` and `CatInformation`.
-7. Rewrote `CatCard`.
-8. Added text wrap and ellipsis for several components.
-9. Swiping list controls map location in `MapPage`.
+5. Swiping list controls map location in `MapPage`.
+6. Added text wrap and ellipsis for several components.
+7. Added text ellipsis for `CatCard` and `CatInformation`.
+8. Enabled queries in `DiscoverMain` and `FindBreeder` working.
+9. Refactored and optimized data loading in several components including `CatCard` and `BreederCard`.
+10. Refactored and optimized data loading on several pages including `DiscoverMain`, `FindBreeder`, `MapPage`, and `StarList`.
 
 - Fix:
 
-1. Horizontal swipe in `StarList` conflicts with `CatCard` and `BreederCard`.
+1. A few bugs in `StarList`.
 2. Some navigations do not work.
-3. Getting the user location does not work when loading at the first time.
-4. Add more error handling for async functions.
+3. Cats not shown in `CatteryProfile`.
+4. app breaks when pressing map icon too early.
 5. `setInterval()` function does not renew parameters.
-6. A few other bugs in `StarList` and `MapPage`.
+6. Add more error handling for async functions for Firebase connection.
+7. Getting the user location does not work when loading at the first time.
+8. Horizontal swipe in `StarList` conflicts with `CatCard` and `BreederCard`.
+9. Map keeps moving and flat list not working in `MapPage` by disabling lazy loading.
 
 - Style:
 
 1. Hide some scroll indicators.
+2. Fix button overflow in `Login` page.
+3. Adjusted `SearchBar` styles and removed underline.
 
 - Test:
 
-1. All functions in Android and iOS.
+1. Pull requests in GitHub.
+2. All functions in Android and iOS.
 
 ## Iteration 2
 
