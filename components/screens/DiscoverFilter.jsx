@@ -33,7 +33,6 @@ const DiscoverFilter = ({
     setSelectedPrice,
 
     tags: {
-      selectedTags,
       setSelectedTags,
       vaccinated,
       setVaccinated,

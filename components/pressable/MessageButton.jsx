@@ -1,7 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import {
-  Alert,
   Linking,
   Platform,
   Pressable,
@@ -43,7 +42,6 @@ export function MessageButton({ onPress, cattery }) {
           name="textsms"
           size={24}
           color={Colors.white}
-          // onPress={messageHandler}
           onPress={() => messageNumber(cattery.phoneNumber)}
           style={{}}
         />

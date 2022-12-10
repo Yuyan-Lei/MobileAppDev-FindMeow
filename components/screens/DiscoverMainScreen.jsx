@@ -297,8 +297,7 @@ function MainScreen({ route, navigation }) {
         cat.distance <= maxNotificationRange
       );
     });
-    // console.log(addedCatWithinRange);
-    // setAllCats(allCats);
+
     // If any new cats within maxNotificationRange are added, send out a notification.
     if (addedCatWithinRange.length > 0 && enableNotification) {
       await Notifications.scheduleNotificationAsync({
@@ -390,12 +389,6 @@ function MainScreen({ route, navigation }) {
   }
 
   const { height, width } = useWindowDimensions();
-
-  /* events for top filter tags - start */
-  const onFilterChange = (value) => {
-    setSelectedIndex(value);
-  };
-  /* events for top filter tags - end */
 
   return (
     <View style={styles.container}>

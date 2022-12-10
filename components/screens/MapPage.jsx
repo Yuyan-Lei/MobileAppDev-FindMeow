@@ -18,8 +18,6 @@ export default function MapPage({
 }) {
   const { height, width } = useWindowDimensions();
   const [showCatList, setShowCatList] = useState(true);
-  const [location, setLocation] = useState(null);
-  const [currentSwiperIndex, setCurrentSwiperIndex] = useState(0);
 
   const [allCatteries, setAllCatteries] = useState([]);
   const [likedCatsEmails, setLikedCatsEmails] = useState([]);
@@ -59,10 +57,6 @@ export default function MapPage({
 
     return () => unsubscribeCattery();
   }, []);
-
-  const showCatListHandler = () => {
-    setShowCatList(!showCatList);
-  };
 
   const initialLat = catsData.at(0).geoLocation.lat;
   const initialLng = catsData.at(0).geoLocation.lng;

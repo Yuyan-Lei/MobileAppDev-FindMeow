@@ -44,6 +44,7 @@ export const Colors = {
   signUpDivider: "rgb(149, 148, 148)",
   signUpBackground: "rgb(246,245,245)",
   signUpIcon: "rgb(97,97,97)",
+  signUpButtonPressed: "rgba(245, 245, 245)",
   selectListInput: "rgb(34, 34, 34)",
   signUpSelectedButton: "#0C0C0E",
   signUpNoteSelecteButton: "rgba(12, 12, 14, 0.5)",

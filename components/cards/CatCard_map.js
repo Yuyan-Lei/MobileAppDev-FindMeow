@@ -80,7 +80,6 @@ export function CatCard_map({ cat, catteryInput, likedCatInput, navigation, show
           height: 110,
         }}
       >
-        {/* <Pressable onPressIn={onTouchStart} onPressOut={onTouchEnd}> */}
         <Pressable
           style={{ flex: 1, paddingLeft: 20, paddingVertical: 10 }}
           onPress={onPressCatCard}
