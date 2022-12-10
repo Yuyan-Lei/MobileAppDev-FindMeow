@@ -17,7 +17,6 @@ import { calculateDistance, getUserLocation } from "../../firebaseUtils/user";
 import { useSwipe } from "../../utils/useSwipe";
 import { BreederCard } from "../cards/BreederCard";
 import { CatCard } from "../cards/CatCard";
-import { FilterButtons } from "../pressable/FilterButtons";
 import { Colors } from "../styles/Colors";
 import { TitleText } from "../texts/TitleText";
 import CatInformation from "./CatInformation";
