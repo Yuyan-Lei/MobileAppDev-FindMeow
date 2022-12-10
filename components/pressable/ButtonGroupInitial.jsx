@@ -216,6 +216,15 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		borderRadius: 10,
 		marginHorizontal: 5,
+
+		shadowColor: Colors.black,
+		shadowRadius: 11,
+		shadowOpacity: 0.08,
+		shadowOffset: {
+		  width: 0,
+		  height: 10,
+		},
+		elevation: 18,
 	},
 	baseButtonText: {
 		fontSize: FontSizes.text,
