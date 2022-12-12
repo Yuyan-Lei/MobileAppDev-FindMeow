@@ -1,4 +1,4 @@
-## Begin to use
+## Quick Start
 
 1. **Set the environment**: Download the whole file pack. Create a `.env` file in the root folder, and add the following environment variables to this file:
 
@@ -38,6 +38,9 @@
    Feel free to sign up for your own accounts!
 
 ## ScreenShots
+
+**WATCH OUR DEMO HERE**: 
+https://youtu.be/77ZKl8r5_6U
 
 ![](screenshots/Login.jpg)
 
